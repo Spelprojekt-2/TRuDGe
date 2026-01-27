@@ -41,7 +41,7 @@ public class PlayerCamera : MonoBehaviour
         verticalRotation -= mouseDelta.y * mouseSens;
 
         verticalRotation = Mathf.Clamp(verticalRotation, -10f, 10f);
-        horizontalRotation = Mathf.Clamp(horizontalRotation, 80f, 110f);
+        horizontalRotation = Mathf.Clamp(horizontalRotation, -110f, -80f);
 
         main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
     }
