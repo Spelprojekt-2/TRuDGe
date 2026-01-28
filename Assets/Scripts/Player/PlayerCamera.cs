@@ -29,6 +29,10 @@ public class PlayerCamera : MonoBehaviour
 
         distanceFromScreenEdge.x = Mathf.Clamp(distanceFromScreenEdge.x, 0, 960);
         distanceFromScreenEdge.y = Mathf.Clamp(distanceFromScreenEdge.y, 0, 540);
+        if(previewNoRotationZone == null)
+        {
+            return;
+        }
         previewNoRotationZone.gameObject.SetActive(renderPreviewZone);
         if (renderPreviewZone)
         {
