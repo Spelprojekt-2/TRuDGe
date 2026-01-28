@@ -1,30 +1,58 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
+using UnityEngine.UI;
+using UnityEditor;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [Header("Camera Settings")]
-    public Transform cameraHolder;
-    public float mouseSens = 0.2f;
-    private float verticalRotation;
-    private float horizontalRotation;
-    [SerializeField] private Transform cameraAnchor;
-    [SerializeField] private float cameraRotationSpeed = 0.5f;
-    private bool rotationStarted = false;
-    private Mouse mouse;
-    private Camera main;
+    [Header("---References(REQUIRED)---")]
+    [SerializeField] Transform cameraHolder;
+    [SerializeField] RectTransform crosshair;
+    [SerializeField] Image previewImage;
+    [SerializeField] bool renderPreview = true;
 
-    private void Start()
+    [Header("---Camera Settings---")]
+    [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
+    [Range(1, 10)]
+    [SerializeField] private float rotationIntensity;
+
+    [Tooltip("The crosshair sensitivity")]
+    [SerializeField] float sensitivity;
+
+    [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
+    [SerializeField] Vector2Int distanceFromScreenEdge;
+
+    private void OnValidate()
     {
-        mouse = Mouse.current;
-        main = Camera.main;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+            return;
+
+        distanceFromScreenEdge.x = Mathf.Clamp(distanceFromScreenEdge.x, 0, 960);
+        distanceFromScreenEdge.y = Mathf.Clamp(distanceFromScreenEdge.y, 0, 540);
+        previewImage.gameObject.SetActive(renderPreview);
+        if (renderPreview)
+        {
+            previewImage.rectTransform.sizeDelta = 2 * distanceFromScreenEdge;
+        }
+        
     }
-    private void Update()
+
+    Camera cam;
+    private Vector2 cursorPos;
+    private Vector2 screenSize;
+    private Vector2 panningDist;
+    
+    private Quaternion camStartRotOffset;
+    void Start()
     {
-        if (Keyboard.current.xKey.isPressed)
+        Cursor.lockState = CursorLockMode.Locked;
+        cam = Camera.main;
+        screenSize = new Vector2(Screen.width, Screen.height);
+        camStartRotOffset = cam.transform.localRotation;
+    }
+    void LateUpdate()
+    {
+        if(Keyboard.current.xKey.isPressed)
         {
             ChangeDirection(180f);
         }
@@ -32,45 +60,46 @@ public class PlayerCamera : MonoBehaviour
         {
             ChangeDirection(0f);
         }
-    }
-    void LateUpdate()
-    {
+
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
-        horizontalRotation += mouseDelta.x * mouseSens;
-        verticalRotation -= mouseDelta.y * mouseSens;
+        cursorPos += mouseDelta * sensitivity;
+        cursorPos.x = Mathf.Clamp(cursorPos.x, -screenSize.x / 2, screenSize.x / 2);
+        cursorPos.y = Mathf.Clamp(cursorPos.y, -screenSize.y / 2, screenSize.y / 2);
+        crosshair.anchoredPosition = cursorPos;
+        if (cursorPos.x > screenSize.x / 2 - distanceFromScreenEdge.x) // Right
+        {
+            panningDist.x = cursorPos.x - (screenSize.x / 2 - distanceFromScreenEdge.x);
+        }
+        else if (cursorPos.x < -screenSize.x / 2 + distanceFromScreenEdge.x) // Left
+        {
+            panningDist.x = cursorPos.x - (-screenSize.x / 2 + distanceFromScreenEdge.x);
+        }
+        else
+        {
+            panningDist.x = 0;
+        }
 
-        verticalRotation = Mathf.Clamp(verticalRotation, -10f, 10f);
-        horizontalRotation = Mathf.Clamp(horizontalRotation, -110f, -80f);
+        if (cursorPos.y > screenSize.y / 2 - distanceFromScreenEdge.y) // Up
+        {
+            panningDist.y = cursorPos.y - (screenSize.y / 2 - distanceFromScreenEdge.y);
+        }
+        else if (cursorPos.y < -screenSize.y / 2 + distanceFromScreenEdge.y) // Down
+        {
+            panningDist.y = cursorPos.y - (-screenSize.y / 2 + distanceFromScreenEdge.y);
+        }
+        else
+        {
+            panningDist.y = 0;
+        }
 
-        main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        panningDist *= 0.01f * rotationIntensity;
+        cam.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
     }
+
 
     private void ChangeDirection(float angle)
     {
         cameraHolder.localRotation = Quaternion.Euler(0, angle, 0);
-    }
-
-    private IEnumerator ChangeDirectionRoutine(float angle)
-    {
-        rotationStarted = true;
-
-        float timePassed = 0f;
-        Quaternion startRotation = cameraAnchor.localRotation;
-        Quaternion endRotation = Quaternion.Euler(0, angle, 0);
-
-        while (timePassed < cameraRotationSpeed)
-        {
-            timePassed += Time.deltaTime;
-            float t = timePassed / cameraRotationSpeed;
-
-            float smoothT = t * t * (3f - 2f * t);
-
-            cameraAnchor.localRotation = Quaternion.Slerp(startRotation, endRotation, smoothT);
-            yield return null;
-        }
-
-        cameraAnchor.localRotation = endRotation;
-        rotationStarted = false;
     }
 }
