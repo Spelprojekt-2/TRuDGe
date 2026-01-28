@@ -24,7 +24,7 @@ public class DrivingBehaviour : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.angularVelocity = new Vector3(0f, inputVector.x * turningSpeed, 0f);
+            rb.angularVelocity = rb.rotation * new Vector3(0f, inputVector.x * turningSpeed, 0f);
             rb.AddRelativeForce(Vector3.forward * inputVector.y * acceleration, ForceMode.Acceleration);
         }
     }
