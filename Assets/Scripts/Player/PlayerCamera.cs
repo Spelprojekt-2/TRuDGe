@@ -104,6 +104,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void ChangeDirection(float angle)
     {
-        cameraHolder.localRotation = Quaternion.Euler(0, angle, 0);
+        cameraHolder.localRotation = Quaternion.Euler(0, angle + 90, 0);
     }
 }
