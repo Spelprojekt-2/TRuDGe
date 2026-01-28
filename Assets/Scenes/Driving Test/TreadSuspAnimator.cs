@@ -41,7 +41,7 @@ public class TreadSuspAnimator : MonoBehaviour
             }
             else
             {
-                skinnedMeshRenderer.SetBlendShapeWeight(i, 0.5f);
+                skinnedMeshRenderer.SetBlendShapeWeight(i, 100f);
             }
         }
     }
