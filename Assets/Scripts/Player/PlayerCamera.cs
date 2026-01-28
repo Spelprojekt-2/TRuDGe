@@ -8,8 +8,8 @@ public class PlayerCamera : MonoBehaviour
     [Header("---References(REQUIRED)---")]
     [SerializeField] Transform cameraHolder;
     [SerializeField] RectTransform crosshair;
-    [SerializeField] Image previewImage;
-    [SerializeField] bool renderPreview = true;
+    [SerializeField] Image previewNoRotationZone;
+    [SerializeField] bool renderPreviewZone = true;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -29,10 +29,10 @@ public class PlayerCamera : MonoBehaviour
 
         distanceFromScreenEdge.x = Mathf.Clamp(distanceFromScreenEdge.x, 0, 960);
         distanceFromScreenEdge.y = Mathf.Clamp(distanceFromScreenEdge.y, 0, 540);
-        previewImage.gameObject.SetActive(renderPreview);
-        if (renderPreview)
+        previewNoRotationZone.gameObject.SetActive(renderPreviewZone);
+        if (renderPreviewZone)
         {
-            previewImage.rectTransform.sizeDelta = 2 * distanceFromScreenEdge;
+            previewNoRotationZone.rectTransform.sizeDelta = 2 * distanceFromScreenEdge;
         }
         
     }
