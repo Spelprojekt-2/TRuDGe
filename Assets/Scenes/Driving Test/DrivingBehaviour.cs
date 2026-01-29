@@ -29,15 +29,11 @@ public class DrivingBehaviour : MonoBehaviour
             rb.angularVelocity = rb.rotation * new Vector3(0f, inputVector.x * turningSpeed, 0f);
             rb.AddRelativeForce(Vector3.forward * inputVector.y * acceleration, ForceMode.Acceleration);
         }
+        isGrounded = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         isGrounded = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        isGrounded = false;
     }
 }
