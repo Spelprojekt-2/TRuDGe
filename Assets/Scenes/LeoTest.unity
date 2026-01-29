@@ -313,14 +313,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Driving Test With Suspension
       objectReference: {fileID: 0}
+    - target: {fileID: 1947924741959589473, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2219950168643904714, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 2103419452}
     - target: {fileID: 2219950168643904714, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      propertyPath: renderPreviewZone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219950168643904714, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
       propertyPath: previewNoRotationZone
       value: 
       objectReference: {fileID: 1854652800}
+    - target: {fileID: 7077568346576980060, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      propertyPath: turningSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7389681597756504585, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -361,10 +373,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8920785047979075250, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1383294595}
+    - target: {fileID: 8920785047979075250, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920785047979075250, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DrivingBehaviourV2, Assembly-CSharp
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7077568346576980060, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 481778193960524937, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1383294595}
   m_SourcePrefab: {fileID: 100100000, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
 --- !u!1 &1242917805
 GameObject:
@@ -487,6 +515,28 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &1383294588 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 481778193960524937, guid: b5dd8fd0e831e654eb5ea01443990a84, type: 3}
+  m_PrefabInstance: {fileID: 418472795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1383294595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383294588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4682f778c06b43e4c8527baf8236753b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turningSpeedMultiplier: 40
+  minimumTurningSpeed: 10
+  acceleration: 0.5
+  topSpeed: 75
+  deceleration: 1.035
 --- !u!1 &1416902248
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +709,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e3d981bfd93b9a74689ebe8f33742db9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
