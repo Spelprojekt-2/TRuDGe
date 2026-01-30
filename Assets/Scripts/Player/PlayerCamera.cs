@@ -67,13 +67,15 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        screenSize = new Vector2(Screen.width, Screen.height);
         camStartRotOffset = cam.transform.localRotation;
         camParentOffsetPos = cameraHolder.transform.localPosition;
         camParentOffsetRot = cameraHolder.transform.localRotation;
     }
     void LateUpdate()
     {
+        screenSize = cam.rect.size * new Vector2(Screen.width, Screen.height);
+
+
         cameraHolder.transform.position = player.position + (cameraHolder.transform.rotation * camParentOffsetPos);
 
         if(Keyboard.current.xKey.isPressed)
