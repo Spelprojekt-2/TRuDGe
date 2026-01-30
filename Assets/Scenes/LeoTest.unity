@@ -424,6 +424,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4774478436867740231, guid: d99db36651ebac14990518a3541819f1, type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6972372626288742017, guid: d99db36651ebac14990518a3541819f1, type: 3}
       propertyPath: crosshair
       value: 
@@ -1038,7 +1042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1854652799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1273,6 +1277,10 @@ PrefabInstance:
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 2103419452}
+    - target: {fileID: 6972372626288742017, guid: d99db36651ebac14990518a3541819f1, type: 3}
+      propertyPath: renderPreviewZone
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6972372626288742017, guid: d99db36651ebac14990518a3541819f1, type: 3}
       propertyPath: previewNoRotationZone
       value: 
