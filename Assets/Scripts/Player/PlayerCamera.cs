@@ -10,6 +10,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] RectTransform crosshair;
     [SerializeField] Image previewNoRotationZone;
     [SerializeField] bool renderPreviewZone = true;
+    [SerializeField] private Transform player;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -41,11 +42,14 @@ public class PlayerCamera : MonoBehaviour
         
     }
 
-    Camera cam;
+    [SerializeField] Camera cam;
     private Vector2 cursorPos;
     private Vector2 screenSize;
     private Vector2 panningDist;
     private Vector2 lookInputVector;
+    private bool isPressingLookBack;
+    private Vector3 camParentOffsetPos;
+    private Quaternion camParentOffsetRot;
     
     private Quaternion camStartRotOffset;
 
@@ -54,15 +58,24 @@ public class PlayerCamera : MonoBehaviour
         lookInputVector = context.ReadValue<Vector2>();
     }
 
+
+    public void LookBack(InputAction.CallbackContext context)
+    {
+        isPressingLookBack = context.performed;
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        cam = Camera.main;
         screenSize = new Vector2(Screen.width, Screen.height);
         camStartRotOffset = cam.transform.localRotation;
+        camParentOffsetPos = cameraHolder.transform.localPosition;
+        camParentOffsetRot = cameraHolder.transform.localRotation;
     }
     void LateUpdate()
     {
+        cameraHolder.transform.position = player.position + (cameraHolder.transform.rotation * camParentOffsetPos);
+
         if(Keyboard.current.xKey.isPressed)
         {
             ChangeDirection(180f);
@@ -111,6 +124,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void ChangeDirection(float angle)
     {
-        cameraHolder.localRotation = Quaternion.Euler(0, angle + 90, 0);
+        cameraHolder.localRotation = Quaternion.Euler(0, angle + 90 + player.rotation.eulerAngles.y, 0);
     }
 }

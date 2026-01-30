@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent (typeof(Camera))]
 public class SplitScreenCamera : MonoBehaviour
 {
+    [SerializeField] PlayerInput input;
     private Camera cam;
     private int index;
     private int totalPlayers;
@@ -22,7 +23,7 @@ public class SplitScreenCamera : MonoBehaviour
 
     private void Start()
     {
-        index = GetComponentInParent<PlayerInput>().playerIndex;
+        index = input.playerIndex;
         totalPlayers = PlayerInput.all.Count;
         cam = GetComponent<Camera>();
         cam.depth = index;
@@ -38,7 +39,7 @@ public class SplitScreenCamera : MonoBehaviour
                 cam.rect = new Rect(0, 0, 1, 1);
                 break;
             case 2:
-                cam.rect = new Rect(index == 0 ? 0 : 0.5f, 0, 0.5f, 1);
+                cam.rect = new Rect(0, index == 1 ? 0 : 0.5f, 1f, 0.5f);
                 break;
             case >= 3:
                 cam.rect = new Rect(
