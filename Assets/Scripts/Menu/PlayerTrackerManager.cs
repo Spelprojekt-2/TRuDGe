@@ -7,26 +7,24 @@ public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     private List<PlayerInput> playerInputs = new List<PlayerInput>();
-    [SerializeField] private List<GameObject> players = new List<GameObject>();
+    [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
     }
-
     public void HandlePlayerJoined(PlayerInput obj)
     {
-        Debug.Log("Here");
-        if (!playerInputs.Contains(obj))
+        if (!playerInputs.Contains(obj) && obj != null)
         {
+
             playerInputs.Add(obj);
-            players.Add(obj.GetComponent<GameObject>());
-            foreach (var player in players)
-            {
-                player.SetActive(false);
-            }
-            DontDestroyOnLoad(obj.gameObject);
+            GameObject playerSpawned = obj.transform.root.gameObject;
+            players.Add(playerSpawned);
+            DontDestroyOnLoad(playerSpawned);
+
+            UpdateAllPlayerCameras();
         }
     }
 
@@ -38,9 +36,15 @@ public class PlayerTrackerManager : MonoBehaviour
             PlayerInputManager.instance.DisableJoining();
             MovePlayersToSpawnPoints();
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "MainMenu")
         {
             allPlayersSpawned = false;
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                SceneManager.LoadSceneAsync("LeoTest");
+            }
+
             PlayerInputManager.instance.EnableJoining();
         }
     }
@@ -59,7 +63,20 @@ public class PlayerTrackerManager : MonoBehaviour
 
         foreach (var player in players)
         {
-            player.SetActive(false);
+            player.SetActive(true);
+        }
+    }
+
+    private void UpdateAllPlayerCameras()
+    {
+        int currentTotal = playerInputs.Count;
+        foreach (var player in players)
+        {
+            var splitCam = player.GetComponentInChildren<SplitScreenCamera>();
+            if (splitCam != null)
+            {
+                splitCam.SetupCamera(currentTotal);
+            }
         }
     }
 }

@@ -47,6 +47,6 @@ public class DrivingBehaviourV2 : MonoBehaviour
             velocity = Quaternion.Euler(rotate) * velocity;
         }
 
-        Debug.Log("Speed: " + velocity.magnitude);
+        //Debug.Log("Speed: " + velocity.magnitude);
     }
 }

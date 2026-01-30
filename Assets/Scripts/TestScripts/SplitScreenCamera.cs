@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent (typeof(Camera))]
 public class SplitScreenCamera : MonoBehaviour
@@ -19,7 +20,7 @@ public class SplitScreenCamera : MonoBehaviour
     {
         totalPlayers = PlayerInput.all.Count;
         if (totalPlayers >= 5) return;
-        SetupCamera();
+        SetupCamera(totalPlayers);
     }
 
     private void Start()
@@ -29,11 +30,14 @@ public class SplitScreenCamera : MonoBehaviour
         cam = GetComponent<Camera>();
         cam.depth = index;
 
-        SetupCamera();
+        SetupCamera(totalPlayers);
     }
 
-    private void SetupCamera()
+    public void SetupCamera(int totalPlayers)
     {
+        if (cam == null) cam = GetComponent<Camera>();
+        index = input.playerIndex;
+
         switch (totalPlayers)
         {
             case 1:
