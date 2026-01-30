@@ -18,6 +18,7 @@ public class SplitScreenCamera : MonoBehaviour
     private void HandlePlayerJoined(PlayerInput obj)
     {
         totalPlayers = PlayerInput.all.Count;
+        if (totalPlayers >= 5) return;
         SetupCamera();
     }
 
