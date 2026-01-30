@@ -9,13 +9,13 @@ public class DrivingBehaviourV2 : MonoBehaviour
     [SerializeField] private float topSpeed = 50f;
     [SerializeField] private float deceleration = 10f;
     private Vector3 velocity;
-    private Vector2 inputVector;
+    private Vector2 driveInputVector;
     private Rigidbody rb;
     private bool isGrounded = true;
 
     public void MoveInput(InputAction.CallbackContext context)
     {
-        inputVector = context.ReadValue<Vector2>();
+        driveInputVector = context.ReadValue<Vector2>();
     }
 
     void Start()
@@ -25,9 +25,9 @@ public class DrivingBehaviourV2 : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (inputVector.y != 0)
+        if (driveInputVector.y != 0)
         {
-            velocity += transform.forward * inputVector.y * acceleration; // Gas
+            velocity += transform.forward * driveInputVector.y * acceleration; // Gas
             if (velocity.magnitude > topSpeed)
             {
                 velocity = velocity.normalized * topSpeed;
@@ -40,9 +40,9 @@ public class DrivingBehaviourV2 : MonoBehaviour
         if (velocity.magnitude < 0.01f) velocity = Vector3.zero;
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
 
-        if (inputVector.x != 0) // Turn
+        if (driveInputVector.x != 0) // Turn
         {
-            Vector3 rotate = new Vector3(0f, inputVector.x * turningSpeedMultiplier * (1 / Mathf.Max(velocity.magnitude, minimumTurningSpeed)), 0f);
+            Vector3 rotate = new Vector3(0f, driveInputVector.x * turningSpeedMultiplier * (1 / Mathf.Max(velocity.magnitude, minimumTurningSpeed)), 0f);
             transform.Rotate(rotate);
             velocity = Quaternion.Euler(rotate) * velocity;
         }

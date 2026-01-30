@@ -45,8 +45,15 @@ public class PlayerCamera : MonoBehaviour
     private Vector2 cursorPos;
     private Vector2 screenSize;
     private Vector2 panningDist;
+    private Vector2 lookInputVector;
     
     private Quaternion camStartRotOffset;
+
+    public void LookInput(InputAction.CallbackContext context)
+    {
+        lookInputVector = context.ReadValue<Vector2>();
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -65,7 +72,7 @@ public class PlayerCamera : MonoBehaviour
             ChangeDirection(0f);
         }
 
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+        Vector2 mouseDelta = lookInputVector;
 
         cursorPos += mouseDelta * sensitivity;
         cursorPos.x = Mathf.Clamp(cursorPos.x, -screenSize.x / 2, screenSize.x / 2);
