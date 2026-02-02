@@ -5284,6 +5284,7 @@ GameObject:
   - component: {fileID: 2324868613239432833}
   - component: {fileID: 6351690275681826053}
   - component: {fileID: 3221375469041325367}
+  - component: {fileID: 3908193058968465226}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -5586,6 +5587,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 2.5
   acceleration: 75
+--- !u!114 &3908193058968465226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401182360880132677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717e743af93de39458eb0ec5d24ef666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lapProgress: 0
+  lap: 0
+  raceProgress: 0
 --- !u!1 &4626151456759177625
 GameObject:
   m_ObjectHideFlags: 0
