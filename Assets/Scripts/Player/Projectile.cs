@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
@@ -7,10 +8,18 @@ public class Projectile : MonoBehaviour
 
     public void SetDirection(Vector3 dir)
     {
+        StartCoroutine(CollisionWakeUp());
         rb.linearVelocity = dir * projectileSpeed;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    IEnumerator CollisionWakeUp()
+    {
+        GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<Collider>().enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision col)
     {
         Destroy(gameObject);
     }

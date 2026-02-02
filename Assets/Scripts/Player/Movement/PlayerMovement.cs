@@ -56,7 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region Input vars
     private Vector2 moveInputVector;
-
+    private bool isGassing;
+    private bool isReversing;
     #endregion
     
     #region Movement vars
@@ -75,6 +76,16 @@ public class PlayerMovement : MonoBehaviour
     public void MoveInput(InputAction.CallbackContext context)
     {
         moveInputVector = context.ReadValue<Vector2>();
+    }
+
+    public void GasInput(InputAction.CallbackContext context)
+    {
+        isGassing = context.performed;
+    }
+
+    public void ReverseInput(InputAction.CallbackContext context)
+    {
+        isReversing = context.performed;
     }
     #endregion
 
@@ -153,10 +164,20 @@ public class PlayerMovement : MonoBehaviour
             0f
         );
 
-        rb.AddForce(
-            RotationRoot.forward * moveInputVector.y * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
-            ForceMode.Acceleration
-        );
+        if (isGassing)
+        {
+            rb.AddForce(
+            RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
+            ForceMode.Acceleration);
+        }
+        else if (isReversing)
+        {
+            rb.AddForce(
+            -RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
+            ForceMode.Acceleration);
+        }
+        
+
     }
     #endregion
 

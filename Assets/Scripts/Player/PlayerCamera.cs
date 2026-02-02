@@ -63,7 +63,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void LookBack(InputAction.CallbackContext context)
     {
-        isPressingLookBack = context.started;
+        isPressingLookBack = context.performed;
     }
 
     public void ResetCrosshair(InputAction.CallbackContext context)
@@ -91,20 +91,6 @@ public class PlayerCamera : MonoBehaviour
     void LateUpdate()
     {
         screenSize = cam.rect.size * new Vector2(Screen.width, Screen.height);
-
-
-        if (isPressingLookBack)
-        {
-            Debug.Log("Here");
-            ChangeDirection(180f);
-        }
-        else
-        {
-            ChangeDirection(0f);
-        }
-
-        cameraHolder.transform.localRotation = player.localRotation;
-
 
         Vector2 mouseDelta = lookInputVector;
         if (isController) mouseDelta *= controllerSensMultiplier;
@@ -140,7 +126,16 @@ public class PlayerCamera : MonoBehaviour
         }
 
         panningDist *= 0.01f * rotationIntensity;
-        cam.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+
+        if (isPressingLookBack)
+        {
+            cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, 180 + camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+        }
+        else
+        {
+            cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+        }
+        
     }
 
 

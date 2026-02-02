@@ -36,30 +36,6 @@ public class PlayerShooting : MonoBehaviour
             timer += Time.deltaTime;
         }
     }
-
-    /*void Shoot()
-    {
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.yellow, 7);
-        RaycastHit hit;
-        Vector3 targetPoint;
-
-        if (Physics.Raycast(ray, out hit, 1000f))
-        {
-            targetPoint = hit.point;
-        }
-        else
-        {
-            targetPoint = ray.GetPoint(1000f);
-        }
-
-        Debug.DrawRay(barrelPosition.position, targetPoint, Color.red, 7);
-
-        Vector3 direction = (targetPoint - barrelPosition.position).normalized;
-
-        GameObject spawnedProjectile = Instantiate(projectilePrefab, barrelPosition.position, Quaternion.identity);
-        spawnedProjectile.GetComponent<Projectile>().SetDirection(direction);
-    }*/
     public void Shoot()
     {
         Vector3 targetPoint = GetAimPoint();
