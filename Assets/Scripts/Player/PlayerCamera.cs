@@ -147,6 +147,4 @@ public class PlayerCamera : MonoBehaviour
     {
         cameraHolder.localRotation = Quaternion.Euler(0, angle + 90 + player.rotation.eulerAngles.y, 0);
     }
-
-
 }

@@ -17,6 +17,13 @@ public class TreadSuspAnimator : MonoBehaviour
     [SerializeField] private float lossyScale;
     [SerializeField] private bool showGizmos = false;
 
+    private void Awake()
+    {
+        t = GetComponent<Transform>();
+        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+        suspendedWheelCount = wheelPositions.Count;
+    }
+
     void Start()
     {
         t = GetComponent<Transform>();
