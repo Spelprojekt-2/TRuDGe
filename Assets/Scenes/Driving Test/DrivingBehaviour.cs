@@ -12,7 +12,6 @@ public class DrivingBehaviour : MonoBehaviour
     public void MoveInput(InputAction.CallbackContext context)
     {
         inputVector = context.ReadValue<Vector2>();
-        Debug.Log("Input Vector: " + inputVector);
     }
 
     void Start()
@@ -24,8 +23,9 @@ public class DrivingBehaviour : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.angularVelocity = rb.rotation * new Vector3(0f, inputVector.x * turningSpeed, 0f);
+            rb.angularVelocity = new Vector3(0f, inputVector.x * turningSpeed, 0f);
             rb.AddRelativeForce(Vector3.forward * inputVector.y * acceleration, ForceMode.Acceleration);
         }
+        Debug.Log("Speed: " + rb.linearVelocity.magnitude);
     }
 }
