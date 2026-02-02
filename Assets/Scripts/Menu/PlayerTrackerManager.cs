@@ -42,7 +42,7 @@ public class PlayerTrackerManager : MonoBehaviour
 
             if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                SceneManager.LoadSceneAsync("LeoTest");
+                SceneManager.LoadSceneAsync("Driving");
             }
 
             PlayerInputManager.instance.EnableJoining();

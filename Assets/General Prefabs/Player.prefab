@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4522567239269629637}
   - component: {fileID: 2447142007858744058}
   - component: {fileID: 7541960691663039628}
+  - component: {fileID: 7757062552865417075}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -169,6 +170,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &7757062552865417075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9099314517524048767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &9196690691358100458
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,11 +401,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 6070624170846764309}
   crosshair: {fileID: 0}
-  previewImage: {fileID: 0}
-  renderPreview: 0
+  previewNoRotationZone: {fileID: 0}
+  renderPreviewZone: 1
+  player: {fileID: 0}
+  input: {fileID: 0}
   rotationIntensity: 3
   sensitivity: 5
+  controllerSensMultiplier: 0
   distanceFromScreenEdge: {x: 605, y: 275}
+  cam: {fileID: 0}
 --- !u!1001 &3655318324884240099
 PrefabInstance:
   m_ObjectHideFlags: 0
