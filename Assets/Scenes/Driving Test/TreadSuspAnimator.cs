@@ -15,6 +15,7 @@ public class TreadSuspAnimator : MonoBehaviour
     [SerializeField][Range(0,0.5f)] private float minSuspensionDistance = 0.2f;
     [SerializeField][Range(0,0.5f)] private float maxSuspensionDistance = 0.5f;
     [SerializeField] private float lossyScale;
+    [SerializeField] private bool showGizmos = false;
 
     void Start()
     {
@@ -56,6 +57,7 @@ public class TreadSuspAnimator : MonoBehaviour
     }
     void OnDrawGizmosSelected()
     {
+        if (!showGizmos) return;
         Gizmos.color = Color.blue;
         foreach (Vector3 localPos in wheelPositions)
         {

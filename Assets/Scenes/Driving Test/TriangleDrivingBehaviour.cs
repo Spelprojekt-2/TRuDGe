@@ -19,9 +19,9 @@ public class TriangleDrivingBehaviour : MonoBehaviour
     [SerializeField] private float rayCastTriangleBaseWidth = 0.5f;
     [SerializeField] private bool reverseTriangleOrientation = false;
     [Tooltip("Height above the triangle vertices where the raycasts start")]
-    [SerializeField] private float rayCastStartHeight = 1f;
+    [SerializeField] private float rayCastStartHeight = 3f;
     [Tooltip("Height below the triangle vertices where the raycasts end")]
-    [SerializeField] private float rayCastEndHeight = 2f;
+    [SerializeField] private float rayCastEndHeight = 3f;
     [SerializeField] private bool showGizmos = true;
     [SerializeField] private bool showGizmosSelected = false;
 
@@ -49,6 +49,8 @@ public class TriangleDrivingBehaviour : MonoBehaviour
         transform.forward * rayCastTriangleBaseDistance * (reverseTriangleOrientation ? 1f : -1f) +
         // x
         transform.right * (-rayCastTriangleBaseWidth / 2f);
+
+    private Vector3[] rayCastHPs = new Vector3[3];
 
     #endregion
 
@@ -117,6 +119,10 @@ public class TriangleDrivingBehaviour : MonoBehaviour
             rayCastStartHeight + rayCastEndHeight,
             groundLayer);
 
+        rayCastHPs[0] = hitInfo0.point;
+        rayCastHPs[1] = hitInfo1.point;
+        rayCastHPs[2] = hitInfo2.point;
+
         int hitCount = (hit0 ? 1 : 0) + (hit1 ? 1 : 0) + (hit2 ? 1 : 0);
         isGrounded = hitCount >= 2;
 
@@ -138,10 +144,8 @@ public class TriangleDrivingBehaviour : MonoBehaviour
     }
     private void ProcessMovement()
     {
-        RotationRoot.rotation = Quaternion.FromToRotation(
-            RotationRoot.up,
-            isGrounded ? groundNormal : Vector3.up
-        ) * RotationRoot.rotation;
+        // Align vehicle to ground normal
+        RotationRoot.rotation = Quaternion.FromToRotation(Vector3.up, groundNormal) * Quaternion.LookRotation(transform.forward);
 
         rb.angularVelocity = rb.rotation * new Vector3(
             0f,
@@ -149,8 +153,8 @@ public class TriangleDrivingBehaviour : MonoBehaviour
             0f
         );
 
-        rb.AddRelativeForce(
-            Vector3.forward * moveInputVector.y * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
+        rb.AddForce(
+            RotationRoot.forward * moveInputVector.y * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
             ForceMode.Acceleration
         );
     }
@@ -194,9 +198,31 @@ public class TriangleDrivingBehaviour : MonoBehaviour
 
         // Draw ground normal
         Gizmos.color = Color.magenta;
+        Gizmos.DrawLineStrip(rayCastHPs, true);
+        Gizmos.DrawLine(
+            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
+            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
+        );
+
+        // Draw rotated up
+        Gizmos.color = Color.green;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + groundNormal
+            transform.position + RotationRoot.up * 5f
+        );
+
+        // Draw rotated forward
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            transform.position,
+            transform.position + RotationRoot.forward * 5f
+        );
+
+        // Draw rotated right
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(
+            transform.position,
+            transform.position + RotationRoot.right * 5f
         );
     }
     #endregion
