@@ -11,6 +11,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] Image previewNoRotationZone;
     [SerializeField] bool renderPreviewZone = true;
     [SerializeField] private Transform player;
+    [SerializeField] private PlayerInput input;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -19,6 +20,7 @@ public class PlayerCamera : MonoBehaviour
 
     [Tooltip("The crosshair sensitivity")]
     [SerializeField] float sensitivity;
+    [SerializeField] float controllerSensMultiplier;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
@@ -50,7 +52,7 @@ public class PlayerCamera : MonoBehaviour
     private bool isPressingLookBack;
     private Vector3 camParentOffsetPos;
     private Quaternion camParentOffsetRot;
-    
+    private bool isController = false;
     private Quaternion camStartRotOffset;
 
     public void LookInput(InputAction.CallbackContext context)
@@ -70,6 +72,7 @@ public class PlayerCamera : MonoBehaviour
         camStartRotOffset = cam.transform.localRotation;
         camParentOffsetPos = cameraHolder.transform.localPosition;
         camParentOffsetRot = cameraHolder.transform.localRotation;
+        isController = input.currentControlScheme == "Gamepad";
     }
     void LateUpdate()
     {
@@ -88,8 +91,9 @@ public class PlayerCamera : MonoBehaviour
         }
 
         Vector2 mouseDelta = lookInputVector;
-
+        if (isController) mouseDelta *= controllerSensMultiplier;
         cursorPos += mouseDelta * sensitivity;
+
         cursorPos.x = Mathf.Clamp(cursorPos.x, -screenSize.x / 2, screenSize.x / 2);
         cursorPos.y = Mathf.Clamp(cursorPos.y, -screenSize.y / 2, screenSize.y / 2);
         crosshair.anchoredPosition = cursorPos;

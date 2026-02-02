@@ -9,4 +9,9 @@ public class Projectile : MonoBehaviour
     {
         rb.linearVelocity = dir * projectileSpeed;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
+    }
 }
