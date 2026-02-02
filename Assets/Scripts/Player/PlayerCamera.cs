@@ -49,7 +49,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector2 screenSize;
     private Vector2 panningDist;
     private Vector2 lookInputVector;
-    private bool isPressingLookBack;
+    private bool isPressingLookBack, isPressingResetCrosshair;
     private Vector3 camParentOffsetPos;
     private Quaternion camParentOffsetRot;
     private bool isController = false;
@@ -63,7 +63,12 @@ public class PlayerCamera : MonoBehaviour
 
     public void LookBack(InputAction.CallbackContext context)
     {
-        isPressingLookBack = context.performed;
+        isPressingLookBack = context.started;
+    }
+
+    public void ResetCrosshair(InputAction.CallbackContext context)
+    {
+        isPressingResetCrosshair = context.performed;
     }
 
     void Start()
@@ -74,21 +79,31 @@ public class PlayerCamera : MonoBehaviour
         camParentOffsetRot = cameraHolder.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
     }
+
+    private void Update()
+    {
+        if (isPressingResetCrosshair)
+        {
+            cursorPos = Vector2.zero;
+        }
+    }
+
     void LateUpdate()
     {
         screenSize = cam.rect.size * new Vector2(Screen.width, Screen.height);
 
 
-        cameraHolder.transform.position = player.position + (cameraHolder.transform.rotation * camParentOffsetPos);
-
-        if(Keyboard.current.xKey.isPressed)
+        if (isPressingLookBack)
         {
+            Debug.Log("Here");
             ChangeDirection(180f);
         }
         else
         {
             ChangeDirection(0f);
         }
+        cameraHolder.transform.position = player.position + (cameraHolder.transform.rotation * camParentOffsetPos);
+
 
         Vector2 mouseDelta = lookInputVector;
         if (isController) mouseDelta *= controllerSensMultiplier;
@@ -132,4 +147,6 @@ public class PlayerCamera : MonoBehaviour
     {
         cameraHolder.localRotation = Quaternion.Euler(0, angle + 90 + player.rotation.eulerAngles.y, 0);
     }
+
+
 }
