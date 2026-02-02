@@ -22,6 +22,10 @@ public class TreadSuspAnimator : MonoBehaviour
         t = GetComponent<Transform>();
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         suspendedWheelCount = wheelPositions.Count;
+        if (hitPositions.Count != suspendedWheelCount)
+        {
+            hitPositions = new List<Vector3>(new Vector3[suspendedWheelCount]);
+        }
     }
 
     void OnValidate()
