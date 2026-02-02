@@ -14,7 +14,6 @@ public class DrivingBehaviour : MonoBehaviour
     public void MoveInput(InputAction.CallbackContext context)
     {
         inputVector = context.ReadValue<Vector2>();
-        Debug.Log("Input Vector: " + inputVector);
     }
 
     void Start()
