@@ -42,7 +42,7 @@ public class PlayerCamera : MonoBehaviour
         
     }
 
-    [SerializeField] Camera cam;
+    public Camera cam;
     private Vector2 cursorPos;
     private Vector2 screenSize;
     private Vector2 panningDist;
