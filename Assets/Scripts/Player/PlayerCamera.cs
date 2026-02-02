@@ -102,7 +102,8 @@ public class PlayerCamera : MonoBehaviour
         {
             ChangeDirection(0f);
         }
-        cameraHolder.transform.position = player.position + (cameraHolder.transform.rotation * camParentOffsetPos);
+
+        cameraHolder.transform.localRotation = player.localRotation;
 
 
         Vector2 mouseDelta = lookInputVector;
