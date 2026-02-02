@@ -5283,6 +5283,7 @@ GameObject:
   - component: {fileID: 6670402132715506849}
   - component: {fileID: 2324868613239432833}
   - component: {fileID: 6351690275681826053}
+  - component: {fileID: 3221375469041325367}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -5341,8 +5342,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4401182360880132677}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0.8
+  m_Mass: 200
+  m_Drag: 0.4
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -5389,6 +5390,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2324868613239432833}
         m_TargetAssemblyTypeName: DrivingBehaviourV2, Assembly-CSharp
+        m_MethodName: MoveInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3221375469041325367}
+        m_TargetAssemblyTypeName: DrivingBehaviour, Assembly-CSharp
         m_MethodName: MoveInput
         m_Mode: 0
         m_Arguments:
@@ -5532,7 +5545,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4401182360880132677}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4682f778c06b43e4c8527baf8236753b, type: 3}
   m_Name: 
@@ -5559,6 +5572,20 @@ MonoBehaviour:
   crosshair: {fileID: 1618995087796112529}
   fireRate: 1
   canvas: {fileID: 434969871267061588}
+--- !u!114 &3221375469041325367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401182360880132677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899981851c41ffc43a313fa4a4ef94ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turningSpeed: 2.5
+  acceleration: 75
 --- !u!1 &4626151456759177625
 GameObject:
   m_ObjectHideFlags: 0
