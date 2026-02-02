@@ -7,7 +7,6 @@ public class TreadSuspAnimator : MonoBehaviour
     private Transform t;
     private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private string blendShapePrefix = "";
     [SerializeField] private List<Vector3> wheelPositions = new List<Vector3>();
     private List<Vector3> hitPositions = new List<Vector3>();
     private int suspendedWheelCount = 4;
