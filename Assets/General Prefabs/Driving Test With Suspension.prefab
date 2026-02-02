@@ -237,9 +237,13 @@ MonoBehaviour:
   crosshair: {fileID: 0}
   previewNoRotationZone: {fileID: 0}
   renderPreviewZone: 0
+  player: {fileID: 0}
+  input: {fileID: 0}
   rotationIntensity: 4.25
   sensitivity: 5
+  controllerSensMultiplier: 0
   distanceFromScreenEdge: {x: 430, y: 300}
+  cam: {fileID: 0}
 --- !u!114 &9068309492587849741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +274,7 @@ GameObject:
   - component: {fileID: 1217837545414687043}
   - component: {fileID: 6826760594683320596}
   - component: {fileID: 8510176156524819449}
+  - component: {fileID: -8182085124010160064}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -407,6 +412,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a090ec766104246439812ca76b7a8063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 0}
+--- !u!114 &-8182085124010160064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820242750924269409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &3750687737062762439
 GameObject:
   m_ObjectHideFlags: 0
