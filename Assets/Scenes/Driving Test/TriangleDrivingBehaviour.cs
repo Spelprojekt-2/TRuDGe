@@ -39,7 +39,7 @@ public class TriangleDrivingBehaviour : MonoBehaviour
         // z
         transform.forward * rayCastTriangleBaseDistance * (reverseTriangleOrientation ? 1f : -1f) +
         // x
-        transform.right * (rayCastTriangleBaseWidth / 2f);
+        transform.right * (rayCastTriangleBaseWidth / (reverseTriangleOrientation ? -2f : 2f));
 
     private Vector3 triPoint2 =>
         transform.position +
@@ -48,7 +48,7 @@ public class TriangleDrivingBehaviour : MonoBehaviour
         // z
         transform.forward * rayCastTriangleBaseDistance * (reverseTriangleOrientation ? 1f : -1f) +
         // x
-        transform.right * (-rayCastTriangleBaseWidth / 2f);
+        transform.right * (rayCastTriangleBaseWidth / (reverseTriangleOrientation ? 2f : -2f));
 
     private Vector3[] rayCastHPs = new Vector3[3];
 
