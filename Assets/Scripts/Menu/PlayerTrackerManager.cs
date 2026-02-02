@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
+    public string scene = "Level1";
     private List<PlayerInput> playerInputs = new List<PlayerInput>();
     [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
@@ -42,7 +43,7 @@ public class PlayerTrackerManager : MonoBehaviour
 
             if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                SceneManager.LoadSceneAsync("Driving");
+                SceneManager.LoadSceneAsync(scene);
             }
 
             PlayerInputManager.instance.EnableJoining();
