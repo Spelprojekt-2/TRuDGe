@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
 
     #region Input vars
     private Vector2 moveInputVector;
-
     #endregion
     
     #region Movement vars
@@ -73,9 +72,19 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Input
-    public void MoveInput(InputAction.CallbackContext context)
+    public void TurnInput(InputAction.CallbackContext context)
     {
-        moveInputVector = context.ReadValue<Vector2>();
+        moveInputVector.x = context.ReadValue<float>();
+    }
+
+    public void GasInput(InputAction.CallbackContext context)
+    {
+        moveInputVector.y = context.performed ? 1 : 0;
+    }
+
+    public void ReverseInput(InputAction.CallbackContext context)
+    {
+        moveInputVector.y = context.performed ? -1 : 0;
     }
     #endregion
 

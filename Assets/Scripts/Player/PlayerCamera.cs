@@ -10,6 +10,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] RectTransform crosshair;
     [SerializeField] Image previewNoRotationZone;
     [SerializeField] bool renderPreviewZone = true;
+    [SerializeField] private Transform player;
+    [SerializeField] private PlayerInput input;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -18,6 +20,7 @@ public class PlayerCamera : MonoBehaviour
 
     [Tooltip("The crosshair sensitivity")]
     [SerializeField] float sensitivity;
+    [SerializeField] float controllerSensMultiplier;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
@@ -29,6 +32,10 @@ public class PlayerCamera : MonoBehaviour
 
         distanceFromScreenEdge.x = Mathf.Clamp(distanceFromScreenEdge.x, 0, 960);
         distanceFromScreenEdge.y = Mathf.Clamp(distanceFromScreenEdge.y, 0, 540);
+        if(previewNoRotationZone == null)
+        {
+            return;
+        }
         previewNoRotationZone.gameObject.SetActive(renderPreviewZone);
         if (renderPreviewZone)
         {
@@ -37,33 +44,58 @@ public class PlayerCamera : MonoBehaviour
         
     }
 
-    Camera cam;
+    public Camera cam;
     private Vector2 cursorPos;
     private Vector2 screenSize;
     private Vector2 panningDist;
-    
+    private Vector2 lookInputVector;
+    private bool isPressingLookBack, isPressingResetCrosshair;
+    private Vector3 camParentOffsetPos;
+    private Quaternion camParentOffsetRot;
+    private bool isController = false;
     private Quaternion camStartRotOffset;
+
+    public void LookInput(InputAction.CallbackContext context)
+    {
+        lookInputVector = context.ReadValue<Vector2>();
+    }
+
+
+    public void LookBack(InputAction.CallbackContext context)
+    {
+        isPressingLookBack = context.performed;
+    }
+
+    public void ResetCrosshair(InputAction.CallbackContext context)
+    {
+        isPressingResetCrosshair = context.performed;
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        cam = Camera.main;
-        screenSize = new Vector2(Screen.width, Screen.height);
         camStartRotOffset = cam.transform.localRotation;
+        camParentOffsetPos = cameraHolder.transform.localPosition;
+        camParentOffsetRot = cameraHolder.transform.localRotation;
+        isController = input.currentControlScheme == "Gamepad";
     }
+
+    private void Update()
+    {
+        if (isPressingResetCrosshair)
+        {
+            cursorPos = Vector2.zero;
+        }
+    }
+
     void LateUpdate()
     {
-        if(Keyboard.current.xKey.isPressed)
-        {
-            ChangeDirection(180f);
-        }
-        else
-        {
-            ChangeDirection(0f);
-        }
+        screenSize = cam.rect.size * new Vector2(Screen.width, Screen.height);
 
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-
+        Vector2 mouseDelta = lookInputVector;
+        if (isController) mouseDelta *= controllerSensMultiplier;
         cursorPos += mouseDelta * sensitivity;
+
         cursorPos.x = Mathf.Clamp(cursorPos.x, -screenSize.x / 2, screenSize.x / 2);
         cursorPos.y = Mathf.Clamp(cursorPos.y, -screenSize.y / 2, screenSize.y / 2);
         crosshair.anchoredPosition = cursorPos;
@@ -94,12 +126,21 @@ public class PlayerCamera : MonoBehaviour
         }
 
         panningDist *= 0.01f * rotationIntensity;
-        cam.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+
+        if (isPressingLookBack)
+        {
+            cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, 180 + camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+        }
+        else
+        {
+            cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+        }
+        
     }
 
 
     private void ChangeDirection(float angle)
     {
-        cameraHolder.localRotation = Quaternion.Euler(0, angle, 0);
+        cameraHolder.localRotation = Quaternion.Euler(0, angle + 90 + player.rotation.eulerAngles.y, 0);
     }
 }
