@@ -10,11 +10,11 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Canvas canvas;
     private float timer = 0;
     private bool isShooting = false;
-    private Camera cam;
+    [SerializeField] private LayerMask excludeLayers;
+    [SerializeField] private PlayerCamera playerCam;
     private void Start()
     {
         timer = fireRate;
-        cam = GetComponent<PlayerCamera>().cam;
     }
     public void ShootInput(InputAction.CallbackContext context)
     {
@@ -38,30 +38,34 @@ public class PlayerShooting : MonoBehaviour
     }
     public void Shoot()
     {
-        Vector3 targetPoint = GetAimPoint();
-        Vector3 direction = (targetPoint - barrelPosition.position).normalized;
+        //Physics.SyncTransforms();
+        Vector3 targetPoint = GetTargetPoint();
+        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        targetPoint.y = barrelPosition.position.y;
+        bulletDir.y = 0;
+
         GameObject bullet = Instantiate(
             projectilePrefab,
             barrelPosition.position,
-            Quaternion.LookRotation(direction)
+            Quaternion.LookRotation(bulletDir)
         );
 
-        bullet.GetComponent<Projectile>().SetDirection(direction, gameObject);
+        // Pass the direction to the projectile script
+        bullet.GetComponent<Projectile>().SetDirection(gameObject);
     }
-
-    Vector3 GetAimPoint()
+    private Vector3 GetTargetPoint()
     {
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(
-            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : cam,
-            crosshair.position
-        );
+        // Call the new stable ray function from your Camera script
+        Ray ray = playerCam.GetStableCrosshairRay();
 
-        Ray ray = cam.ScreenPointToRay(screenPos);
+        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000))
+        // Use the LayerMask we set up earlier to ignore the player/vehicle
+        if (Physics.Raycast(ray, out hit, 1000f, ~excludeLayers))
         {
             return hit.point;
         }
-        return ray.origin + ray.direction * 100000;
+
+        return ray.GetPoint(1000f);
     }
 }

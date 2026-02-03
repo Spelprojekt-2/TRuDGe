@@ -7,15 +7,11 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private GameObject shooter;
 
-    public void SetDirection(Vector3 dir, GameObject shooter)
+    public void SetDirection(GameObject shooter)
     {
         StartCoroutine(DeathTimer());
         this.shooter = shooter;
-        if(dir.y < 0)
-        {
-            dir.y = 0;
-        }
-        rb.linearVelocity = dir * projectileSpeed;
+        rb.linearVelocity =  transform.forward * projectileSpeed;
     }
 
     IEnumerator DeathTimer()
@@ -33,7 +29,9 @@ public class Projectile : MonoBehaviour
 
         if (col.gameObject.CompareTag("Player"))
         {
-            col.GetComponentInParent<Rigidbody>().AddForce((transform.position - col.transform.position).normalized * 15f, ForceMode.Impulse);
+            Vector3 force = (transform.position - col.transform.position).normalized * 30f;
+            force.y = 0;
+            col.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
         }
         Destroy(gameObject);
     }

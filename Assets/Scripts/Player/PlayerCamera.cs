@@ -130,6 +130,22 @@ public class PlayerCamera : MonoBehaviour
         
     }
 
+    public Ray GetStableCrosshairRay()
+    {
+        // Use pixelRect to get the size of THIS player's specific window
+        Rect rect = cam.pixelRect;
+
+        // Calculate the center of THIS camera's viewport
+        // rect.x and rect.y handle the offset (e.g. if the camera starts halfway down the screen)
+        Vector2 center = new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f);
+
+        // Add your cursorPos (which is relative to the center of the player's UI)
+        Vector2 screenPoint = center + cursorPos;
+
+        // Create the ray
+        return cam.ScreenPointToRay(screenPoint);
+    }
+
     void ApplyAimAssist()
     {
         Ray ray = cam.ScreenPointToRay(crosshair.position);
