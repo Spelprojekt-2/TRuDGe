@@ -1,27 +1,53 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using System.Linq;
 
 public class RaceController : MonoBehaviour
 {
     public SplineContainer trackSpline;
-    private RacerData[] racers;
+    [SerializeField, Range(1, 5)] int lapsOnThisTrack = 3;
+    private List<RacerData> racers;
 
     void Start()
     {
-        racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None);
+        racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
+        for (int i = 0; i < racers.Count; i++)
+        {
+            UpdateRaceProgress(racers[i]);
+            racers[i].TrackLoaded(lapsOnThisTrack);
+        }
     }
 
     private void Update()
     {
-        if (racers.Length == 0 || trackSpline == null)
-            return;
+        if (racers.Count == 0 || trackSpline == null) return;
 
-        int splineCount = trackSpline.Splines.Count;
-
-        for (int i = 0; i < racers.Length; i++)
+        for (int i = 0; i < racers.Count; i++)
         {
-            Vector3 racerWorldPos = racers[i].transform.position;
+            UpdateRaceProgress(racers[i]);
+        }
+
+        RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
+        for (int i = 0; i < racersInOrder.Length; i++)
+        {
+            if (racersInOrder[i].racePosition != i + 1)
+            {
+                racersInOrder[i].UpdatePosition(i + 1);
+            }
+        }
+    }
+
+    void UpdateRaceProgress(RacerData racer)
+    {
+        {
+            if (racer.lap >= lapsOnThisTrack)
+            {
+                racer.raceProgress = 1000 - racer.racePosition;
+                return;
+            }
+            Vector3 racerWorldPos = racer.transform.position;
             float3 localPos =
                 trackSpline.transform.InverseTransformPoint(racerWorldPos);
 
@@ -29,7 +55,7 @@ public class RaceController : MonoBehaviour
             float3 bestPoint = float3.zero;
             float bestProgress = 0f;
 
-            for (int j = 0; j < splineCount; j++)
+            for (int j = 0; j < trackSpline.Splines.Count; j++)
             {
                 Spline spline = trackSpline.Splines[j];
 
@@ -45,26 +71,32 @@ public class RaceController : MonoBehaviour
                 {
                     bestDistance = dist;
                     bestPoint = pointOnSpline;
-
-                    // Normalize progress across entire container
-                    bestProgress = (j + t) / splineCount;
+                    bestProgress = (j + t) / trackSpline.Splines.Count;
                 }
             }
 
-            // World-space point (useful for AI / debug / respawn)
+            // Progress point (useful for AI / respawn)
             Vector3 nearestWorldPosition =
                 trackSpline.transform.TransformPoint(bestPoint);
 
             float newLapProgress = bestProgress;
 
             // Lap wrap detection
-            if (newLapProgress < 0.01f && racers[i].lapProgress > 0.99f)
-                racers[i].lap++;
-            else if (newLapProgress > 0.99f && racers[i].lapProgress < 0.01f)
-                racers[i].lap--;
+            if (newLapProgress < 0.01f && racer.lapProgress > 0.99f)
+            {
+                racer.NextLap();
+                if (racer.lap == lapsOnThisTrack)
+                {
+                    racer.RaceFinished();
+                    racer.lapProgress = 0.5f;
+                    racer.raceProgress = 1000 - racer.racePosition;
+                }
+            }
+            else if (newLapProgress > 0.99f && racer.lapProgress < 0.01f)
+                racer.BackwardsLap();
 
-            racers[i].lapProgress = newLapProgress;
-            racers[i].raceProgress = racers[i].lap + newLapProgress;
+            racer.lapProgress = newLapProgress;
+            racer.raceProgress = racer.lap + newLapProgress;
         }
     }
 }
