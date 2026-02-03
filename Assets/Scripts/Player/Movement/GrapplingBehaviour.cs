@@ -16,10 +16,12 @@ public class GrapplingBehaviour : MonoBehaviour
     #endregion
 
     [SerializeField] private Vector3 lRPoint = Vector3.zero;
+    private float grappleDistance = 0f;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        grappleDistance = Vector3.Distance(rigidbody.transform.position, lRPoint);
     }
 
     void Update()
@@ -28,6 +30,30 @@ public class GrapplingBehaviour : MonoBehaviour
         lineRenderer.SetPosition(1, lRPoint);
 
         grappleElevationObject.LookAt(lRPoint);
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 grappleDir = (lRPoint - rigidbody.transform.position).normalized;
+        float relativeVelocity = Vector3.Dot(rigidbody.linearVelocity, grappleDir);
+
+        if (relativeVelocity < 0f)
+        {
+            rigidbody.linearVelocity -= grappleDir * relativeVelocity;
+        }
+
+        float dist = Vector3.Distance(rigidbody.transform.position, lRPoint);
+        if (dist > grappleDistance)
+        {
+            Vector3 desiredPosition = lRPoint - grappleDir * grappleDistance;
+            Vector3 correctionVelocity = (desiredPosition - rigidbody.transform.position) / Time.fixedDeltaTime;
+            rigidbody.linearVelocity += correctionVelocity;
+        }
+
+        if (dist < grappleDistance)
+        {
+            grappleDistance = dist;
+        }
     }
     void OnDrawGizmos()
     {
