@@ -58,7 +58,8 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             if (i < spawns.Length)
             {
-                playerInputs[i].transform.position = spawns[i].transform.position;
+                playerInputs[i].GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                playerInputs[i].transform.position = spawns[i].transform.position + Vector3.up * 3;
                 playerInputs[i].transform.rotation = spawns[i].GetRotation();
             }
         }
