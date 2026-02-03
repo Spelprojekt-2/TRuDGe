@@ -63,11 +63,17 @@ public class PlayerMovement : MonoBehaviour
     #region Movement vars
     [Header("Movement")]
     [SerializeField] private float acceleration = 50f;
-    [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.1f;
+    [SerializeField] private float topSpeed = 100f;
+    [SerializeField][Range(0f, 1f)] private float defaultLinearDamping = 0.4f;
+    [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.25f;
+    [SerializeField] private float turningSpeedmodifier = 2f;
+    [SerializeField] private float turningBase = 3f;
     [SerializeField] private float turningSpeed = 3f;
-    [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.1f;
+    [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.25f;
     [Tooltip("How fast the vehicle uprights itself when in the air")]
     [SerializeField] private float inAirUprightingSpeed = 1f;
+    [SerializeField] private float minFov = 15f;
+    [SerializeField] private float maxFov = 90f;
     private Vector3 groundNormal;
     private bool isGrounded;
     #endregion
@@ -96,7 +102,10 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Update()
     {
-        
+        var fov = Camera.main.fieldOfView;
+        fov = rb.linearVelocity.magnitude;
+        fov = Mathf.Clamp(fov, minFov, maxFov);
+        Camera.main.fieldOfView = fov;
     }
 
     public void FixedUpdate()
@@ -166,15 +175,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGassing)
         {
+            turningSpeed = turningBase - turningSpeedmodifier  ; 
+            if (rb.linearVelocity.magnitude < topSpeed){
+            rb.linearDamping = 0;
             rb.AddForce(
             RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
             ForceMode.Acceleration);
-        }
+        }}
         else if (isReversing)
         {
+            turningSpeed = turningBase + turningSpeedmodifier   ;
+            rb.linearDamping = defaultLinearDamping*2;
             rb.AddForce(
             -RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
             ForceMode.Acceleration);
+        }
+        else{
+            turningSpeed = turningBase;
+            rb.linearDamping = defaultLinearDamping;
         }
         
 
