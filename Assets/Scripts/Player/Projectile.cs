@@ -5,22 +5,36 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private Rigidbody rb;
+    private GameObject shooter;
 
-    public void SetDirection(Vector3 dir)
+    public void SetDirection(Vector3 dir, GameObject shooter)
     {
-        StartCoroutine(CollisionWakeUp());
+        StartCoroutine(DeathTimer());
+        this.shooter = shooter;
+        if(dir.y < 0)
+        {
+            dir.y = 0;
+        }
         rb.linearVelocity = dir * projectileSpeed;
     }
 
-    IEnumerator CollisionWakeUp()
+    IEnumerator DeathTimer()
     {
-        GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        GetComponent<Collider>().enabled = true;
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision col)
+    private void OnTriggerEnter(Collider col)
     {
+        if (col.transform.IsChildOf(shooter.transform))
+        {
+            return;
+        }
+
+        if (col.gameObject.CompareTag("Player"))
+        {
+            col.GetComponentInParent<Rigidbody>().AddForce((transform.position - col.transform.position).normalized * 15f, ForceMode.Impulse);
+        }
         Destroy(gameObject);
     }
 }

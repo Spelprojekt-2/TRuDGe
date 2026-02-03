@@ -39,16 +39,14 @@ public class PlayerShooting : MonoBehaviour
     public void Shoot()
     {
         Vector3 targetPoint = GetAimPoint();
-
         Vector3 direction = (targetPoint - barrelPosition.position).normalized;
-
         GameObject bullet = Instantiate(
             projectilePrefab,
             barrelPosition.position,
             Quaternion.LookRotation(direction)
         );
 
-        bullet.GetComponent<Projectile>().SetDirection(direction);
+        bullet.GetComponent<Projectile>().SetDirection(direction, gameObject);
     }
 
     Vector3 GetAimPoint()
@@ -64,6 +62,6 @@ public class PlayerShooting : MonoBehaviour
         {
             return hit.point;
         }
-        return ray.origin + ray.direction * 1000;
+        return ray.origin + ray.direction * 100000;
     }
 }

@@ -8,8 +8,6 @@ public class PlayerCamera : MonoBehaviour
     [Header("---References(REQUIRED)---")]
     [SerializeField] Transform cameraHolder;
     [SerializeField] RectTransform crosshair;
-    [SerializeField] Image previewNoRotationZone;
-    [SerializeField] bool renderPreviewZone = true;
     [SerializeField] private Transform player;
     [SerializeField] private PlayerInput input;
 
@@ -18,31 +16,22 @@ public class PlayerCamera : MonoBehaviour
     [Range(1, 10)]
     [SerializeField] private float rotationIntensity;
 
-    [Tooltip("The crosshair sensitivity")]
+    [Header("---Aiming Settings---")]
     [SerializeField] float sensitivity;
     [SerializeField] float controllerSensMultiplier;
+    [SerializeField] float bottomCrosshairLimit;
+
+    [Header("---Aim Assist Settings---")]
+    [SerializeField] float aimAssistDistance;
+    [SerializeField] float assistStrength = 0.2f; // How hard the crosshair pulls
+    [SerializeField] float sensitivityReduction = 0.5f; // 0.5 = half speed when over enemy
+    [SerializeField] LayerMask enemyLayer;
+
+    private bool isOverEnemy = false;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
 
-    private void OnValidate()
-    {
-        if (EditorApplication.isCompiling || EditorApplication.isUpdating)
-            return;
-
-        distanceFromScreenEdge.x = Mathf.Clamp(distanceFromScreenEdge.x, 0, 960);
-        distanceFromScreenEdge.y = Mathf.Clamp(distanceFromScreenEdge.y, 0, 540);
-        if(previewNoRotationZone == null)
-        {
-            return;
-        }
-        previewNoRotationZone.gameObject.SetActive(renderPreviewZone);
-        if (renderPreviewZone)
-        {
-            previewNoRotationZone.rectTransform.sizeDelta = 2 * distanceFromScreenEdge;
-        }
-        
-    }
 
     public Camera cam;
     private Vector2 cursorPos;
@@ -50,8 +39,6 @@ public class PlayerCamera : MonoBehaviour
     private Vector2 panningDist;
     private Vector2 lookInputVector;
     private bool isPressingLookBack, isPressingResetCrosshair;
-    private Vector3 camParentOffsetPos;
-    private Quaternion camParentOffsetRot;
     private bool isController = false;
     private Quaternion camStartRotOffset;
 
@@ -75,8 +62,6 @@ public class PlayerCamera : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         camStartRotOffset = cam.transform.localRotation;
-        camParentOffsetPos = cameraHolder.transform.localPosition;
-        camParentOffsetRot = cameraHolder.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
     }
 
@@ -84,7 +69,7 @@ public class PlayerCamera : MonoBehaviour
     {
         if (isPressingResetCrosshair)
         {
-            cursorPos = Vector2.zero;
+            cursorPos = new Vector2(0f, 100f);
         }
     }
 
@@ -92,13 +77,20 @@ public class PlayerCamera : MonoBehaviour
     {
         screenSize = cam.rect.size * new Vector2(Screen.width, Screen.height);
 
+        ApplyAimAssist();
+
         Vector2 mouseDelta = lookInputVector;
         if (isController) mouseDelta *= controllerSensMultiplier;
-        cursorPos += mouseDelta * sensitivity;
+
+        float currentSens = isOverEnemy ? sensitivity * sensitivityReduction : sensitivity;
+        cursorPos += mouseDelta * currentSens;
 
         cursorPos.x = Mathf.Clamp(cursorPos.x, -screenSize.x / 2, screenSize.x / 2);
-        cursorPos.y = Mathf.Clamp(cursorPos.y, -screenSize.y / 2, screenSize.y / 2);
+        cursorPos.y = Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, screenSize.y / 2);
         crosshair.anchoredPosition = cursorPos;
+
+
+
         if (cursorPos.x > screenSize.x / 2 - distanceFromScreenEdge.x) // Right
         {
             panningDist.x = cursorPos.x - (screenSize.x / 2 - distanceFromScreenEdge.x);
@@ -138,9 +130,49 @@ public class PlayerCamera : MonoBehaviour
         
     }
 
-
-    private void ChangeDirection(float angle)
+    void ApplyAimAssist()
     {
-        cameraHolder.localRotation = Quaternion.Euler(0, angle + 90 + player.rotation.eulerAngles.y, 0);
+        Ray ray = cam.ScreenPointToRay(crosshair.position);
+        isOverEnemy = false;
+
+        if (Physics.SphereCast(ray, aimAssistDistance, out RaycastHit hit, 100f, enemyLayer))
+        {
+            if (hit.collider.gameObject != player.gameObject)
+            {
+                isOverEnemy = true;
+
+                if (hit.transform.root == player.root)
+                {
+                    return; // It hit us, so stop here and don't apply assist
+                }
+
+                Vector3 rawScreenPoint = cam.WorldToScreenPoint(hit.collider.bounds.center);
+                Vector2 centeredTarget;
+                centeredTarget.x = rawScreenPoint.x - (Screen.width * cam.rect.x) - (screenSize.x / 2f);
+                centeredTarget.y = rawScreenPoint.y - (Screen.height * cam.rect.y) - (screenSize.y / 2f);
+
+                if (lookInputVector.magnitude > 0.01f)
+                {
+                    cursorPos = Vector2.Lerp(cursorPos, centeredTarget, assistStrength * Time.deltaTime * 5f);
+                }
+                Debug.DrawLine(cam.transform.position, hit.point, Color.yellow);
+            }
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        if (cam == null || crosshair == null) return;
+
+        Ray ray = cam.ScreenPointToRay(crosshair.position);
+        float maxDist = 100f;
+
+        Gizmos.color = isOverEnemy ? Color.green : Color.red;
+
+        Gizmos.DrawWireSphere(transform.position, aimAssistDistance);
+
+        Gizmos.DrawRay(transform.position, ray.direction * maxDist);
+
+        Gizmos.DrawWireSphere(transform.position + ray.direction * maxDist, aimAssistDistance);
+
     }
 }
