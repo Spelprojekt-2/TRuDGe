@@ -7,7 +7,6 @@ public class TreadSuspAnimator : MonoBehaviour
     private Transform t;
     private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private string blendShapePrefix = "";
     [SerializeField] private List<Vector3> wheelPositions = new List<Vector3>();
     private List<Vector3> hitPositions = new List<Vector3>();
     private int suspendedWheelCount = 4;
@@ -17,11 +16,22 @@ public class TreadSuspAnimator : MonoBehaviour
     [SerializeField] private float lossyScale;
     [SerializeField] private bool showGizmos = false;
 
+    private void Awake()
+    {
+        t = GetComponent<Transform>();
+        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+        suspendedWheelCount = wheelPositions.Count;
+    }
+
     void Start()
     {
         t = GetComponent<Transform>();
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         suspendedWheelCount = wheelPositions.Count;
+        if (hitPositions.Count != suspendedWheelCount)
+        {
+            hitPositions = new List<Vector3>(new Vector3[suspendedWheelCount]);
+        }
     }
 
     void OnValidate()
