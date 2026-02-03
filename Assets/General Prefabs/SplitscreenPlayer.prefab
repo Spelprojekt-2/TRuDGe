@@ -4910,7 +4910,6 @@ GameObject:
   - component: {fileID: 3621178358766502698}
   - component: {fileID: 8942500506450043773}
   - component: {fileID: 6106206422992046480}
-  - component: {fileID: 4860781957577585742}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5049,20 +5048,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 4948547773746624805}
---- !u!114 &4860781957577585742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3010010027984510216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
 --- !u!1 &4523023332637477557
 GameObject:
   m_ObjectHideFlags: 0
@@ -5130,7 +5115,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4029194333597442243}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: MoveInput
+        m_MethodName: TurnInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5348,6 +5333,7 @@ MonoBehaviour:
   rayCastEndHeight: 3
   showGizmos: 1
   showGizmosSelected: 1
+  topSpeed: 100
   acceleration: 50
   inAirAccelerationModifier: 0.1
   turningSpeed: 3
@@ -10702,7 +10688,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  blendShapePrefix: 
   wheelPositions:
   - {x: 1, y: 0, z: 1.2}
   - {x: 1, y: 0, z: 0.2}
@@ -10737,7 +10722,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  blendShapePrefix: 
   wheelPositions:
   - {x: -1, y: 0, z: 1.2}
   - {x: -1, y: 0, z: 0.2}

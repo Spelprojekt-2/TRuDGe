@@ -56,12 +56,11 @@ public class PlayerMovement : MonoBehaviour
 
     #region Input vars
     private Vector2 moveInputVector;
-    private bool isGassing;
-    private bool isReversing;
     #endregion
     
     #region Movement vars
     [Header("Movement")]
+    [SerializeField] private float topSpeed = 100f;
     [SerializeField] private float acceleration = 50f;
     [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.1f;
     [SerializeField] private float turningSpeed = 3f;
@@ -73,19 +72,19 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Input
-    public void MoveInput(InputAction.CallbackContext context)
+    public void TurnInput(InputAction.CallbackContext context)
     {
-        moveInputVector = context.ReadValue<Vector2>();
+        moveInputVector.x = context.ReadValue<float>();
     }
 
     public void GasInput(InputAction.CallbackContext context)
     {
-        isGassing = context.performed;
+        moveInputVector.y = context.performed ? 1 : 0;
     }
 
     public void ReverseInput(InputAction.CallbackContext context)
     {
-        isReversing = context.performed;
+        moveInputVector.y = context.performed ? -1 : 0;
     }
     #endregion
 
@@ -164,20 +163,15 @@ public class PlayerMovement : MonoBehaviour
             0f
         );
 
-        if (isGassing)
-        {
-            rb.AddForce(
-            RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
-            ForceMode.Acceleration);
-        }
-        else if (isReversing)
-        {
-            rb.AddForce(
-            -RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
-            ForceMode.Acceleration);
-        }
-        
+        rb.AddForce(
+            RotationRoot.forward * moveInputVector.y * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
+            ForceMode.Acceleration
+        );
 
+        if (rb.linearVelocity.magnitude > topSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * topSpeed;
+        }
     }
     #endregion
 
