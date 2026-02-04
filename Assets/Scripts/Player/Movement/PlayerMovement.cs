@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,47 +11,56 @@ public class PlayerMovement : MonoBehaviour
     #region Ground normal vars
     [Header("Ground normal sampling")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float rayCastTriangleHeight = 0f;
-    [Tooltip("How far from the origin the triangle's tip is")]
-    [SerializeField] private float rayCastTriangleTipDistance = 2f;
-    [Tooltip("How far from the origin the triangle's base corners are")]
-    [SerializeField] private float rayCastTriangleBaseDistance = 2f;
-    [Tooltip("Width of the triangle's base")]
-    [SerializeField] private float rayCastTriangleBaseWidth = 3f;
-    [SerializeField] private bool reverseTriangleOrientation = false;
-    [Tooltip("Height above the triangle vertices where the raycasts start")]
-    [SerializeField] private float rayCastStartHeight = 3f;
-    [Tooltip("Height below the triangle vertices where the raycasts end")]
-    [SerializeField] private float rayCastEndHeight = 3f;
+    // [SerializeField] private float rayCastRigHeight = 3f;
+    [Tooltip("Position of the raycast rig relative to the vehicle's origin (x: forward/back, y: up/down)")]
+    [SerializeField] private Vector2 rayCastRigPosition = new Vector2(0f, 3f);
+    [Tooltip("Size of the raycast rig (x: width, y: depth)")]
+    [SerializeField] private Vector2 rayCastRigSize = new Vector2(3f, 4f);
+    [Tooltip("How long the raycasts are")]
+    [SerializeField] private float rayCastLength = 6f;
     [SerializeField] private bool showGizmos = true;
     [SerializeField] private bool showGizmosSelected = false;
 
-    private Vector3 triPoint0 =>
+    private Vector3[] rigPoints => new Vector3[4]
+    {
+        // P0
         transform.position +
         // y
-        transform.up * rayCastTriangleHeight +
+        transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * rayCastTriangleTipDistance * (reverseTriangleOrientation ? -1f : 1f);
-
-    private Vector3 triPoint1 =>
-        transform.position +
-        // y
-        transform.up * rayCastTriangleHeight +
-        // z
-        transform.forward * rayCastTriangleBaseDistance * (reverseTriangleOrientation ? 1f : -1f) +
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y * 0.5f) +
         // x
-        transform.right * (rayCastTriangleBaseWidth / (reverseTriangleOrientation ? -2f : 2f));
-
-    private Vector3 triPoint2 =>
+        transform.right * (-rayCastRigSize.x / 2f),
+        
+        // P1
         transform.position +
         // y
-        transform.up * rayCastTriangleHeight +
+        transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * rayCastTriangleBaseDistance * (reverseTriangleOrientation ? 1f : -1f) +
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y * 0.5f) +
         // x
-        transform.right * (rayCastTriangleBaseWidth / (reverseTriangleOrientation ? 2f : -2f));
+        transform.right * (rayCastRigSize.x / 2f),
 
-    private Vector3[] rayCastHPs = new Vector3[3];
+        // P2
+        transform.position +
+        // y
+        transform.up * rayCastRigPosition.y +
+        // z
+        transform.forward * (rayCastRigPosition.x - rayCastRigSize.y * 0.5f) +
+        // x
+        transform.right * (rayCastRigSize.x / 2f),
+
+        // P3
+        transform.position +
+        // y
+        transform.up * rayCastRigPosition.y +
+        // z
+        transform.forward * (rayCastRigPosition.x - rayCastRigSize.y * 0.5f) +
+        // x
+        transform.right * (-rayCastRigSize.x / 2f) 
+    };
+
+    private (bool,Vector3)[] rayCastHPs = new (bool,Vector3)[4];
 
     #endregion
 
@@ -108,48 +118,74 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     private void ProcessRayCasts()
     {
-        bool hit0 = Physics.Raycast(
-            triPoint0 + Vector3.up * rayCastStartHeight,
-            Vector3.down,
-            out RaycastHit hitInfo0,
-            rayCastStartHeight + rayCastEndHeight,
-            groundLayer);
-        
-        bool hit1 = Physics.Raycast(
-            triPoint1 + Vector3.up * rayCastStartHeight,
-            Vector3.down,
-            out RaycastHit hitInfo1,
-            rayCastStartHeight + rayCastEndHeight,
-            groundLayer);
+        bool[] didHits = new bool[4];
+        RaycastHit[] hitInfos = new RaycastHit[4];
 
-        bool hit2 = Physics.Raycast(
-            triPoint2 + Vector3.up * rayCastStartHeight,
-            Vector3.down,
-            out RaycastHit hitInfo2,
-            rayCastStartHeight + rayCastEndHeight,
-            groundLayer);
+        for (int i = 0; i < 4; i++)
+        {
+            didHits[i] = Physics.Raycast(
+                rigPoints[i],
+                Vector3.down,
+                out hitInfos[i],
+                rayCastLength,
+                groundLayer);
+        }
 
-        rayCastHPs[0] = hitInfo0.point;
-        rayCastHPs[1] = hitInfo1.point;
-        rayCastHPs[2] = hitInfo2.point;
+        int hitCount = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (didHits[i])
+            {
+                hitCount++;
+                rayCastHPs[i] = (true, hitInfos[i].point);
+            }
+            else
+                rayCastHPs[i] = (false, Vector3.zero);
+        }
 
-        int hitCount = (hit0 ? 1 : 0) + (hit1 ? 1 : 0) + (hit2 ? 1 : 0);
         isGrounded = hitCount >= 2;
 
-        if (hitCount == 3)
+        switch (hitCount)
         {
-            groundNormal = Vector3.Cross(
-                hitInfo1.point - hitInfo0.point,
-                hitInfo2.point - hitInfo0.point
-            ).normalized;
-        }
-        else
-        {
-            groundNormal = Vector3.Lerp(
-                groundNormal,
-                Vector3.up,
-                Time.fixedDeltaTime * inAirUprightingSpeed
-            );
+            case 4:
+                {
+                    int lowestPoint = 0;
+                    List<Vector3> points = new List<Vector3>();
+                    for (int i = 0; i < 4; i++)
+                    {
+                        points.Add(rayCastHPs[i].Item2);
+                        if (rayCastHPs[i].Item2.y < rayCastHPs[lowestPoint].Item2.y)
+                        {
+                            lowestPoint = i;
+                        }
+                    }
+                    points.RemoveAt(lowestPoint);
+                    groundNormal = Vector3.Cross(
+                        points[0] - points[1],
+                        points[0] - points[2]
+                    ).normalized;
+                } break;
+            case 3:
+                {
+                    List<Vector3> points = new List<Vector3>();
+                    for (int i = 1; i < 4; i++)
+                    {
+                        if (!rayCastHPs[i].Item1) continue;
+                        points.Add(rayCastHPs[i].Item2);
+                    }
+                    groundNormal = Vector3.Cross(
+                        points[0] - points[1],
+                        points[0] - points[2]
+                    ).normalized;
+                } break;
+            default:
+                {
+                    groundNormal = Vector3.Lerp(
+                        groundNormal,
+                        Vector3.up,
+                        Time.fixedDeltaTime * inAirUprightingSpeed
+                    );
+                } break;
         }
     }
     private void ProcessMovement()
@@ -186,38 +222,64 @@ public class PlayerMovement : MonoBehaviour
     }
     private void DrawGizmos()
     {
-        // Draw ground sample triangle
+        // Draw ground sample rig
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLineStrip(new Vector3[]
-        {
-            triPoint0,
-            triPoint1,
-            triPoint2
-        }, true);
+        Gizmos.DrawLineStrip(rigPoints, true);
 
         // Draw raycasts
         Gizmos.color = Color.yellow;
         Gizmos.DrawLineList(
             new Vector3[]
             {
-                triPoint0 + Vector3.up * rayCastStartHeight,
-                triPoint0 - Vector3.up * rayCastEndHeight,
+                rigPoints[0],
+                rigPoints[0] + Vector3.down * rayCastLength,
 
-                triPoint1 + Vector3.up * rayCastStartHeight,
-                triPoint1 - Vector3.up * rayCastEndHeight,
+                rigPoints[1],
+                rigPoints[1] + Vector3.down * rayCastLength,
 
-                triPoint2 + Vector3.up * rayCastStartHeight,
-                triPoint2 - Vector3.up * rayCastEndHeight,
+                rigPoints[2],
+                rigPoints[2] + Vector3.down * rayCastLength,
             }
         );
 
         // Draw ground normal
         Gizmos.color = Color.magenta;
-        Gizmos.DrawLineStrip(rayCastHPs, true);
-        Gizmos.DrawLine(
-            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
-            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
-        );
+
+        List<Vector3> groundProjectionVerts = new List<Vector3>();
+        for (int i = 0; i < 4; i++)
+        {
+            if (rayCastHPs[i].Item1)
+            {
+                groundProjectionVerts.Add(rayCastHPs[i].Item2);
+            }
+        }
+        Gizmos.DrawLineStrip(groundProjectionVerts.ToArray(), true);
+
+        // Gizmos.DrawLine(
+        //     (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
+        //     (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
+        // );
+
+
+
+        Vector3 lowestPoint = rayCastHPs[0].Item2;
+        List<Vector3> points = new List<Vector3>();
+        for (int i = 1; i < 4; i++)
+        {
+            if (rayCastHPs[i].Item2.y < lowestPoint.y)
+            {
+                points.Add(lowestPoint);
+                lowestPoint = rayCastHPs[i].Item2;
+            }
+            else
+            {
+                points.Add(rayCastHPs[i].Item2);
+            }
+        }
+        groundNormal = Vector3.Cross(
+            points[0] - points[2],
+            points[0] - points[1]
+        ).normalized;
 
         // Draw rotated up
         Gizmos.color = Color.green;
