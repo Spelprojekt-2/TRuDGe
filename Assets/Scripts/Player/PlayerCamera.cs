@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public class PlayerCamera : MonoBehaviour
     private bool isController = false;
     private Quaternion camStartRotOffset;
 
+
+    [SerializeField] private string uiCameraTag = "UICamera";
+
     public void LookInput(InputAction.CallbackContext context)
     {
         lookInputVector = context.ReadValue<Vector2>();
@@ -65,6 +69,7 @@ public class PlayerCamera : MonoBehaviour
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
     }
+
 
     private void Update()
     {
@@ -189,6 +194,31 @@ public class PlayerCamera : MonoBehaviour
         else
         {
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+        }
+    }
+
+    public void MinimapPrep()
+    {
+        // 1. Get the Camera component on this spawned player
+        Camera playerCam = cam;
+
+        // 2. Find the UI Camera in the scene by Tag
+        GameObject uiCamObj = GameObject.FindWithTag(uiCameraTag);
+
+        if (playerCam != null && uiCamObj != null)
+        {
+            Camera uiCam = uiCamObj.GetComponent<Camera>();
+            var cameraData = playerCam.GetUniversalAdditionalCameraData();
+
+            // 3. Add the UI Camera to this player's stack
+            if (!cameraData.cameraStack.Contains(uiCam))
+            {
+                cameraData.cameraStack.Add(uiCam);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("AutoCameraStacker: Could not find Player Cam or UI Cam!");
         }
     }
 }

@@ -65,6 +65,10 @@ public class PlayerTrackerManager : MonoBehaviour
                 playerInputs[i].GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
                 playerInputs[i].transform.position = spawns[i].transform.position;
                 playerInputs[i].transform.rotation = spawns[i].transform.rotation;
+                if(i == 0)
+                {
+                    playerInputs[i].GetComponent<PlayerCamera>().MinimapPrep();
+                }
             }
 
             if (SceneManager.GetActiveScene().name != "SelectionScreen")
