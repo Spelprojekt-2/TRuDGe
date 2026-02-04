@@ -156,11 +156,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             groundNormal = Vector3.up;
-            // groundNormal = Vector3.Lerp(
-            //     groundNormal,
-            //     Vector3.up,
-            //     Time.fixedDeltaTime * inAirUprightingSpeed
-            // ).normalized;
         }
     }
     private void ProcessMovement()
