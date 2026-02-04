@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
         {
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
             force.y = 0;
-            col.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            col.GetComponentInParent<Rigidbody>().AddForceAtPosition(force, transform.position, ForceMode.Impulse);
         }
         Destroy(gameObject);
     }
