@@ -199,7 +199,8 @@ public class PlayerCamera : MonoBehaviour
 
     public void MinimapPrep()
     {
-        GameObject uiCamObj = GameObject.FindWithTag(uiCameraTag);
+
+        GameObject? uiCamObj = GameObject.FindWithTag(uiCameraTag);
 
         if (cam != null && uiCamObj != null)
         {

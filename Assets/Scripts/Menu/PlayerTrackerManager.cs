@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Windows;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
@@ -25,7 +26,8 @@ public class PlayerTrackerManager : MonoBehaviour
     {
         if (!playerInputs.Contains(obj) && obj != null)
         {
-
+            DontDestroyOnLoad(obj.gameObject);
+            DontDestroyOnLoad(obj.transform.root.gameObject);
             playerInputs.Add(obj);
             GameObject playerSpawned = obj.transform.root.gameObject;
             players.Add(playerSpawned);

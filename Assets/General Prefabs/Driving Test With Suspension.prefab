@@ -162,30 +162,38 @@ MonoBehaviour:
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
-    m_ActionName: 'Player/Jump[/Keyboard/space]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
-    m_ActionName: 'Player/Previous[/Keyboard/1]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
-    m_ActionName: 'Player/Next[/Keyboard/2]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
-    m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
     m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
     m_ActionName: 'UI/Submit[/Keyboard/enter]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
     m_ActionName: 'UI/Cancel[/Keyboard/escape]'
   - m_PersistentCalls:
@@ -216,6 +224,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7706f44c-5882-402e-87b5-491642bb41f2
+    m_ActionName: 'Player/Gas[/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 978d199a-6bf6-48f1-bdf1-b4621a1ba626
+    m_ActionName: 'Player/Grapple[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1c8619a9-0a5f-4c09-acca-dbcee349196e
+    m_ActionName: 'Player/Reverse[/Keyboard/s]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -235,15 +255,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 7152092245243515223}
   crosshair: {fileID: 0}
-  previewNoRotationZone: {fileID: 0}
-  renderPreviewZone: 0
   player: {fileID: 0}
   input: {fileID: 0}
+  rotationRoot: {fileID: 0}
   rotationIntensity: 4.25
   sensitivity: 5
   controllerSensMultiplier: 0
+  bottomCrosshairLimit: 0
+  aimAssistDistance: 0
+  assistStrength: 0.2
+  sensitivityReduction: 0.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   distanceFromScreenEdge: {x: 430, y: 300}
   cam: {fileID: 0}
+  uiCameraTag: UICamera
 --- !u!114 &9068309492587849741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10783,7 +10810,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04c60d797790864c8cee71620f66356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blendShapePrefix: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   wheelPositions:
   - {x: 1, y: 0, z: 1.2}
   - {x: 1, y: 0, z: 0.2}
@@ -10791,6 +10820,8 @@ MonoBehaviour:
   - {x: 1, y: 0, z: -1.8}
   minSuspensionDistance: 0.3
   maxSuspensionDistance: 0.5
+  lossyScale: 0
+  showGizmos: 0
 --- !u!4 &4726734680717982889 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1b930954eaefee8498f59020f23588e6, type: 3}
@@ -10813,7 +10844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04c60d797790864c8cee71620f66356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blendShapePrefix: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   wheelPositions:
   - {x: -1, y: 0, z: 1.2}
   - {x: -1, y: 0, z: 0.2}
@@ -10821,3 +10854,5 @@ MonoBehaviour:
   - {x: -1, y: 0, z: -1.8}
   minSuspensionDistance: 0.3
   maxSuspensionDistance: 0.5
+  lossyScale: 0
+  showGizmos: 0
