@@ -16,51 +16,41 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 rayCastRigPosition = new Vector2(0f, 3f);
     [Tooltip("Size of the raycast rig (x: width, y: depth)")]
     [SerializeField] private Vector2 rayCastRigSize = new Vector2(3f, 4f);
+    [SerializeField] private bool flipRaycastRigZ = false;
     [Tooltip("How long the raycasts are")]
     [SerializeField] private float rayCastLength = 6f;
     [SerializeField] private bool showGizmos = true;
     [SerializeField] private bool showGizmosSelected = false;
 
-    private Vector3[] rigPoints => new Vector3[4]
+    private Vector3[] rigPoints => new Vector3[3]
     {
         // P0
         transform.position +
         // y
         transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y * 0.5f) +
-        // x
-        transform.right * (-rayCastRigSize.x / 2f),
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)),
         
         // P1
         transform.position +
         // y
         transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y * 0.5f) +
+        transform.forward * (rayCastRigPosition.x - rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
         // x
-        transform.right * (rayCastRigSize.x / 2f),
+        transform.right * (rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f)),
 
         // P2
         transform.position +
         // y
         transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * (rayCastRigPosition.x - rayCastRigSize.y * 0.5f) +
+        transform.forward * (rayCastRigPosition.x - rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
         // x
-        transform.right * (rayCastRigSize.x / 2f),
-
-        // P3
-        transform.position +
-        // y
-        transform.up * rayCastRigPosition.y +
-        // z
-        transform.forward * (rayCastRigPosition.x - rayCastRigSize.y * 0.5f) +
-        // x
-        transform.right * (-rayCastRigSize.x / 2f) 
+        transform.right * (-rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f))
     };
 
-    private (bool,Vector3)[] rayCastHPs = new (bool,Vector3)[4];
+    private Vector3[] rayCastHPs = new Vector3[3];
 
     #endregion
 
@@ -118,10 +108,10 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     private void ProcessRayCasts()
     {
-        bool[] didHits = new bool[4];
-        RaycastHit[] hitInfos = new RaycastHit[4];
+        bool[] didHits = new bool[3];
+        RaycastHit[] hitInfos = new RaycastHit[3];
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             didHits[i] = Physics.Raycast(
                 rigPoints[i],
@@ -132,60 +122,30 @@ public class PlayerMovement : MonoBehaviour
         }
 
         int hitCount = 0;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
-            if (didHits[i])
-            {
-                hitCount++;
-                rayCastHPs[i] = (true, hitInfos[i].point);
-            }
-            else
-                rayCastHPs[i] = (false, Vector3.zero);
+            if (!didHits[i]) continue;
+            
+            hitCount++;
+            rayCastHPs[i] = hitInfos[i].point;
         }
 
         isGrounded = hitCount >= 2;
 
-        switch (hitCount)
+        if (hitCount == 3)
         {
-            case 4:
-                {
-                    int lowestPoint = 0;
-                    List<Vector3> points = new List<Vector3>();
-                    for (int i = 0; i < 4; i++)
-                    {
-                        points.Add(rayCastHPs[i].Item2);
-                        if (rayCastHPs[i].Item2.y < rayCastHPs[lowestPoint].Item2.y)
-                        {
-                            lowestPoint = i;
-                        }
-                    }
-                    points.RemoveAt(lowestPoint);
-                    groundNormal = Vector3.Cross(
-                        points[0] - points[1],
-                        points[0] - points[2]
-                    ).normalized;
-                } break;
-            case 3:
-                {
-                    List<Vector3> points = new List<Vector3>();
-                    for (int i = 1; i < 4; i++)
-                    {
-                        if (!rayCastHPs[i].Item1) continue;
-                        points.Add(rayCastHPs[i].Item2);
-                    }
-                    groundNormal = Vector3.Cross(
-                        points[0] - points[1],
-                        points[0] - points[2]
-                    ).normalized;
-                } break;
-            default:
-                {
-                    groundNormal = Vector3.Lerp(
-                        groundNormal,
-                        Vector3.up,
-                        Time.fixedDeltaTime * inAirUprightingSpeed
-                    );
-                } break;
+            groundNormal = Vector3.Cross(
+                rayCastHPs[0] - rayCastHPs[1],
+                rayCastHPs[0] - rayCastHPs[2]
+            ).normalized;
+        }
+        else
+        {
+            groundNormal = Vector3.Lerp(
+                groundNormal,
+                Vector3.up,
+                Time.fixedDeltaTime * inAirUprightingSpeed
+            ).normalized;
         }
     }
     private void ProcessMovement()
@@ -238,48 +198,19 @@ public class PlayerMovement : MonoBehaviour
                 rigPoints[1] + Vector3.down * rayCastLength,
 
                 rigPoints[2],
-                rigPoints[2] + Vector3.down * rayCastLength,
+                rigPoints[2] + Vector3.down * rayCastLength
             }
         );
 
         // Draw ground normal
         Gizmos.color = Color.magenta;
 
-        List<Vector3> groundProjectionVerts = new List<Vector3>();
-        for (int i = 0; i < 4; i++)
-        {
-            if (rayCastHPs[i].Item1)
-            {
-                groundProjectionVerts.Add(rayCastHPs[i].Item2);
-            }
-        }
-        Gizmos.DrawLineStrip(groundProjectionVerts.ToArray(), true);
+        Gizmos.DrawLineStrip(rayCastHPs, true);
 
-        // Gizmos.DrawLine(
-        //     (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
-        //     (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
-        // );
-
-
-
-        Vector3 lowestPoint = rayCastHPs[0].Item2;
-        List<Vector3> points = new List<Vector3>();
-        for (int i = 1; i < 4; i++)
-        {
-            if (rayCastHPs[i].Item2.y < lowestPoint.y)
-            {
-                points.Add(lowestPoint);
-                lowestPoint = rayCastHPs[i].Item2;
-            }
-            else
-            {
-                points.Add(rayCastHPs[i].Item2);
-            }
-        }
-        groundNormal = Vector3.Cross(
-            points[0] - points[2],
-            points[0] - points[1]
-        ).normalized;
+        Gizmos.DrawLine(
+            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
+            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
+        );
 
         // Draw rotated up
         Gizmos.color = Color.green;
