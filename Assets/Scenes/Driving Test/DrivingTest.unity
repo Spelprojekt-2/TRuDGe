@@ -664,6 +664,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -10}
+--- !u!1001 &1089584597
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.753
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795407240725130027, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_Name
+      value: TriangleTank (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682177630672264121, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682177630672264121, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionId
+      value: 978d199a-6bf6-48f1-bdf1-b4621a1ba626
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682177630672264121, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionName
+      value: 'Player/Grapple[/Mouse/rightButton]'
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 316810166874600747, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+    - {fileID: 7476808805818982267, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1412539999838681139, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1089584599}
+  m_SourcePrefab: {fileID: 100100000, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+--- !u!1 &1089584598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1412539999838681139, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+  m_PrefabInstance: {fileID: 1089584597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1089584599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089584598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d9562d4639da74eb0bab786a8e555b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels:
+  - localPosition: {x: 0, y: 0, z: 2}
+    radius: 1
+  - localPosition: {x: 0, y: 0, z: 1}
+    radius: 1
+  showGizmos: 2
 --- !u!1 &1155273669
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +1043,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TriangleTank
       objectReference: {fileID: 0}
+    - target: {fileID: 6795407240725130027, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8682177630672264121, guid: 3189c40174a28c648ab176c87b121106, type: 3}
       propertyPath: m_ActionEvents.Array.size
       value: 18
@@ -975,3 +1076,4 @@ SceneRoots:
   - {fileID: 1155273673}
   - {fileID: 903718285}
   - {fileID: 4834385897573415154}
+  - {fileID: 1089584597}
