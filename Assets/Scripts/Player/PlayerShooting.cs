@@ -38,8 +38,8 @@ public class PlayerShooting : MonoBehaviour
     }
     public void Shoot()
     {
-        //Physics.SyncTransforms();
         Vector3 targetPoint = GetTargetPoint();
+
         Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
         targetPoint.y = barrelPosition.position.y;
         bulletDir.y = 0;
