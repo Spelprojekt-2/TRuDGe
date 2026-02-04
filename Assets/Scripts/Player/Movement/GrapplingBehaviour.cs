@@ -6,7 +6,7 @@ public class GrapplingBehaviour : MonoBehaviour
 {
     #region Component refs
     private LineRenderer lineRenderer;
-    [SerializeField] private Rigidbody rigidbody;
+    [SerializeField] private Rigidbody vehicleRigidbody;
     [Tooltip("The object that will follow the grapple hook's azimuth/heading/yaw rotation (grapple turret)")]
     [SerializeField] private Transform grappleAzimuthObject;
     [Tooltip("The object that will follow the grapple hook's elevation/pitch rotation (grapple barrel)")]
@@ -23,12 +23,12 @@ public class GrapplingBehaviour : MonoBehaviour
         isGrappling = !isGrappling;
         lineRenderer.enabled = isGrappling;
         if (isGrappling)
-            grappleDistance = Vector3.Distance(rigidbody.transform.position, lRPoint);
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, lRPoint);
     }
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        grappleDistance = Vector3.Distance(rigidbody.transform.position, lRPoint);
+        grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, lRPoint);
     }
 
     void Update()
@@ -43,20 +43,20 @@ public class GrapplingBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         if (!isGrappling) return;
-        Vector3 grappleDir = (lRPoint - rigidbody.transform.position).normalized;
-        float relativeVelocity = Vector3.Dot(rigidbody.linearVelocity, grappleDir);
+        Vector3 grappleDir = (lRPoint - vehicleRigidbody.transform.position).normalized;
+        float relativeVelocity = Vector3.Dot(vehicleRigidbody.linearVelocity, grappleDir);
 
         if (relativeVelocity < 0f)
         {
-            rigidbody.linearVelocity -= grappleDir * relativeVelocity;
+            vehicleRigidbody.linearVelocity -= grappleDir * relativeVelocity;
         }
 
-        float dist = Vector3.Distance(rigidbody.transform.position, lRPoint);
+        float dist = Vector3.Distance(vehicleRigidbody.transform.position, lRPoint);
         if (dist > grappleDistance)
         {
             Vector3 desiredPosition = lRPoint - grappleDir * grappleDistance;
-            Vector3 correctionVelocity = (desiredPosition - rigidbody.transform.position) / Time.fixedDeltaTime;
-            rigidbody.linearVelocity += correctionVelocity;
+            Vector3 correctionVelocity = (desiredPosition - vehicleRigidbody.transform.position) / Time.fixedDeltaTime;
+            vehicleRigidbody.linearVelocity += correctionVelocity;
         }
 
         if (dist < grappleDistance)
