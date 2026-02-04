@@ -85,6 +85,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     #endregion
 
+    #region Public methods
+    public float GetTopSpeed() => topSpeed;
+    public bool IsGrounded() => isGrounded;
+    public Vector3 GetGroundNormal() => groundNormal;
+    public float GetCurrentSpeed(bool absolute = false) =>
+        absolute ?
+            rb.linearVelocity.magnitude :
+            Vector3.Dot(rb.linearVelocity, rotationRoot.forward);
+    #endregion
+
     #region Input
     public void TurnInput(InputAction.CallbackContext context)
     {
