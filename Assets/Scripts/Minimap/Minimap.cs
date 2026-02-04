@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class Minimap : MonoBehaviour
 {
+    [SerializeField] private RectTransform minimapContainer;
     [Header("---Minimap Visuals---")]
     [SerializeField] private int resolution = 150;
     [SerializeField] private float trackWidth = 10f;
@@ -20,6 +21,13 @@ public class Minimap : MonoBehaviour
     {
         raceData = FindFirstObjectByType<RaceController>();
         DrawTrack();
+
+        PlayerMovement[] players = Object.FindObjectsOfType<PlayerMovement>();
+        if(players.Length < 3)
+        {
+            RectTransform rect = minimapContainer.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(-700, 0);
+        }
     }
     void DrawTrack()
     {
