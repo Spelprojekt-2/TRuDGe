@@ -8,7 +8,7 @@ public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     public string scene = "Level1";
-    private List<PlayerInput> playerInputs = new List<PlayerInput>();
+    private Dictionary<int, PlayerInput> playerInputs = new();
     [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
 
@@ -22,65 +22,91 @@ public class PlayerTrackerManager : MonoBehaviour
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         readyStates.Clear();
     }
-    public void HandlePlayerJoined(PlayerInput obj)
+    public void HandlePlayerJoined(PlayerInput input)
     {
-        if (!playerInputs.Contains(obj) && obj != null)
-        {
-            DontDestroyOnLoad(obj.gameObject);
-            DontDestroyOnLoad(obj.transform.root.gameObject);
-            playerInputs.Add(obj);
-            GameObject playerSpawned = obj.transform.root.gameObject;
-            players.Add(playerSpawned);
-            DontDestroyOnLoad(playerSpawned);
-            readyStates[obj.playerIndex] = false;
+        if (!input)
+            return;
 
+        int index = input.playerIndex;
 
-            MovePlayersToSpawnPoints();
-            UpdateAllPlayerCameras();
-        }
+        if (playerInputs.ContainsKey(index))
+            return;
+
+        playerInputs[index] = input;
+        readyStates[index] = false;
+
+        DontDestroyOnLoad(input.transform.root.gameObject);
+
+        MovePlayersToSpawnPoints();
+        UpdateAllPlayerCameras();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
     {
-        if (SceneManager.GetActiveScene().name != "SelectionScreen" && SceneManager.GetActiveScene().name != "MainMenu" && !allPlayersSpawned)
+        playerInputs.Clear();
+
+        foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+        {
+            playerInputs[input.playerIndex] = input;
+        }
+
+        bool isMenu =
+            scene.name == "SelectionScreen" ||
+            scene.name == "MainMenu";
+
+        if (!isMenu && !allPlayersSpawned)
         {
             allPlayersSpawned = true;
-            PlayerInputManager.instance.DisableJoining();
+            if (PlayerInputManager.instance)
+                PlayerInputManager.instance.DisableJoining();
+
             MovePlayersToSpawnPoints();
         }
-        else if(SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "MainMenu")
+        else if (isMenu)
         {
             UIList = FindFirstObjectByType<SelectionUIList>();
             allPlayersSpawned = false;
-            PlayerInputManager.instance.EnableJoining();
+            if (PlayerInputManager.instance)
+                PlayerInputManager.instance.EnableJoining();
         }
     }
+
 
     void MovePlayersToSpawnPoints()
     {
-        SpawnPointVisualizer[] spawns = GameObject.FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None).OrderBy(o => o.name).ToArray();
+        var spawns = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
+            .OrderBy(o => o.name)
+            .ToArray();
 
-        for (int i = 0; i < playerInputs.Count; i++)
+        foreach (var kvp in playerInputs)
         {
-            if (i < spawns.Length)
-            {
-                playerInputs[i].GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                playerInputs[i].transform.position = spawns[i].transform.position;
-                playerInputs[i].transform.rotation = spawns[i].transform.rotation;
-                if(i == 0)
-                {
-                    playerInputs[i].GetComponent<PlayerCamera>().MinimapPrep();
-                }
-            }
+            int index = kvp.Key;
+            PlayerInput input = kvp.Value;
 
-            if (SceneManager.GetActiveScene().name != "SelectionScreen")
-                players[i].GetComponentInChildren<PlayerInput>().SwitchCurrentActionMap("Player");
-            else
-                players[i].GetComponentInChildren<PlayerInput>().SwitchCurrentActionMap("UI");
+            if (!input || index >= spawns.Length)
+                continue;
+
+            var rb = input.GetComponent<Rigidbody>();
+            if (rb)
+                rb.linearVelocity = Vector3.zero;
+
+            input.transform.SetPositionAndRotation(
+                spawns[index].transform.position,
+                spawns[index].transform.rotation
+            );
+
+            if (index == 0)
+                input.GetComponent<PlayerCamera>()?.MinimapPrep();
+
+            input.SwitchCurrentActionMap(
+                SceneManager.GetActiveScene().name == "SelectionScreen"
+                ? "UI"
+                : "Player"
+            );
         }
     }
 
-    private void UpdateAllPlayerCameras()
+private void UpdateAllPlayerCameras()
     {
         int currentTotal = playerInputs.Count;
         foreach (var player in players)
