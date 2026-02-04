@@ -61,6 +61,10 @@ public class PlayerTrackerManager : MonoBehaviour
                 playerInputs[i].GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
                 playerInputs[i].transform.position = spawns[i].transform.position + Vector3.up * 3;
                 playerInputs[i].transform.rotation = spawns[i].GetRotation();
+                if(i == 0)
+                {
+                    playerInputs[i].GetComponent<PlayerCamera>().MinimapPrep();
+                }
             }
         }
 
