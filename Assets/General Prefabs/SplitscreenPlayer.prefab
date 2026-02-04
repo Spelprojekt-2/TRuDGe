@@ -5010,7 +5010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7171630561434687437}
   - component: {fileID: 8685995817730049345}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Ground Colider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5571,7 +5571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e6c25cbeb1d654f8beb001ee89b7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationRoot: {fileID: 9156989860318698681}
+  rotationRoot: {fileID: 9156989860318698681}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -5583,10 +5583,60 @@ MonoBehaviour:
   showGroundSample: 2
   showLocalAxes: 0
   topSpeed: 100
-  acceleration: 50
+  baseAcceleration: 50
+  accelerationOverSpeedModifier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   inAirAccelerationModifier: 0.1
-  turningSpeed: 3
+  baseTurningSpeed: 3
+  turningSpeedOverSpeedModifier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   inAirTurningModifier: 0.1
+  baseSpeedOnAbsoluteVelocity: 0
+  onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
 --- !u!54 &8035972993285117548
 Rigidbody:
@@ -10570,7 +10620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4316025077096672363}
   - component: {fileID: 1146310759823197483}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Wall Colider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10831,7 +10881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2085794354640280471}
   - component: {fileID: 6168576910376186280}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Player Colider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

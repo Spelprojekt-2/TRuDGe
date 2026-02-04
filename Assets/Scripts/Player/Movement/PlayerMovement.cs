@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Component refs
     private Rigidbody rb;
-    [SerializeField] private Transform RotationRoot;
+    [SerializeField] private Transform rotationRoot;
     #endregion
 
     #region Ground normal vars
@@ -63,11 +63,20 @@ public class PlayerMovement : MonoBehaviour
     
     #region Movement vars
     [Header("Movement")]
+    [Tooltip("Clamp on absolute velocity magnitude. Set to 0 to disable.")]
     [SerializeField] private float topSpeed = 100f;
-    [SerializeField] private float acceleration = 50f;
+    [SerializeField] private float baseAcceleration = 50f;
+    [Tooltip("Curve to modify acceleration based on current speed")]
+    [SerializeField] private AnimationCurve accelerationOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.1f;
-    [SerializeField] private float turningSpeed = 3f;
+    [SerializeField] private float baseTurningSpeed = 3f;
+    [Tooltip("Curve to modify turning speed based on current speed")]
+    [SerializeField] private AnimationCurve turningSpeedOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.1f;
+    [Tooltip("If true, current speed will be calculated from absolute velocity rather than forward velocity. (Does not affect top speed clamping)")]
+    [SerializeField] private bool baseSpeedOnAbsoluteVelocity = false;
+    [Tooltip("How fast the vehicle uprights itself when on the ground")]
+    [SerializeField] private float onGroundUprightingSpeed = 5f;
     [Tooltip("How fast the vehicle uprights itself when in the air")]
     [SerializeField] private float inAirUprightingSpeed = 1f;
     private Vector3 groundNormal;
@@ -144,30 +153,61 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            groundNormal = Vector3.Lerp(
-                groundNormal,
-                Vector3.up,
-                Time.fixedDeltaTime * inAirUprightingSpeed
-            ).normalized;
+            groundNormal = Vector3.up;
+            // groundNormal = Vector3.Lerp(
+            //     groundNormal,
+            //     Vector3.up,
+            //     Time.fixedDeltaTime * inAirUprightingSpeed
+            // ).normalized;
         }
     }
     private void ProcessMovement()
     {
         // Align vehicle to ground normal
-        RotationRoot.rotation = Quaternion.FromToRotation(Vector3.up, groundNormal) * Quaternion.LookRotation(transform.forward);
+        rotationRoot.rotation = Quaternion.Slerp(
+            rotationRoot.rotation,
+            Quaternion.FromToRotation(Vector3.up, groundNormal) * Quaternion.LookRotation(transform.forward),
+            Time.fixedDeltaTime * (isGrounded ? onGroundUprightingSpeed : inAirUprightingSpeed)
+        );
 
+        // Turning
         rb.angularVelocity = rb.rotation * new Vector3(
             0f,
-            moveInputVector.x * turningSpeed * (isGrounded ? 1f : inAirTurningModifier),
+            // Input
+            moveInputVector.x *
+            // Base turning speed
+            baseTurningSpeed *
+            // Speed modifier
+            turningSpeedOverSpeedModifier.Evaluate(
+                baseSpeedOnAbsoluteVelocity ?
+                    rb.linearVelocity.magnitude / topSpeed :
+                    Vector3.Dot(rb.linearVelocity, rotationRoot.forward) / topSpeed
+            ) *
+            // Air modifier
+            (isGrounded ? 1f : inAirTurningModifier),
             0f
         );
 
+        // Acceleration
         rb.AddForce(
-            RotationRoot.forward * moveInputVector.y * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
+            // Direction
+            rotationRoot.forward *
+            // Input
+            moveInputVector.y *
+            // Base acceleration
+            baseAcceleration * 
+            // Speed modifier
+            accelerationOverSpeedModifier.Evaluate(
+                baseSpeedOnAbsoluteVelocity ?
+                    rb.linearVelocity.magnitude / topSpeed :
+                    Vector3.Dot(rb.linearVelocity, rotationRoot.forward) / topSpeed
+            ) *
+            // Air modifier
+            (isGrounded ? 1f : inAirAccelerationModifier),
             ForceMode.Acceleration
         );
 
-        if (rb.linearVelocity.magnitude > topSpeed)
+        if (rb.linearVelocity.magnitude != 0 && rb.linearVelocity.magnitude > topSpeed)
         {
             rb.linearVelocity = rb.linearVelocity.normalized * topSpeed;
         }
@@ -227,21 +267,21 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + RotationRoot.up * 5f
+            transform.position + rotationRoot.up * 5f
         );
 
         // Draw rotated forward
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + RotationRoot.forward * 5f
+            transform.position + rotationRoot.forward * 5f
         );
 
         // Draw rotated right
         Gizmos.color = Color.red;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + RotationRoot.right * 5f
+            transform.position + rotationRoot.right * 5f
         );
     }
     #endregion
