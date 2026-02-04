@@ -62,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
     
     #region Movement vars
     [Header("Movement")]
-    [SerializeField] private float acceleration = 50f;
-    [SerializeField] private float topSpeed = 100f;
+    [SerializeField] private float acceleration = 25f;
+    [SerializeField] private float topSpeed = 90f;
     [SerializeField][Range(0f, 1f)] private float defaultLinearDamping = 0.4f;
     [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.25f;
     [SerializeField] private float turningSpeedmodifier = 2f;
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.25f;
     [Tooltip("How fast the vehicle uprights itself when in the air")]
     [SerializeField] private float inAirUprightingSpeed = 1f;
-    [SerializeField] private float minFov = 15f;
+    [SerializeField] private float minFov = 45f;
     [SerializeField] private float maxFov = 90f;
     private Vector3 groundNormal;
     private bool isGrounded;
@@ -177,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
         {
             turningSpeed = turningBase - turningSpeedmodifier  ; 
             if (rb.linearVelocity.magnitude < topSpeed){
-            rb.linearDamping = 0;
+            rb.linearDamping = 0.1f;
             rb.AddForce(
             RotationRoot.forward * acceleration * (isGrounded ? 1f : inAirAccelerationModifier),
             ForceMode.Acceleration);
