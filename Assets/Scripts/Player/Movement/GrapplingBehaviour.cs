@@ -20,6 +20,7 @@ public class GrapplingBehaviour : MonoBehaviour
     private bool isGrappling = false;
     public void Toggle()
     {
+        Debug.Log("Toggling grapple");
         isGrappling = !isGrappling;
         lineRenderer.enabled = isGrappling;
         if (isGrappling)
