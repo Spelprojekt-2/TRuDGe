@@ -5133,6 +5133,7 @@ GameObject:
   - component: {fileID: 3621178358766502698}
   - component: {fileID: 8942500506450043773}
   - component: {fileID: 6106206422992046480}
+  - component: {fileID: 603227144528213282}
   m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5271,6 +5272,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 4948547773746624805}
+--- !u!114 &603227144528213282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833fa3eb9378cd4438de76e553b09efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 4029194333597442243}
+  fovOverSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 101.810455
+      value: 9.0206995
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fovLerpSpeed: 10
 --- !u!1 &4523023332637477557
 GameObject:
   m_ObjectHideFlags: 0
