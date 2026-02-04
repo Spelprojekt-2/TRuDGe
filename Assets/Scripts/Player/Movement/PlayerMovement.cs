@@ -59,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region Input vars
     private Vector2 moveInputVector;
+    private float accelerationInput;
+    private float reversingInput;
     #endregion
     
     #region Movement vars
@@ -91,12 +93,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void GasInput(InputAction.CallbackContext context)
     {
-        moveInputVector.y = context.performed ? 1 : 0;
+        accelerationInput = context.ReadValue<float>();
     }
 
     public void ReverseInput(InputAction.CallbackContext context)
     {
-        moveInputVector.y = context.performed ? -1 : 0;
+        reversingInput = context.ReadValue<float>();
     }
     #endregion
 
@@ -107,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Update()
     {
-        
+        moveInputVector.y = Mathf.Clamp(accelerationInput - reversingInput, -1f, 1f);
     }
 
     public void FixedUpdate()
