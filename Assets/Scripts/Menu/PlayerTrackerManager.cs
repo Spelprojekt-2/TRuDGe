@@ -52,13 +52,15 @@ public class PlayerTrackerManager : MonoBehaviour
 
     void MovePlayersToSpawnPoints()
     {
-        GameObject[] spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        SpawnPointVisualizer[] spawns = GameObject.FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None);
 
         for (int i = 0; i < playerInputs.Count; i++)
         {
             if (i < spawns.Length)
             {
-                playerInputs[i].transform.position = spawns[i].transform.position;
+                playerInputs[i].GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                playerInputs[i].transform.position = spawns[i].transform.position + Vector3.up * 3;
+                playerInputs[i].transform.rotation = spawns[i].GetRotation();
             }
         }
 
