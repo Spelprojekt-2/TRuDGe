@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-
+using System.Linq;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
@@ -11,9 +11,15 @@ public class PlayerTrackerManager : MonoBehaviour
     [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
 
+    private Dictionary<int, bool> readyStates = new();
+    private SelectionUIList UIList;
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        readyStates.Clear();
     }
     public void HandlePlayerJoined(PlayerInput obj)
     {
@@ -24,12 +30,15 @@ public class PlayerTrackerManager : MonoBehaviour
             GameObject playerSpawned = obj.transform.root.gameObject;
             players.Add(playerSpawned);
             DontDestroyOnLoad(playerSpawned);
+            readyStates[obj.playerIndex] = false;
 
+
+            MovePlayersToSpawnPoints();
             UpdateAllPlayerCameras();
         }
     }
 
-    private void Update()
+    void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
     {
         if (SceneManager.GetActiveScene().name != "SelectionScreen" && SceneManager.GetActiveScene().name != "MainMenu" && !allPlayersSpawned)
         {
@@ -39,38 +48,33 @@ public class PlayerTrackerManager : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "MainMenu")
         {
+            UIList = FindFirstObjectByType<SelectionUIList>();
             allPlayersSpawned = false;
-
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                SceneManager.LoadSceneAsync(scene);
-            }
-
             PlayerInputManager.instance.EnableJoining();
         }
     }
 
     void MovePlayersToSpawnPoints()
     {
-        SpawnPointVisualizer[] spawns = GameObject.FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None);
+        SpawnPointVisualizer[] spawns = GameObject.FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None).OrderBy(o => o.name).ToArray();
 
         for (int i = 0; i < playerInputs.Count; i++)
         {
             if (i < spawns.Length)
             {
                 playerInputs[i].GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                playerInputs[i].transform.position = spawns[i].transform.position + Vector3.up * 3;
-                playerInputs[i].transform.rotation = spawns[i].GetRotation();
+                playerInputs[i].transform.position = spawns[i].transform.position;
+                playerInputs[i].transform.rotation = spawns[i].transform.rotation;
                 if(i == 0)
                 {
                     playerInputs[i].GetComponent<PlayerCamera>().MinimapPrep();
                 }
             }
-        }
 
-        foreach (var player in players)
-        {
-            player.SetActive(true);
+            if (SceneManager.GetActiveScene().name != "SelectionScreen")
+                players[i].GetComponentInChildren<PlayerInput>().SwitchCurrentActionMap("Player");
+            else
+                players[i].GetComponentInChildren<PlayerInput>().SwitchCurrentActionMap("UI");
         }
     }
 
@@ -84,6 +88,57 @@ public class PlayerTrackerManager : MonoBehaviour
             {
                 splitCam.SetupCamera(currentTotal);
             }
+        }
+    }
+
+    public void SetReady(PlayerInput input)
+    {
+        int player = input.playerIndex;
+        readyStates[player] = true;
+        switch (player)
+        {
+            case 0:
+                UIList.ReadyTextP1.gameObject.SetActive(true);
+                break;
+            case 1:
+                UIList.ReadyTextP2.gameObject.SetActive(true);
+                break;
+            case 2:
+                UIList.ReadyTextP3.gameObject.SetActive(true);
+                break;
+            case 3:
+                UIList.ReadyTextP4.gameObject.SetActive(true);
+                break;
+        }
+
+        foreach (var isReady in readyStates.Values)
+        {
+            if (!isReady)
+                return;
+        }
+
+        Debug.Log("Everyone is ready!");
+        SceneManager.LoadScene(scene);
+    }
+    public void SetUnready(PlayerInput input)
+    {
+        int player = input.playerIndex;
+        readyStates[player] = false;
+
+        switch (player)
+        {
+            case 0:
+                UIList.ReadyTextP1.gameObject.SetActive(false);
+                break;
+            case 1:
+                UIList.ReadyTextP2.gameObject.SetActive(false);
+                break;
+            case 2:
+                UIList.ReadyTextP3.gameObject.SetActive(false);
+                break;
+            case 3:
+                UIList.ReadyTextP4.gameObject.SetActive(false);
+                break;
         }
     }
 }
