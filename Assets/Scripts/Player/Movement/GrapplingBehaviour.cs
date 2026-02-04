@@ -17,7 +17,14 @@ public class GrapplingBehaviour : MonoBehaviour
 
     [SerializeField] private Vector3 lRPoint = Vector3.zero;
     private float grappleDistance = 0f;
-
+    private bool isGrappling = false;
+    public void Toggle()
+    {
+        isGrappling = !isGrappling;
+        lineRenderer.enabled = isGrappling;
+        if (isGrappling)
+            grappleDistance = Vector3.Distance(rigidbody.transform.position, lRPoint);
+    }
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -26,6 +33,7 @@ public class GrapplingBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (!isGrappling) return;
         lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
         lineRenderer.SetPosition(1, lRPoint);
 
@@ -34,6 +42,7 @@ public class GrapplingBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isGrappling) return;
         Vector3 grappleDir = (lRPoint - rigidbody.transform.position).normalized;
         float relativeVelocity = Vector3.Dot(rigidbody.linearVelocity, grappleDir);
 

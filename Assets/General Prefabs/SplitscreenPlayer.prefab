@@ -5401,6 +5401,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1c8619a9-0a5f-4c09-acca-dbcee349196e
     m_ActionName: 'Player/Reverse[/Keyboard/s,/XInputControllerWindows/leftTrigger]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8075224458996698583}
+        m_TargetAssemblyTypeName: GrapplingBehaviour, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 978d199a-6bf6-48f1-bdf1-b4621a1ba626
+    m_ActionName: 'Player/Grapple[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5431,7 +5447,7 @@ MonoBehaviour:
   sensitivityReduction: 0.5
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   distanceFromScreenEdge: {x: 430, y: 300}
   cam: {fileID: 2227583658322248293}
 --- !u!114 &6668579927141968441
@@ -5453,7 +5469,7 @@ MonoBehaviour:
   canvas: {fileID: 434969871267061588}
   excludeLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   playerCam: {fileID: 4586681433911336767}
 --- !u!114 &4029194333597442243
 MonoBehaviour:
@@ -10513,6 +10529,7 @@ Transform:
   - {fileID: 6506330483864751720}
   - {fileID: 42627169806494049}
   - {fileID: 5018652592352119297}
+  - {fileID: 8266929133646084253}
   m_Father: {fileID: 2563408139579286964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5775183119610709466
@@ -11122,3 +11139,80 @@ MonoBehaviour:
   maxSuspensionDistance: 0.5
   lossyScale: 0
   showGizmos: 1
+--- !u!1001 &5684696955890468507
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9156989860318698681}
+    m_Modifications:
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.819
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: rigidbody
+      value: 
+      objectReference: {fileID: 8035972993285117548}
+    - target: {fileID: 8006152340013823523, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: m_Name
+      value: Grapple
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+--- !u!114 &8075224458996698583 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+  m_PrefabInstance: {fileID: 5684696955890468507}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8676d4f3deb21e240b3a4cb0fabb3943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8266929133646084253 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4349934064348036614, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+  m_PrefabInstance: {fileID: 5684696955890468507}
+  m_PrefabAsset: {fileID: 0}
