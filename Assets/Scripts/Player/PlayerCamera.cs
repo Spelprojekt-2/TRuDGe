@@ -167,7 +167,7 @@ public class PlayerCamera : MonoBehaviour
                 if (hit.transform.root == player.root)
                 {
                     isOverEnemy = false;
-                    continue; // It hit us, so stop here and don't apply assist
+                    continue; //Fortsätter ifall man träffar sig själv
                 }
 
                 currentHitCol = hit.collider;
@@ -199,18 +199,13 @@ public class PlayerCamera : MonoBehaviour
 
     public void MinimapPrep()
     {
-        // 1. Get the Camera component on this spawned player
-        Camera playerCam = cam;
-
-        // 2. Find the UI Camera in the scene by Tag
         GameObject uiCamObj = GameObject.FindWithTag(uiCameraTag);
 
-        if (playerCam != null && uiCamObj != null)
+        if (cam != null && uiCamObj != null)
         {
             Camera uiCam = uiCamObj.GetComponent<Camera>();
-            var cameraData = playerCam.GetUniversalAdditionalCameraData();
+            var cameraData = cam.GetUniversalAdditionalCameraData();
 
-            // 3. Add the UI Camera to this player's stack
             if (!cameraData.cameraStack.Contains(uiCam))
             {
                 cameraData.cameraStack.Add(uiCam);
@@ -218,7 +213,7 @@ public class PlayerCamera : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("AutoCameraStacker: Could not find Player Cam or UI Cam!");
+            Debug.LogWarning("En kamera är null");
         }
     }
 }

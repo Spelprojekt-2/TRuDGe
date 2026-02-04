@@ -5,17 +5,20 @@ using System.Collections.Generic;
 
 public class Minimap : MonoBehaviour
 {
-    [SerializeField] private RaceController raceData;
-
-    [Header("Visuals")]
-    [SerializeField] private int resolution = 150; // Smoothness of the line
+    [Header("---Minimap Visuals---")]
+    [SerializeField] private int resolution = 150;
     [SerializeField] private float trackWidth = 10f;
     [SerializeField] private Color trackColor = Color.white;
 
+    [Header("---Line renderer---")]
     [SerializeField] private UILineRenderer uiLine;
+    private RaceController raceData;
+    private Vector3 trackMin;
+    private Vector3 trackMax;
 
     void Start()
     {
+        raceData = FindFirstObjectByType<RaceController>();
         DrawTrack();
     }
     void DrawTrack()
@@ -38,6 +41,8 @@ public class Minimap : MonoBehaviour
             if (p.z > max.z) max.z = p.z;
         }
 
+        trackMin = min;
+        trackMax = max;
         uiLine.thickness = trackWidth;
         uiLine.color = trackColor;
 
@@ -48,11 +53,9 @@ public class Minimap : MonoBehaviour
         {
             Vector3 worldPos = container.EvaluatePosition(i / (float)resolution);
 
-            // 2. Normalize to 0-1
             float normX = Mathf.InverseLerp(min.x, max.x, worldPos.x);
             float normY = Mathf.InverseLerp(min.z, max.z, worldPos.z);
 
-            // 3. Map to local UI coordinates
             float uiX = (normX - 0.5f) * rect.rect.width;
             float uiY = (normY - 0.5f) * rect.rect.height;
 
@@ -60,5 +63,16 @@ public class Minimap : MonoBehaviour
         }
 
         uiLine.SetPoints(uiPoints);
+    }
+
+    public Vector2 GetWorldToMinimap(Vector3 worldPos)
+    {
+        float normX = Mathf.InverseLerp(trackMin.x, trackMax.x, worldPos.x);
+        float normY = Mathf.InverseLerp(trackMin.z, trackMax.z, worldPos.z);
+        Rect rect = uiLine.rectTransform.rect;
+        float uiX = (normX - 0.5f) * rect.width;
+        float uiY = (normY - 0.5f) * rect.height;
+
+        return new Vector2(uiX, uiY);
     }
 }
