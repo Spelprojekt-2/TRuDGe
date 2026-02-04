@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private Transform RotationRoot;
     #endregion
+
     #region Ground normal vars
     [Header("Ground normal sampling")]
     [SerializeField] private LayerMask groundLayer;
@@ -19,8 +19,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool flipRaycastRigZ = false;
     [Tooltip("How long the raycasts are")]
     [SerializeField] private float rayCastLength = 6f;
-    [SerializeField] private bool showGizmos = true;
-    [SerializeField] private bool showGizmosSelected = false;
+
+    [Header("Gizmo display settings")]
+    [SerializeField] private ShowGizmoEnum showRig = ShowGizmoEnum.Selected;
+    [SerializeField] private ShowGizmoEnum showGroundSample = ShowGizmoEnum.Always;
+    [SerializeField] private ShowGizmoEnum showLocalAxes = ShowGizmoEnum.Never;
 
     private Vector3[] rigPoints => new Vector3[3]
     {
@@ -174,13 +177,17 @@ public class PlayerMovement : MonoBehaviour
     #region Debug
     public void OnDrawGizmos()
     {
-        if (showGizmos) DrawGizmos();
+        if (showRig == ShowGizmoEnum.Always) DrawRigGizmos();
+        if (showGroundSample == ShowGizmoEnum.Always) DrawGroundSampleGizmos();
+        if (showLocalAxes == ShowGizmoEnum.Always) DrawLocalAxesGizmos();
     }
     public void OnDrawGizmosSelected()
     {
-        if (showGizmosSelected) DrawGizmos();
+        if (showRig == ShowGizmoEnum.Selected) DrawRigGizmos();
+        if (showGroundSample == ShowGizmoEnum.Selected) DrawGroundSampleGizmos();
+        if (showLocalAxes == ShowGizmoEnum.Selected) DrawLocalAxesGizmos();
     }
-    private void DrawGizmos()
+    private void DrawRigGizmos()
     {
         // Draw ground sample rig
         Gizmos.color = Color.cyan;
@@ -201,7 +208,9 @@ public class PlayerMovement : MonoBehaviour
                 rigPoints[2] + Vector3.down * rayCastLength
             }
         );
-
+    }
+    private void DrawGroundSampleGizmos()
+    {
         // Draw ground normal
         Gizmos.color = Color.magenta;
 
@@ -211,7 +220,9 @@ public class PlayerMovement : MonoBehaviour
             (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
             (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
         );
-
+    }
+    private void DrawLocalAxesGizmos()
+    {
         // Draw rotated up
         Gizmos.color = Color.green;
         Gizmos.DrawLine(
