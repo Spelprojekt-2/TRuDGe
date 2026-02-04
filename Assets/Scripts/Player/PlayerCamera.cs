@@ -10,6 +10,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] RectTransform crosshair;
     [SerializeField] private Transform player;
     [SerializeField] private PlayerInput input;
+    [SerializeField] private Transform rotationRoot;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -69,7 +70,7 @@ public class PlayerCamera : MonoBehaviour
     {
         if (isPressingResetCrosshair)
         {
-            cursorPos = new Vector2(0f, 100f);
+            cursorPos = new Vector2(0f, 80f);
         }
     }
 
@@ -119,6 +120,8 @@ public class PlayerCamera : MonoBehaviour
 
         panningDist *= 0.01f * rotationIntensity;
 
+        cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, rotationRoot.transform.position, 10f * Time.deltaTime);
+        cameraHolder.transform.rotation = Quaternion.Slerp(cameraHolder.transform.rotation, rotationRoot.transform.rotation, 10f * Time.deltaTime);
         if (isPressingLookBack)
         {
             cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, 180 + camStartRotOffset.eulerAngles.y + panningDist.x, 0);
@@ -148,47 +151,44 @@ public class PlayerCamera : MonoBehaviour
 
     void ApplyAimAssist()
     {
-        Ray ray = cam.ScreenPointToRay(crosshair.position);
+        Ray ray = GetStableCrosshairRay();
         isOverEnemy = false;
-
-        if (Physics.SphereCast(ray, aimAssistDistance, out RaycastHit hit, 100f, enemyLayer))
+        RaycastHit[] hits = Physics.RaycastAll(ray, 100f, enemyLayer);
+        Collider currentHitCol = null;
+        foreach (var hit in hits)
         {
             if (hit.collider.gameObject != player.gameObject)
             {
-                isOverEnemy = true;
-
                 if (hit.transform.root == player.root)
                 {
-                    return; // It hit us, so stop here and don't apply assist
+                    isOverEnemy = false;
+                    continue; // It hit us, so stop here and don't apply assist
                 }
 
-                Vector3 rawScreenPoint = cam.WorldToScreenPoint(hit.collider.bounds.center);
-                Vector2 centeredTarget;
-                centeredTarget.x = rawScreenPoint.x - (Screen.width * cam.rect.x) - (screenSize.x / 2f);
-                centeredTarget.y = rawScreenPoint.y - (Screen.height * cam.rect.y) - (screenSize.y / 2f);
-
-                if (lookInputVector.magnitude > 0.01f)
-                {
-                    cursorPos = Vector2.Lerp(cursorPos, centeredTarget, assistStrength * Time.deltaTime * 5f);
-                }
-                Debug.DrawLine(cam.transform.position, hit.point, Color.yellow);
+                currentHitCol = hit.collider;
+                isOverEnemy = true;
+                break;
             }
         }
-    }
-    private void OnDrawGizmos()
-    {
-        if (cam == null || crosshair == null) return;
+        if (isOverEnemy)
+        {
+            if (lookInputVector.magnitude >= 0f)
+            {
+                Vector3 screenPos = cam.WorldToScreenPoint(currentHitCol.transform.position);
+                Rect pixelRect = cam.pixelRect;
+                Vector2 centeredTarget;
+                centeredTarget.x = (screenPos.x - pixelRect.x) - (pixelRect.width / 2f);
+                centeredTarget.y = (screenPos.y - pixelRect.y) - (pixelRect.height / 2f);
 
-        Ray ray = cam.ScreenPointToRay(crosshair.position);
-        float maxDist = 100f;
+                cursorPos = Vector2.Lerp(cursorPos, centeredTarget, assistStrength * Time.deltaTime * 5f);
+                //cursorPos = centeredTarget; 
+            }
 
-        Gizmos.color = isOverEnemy ? Color.green : Color.red;
-
-        Gizmos.DrawWireSphere(transform.position, aimAssistDistance);
-
-        Gizmos.DrawRay(transform.position, ray.direction * maxDist);
-
-        Gizmos.DrawWireSphere(transform.position + ray.direction * maxDist, aimAssistDistance);
-
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+        }
     }
 }
