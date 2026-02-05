@@ -6,7 +6,6 @@ public class Pickup : MonoBehaviour
     private PlayerPowerups player;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.transform.root.CompareTag("Player"))
         {
             player = other.gameObject.GetComponentInParent<PlayerPowerups>();
