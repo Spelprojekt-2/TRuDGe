@@ -55,6 +55,7 @@ public class PlayerShooting : MonoBehaviour
         PlayerCamera playerCam = GetComponent<PlayerCamera>();
             if (playerCam.isOverEnemy && prefab != projectilePrefab)
             {
+                Debug.Log("Homing missile");
                 bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, playerCam.currentTarget.transform);
             }
             else
