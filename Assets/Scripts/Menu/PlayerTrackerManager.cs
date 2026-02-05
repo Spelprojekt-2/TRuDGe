@@ -3,13 +3,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Windows;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     public string scene = "Level1";
     private Dictionary<int, PlayerInput> playerInputs = new();
-    [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
     private bool isMenu = true;
 
@@ -107,9 +105,9 @@ public class PlayerTrackerManager : MonoBehaviour
 private void UpdateAllPlayerCameras()
     {
         int currentTotal = playerInputs.Count;
-        foreach (var player in players)
+        foreach (var player in playerInputs)
         {
-            var splitCam = player.GetComponentInChildren<SplitScreenCamera>();
+            var splitCam = player.Value.GetComponentInChildren<SplitScreenCamera>();
             if (splitCam != null)
             {
                 splitCam.SetupCamera(currentTotal);
