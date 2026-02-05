@@ -52667,6 +52667,17 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &1523684138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 234624281745062732, guid: 85b0e20e31300434894d6bd6b7173ad3, type: 3}
+  m_PrefabInstance: {fileID: 1842642143}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1549541343
 GameObject:
   m_ObjectHideFlags: 0
@@ -58571,7 +58582,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1838837716971147322, guid: 85b0e20e31300434894d6bd6b7173ad3, type: 3}
       propertyPath: m_Name
-      value: MinimapCam
+      value: OverlayCamera
       objectReference: {fileID: 0}
     - target: {fileID: 8117450413405393129, guid: 85b0e20e31300434894d6bd6b7173ad3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58579,7 +58590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8117450413405393129, guid: 85b0e20e31300434894d6bd6b7173ad3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 36.30432
+      value: -283.47
       objectReference: {fileID: 0}
     - target: {fileID: 8117450413405393129, guid: 85b0e20e31300434894d6bd6b7173ad3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -79152,6 +79163,8 @@ MonoBehaviour:
   trackSpline: {fileID: 1985095219}
   lapsOnThisTrack: 3
   startingLine: {fileID: 697767086}
+  timeBeforeStartCountdown: 7
+  countdownText: {fileID: 1523684138}
 --- !u!43 &1987443562
 Mesh:
   m_ObjectHideFlags: 0
