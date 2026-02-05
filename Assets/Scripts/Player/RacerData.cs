@@ -41,6 +41,7 @@ public class RacerData : MonoBehaviour
     public void OnRacetrackScene()
     {
         OnRaceSceneStarted?.Invoke();
+        positionText.gameObject.SetActive(true);
     }
     public void OnRaceStarted()
     {
@@ -63,6 +64,10 @@ public class RacerData : MonoBehaviour
 
     }
 
+    public void DisablePosition()
+    {
+        positionText.gameObject.SetActive(false);
+    }
     public void UpdatePosition(int pos)
     {
         racePosition = pos;

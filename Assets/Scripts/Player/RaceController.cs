@@ -5,6 +5,8 @@ using UnityEngine.Splines;
 using System.Linq;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class RaceController : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class RaceController : MonoBehaviour
 
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += SummaryScene;
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
 
@@ -44,7 +48,7 @@ public class RaceController : MonoBehaviour
             if (timeToRaceStart < 0)
             {
                 raceStarted = true;
-                for (int i = 0;i < racers.Count;i++)
+                for (int i = 0; i < racers.Count; i++)
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
@@ -52,8 +56,18 @@ public class RaceController : MonoBehaviour
                 }
             }
         }
-
-
+        else
+        {
+            bool allDone = true;
+            for (int i = 0; i < racers.Count; i++)
+            {
+                if (racers[i].bestLap < lapsOnThisTrack) allDone = false;
+            }
+            if (allDone)
+            {
+                SceneManager.LoadScene("AfterRace");
+            }
+        }
         if (racers.Count == 0 || trackSpline == null) return;
 
         for (int i = 0; i < racers.Count; i++)
@@ -69,8 +83,24 @@ public class RaceController : MonoBehaviour
                 racersInOrder[i].UpdatePosition(i + 1);
             }
         }
+
     }
 
+
+    public void SummaryScene(Scene scene, LoadSceneMode loadmode)
+    {
+        string leaderboard = "";
+        RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
+        for (int i = 0; i < racersInOrder.Length; ++i)
+        {
+            racersInOrder[i].DisablePosition();
+            leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}";
+        }
+
+        FindFirstObjectByType<TextMeshProUGUI>().text = leaderboard;
+        Debug.Log(scene.name);
+        Destroy(this);
+    }
     void UpdateRaceProgress(RacerData racer)
     {
         if (racer.lap >= lapsOnThisTrack)

@@ -51,6 +51,7 @@ public class PlayerTrackerManager : MonoBehaviour
 
         isMenu =
             scene.name == "SelectionScreen" ||
+            scene.name == "AfterRace" ||
             scene.name == "MainMenu";
 
         if (!isMenu && !allPlayersSpawned)
