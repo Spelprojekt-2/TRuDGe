@@ -672,18 +672,6 @@ MonoBehaviour:
   OnRaceFinish:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4029194333597442243}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 5775183119610709466}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -708,12 +696,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnRaceSceneStarted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8035972993285117548}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_isKinematic
+      - m_Target: {fileID: 4029194333597442243}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -721,8 +706,11 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
+  OnRaceSceneStarted:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 6668579927141968441}
         m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
         m_MethodName: set_enabled
@@ -745,7 +733,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 5775183119610709466}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -762,9 +750,9 @@ MonoBehaviour:
   OnRaceStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8035972993285117548}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_isKinematic
+      - m_Target: {fileID: 4029194333597442243}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -772,7 +760,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 100
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 6668579927141968441}
         m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
