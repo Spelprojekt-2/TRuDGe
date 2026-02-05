@@ -42,8 +42,10 @@ public class PlayerShooting : MonoBehaviour
 
         Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
         targetPoint.y = barrelPosition.position.y;
-        bulletDir.y = 0;
-
+        if(bulletDir.y < 0)
+        {
+            bulletDir.y = 0;
+        }
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,
@@ -51,7 +53,7 @@ public class PlayerShooting : MonoBehaviour
         );
 
         PlayerCamera playerCam = GetComponent<PlayerCamera>();
-            if (playerCam.isOverEnemy)
+            if (playerCam.isOverEnemy && prefab != projectilePrefab)
             {
                 bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, playerCam.currentTarget.transform);
             }

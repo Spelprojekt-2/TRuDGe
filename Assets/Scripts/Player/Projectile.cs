@@ -5,8 +5,10 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] LayerMask groundLayer;
     private GameObject shooter;
     private Transform target = null;
+    private bool isFalling = false;
 
     public void PrepareProjectile(GameObject shooter, Transform target)
     {
@@ -17,19 +19,29 @@ public class Projectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(target == null);
+        if (isFalling) return;
+
         rb.linearVelocity = transform.forward * projectileSpeed;
+
         if (target != null)
         {
-            target.position = new Vector3(target.position.x, transform.position.y, target.position.z);
-            transform.LookAt(target.position);
+            Vector3 targetPos = target.position;
+            targetPos = new Vector3(target.position.x, transform.position.y, target.position.z);
+            transform.LookAt(targetPos);
+
+            Ray ray = new Ray(transform.position, transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f, groundLayer))
+            {
+                transform.position += Vector3.up * 1f;
+            }
         }
     }
 
     IEnumerator DeathTimer()
     {
-        yield return new WaitForSeconds(10f);
-        Destroy(gameObject);
+        yield return new WaitForSeconds(0.5f);
+        isFalling = true;
+        rb.useGravity = true;
     }
 
     private void OnTriggerEnter(Collider col)
@@ -38,13 +50,11 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-
-        Debug.Log("");
         if (col.transform.root.CompareTag("Player"))
         {
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
             force.y = 0;
-            col.GetComponentInParent<Rigidbody>().AddForceAtPosition(force, transform.position, ForceMode.Impulse);
+            col.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
         }
         Destroy(gameObject);
     }

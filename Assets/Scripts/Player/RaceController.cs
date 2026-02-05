@@ -89,6 +89,7 @@ public class RaceController : MonoBehaviour
 
     public void SummaryScene(Scene scene, LoadSceneMode loadmode)
     {
+        if (scene.name != "AfterRace") return;
         string leaderboard = "";
         RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
         for (int i = 0; i < racersInOrder.Length; ++i)
