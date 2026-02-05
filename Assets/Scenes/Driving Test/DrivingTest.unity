@@ -337,6 +337,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &659942046 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7478713241105780825, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+  m_PrefabInstance: {fileID: 1089584597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &685260909
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +677,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3553213513860641180, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553213513860641180, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 85.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5036917013792660464, guid: 3189c40174a28c648ab176c87b121106, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.89
@@ -728,6 +741,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[17].m_ActionName
       value: 'Player/Grapple[/Mouse/rightButton]'
       objectReference: {fileID: 0}
+    - target: {fileID: 8898599608325224939, guid: 3189c40174a28c648ab176c87b121106, type: 3}
+      propertyPath: rotationRoot
+      value: 
+      objectReference: {fileID: 659942046}
     m_RemovedComponents:
     - {fileID: 316810166874600747, guid: 3189c40174a28c648ab176c87b121106, type: 3}
     - {fileID: 7476808805818982267, guid: 3189c40174a28c648ab176c87b121106, type: 3}
@@ -756,11 +773,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheels:
-  - localPosition: {x: 0, y: 0.5, z: 1.2}
-    radius: 0.4
-  - localPosition: {x: 0, y: 0.5, z: 0.2}
-    radius: 0.4
+  - localPosition: {x: 0, y: 2.6, z: 1.49}
+    radius: 0.5
+  - localPosition: {x: 0, y: 0.48, z: -0.86}
+    radius: 1
+  - localPosition: {x: 0, y: -0.64, z: -3.29}
+    radius: 1
+  - localPosition: {x: 0, y: -0.27, z: -7.5}
+    radius: 1
+  - localPosition: {x: 0, y: 0.34, z: -9.79}
+    radius: 1
+  - localPosition: {x: 0, y: 2.46, z: -11.8}
+    radius: 0.5
+  innerTreadMargin: 0.2
+  outerTreadMargin: 0.1
   showGizmos: 2
+  angle: 0
 --- !u!1 &1155273669
 GameObject:
   m_ObjectHideFlags: 0
