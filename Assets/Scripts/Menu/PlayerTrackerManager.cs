@@ -11,6 +11,7 @@ public class PlayerTrackerManager : MonoBehaviour
     private Dictionary<int, PlayerInput> playerInputs = new();
     [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
+    private bool isMenu = true;
 
     private Dictionary<int, bool> readyStates = new();
     private SelectionUIList UIList;
@@ -50,7 +51,7 @@ public class PlayerTrackerManager : MonoBehaviour
             playerInputs[input.playerIndex] = input;
         }
 
-        bool isMenu =
+        isMenu =
             scene.name == "SelectionScreen" ||
             scene.name == "MainMenu";
 
@@ -98,11 +99,8 @@ public class PlayerTrackerManager : MonoBehaviour
             if (index == 0)
                 input.GetComponent<PlayerCamera>()?.MinimapPrep();
 
-            input.SwitchCurrentActionMap(
-                SceneManager.GetActiveScene().name == "SelectionScreen"
-                ? "UI"
-                : "Player"
-            );
+            input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
+            if (!isMenu) input.GetComponent<RacerData>().OnRacetrackScene();
         }
     }
 
