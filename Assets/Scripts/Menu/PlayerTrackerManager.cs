@@ -3,14 +3,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Windows;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     public string scene = "Level1";
     private Dictionary<int, PlayerInput> playerInputs = new();
-    [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
+    private bool isMenu = true;
 
     private Dictionary<int, bool> readyStates = new();
     private SelectionUIList UIList;
@@ -50,8 +49,9 @@ public class PlayerTrackerManager : MonoBehaviour
             playerInputs[input.playerIndex] = input;
         }
 
-        bool isMenu =
+        isMenu =
             scene.name == "SelectionScreen" ||
+            scene.name == "AfterRace" ||
             scene.name == "MainMenu";
 
         if (!isMenu && !allPlayersSpawned)
@@ -98,20 +98,17 @@ public class PlayerTrackerManager : MonoBehaviour
             if (index == 0)
                 input.GetComponent<PlayerCamera>()?.MinimapPrep();
 
-            input.SwitchCurrentActionMap(
-                SceneManager.GetActiveScene().name == "SelectionScreen"
-                ? "UI"
-                : "Player"
-            );
+            input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
+            if (!isMenu) input.GetComponent<RacerData>().OnRacetrackScene();
         }
     }
 
 private void UpdateAllPlayerCameras()
     {
         int currentTotal = playerInputs.Count;
-        foreach (var player in players)
+        foreach (var player in playerInputs)
         {
-            var splitCam = player.GetComponentInChildren<SplitScreenCamera>();
+            var splitCam = player.Value.GetComponentInChildren<SplitScreenCamera>();
             if (splitCam != null)
             {
                 splitCam.SetupCamera(currentTotal);
