@@ -28,7 +28,7 @@ public class PlayerShooting : MonoBehaviour
             if(isShooting)
             {
                 timer = 0;
-                Shoot();
+                Shoot(projectilePrefab);
             }
         }
         else
@@ -36,7 +36,7 @@ public class PlayerShooting : MonoBehaviour
             timer += Time.deltaTime;
         }
     }
-    public void Shoot()
+    public void Shoot(GameObject prefab)
     {
         Vector3 targetPoint = GetTargetPoint();
 
@@ -45,14 +45,22 @@ public class PlayerShooting : MonoBehaviour
         bulletDir.y = 0;
 
         GameObject bullet = Instantiate(
-            projectilePrefab,
+            prefab,
             barrelPosition.position,
             Quaternion.LookRotation(bulletDir)
         );
 
-        // Pass the direction to the projectile script
-        bullet.GetComponent<Projectile>().SetDirection(gameObject);
+        PlayerCamera playerCam = GetComponent<PlayerCamera>();
+            if (playerCam.isOverEnemy)
+            {
+                bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, playerCam.currentTarget.transform);
+            }
+            else
+            {
+                bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null);
+            }
     }
+
     private Vector3 GetTargetPoint()
     {
         // Call the new stable ray function from your Camera script
