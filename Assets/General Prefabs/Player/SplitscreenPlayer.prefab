@@ -592,6 +592,7 @@ MonoBehaviour:
   showGroundSample: 2
   showLocalAxes: 0
   topSpeed: 100
+  externalTopSpeedModifier: 1
   baseAcceleration: 50
   accelerationOverSpeedModifier:
     serializedVersion: 2
@@ -618,6 +619,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   inAirAccelerationModifier: 0.1
+  externalAccelerationModifier: 1
   baseTurningSpeed: 3
   turningSpeedOverSpeedModifier:
     serializedVersion: 2
@@ -1323,9 +1325,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8035972993285117548}
     - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 2227583658322248293}
+    - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
       propertyPath: vehicleRigidbody
       value: 
       objectReference: {fileID: 8035972993285117548}
+    - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: grappleUIIndicator
+      value: 
+      objectReference: {fileID: 2193116881237777157}
     - target: {fileID: 8006152340013823523, guid: 8f15b085a70e53341866399247cb99da, type: 3}
       propertyPath: m_Name
       value: Grapple
@@ -1455,22 +1465,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2628281607932798796, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3635494156381062691, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 7232532604337937581, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2227583658322248293}
-    - target: {fileID: 8637081683181989394, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1484,6 +1482,11 @@ Canvas:
 --- !u!224 &1618995087796112529 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8368145138447290216, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
+  m_PrefabInstance: {fileID: 7085935582683104249}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2193116881237777157 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8951406674107144444, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
   m_PrefabInstance: {fileID: 7085935582683104249}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3277330250164560602 stripped

@@ -13,7 +13,6 @@ public class TriggerEvent : MonoBehaviour
     [SerializeField] private TriggerEventType triggerEventType;
     [SerializeField] private string targetTag = "Player";
     public UnityEvent<GameObject> onTrigger;
-
     void OnTriggerEnter(Collider other)
     {
         if (triggerEventType == TriggerEventType.Enter && other.CompareTag(targetTag))
