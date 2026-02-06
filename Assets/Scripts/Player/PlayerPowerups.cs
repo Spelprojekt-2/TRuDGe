@@ -1,13 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using TMPro;
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject homingMissile;
+    [SerializeField] private int magnetPickupRange = 30;
+    [SerializeField] private TextMeshProUGUI currPowerUpText;
     private PowerUpType? type = null;
     private bool usedPowerUp;
     private float normalTopSpeedModifier;
     private bool usingTurbo = false;
+    private bool usingMagnet = false;
+
+    private void Start()
+    {
+        currPowerUpText.text = "";
+    }
     public void UsePowerUpInput(InputAction.CallbackContext context)
     {
         usedPowerUp = context.performed;
@@ -16,12 +25,14 @@ public class PlayerPowerups : MonoBehaviour
     {
         gasolineTank,
         homingMissle,
-        turbo
+        turbo,
+        magnet
     };
     public void GainedPowerUp(PowerUpType type)
     {
         this.type = type;
-        if(type == PowerUpType.gasolineTank)
+        PowerUpUIUpdate();
+        if (type == PowerUpType.gasolineTank)
         {
             if (usingTurbo)
             {
@@ -46,14 +57,20 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.turbo:
+                if (usingTurbo) return;
                 StartCoroutine(Turbo());
                 break;
 
-            default:
+            case PowerUpType.magnet:
+                StartCoroutine(Magnet());
                 break;
+
+            default:
+                return;
         }
         Debug.Log("Used " + type);
         type = null;
+        PowerUpUIUpdate();
     }
 
     private void Update()
@@ -62,10 +79,48 @@ public class PlayerPowerups : MonoBehaviour
         {
             UsePowerUp();
         }
+
+        if (usingMagnet)
+        {
+            Pickup[] gasolineTanks = FindObjectsOfType<Pickup>();
+
+            foreach (var gasTank in gasolineTanks)
+            {
+                if(gasTank.powerUpType == PowerUpType.gasolineTank)
+                {
+                    if (Vector2.Distance(transform.position, gasTank.transform.position) <= magnetPickupRange)
+                    {
+                        var t = 0.1f;
+                        gasTank.transform.position = Vector3.Lerp(gasTank.transform.position, transform.position, t);
+                    }
+                }
+            }
+        }
+    }
+
+    void PowerUpUIUpdate()
+    {
+        if(type == PowerUpType.homingMissle)
+        {
+            currPowerUpText.text = "Homing Missile";
+        }
+        else if(type == PowerUpType.turbo)
+        {
+            currPowerUpText.text = "Turbo";
+        }
+        else if (type == PowerUpType.magnet)
+        {
+            currPowerUpText.text = "Magnet";
+        }
+        else
+        {
+            currPowerUpText.text = "";
+        }
     }
 
     IEnumerator Turbo()
     {
+        usingTurbo = true;
         var playerMovement = GetComponent<PlayerMovement>();
 
         var normalAccelerationModifier = playerMovement.externalAccelerationModifier;
@@ -79,5 +134,13 @@ public class PlayerPowerups : MonoBehaviour
         playerMovement.externalAccelerationModifier = normalAccelerationModifier;
         playerMovement.externalTopSpeedModifier = normalTopSpeedModifier;
         playerMovement.externalIgnoreInAirAccelerationModifier = false;
+        usingTurbo = false;
+    }
+
+    IEnumerator Magnet()
+    {
+        usingMagnet = true;
+        yield return new WaitForSeconds(10f);
+        usingMagnet = false;
     }
 }
