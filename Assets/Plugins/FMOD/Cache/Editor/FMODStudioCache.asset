@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8015959497500968120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Music_WinMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Music_WinMusic
+  Guid:
+    Data1: -1473755428
+    Data2: 1243339096
+    Data3: -1603060331
+    Data4: 2025871491
+  Banks:
+  - {fileID: -7304124580301458778}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7672785455856281495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Music_InGame
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Music_InGame
+  Guid:
+    Data1: 726454340
+    Data2: 1339017558
+    Data3: 1311032235
+    Data4: -2145458457
+  Banks:
+  - {fileID: -7304124580301458778}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 138788
 --- !u!114 &-7304124580301458778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,10 +69,10 @@ MonoBehaviour:
   Path: Assets/Audio/Banks/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639058882524374035
+  lastModified: 639059678373884410
   FileSizes:
   - Name: Desktop
-    Value: 506
+    Value: 10331808
   Exists: 1
 --- !u!114 &-6095565888938044330
 MonoBehaviour:
@@ -48,6 +102,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 5000
+--- !u!114 &-5824637718080083035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Music_PowerUps
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Music_PowerUps
+  Guid:
+    Data1: 149569241
+    Data2: 1195743014
+    Data3: 1995336863
+    Data4: 399304952
+  Banks:
+  - {fileID: -7304124580301458778}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3495741260033718951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,32 +168,12 @@ MonoBehaviour:
   Path: Assets/Audio/Banks/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639058882524792336
+  lastModified: 639059678374500830
   FileSizes:
   - Name: Desktop
-    Value: 14244
+    Value: 127552
   Exists: 1
---- !u!114 &-2701243806708319348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/Audio/Banks/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 639058882524318350
-  FileSizes:
-  - Name: Desktop
-    Value: 3156
-  Exists: 1
---- !u!114 &-2695083670352540875
+--- !u!114 &-2711747148907680998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +183,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/GrappleGun/GrappleState
+  m_Name: parameter:/GrappleCanon/GrappleState
   m_EditorClassIdentifier: 
   Name: GrappleState
   StudioPath: 
@@ -139,6 +200,26 @@ MonoBehaviour:
   - OnHold
   - Returning
   - End
+  Exists: 1
+--- !u!114 &-2701243806708319348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Banks/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639059678351671667
+  FileSizes:
+  - Name: Desktop
+    Value: 3312
   Exists: 1
 --- !u!114 &-1299460294803711827
 MonoBehaviour:
@@ -186,36 +267,46 @@ MonoBehaviour:
   - {fileID: -2949230140697014379}
   EditorEvents:
   - {fileID: -1299460294803711827}
-  - {fileID: 3913912979902776755}
-  - {fileID: 1368948479935879877}
-  - {fileID: 7518348505973047999}
-  - {fileID: 5165148586710918884}
   - {fileID: -6095565888938044330}
   - {fileID: 3863846697666886120}
+  - {fileID: 1777801382191191353}
+  - {fileID: 5665798602078605727}
+  - {fileID: -7672785455856281495}
+  - {fileID: 8448245362353335133}
+  - {fileID: -5824637718080083035}
+  - {fileID: -8015959497500968120}
+  - {fileID: 1485846646813751730}
   EditorParameters:
   - {fileID: -3495741260033718951}
+  - {fileID: 2172483927529724920}
   MasterBanks:
   - {fileID: -2701243806708319348}
   StringsBanks:
   - {fileID: 2471770865485734388}
   cacheVersion: 131858
-  cacheTime: 639058882524792336
+  cacheTime: 639059678374500830
   SerializableEventsDict:
   - key: event:/Sound/UI/Button_Click
     index: 0
-  - key: event:/Sound/Nonsense/2
-    index: 1
-  - key: event:/Sound/Nonsense/3
-    index: 2
-  - key: event:/Sound/Tanks/GrappleGun
-    index: 3
-  - key: event:/Sound/Nonsense/1
-    index: 4
   - key: event:/Sound/Tanks/VehicleEngine
-    index: 5
+    index: 1
   - key: event:/Sound/Tanks/GrappleHook
+    index: 2
+  - key: event:/Music/Music_TrainingGround
+    index: 3
+  - key: event:/Music/Music_FlerBanorIDK
+    index: 4
+  - key: event:/Music/Music_InGame
+    index: 5
+  - key: event:/Music/Music_MainMenu
     index: 6
---- !u!114 &1368948479935879877
+  - key: event:/Music/Music_PowerUps
+    index: 7
+  - key: event:/Music/Music_WinMusic
+    index: 8
+  - key: event:/Sound/Tanks/GrappleCanon
+    index: 9
+--- !u!114 &1485846646813751730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,23 +316,75 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound/Nonsense/3
+  m_Name: event:/Sound/Tanks/GrappleCanon
   m_EditorClassIdentifier: 
-  Path: event:/Sound/Nonsense/3
+  Path: event:/Sound/Tanks/GrappleCanon
   Guid:
-    Data1: 2127632517
-    Data2: 1096667216
-    Data3: -855946108
-    Data4: -1333589135
+    Data1: -958123878
+    Data2: 1173704611
+    Data3: -253677379
+    Data4: -1429871009
   Banks:
   - {fileID: -2949230140697014379}
   IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -2711747148907680998}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4200
+--- !u!114 &1777801382191191353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Music_TrainingGround
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Music_TrainingGround
+  Guid:
+    Data1: -705456871
+    Data2: 1314446537
+    Data3: -2057530207
+    Data4: -496183629
+  Banks:
+  - {fileID: -7304124580301458778}
+  IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 44738
+--- !u!114 &2172483927529724920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/PlayerCount
+  m_EditorClassIdentifier: 
+  Name: PlayerCount
+  StudioPath: parameter:/Generic/PlayerCount
+  Min: 1
+  Max: 4
+  Default: 1
+  ID:
+    data1: 1031266567
+    data2: 419881971
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &2471770865485734388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,10 +400,10 @@ MonoBehaviour:
   Path: Assets/Audio/Banks/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639058882524338366
+  lastModified: 639059678351681670
   FileSizes:
   - Name: Desktop
-    Value: 1706
+    Value: 1912
   Exists: 1
 --- !u!114 &3252529388141425918
 MonoBehaviour:
@@ -315,60 +458,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 160
---- !u!114 &3913912979902776755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound/Nonsense/2
-  m_EditorClassIdentifier: 
-  Path: event:/Sound/Nonsense/2
-  Guid:
-    Data1: 594190467
-    Data2: 1095989273
-    Data3: 147050645
-    Data4: 1807263154
-  Banks:
-  - {fileID: -2949230140697014379}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &5165148586710918884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound/Nonsense/1
-  m_EditorClassIdentifier: 
-  Path: event:/Sound/Nonsense/1
-  Guid:
-    Data1: 1001751200
-    Data2: 1107979064
-    Data3: -1333221206
-    Data4: 783926051
-  Banks:
-  - {fileID: -2949230140697014379}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &5581135374152863070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +486,33 @@ MonoBehaviour:
   - Metal
   - Wood
   Exists: 1
+--- !u!114 &5665798602078605727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Music_FlerBanorIDK
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Music_FlerBanorIDK
+  Guid:
+    Data1: -115748572
+    Data2: 1099456636
+    Data3: -1638553967
+    Data4: 1368287730
+  Banks:
+  - {fileID: -7304124580301458778}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &6050493449860090324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +537,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &7518348505973047999
+--- !u!114 &8448245362353335133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -431,21 +547,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Sound/Tanks/GrappleGun
+  m_Name: event:/Music/Music_MainMenu
   m_EditorClassIdentifier: 
-  Path: event:/Sound/Tanks/GrappleGun
+  Path: event:/Music/Music_MainMenu
   Guid:
-    Data1: -958123878
-    Data2: 1173704611
-    Data3: -253677379
-    Data4: -1429871009
+    Data1: 1410650960
+    Data2: 1199002596
+    Data3: -1574929750
+    Data4: -2054624318
   Banks:
-  - {fileID: -2949230140697014379}
+  - {fileID: -7304124580301458778}
   IsStream: 0
-  Is3D: 1
-  IsOneShot: 0
-  Parameters:
-  - {fileID: -2695083670352540875}
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 4200
+  Length: 0
