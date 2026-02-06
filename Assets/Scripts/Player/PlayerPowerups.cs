@@ -30,8 +30,6 @@ public class PlayerPowerups : MonoBehaviour
     };
     public void GainedPowerUp(PowerUpType type)
     {
-        this.type = type;
-        PowerUpUIUpdate();
         if (type == PowerUpType.gasolineTank)
         {
             if (usingTurbo)
@@ -42,7 +40,11 @@ public class PlayerPowerups : MonoBehaviour
             {
                 GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
             }
-            this.type = null;
+        }
+        else
+        {
+            this.type = type;
+            PowerUpUIUpdate();
         }
     }
 
@@ -88,10 +90,9 @@ public class PlayerPowerups : MonoBehaviour
             {
                 if(gasTank.powerUpType == PowerUpType.gasolineTank)
                 {
-                    if (Vector2.Distance(transform.position, gasTank.transform.position) <= magnetPickupRange)
+                    if (Vector3.Distance(transform.position, gasTank.transform.position) <= magnetPickupRange)
                     {
-                        var t = 0.1f;
-                        gasTank.transform.position = Vector3.Lerp(gasTank.transform.position, transform.position, t);
+                        gasTank.SetMagnetTarget(transform);
                     }
                 }
             }
@@ -126,7 +127,7 @@ public class PlayerPowerups : MonoBehaviour
         var normalAccelerationModifier = playerMovement.externalAccelerationModifier;
         normalTopSpeedModifier = playerMovement.externalTopSpeedModifier;
 
-        playerMovement.externalAccelerationModifier = 2f;
+        playerMovement.externalAccelerationModifier = 1.75f;
         playerMovement.externalTopSpeedModifier = 2f;
         playerMovement.externalIgnoreInAirAccelerationModifier = true;
         yield return new WaitForSeconds(2f);
@@ -140,7 +141,7 @@ public class PlayerPowerups : MonoBehaviour
     IEnumerator Magnet()
     {
         usingMagnet = true;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         usingMagnet = false;
     }
 }
