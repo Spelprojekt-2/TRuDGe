@@ -69,7 +69,7 @@ MonoBehaviour:
   Path: Assets/Audio/Banks/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639059678373884410
+  lastModified: 639059825924248644
   FileSizes:
   - Name: Desktop
     Value: 10331808
@@ -168,10 +168,10 @@ MonoBehaviour:
   Path: Assets/Audio/Banks/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639059678374500830
+  lastModified: 639059825925154183
   FileSizes:
   - Name: Desktop
-    Value: 127552
+    Value: 10454304
   Exists: 1
 --- !u!114 &-2711747148907680998
 MonoBehaviour:
@@ -197,8 +197,8 @@ MonoBehaviour:
   IsGlobal: 0
   Labels:
   - Firing
-  - OnHold
-  - Returning
+  - Hit
+  - Return
   - End
   Exists: 1
 --- !u!114 &-2701243806708319348
@@ -284,7 +284,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 2471770865485734388}
   cacheVersion: 131858
-  cacheTime: 639059678374500830
+  cacheTime: 639059825925154183
   SerializableEventsDict:
   - key: event:/Sound/UI/Button_Click
     index: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
     Data4: -1429871009
   Banks:
   - {fileID: -2949230140697014379}
-  IsStream: 0
+  IsStream: 1
   Is3D: 1
   IsOneShot: 0
   Parameters:
@@ -360,7 +360,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 44738
+  Length: 44669
 --- !u!114 &2172483927529724920
 MonoBehaviour:
   m_ObjectHideFlags: 0

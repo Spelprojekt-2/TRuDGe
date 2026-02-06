@@ -11,7 +11,8 @@ public class AudioManager : MonoBehaviour
     // Här ligger variabler etc.
     [Tooltip("List of bus paths to pause, e.g., 'bus:/SFX', 'bus:/Music'")]
     [SerializeField] private List<string> busesToMute;
-
+    [SerializeField] private EventReference MusicTest;
+    private EventInstance musicInstance;
     #endregion
 
     private void Awake()
@@ -25,6 +26,12 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        musicInstance = RuntimeManager.CreateInstance(MusicTest);
+        musicInstance.start();
     }
 
     /// <summary>
