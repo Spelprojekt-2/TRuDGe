@@ -24,8 +24,9 @@ public class Pickup : MonoBehaviour
             }
             else
             {
-                PlayerPowerups.PowerUpType randomPowerUp = (PlayerPowerups.PowerUpType)Random.Range(0, System.Enum.GetValues(typeof(PlayerPowerups.PowerUpType)).Length);
+                PlayerPowerups.PowerUpType randomPowerUp = (PlayerPowerups.PowerUpType)Random.Range(1, System.Enum.GetValues(typeof(PlayerPowerups.PowerUpType)).Length);
                 player.GainedPowerUp(randomPowerUp);
+                Debug.Log(randomPowerUp);
             }
             StartCoroutine(RespawnTimer());
         }

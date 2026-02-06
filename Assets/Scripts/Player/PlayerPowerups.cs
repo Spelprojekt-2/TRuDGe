@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject homingMissile;
-    private PowerUpType type;
+    private PowerUpType? type = null;
     private bool usedPowerUp;
 
     public void UsePowerUpInput(InputAction.CallbackContext context)
@@ -12,7 +13,6 @@ public class PlayerPowerups : MonoBehaviour
     }
     public enum PowerUpType
     {
-        nothing,
         gasolineTank,
         homingMissle,
         turbo
@@ -20,6 +20,11 @@ public class PlayerPowerups : MonoBehaviour
     public void GainedPowerUp(PowerUpType type)
     {
         this.type = type;
+        if(type == PowerUpType.gasolineTank)
+        {
+            GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+            this.type = null;
+        }
     }
 
     private void UsePowerUp()
@@ -28,23 +33,19 @@ public class PlayerPowerups : MonoBehaviour
 
         switch (type)
         {
-            case PowerUpType.nothing:
-                Debug.Log("Used " + type);
-                return;
-
-            case PowerUpType.gasolineTank:
-                GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
-                break;
-
             case PowerUpType.homingMissle:
                 GetComponent<PlayerShooting>().Shoot(homingMissile);
+                break;
+
+            case PowerUpType.turbo:
+                StartCoroutine(Turbo());
                 break;
 
             default:
                 break;
         }
-
-        type = PowerUpType.nothing;
+        Debug.Log("Used " + type);
+        type = null;
     }
 
     private void Update()
@@ -53,5 +54,21 @@ public class PlayerPowerups : MonoBehaviour
         {
             UsePowerUp();
         }
+    }
+
+    IEnumerator Turbo()
+    {
+        var playerMovement = GetComponent<PlayerMovement>();
+
+        var normalAccelerationModifier = playerMovement.externalAccelerationModifier;
+        var normalTopSpeedModifier = playerMovement.externalTopSpeedModifier;
+
+        playerMovement.externalAccelerationModifier = 2f;
+        playerMovement.externalTopSpeedModifier = 2f;
+
+        yield return new WaitForSeconds(2f);
+
+        playerMovement.externalAccelerationModifier = normalAccelerationModifier;
+        playerMovement.externalTopSpeedModifier = normalTopSpeedModifier;
     }
 }

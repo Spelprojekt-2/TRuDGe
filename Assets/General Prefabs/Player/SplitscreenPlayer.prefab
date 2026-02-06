@@ -242,6 +242,33 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 40.14354
+      value: 6.0021367
+      inSlope: 0.0006862395
+      outSlope: 0.0006862395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 90.474365
+      value: 7.350048
+      inSlope: -0.00083342596
+      outSlope: -0.00083342596
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.46081722
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 90.50381
+      value: 9.013463
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    - serializedVersion: 3
       time: 101.810455
       value: 9.0206995
       inSlope: 0
@@ -586,33 +613,44 @@ MonoBehaviour:
   showRig: 1
   showGroundSample: 2
   showLocalAxes: 0
-  topSpeed: 100
-  baseAcceleration: 50
+  topSpeed: 90
+  externalTopSpeedModifier: 1
+  baseAcceleration: 40
   accelerationOverSpeedModifier:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.00015013147
+      outSlope: 0.00015013147
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7011308
+      value: 1.0001053
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.999241
+      value: 1.5083537
+      inSlope: 1.7049013
+      outSlope: 1.7049013
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   inAirAccelerationModifier: 0.1
+  externalAccelerationModifier: 1
   baseTurningSpeed: 3
   turningSpeedOverSpeedModifier:
     serializedVersion: 2
@@ -628,7 +666,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1
+      value: 0.59963226
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -638,7 +676,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inAirTurningModifier: 0.1
+  inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
   onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
@@ -651,7 +689,7 @@ Rigidbody:
   m_GameObject: {fileID: 4523023332637477557}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0.5
+  m_Drag: 0.4
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -988,7 +1026,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 521
+    m_Bits: 16905
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -1011,6 +1049,10 @@ PrefabInstance:
     - target: {fileID: 489529710812375878, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094731879804698890, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 17271
       objectReference: {fileID: 0}
     - target: {fileID: 4199132922079827961, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_Layer
