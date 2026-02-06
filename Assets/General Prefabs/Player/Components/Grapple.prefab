@@ -301,9 +301,10 @@ GameObject:
   - component: {fileID: 4349934064348036614}
   - component: {fileID: 4536510343757941580}
   - component: {fileID: 832853339737233674}
+  - component: {fileID: -6874027879063259045}
   m_Layer: 0
   m_Name: Grapple
-  m_TagString: Untagged
+  m_TagString: Grappler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -337,6 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8676d4f3deb21e240b3a4cb0fabb3943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grappleUIIndicator: {fileID: 0}
+  playerCamera: {fileID: 0}
   vehicleRigidbody: {fileID: 0}
   grappleAzimuthObject: {fileID: 5387242127863908767}
   grappleElevationObject: {fileID: 2370274047725445919}
@@ -449,6 +452,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!135 &-6874027879063259045
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8006152340013823523}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8663252895940119078
 GameObject:
   m_ObjectHideFlags: 0
