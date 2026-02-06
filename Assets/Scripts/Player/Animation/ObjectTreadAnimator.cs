@@ -193,8 +193,6 @@ public class ObjectTreadAnimator : MonoBehaviour
             }
             public void DrawGizmos()
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(prevEndPoint, 0.05f);
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(center, center + RotateVectorOnX(new Vector3(0, 2, 0), arcStartAngle));
                 Gizmos.color = Color.blue;
@@ -228,10 +226,6 @@ public class ObjectTreadAnimator : MonoBehaviour
 
     [Header("Gizmos")]
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Always;
-    [SerializeField][Range(0, 2 * Mathf.PI)] private float angle = 0f;
-    [SerializeField] private Vector2 viktor = new Vector2(0, 1);
-    [SerializeField] private float tanViktor = 0f;
-    [SerializeField] private float aCosViktor = 0f;
 
     private TreadSpline treadSpline;
 
@@ -277,14 +271,6 @@ public class ObjectTreadAnimator : MonoBehaviour
         }
 
         treadSpline.DrawGizmos();
-        
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(
-            t.TransformPoint(new Vector3(0, 0, 0)),
-            t.TransformPoint(new Vector3(0, viktor.y, viktor.x))
-        );
-        tanViktor = Mathf.Atan2(viktor.x, viktor.y);
-        aCosViktor = Mathf.Acos(viktor.x / viktor.magnitude);
 
 
         // Vector3 v0 = wheels[1].localPosition - wheels[0].localPosition;
@@ -352,12 +338,6 @@ public class ObjectTreadAnimator : MonoBehaviour
         //         t.TransformPoint( lineP1 )
         //     );
         // }
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(
-            Vector3.zero,
-            RotateVectorOnX(new Vector3(0, 0, 5f), angle)
-        );
     }
 
     #region Gizmos Helpers
