@@ -34,8 +34,13 @@ public class RacerData : MonoBehaviour
             lap++;
             bestLap++;
             OnNewLap?.Invoke();
-            lapCountText.text = $"Lap: {lap+1}/{trackLaps}";
+            UpdateLapCount();
         }
+    }
+
+    public void UpdateLapCount()
+    {
+        lapCountText.text = $"Lap: {lap + 1}/{trackLaps}";
     }
 
     public void OnRacetrackScene()
@@ -66,7 +71,7 @@ public class RacerData : MonoBehaviour
 
     public void DisablePosition()
     {
-        positionText.gameObject.SetActive(false);
+        if (positionText != null) positionText.gameObject.SetActive(false);
     }
     public void UpdatePosition(int pos)
     {

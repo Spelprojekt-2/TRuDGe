@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 public class Pickup : MonoBehaviour
 {
-    [SerializeField] private PlayerPowerups.PowerUpType powerUpType;
+    [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
 
     private PlayerPowerups player;
