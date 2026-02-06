@@ -36,7 +36,7 @@ public class ObjectTreadAnimator : MonoBehaviour
 
             Vector3 tangentPointDir = TreadSplineWheel.RotateVectorOnX( dir, theta );
             Vector3 tangentPointVector = tangentPointDir * r0;
-            Vector3 lineDir = new Vector3(0, -tangentPointDir.z, tangentPointDir.y);
+            Vector3 lineDir = new Vector3(0, tangentPointDir.z, -tangentPointDir.y);
             Vector3 lineStart = wheelData[^1].localPosition + tangentPointVector;
             Vector3 prevEndPoint = lineStart + lineDir * lineLength;
 
@@ -94,6 +94,13 @@ public class ObjectTreadAnimator : MonoBehaviour
             }
             return min;
         }
+        public void DrawGizmos()
+        {
+            foreach (TreadSplineWheel wheel in wheels)
+            {
+                wheel.DrawGizmos();
+            }
+        }
         struct TreadSplineWheel
         {
             public Vector3 center { get; private set; }
@@ -108,6 +115,7 @@ public class ObjectTreadAnimator : MonoBehaviour
             private float arcStartAngle;
             private float arcSpanAngle;
             private float arcLength => arcSpanAngle * radius;
+            private Vector3 prevEndPoint;
             
             public TreadSplineWheel(Vector3 center, float radius, Vector3 prevEndPoint, Vector3 nextCenter, float nextRadius, float distanceFromStart)
             {
@@ -130,13 +138,15 @@ public class ObjectTreadAnimator : MonoBehaviour
 
                 Vector3 tangentPointDir = RotateVectorOnX( dir, theta );
                 Vector3 tangentPointVector = tangentPointDir * radius;
-                lineDir = new Vector3(0, -tangentPointDir.z, tangentPointDir.y);
+                lineDir = new Vector3(0, tangentPointDir.z, -tangentPointDir.y);
 
                 lineStart = center + tangentPointVector;
 
+                this.prevEndPoint = prevEndPoint;
+
                 // Calculate arc angles
-                Vector3 toPrev = (prevEndPoint - center).normalized;
-                arcStartAngle = Mathf.Atan2(toPrev.z, toPrev.y);
+                Vector3 toPrev = prevEndPoint - center;
+                arcStartAngle = -Mathf.Atan2(toPrev.z, toPrev.y);
                 arcSpanAngle = Vector2.SignedAngle(
                     new Vector2(toPrev.z, toPrev.y),
                     new Vector2(tangentPointVector.z, tangentPointVector.y)
@@ -152,7 +162,7 @@ public class ObjectTreadAnimator : MonoBehaviour
                 if (distance < arcLength)
                 {
                     float angleOfPoint = (distance / arcLength * arcSpanAngle) + arcStartAngle;
-                    return center + RotateVectorOnX(new Vector3(0, 0, radius), angleOfPoint);
+                    return center + RotateVectorOnX(new Vector3(0, radius, 0), angleOfPoint);
                 }
                 else
                 {
@@ -166,14 +176,29 @@ public class ObjectTreadAnimator : MonoBehaviour
                 if (distance < arcLength)
                 {
                     // Wheel rotation
+                    float angleOfPoint = (distance / arcLength * arcSpanAngle) + arcStartAngle;
+                    Vector3 v = RotateVectorOnX(new Vector3(0, 1, 0), angleOfPoint);
+                    return Quaternion.LookRotation(
+                        new Vector3(0, v.z, -v.y),
+                        v
+                    );
                 }
                 else
                 {
                     distance -= arcLength;
                     // Line segment rotation
+                    Vector3 up = new Vector3(0, -lineDir.z, lineDir.y);
+                    return Quaternion.LookRotation(lineDir, up);
                 }
-
-                return Quaternion.identity;
+            }
+            public void DrawGizmos()
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(prevEndPoint, 0.05f);
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(center, center + RotateVectorOnX(new Vector3(0, 2, 0), arcStartAngle));
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(center, center + RotateVectorOnX(new Vector3(0, 2, 0), arcStartAngle + arcSpanAngle));
             }
             public static float TwoCircleTangentLength(float r1, float r2, float d)
             {
@@ -183,7 +208,7 @@ public class ObjectTreadAnimator : MonoBehaviour
             {
                 float tangent = TwoCircleTangentLength(r1, r2, d);
                 float hypotenuse = Mathf.Sqrt(tangent * tangent + r2 * r2); 
-                return Mathf.Acos((r1 * r1 + d * d - hypotenuse * hypotenuse) / (2 * r1 * d));
+                return -Mathf.Acos((r1 * r1 + d * d - hypotenuse * hypotenuse) / (2 * r1 * d));
             }
             public static Vector3 RotateVectorOnX(Vector3 v, float angle)
             {
@@ -204,6 +229,9 @@ public class ObjectTreadAnimator : MonoBehaviour
     [Header("Gizmos")]
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Always;
     [SerializeField][Range(0, 2 * Mathf.PI)] private float angle = 0f;
+    [SerializeField] private Vector2 viktor = new Vector2(0, 1);
+    [SerializeField] private float tanViktor = 0f;
+    [SerializeField] private float aCosViktor = 0f;
 
     private TreadSpline treadSpline;
 
@@ -233,18 +261,32 @@ public class ObjectTreadAnimator : MonoBehaviour
         
         Gizmos.color = Color.magenta;
         
-        float segmentLength = 0.05f;
+        float segmentLength = 0.2f;
         for (float d = segmentLength; d < treadSpline.totalLength; d += segmentLength)
         {
-            if (Gizmos.color == Color.magenta)
-                Gizmos.color = Color.yellow;
-            else
-                Gizmos.color = Color.magenta;
+            Gizmos.color = Color.magenta;
             Vector3 point0 = treadSpline.GetLocation(d - segmentLength);
             Vector3 point1 = treadSpline.GetLocation(d);
             Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point1));
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point0 + treadSpline.GetRotation(d - segmentLength) * Vector3.up * segmentLength));
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point0 + treadSpline.GetRotation(d - segmentLength) * Vector3.forward * segmentLength/2));
         }
+
+        treadSpline.DrawGizmos();
         
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(
+            t.TransformPoint(new Vector3(0, 0, 0)),
+            t.TransformPoint(new Vector3(0, viktor.y, viktor.x))
+        );
+        tanViktor = Mathf.Atan2(viktor.x, viktor.y);
+        aCosViktor = Mathf.Acos(viktor.x / viktor.magnitude);
+
+
         // Vector3 v0 = wheels[1].localPosition - wheels[0].localPosition;
         // float dist0 = v0.magnitude;
         // float tangent0 = TwoCircleTangentLength(wheels[0].radius, wheels[1].radius, dist0);
@@ -254,14 +296,14 @@ public class ObjectTreadAnimator : MonoBehaviour
 
         // float angle0 = TwoCircleTangentAngle(wheels[0].radius, wheels[1].radius, v0.magnitude);
 
-        // Vector3 tangentPointVector0 = RotateVectorOnX( v0n, angle0 ) * wheels[0].radius;
-        // Vector3 rv0n = RotateVectorOnX( v0n, angle0 );
+        // Vector3 tangentPointVector0 = RotateVectorOnX( v0n, -angle0 ) * wheels[0].radius;
+        // Vector3 rv0n = RotateVectorOnX( v0n, -angle0 );
         // Gizmos.DrawLine(
         //     t.TransformPoint(
         //         wheels[0].localPosition + tangentPointVector0
         //     ),
         //     t.TransformPoint(
-        //         wheels[0].localPosition + tangentPointVector0 + new Vector3(0, -rv0n.z, rv0n.y) * tangent0
+        //         wheels[0].localPosition + tangentPointVector0 + new Vector3(0, rv0n.z, -rv0n.y) * tangent0
         //     )
         //     );
 
@@ -312,6 +354,10 @@ public class ObjectTreadAnimator : MonoBehaviour
         // }
 
         Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(
+            Vector3.zero,
+            RotateVectorOnX(new Vector3(0, 0, 5f), angle)
+        );
     }
 
     #region Gizmos Helpers
