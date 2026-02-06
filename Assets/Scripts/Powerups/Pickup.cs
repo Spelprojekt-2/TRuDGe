@@ -13,6 +13,7 @@ public class Pickup : MonoBehaviour
         col = GetComponent<Collider>();
         meshes = GetComponentsInChildren<MeshRenderer>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.CompareTag("Player"))
