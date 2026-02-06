@@ -29,7 +29,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] float sensitivityReduction = 0.5f; // 0.5 = half speed when over enemy
     [SerializeField] LayerMask enemyLayer;
 
-    private bool isOverEnemy = false;
+    [HideInInspector] public bool isOverEnemy = false;
+    [HideInInspector] public Collider currentTarget = null;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
@@ -167,10 +168,12 @@ public class PlayerCamera : MonoBehaviour
                 if (hit.transform.root == player.root)
                 {
                     isOverEnemy = false;
+                    currentTarget = null;
                     continue; //Fortsätter ifall man träffar sig själv
                 }
 
                 currentHitCol = hit.collider;
+                currentTarget = currentHitCol;
                 isOverEnemy = true;
                 break;
             }
@@ -200,7 +203,7 @@ public class PlayerCamera : MonoBehaviour
     public void MinimapPrep()
     {
 
-        GameObject? uiCamObj = GameObject.FindWithTag(uiCameraTag);
+        var uiCamObj = GameObject.FindWithTag(uiCameraTag);
 
         if (cam != null && uiCamObj != null)
         {

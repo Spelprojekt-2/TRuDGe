@@ -242,6 +242,33 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 40.14354
+      value: 6.0021367
+      inSlope: 0.0006862395
+      outSlope: 0.0006862395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 90.474365
+      value: 7.350048
+      inSlope: -0.00083342596
+      outSlope: -0.00083342596
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.46081722
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 90.50381
+      value: 9.013463
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    - serializedVersion: 3
       time: 101.810455
       value: 9.0206995
       inSlope: 0
@@ -270,6 +297,7 @@ GameObject:
   - component: {fileID: 8035972993285117548}
   - component: {fileID: 1516440824473505753}
   - component: {fileID: 4955618456470722475}
+  - component: {fileID: 6581021729640459954}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -441,30 +469,6 @@ MonoBehaviour:
     m_ActionId: 32b35790-4ed0-4e9a-aa41-69ac6d629449
     m_ActionName: 'UI/Point[/Mouse/position,/Pen/position]'
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3c7022bf-7922-4f7c-a998-c437916075ad
-    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 44b200b1-1557-4083-816c-b22cbdf77ddf
-    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
-    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0489e84a-4833-4c40-bfae-cea84b696689
-    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 24908448-c609-4bc3-a128-ea258674378a
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4029194333597442243}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
@@ -512,6 +516,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 978d199a-6bf6-48f1-bdf1-b4621a1ba626
     m_ActionName: 'Player/Grapple[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6581021729640459954}
+        m_TargetAssemblyTypeName: PlayerPowerups, Assembly-CSharp
+        m_MethodName: UsePowerUpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 96167161-7b25-49d6-bbf7-423ef2a85d92
+    m_ActionName: 'Player/UsePowerUp[/Keyboard/space,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -544,7 +564,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  distanceFromScreenEdge: {x: 430, y: 300}
+  isOverEnemy: 0
+  currentTarget: {fileID: 0}
+  distanceFromScreenEdge: {x: 430, y: 100}
   cam: {fileID: 2227583658322248293}
   uiCameraTag: UICamera
 --- !u!114 &6668579927141968441
@@ -591,33 +613,44 @@ MonoBehaviour:
   showRig: 1
   showGroundSample: 2
   showLocalAxes: 0
-  topSpeed: 100
-  baseAcceleration: 50
+  topSpeed: 90
+  externalTopSpeedModifier: 1
+  baseAcceleration: 40
   accelerationOverSpeedModifier:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.00015013147
+      outSlope: 0.00015013147
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7011308
+      value: 1.0001053
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.999241
+      value: 1.5083537
+      inSlope: 1.7049013
+      outSlope: 1.7049013
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   inAirAccelerationModifier: 0.1
+  externalAccelerationModifier: 1
   baseTurningSpeed: 3
   turningSpeedOverSpeedModifier:
     serializedVersion: 2
@@ -633,7 +666,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1
+      value: 0.59963226
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -643,7 +676,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inAirTurningModifier: 0.1
+  inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
   onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
@@ -656,7 +689,7 @@ Rigidbody:
   m_GameObject: {fileID: 4523023332637477557}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0.5
+  m_Drag: 0.4
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -693,7 +726,7 @@ MonoBehaviour:
   bestLap: 0
   lapCountText: {fileID: 4479765964928965092}
   positionText: {fileID: 3277330250164560602}
-  OnFinished:
+  OnRaceFinish:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5775183119610709466}
@@ -707,6 +740,96 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6668579927141968441}
+        m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4029194333597442243}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRaceSceneStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6668579927141968441}
+        m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4029194333597442243}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5775183119610709466}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnRaceStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4029194333597442243}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 100
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6668579927141968441}
+        m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 100
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
   OnNewLap:
     m_PersistentCalls:
@@ -723,6 +846,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6581021729640459954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46cff4259db40b46bdfe07a58c6337c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  homingMissile: {fileID: 3763159829829621810, guid: ebc5e9e33de814547aabb7d567504497, type: 3}
 --- !u!1 &5516304864388716943
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +1026,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 16905
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -913,6 +1049,10 @@ PrefabInstance:
     - target: {fileID: 489529710812375878, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094731879804698890, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 17271
       objectReference: {fileID: 0}
     - target: {fileID: 4199132922079827961, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_Layer

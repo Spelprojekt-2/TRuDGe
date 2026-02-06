@@ -13,7 +13,7 @@ public class SplitScreenCamera : MonoBehaviour
 
     private void Awake()
     {
-        PlayerInputManager.instance.onPlayerJoined += HandlePlayerJoined;
+        if(PlayerInputManager.instance != null) PlayerInputManager.instance.onPlayerJoined += HandlePlayerJoined;
     }
 
     private void HandlePlayerJoined(PlayerInput obj)
