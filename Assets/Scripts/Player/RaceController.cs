@@ -106,7 +106,7 @@ public class RaceController : MonoBehaviour
             leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}\n";
         }
 
-        FindFirstObjectByType<TextMeshProUGUI>().text = leaderboard;
+        GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = leaderboard;
     }
     void UpdateRaceProgress(RacerData racer)
     {
