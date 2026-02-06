@@ -14,7 +14,8 @@ public class PlayerPowerups : MonoBehaviour
     {
         nothing,
         gasolineTank,
-        homingMissle
+        homingMissle,
+        turbo
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -32,7 +33,7 @@ public class PlayerPowerups : MonoBehaviour
                 return;
 
             case PowerUpType.gasolineTank:
-                Debug.Log("Used " + type);
+                GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
                 break;
 
             case PowerUpType.homingMissle:
