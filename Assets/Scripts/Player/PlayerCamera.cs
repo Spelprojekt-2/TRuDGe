@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public class PlayerCamera : MonoBehaviour
     private bool isController = false;
     private Quaternion camStartRotOffset;
 
+
+    [SerializeField] private string uiCameraTag = "UICamera";
+
     public void LookInput(InputAction.CallbackContext context)
     {
         lookInputVector = context.ReadValue<Vector2>();
@@ -65,6 +69,7 @@ public class PlayerCamera : MonoBehaviour
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
     }
+
 
     private void Update()
     {
@@ -162,7 +167,7 @@ public class PlayerCamera : MonoBehaviour
                 if (hit.transform.root == player.root)
                 {
                     isOverEnemy = false;
-                    continue; // It hit us, so stop here and don't apply assist
+                    continue; //Fortsätter ifall man träffar sig själv
                 }
 
                 currentHitCol = hit.collider;
@@ -189,6 +194,27 @@ public class PlayerCamera : MonoBehaviour
         else
         {
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+        }
+    }
+
+    public void MinimapPrep()
+    {
+
+        GameObject? uiCamObj = GameObject.FindWithTag(uiCameraTag);
+
+        if (cam != null && uiCamObj != null)
+        {
+            Camera uiCam = uiCamObj.GetComponent<Camera>();
+            var cameraData = cam.GetUniversalAdditionalCameraData();
+
+            if (!cameraData.cameraStack.Contains(uiCam))
+            {
+                cameraData.cameraStack.Add(uiCam);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("En kamera är null");
         }
     }
 }
