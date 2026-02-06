@@ -6,7 +6,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject homingMissile;
     private PowerUpType? type = null;
     private bool usedPowerUp;
-
+    private float normalTopSpeedModifier;
+    private bool usingTurbo = false;
     public void UsePowerUpInput(InputAction.CallbackContext context)
     {
         usedPowerUp = context.performed;
@@ -22,7 +23,14 @@ public class PlayerPowerups : MonoBehaviour
         this.type = type;
         if(type == PowerUpType.gasolineTank)
         {
-            GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+            if (usingTurbo)
+            {
+                normalTopSpeedModifier += 0.1f;
+            }
+            else
+            {
+                GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+            }
             this.type = null;
         }
     }
@@ -61,7 +69,7 @@ public class PlayerPowerups : MonoBehaviour
         var playerMovement = GetComponent<PlayerMovement>();
 
         var normalAccelerationModifier = playerMovement.externalAccelerationModifier;
-        var normalTopSpeedModifier = playerMovement.externalTopSpeedModifier;
+        normalTopSpeedModifier = playerMovement.externalTopSpeedModifier;
 
         playerMovement.externalAccelerationModifier = 2f;
         playerMovement.externalTopSpeedModifier = 2f;
