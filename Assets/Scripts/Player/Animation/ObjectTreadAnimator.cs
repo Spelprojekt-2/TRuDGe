@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 
 [System.Serializable]
 public struct Wheel
@@ -13,36 +12,95 @@ public class ObjectTreadAnimator : MonoBehaviour
     struct TreadSpline
     {
         private TreadSplineWheel[] wheels;
-        public Quaternion GetRotation(float splineDistance) =>
-            wheels[GetAppropriateSegmentIndex(splineDistance)].GetRotation(splineDistance);
-        public Vector3 GetLocation(float splineDistance) =>
-            wheels[GetAppropriateSegmentIndex(splineDistance)].GetLocation(splineDistance);
+        public float totalLength
+        {
+            get
+            {
+                return wheels[^1].distanceFromStart + wheels[^1].length;
+            }
+        }
+        public TreadSpline(List<Wheel> wheelData, float innerTreadMargin, float outerTreadMargin)
+        {
+            wheels = new TreadSplineWheel[wheelData.Count];
+            float distanceFromStart = 0f;
+
+            // Get the end point of the last wheel to start the loop
+            float r0 = wheelData[^1].radius + innerTreadMargin;
+            float r1 = wheelData[0].radius + innerTreadMargin;
+            Vector3 diff = wheelData[0].localPosition - wheelData[^1].localPosition;
+            Vector3 dir = diff.normalized;
+            float dist = diff.magnitude;
+
+            float lineLength = TreadSplineWheel.TwoCircleTangentLength(r0, r1, dist);
+            float theta = TreadSplineWheel.TwoCircleTangentAngle(r0, r1, dist);
+
+            Vector3 tangentPointDir = TreadSplineWheel.RotateVectorOnX( dir, theta );
+            Vector3 tangentPointVector = tangentPointDir * r0;
+            Vector3 lineDir = new Vector3(0, -tangentPointDir.z, tangentPointDir.y);
+            Vector3 lineStart = wheelData[^1].localPosition + tangentPointVector;
+            Vector3 prevEndPoint = lineStart + lineDir * lineLength;
+
+            // Now create all wheels in order
+            for (int i = 0; i < wheelData.Count; i++)
+            {
+                int ip1 = (i + 1) % wheelData.Count;
+                wheels[i] = new TreadSplineWheel(
+                    wheelData[i].localPosition,
+                    wheelData[i].radius + innerTreadMargin,
+                    prevEndPoint,
+                    wheelData[ip1].localPosition,
+                    wheelData[ip1].radius + innerTreadMargin,
+                    distanceFromStart
+                );
+                distanceFromStart += wheels[i].length;
+                prevEndPoint = wheels[i].endPoint;
+            }
+        }
+        public Quaternion GetRotation(float splineDistance)
+        {
+            if (splineDistance < 0f)
+                splineDistance = 0f;
+            else if (splineDistance > totalLength)
+                splineDistance = totalLength;
+            return wheels[GetAppropriateSegmentIndex(splineDistance)].GetRotation(splineDistance);
+        }
+        public Vector3 GetLocation(float splineDistance)
+        {
+            if (splineDistance < 0f)
+                splineDistance = 0f;
+            else if (splineDistance > totalLength)
+                splineDistance = totalLength;
+            return wheels[GetAppropriateSegmentIndex(splineDistance)].GetLocation(splineDistance);
+        }
         private int GetAppropriateSegmentIndex(float splineDistance)
         {
             int min = 0;
             int max = wheels.Length - 1;
-            while (true)
+            while (min < max)
             {
                 int mid = (min + max) / 2;
-                if (splineDistance < wheels[mid].totalDistance)
+                if (splineDistance < wheels[mid].distanceFromStart)
                 {
                     max = mid - 1;
                 }
-                else if (splineDistance >= wheels[mid].totalDistance)
+                else if (splineDistance >= wheels[mid].distanceFromStart)
                 {
-                    if (splineDistance < wheels[mid + 1].totalDistance)
+                    if (splineDistance < wheels[mid + 1].distanceFromStart)
                     {
                         return mid;
                     }
                     min = mid + 1;
                 }
             }
+            return min;
         }
         struct TreadSplineWheel
         {
             public Vector3 center { get; private set; }
             public float radius { get; private set; }
-            public float totalDistance { get; private set; }
+            public float distanceFromStart { get; private set; }
+            public float length => arcLength + lineLength;
+            public Vector3 endPoint => lineEnd;
             private float lineLength;
             private Vector3 lineStart;
             private Vector3 lineDir;
@@ -51,16 +109,38 @@ public class ObjectTreadAnimator : MonoBehaviour
             private float arcSpanAngle;
             private float arcLength => arcSpanAngle * radius;
             
-            public TreadSplineWheel(Vector3 c, float r, float d)
+            public TreadSplineWheel(Vector3 center, float radius, Vector3 prevEndPoint, Vector3 nextCenter, float nextRadius, float distanceFromStart)
             {
-                center = c;
-                radius = r;
-                totalDistance = d;
-                lineStart = Vector3.zero;
-                lineDir = Vector3.zero;
-                lineLength = 0f;
+                this.center = center;
+                this.radius = radius;
+                this.distanceFromStart = distanceFromStart;
                 arcStartAngle = 0f;
                 arcSpanAngle = 0f;
+                lineLength = 0f;
+                lineStart = Vector3.zero;
+                lineDir = Vector3.zero;
+
+                // Calculate the tangent points of this and the next wheel
+                Vector3 diff = nextCenter - center;
+                Vector3 dir = diff.normalized;
+                float dist = diff.magnitude;
+
+                lineLength = TwoCircleTangentLength(radius, nextRadius, dist);
+                float theta = TwoCircleTangentAngle(radius, nextRadius, dist);
+
+                Vector3 tangentPointDir = RotateVectorOnX( dir, theta );
+                Vector3 tangentPointVector = tangentPointDir * radius;
+                lineDir = new Vector3(0, -tangentPointDir.z, tangentPointDir.y);
+
+                lineStart = center + tangentPointVector;
+
+                // Calculate arc angles
+                Vector3 toPrev = (prevEndPoint - center).normalized;
+                arcStartAngle = Mathf.Atan2(toPrev.z, toPrev.y);
+                arcSpanAngle = Vector2.SignedAngle(
+                    new Vector2(toPrev.z, toPrev.y),
+                    new Vector2(tangentPointVector.z, tangentPointVector.y)
+                ) * Mathf.Deg2Rad;
             }
             public void Move(Vector3 newCenter)
             {
@@ -68,32 +148,44 @@ public class ObjectTreadAnimator : MonoBehaviour
             }
             public Vector3 GetLocation(float distance)
             {
-                distance -= totalDistance;
-                if (distance <= lineLength)
-                {
-                    return lineStart + lineDir * distance;
-                }
-                else
+                distance -= distanceFromStart;
+                if (distance < arcLength)
                 {
                     float angleOfPoint = (distance / arcLength * arcSpanAngle) + arcStartAngle;
                     return center + RotateVectorOnX(new Vector3(0, 0, radius), angleOfPoint);
                 }
+                else
+                {
+                    distance -= arcLength;
+                    return lineStart + lineDir * distance;
+                }
             }
             public Quaternion GetRotation(float distance)
             {
-                distance -= totalDistance;
-                if (distance <= lineLength)
+                distance -= distanceFromStart;
+                if (distance < arcLength)
                 {
-                    // Line segment rotation
+                    // Wheel rotation
                 }
                 else
                 {
-                    // Wheel rotation
+                    distance -= arcLength;
+                    // Line segment rotation
                 }
 
                 return Quaternion.identity;
             }
-            private Vector3 RotateVectorOnX(Vector3 v, float angle)
+            public static float TwoCircleTangentLength(float r1, float r2, float d)
+            {
+                return Mathf.Sqrt(d * d - (r1 - r2) * (r1 - r2));
+            }
+            public static float TwoCircleTangentAngle(float r1, float r2, float d)
+            {
+                float tangent = TwoCircleTangentLength(r1, r2, d);
+                float hypotenuse = Mathf.Sqrt(tangent * tangent + r2 * r2); 
+                return Mathf.Acos((r1 * r1 + d * d - hypotenuse * hypotenuse) / (2 * r1 * d));
+            }
+            public static Vector3 RotateVectorOnX(Vector3 v, float angle)
             {
                 float cos = Mathf.Cos(angle);
                 float sin = Mathf.Sin(angle);
@@ -113,6 +205,12 @@ public class ObjectTreadAnimator : MonoBehaviour
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Always;
     [SerializeField][Range(0, 2 * Mathf.PI)] private float angle = 0f;
 
+    private TreadSpline treadSpline;
+
+    void OnValidate()
+    {
+        treadSpline = new TreadSpline(wheels, innerTreadMargin, outerTreadMargin);
+    }
     private void OnDrawGizmos()
     {
         if (showGizmos == ShowGizmoEnum.Always)
@@ -134,6 +232,19 @@ public class ObjectTreadAnimator : MonoBehaviour
         }
         
         Gizmos.color = Color.magenta;
+        
+        float segmentLength = 0.05f;
+        for (float d = segmentLength; d < treadSpline.totalLength; d += segmentLength)
+        {
+            if (Gizmos.color == Color.magenta)
+                Gizmos.color = Color.yellow;
+            else
+                Gizmos.color = Color.magenta;
+            Vector3 point0 = treadSpline.GetLocation(d - segmentLength);
+            Vector3 point1 = treadSpline.GetLocation(d);
+            Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point1));
+        }
+        
         // Vector3 v0 = wheels[1].localPosition - wheels[0].localPosition;
         // float dist0 = v0.magnitude;
         // float tangent0 = TwoCircleTangentLength(wheels[0].radius, wheels[1].radius, dist0);
@@ -154,51 +265,51 @@ public class ObjectTreadAnimator : MonoBehaviour
         //     )
         //     );
 
-        Vector3 lastLinePoint = Vector3.zero;
-        for (int i = 0; i < wheels.Count; i++)
-        {
-            int ip1 = (i + 1) % wheels.Count; 
+        // Vector3 lastLinePoint = Vector3.zero;
+        // for (int i = 0; i < wheels.Count; i++)
+        // {
+        //     int ip1 = (i + 1) % wheels.Count; 
 
-            float r0 = wheels[i].radius + innerTreadMargin;
-            float r1 = wheels[ip1].radius + innerTreadMargin;
+        //     float r0 = wheels[i].radius + innerTreadMargin;
+        //     float r1 = wheels[ip1].radius + innerTreadMargin;
 
-            Vector3 diff = wheels[ip1].localPosition - wheels[i].localPosition;
-            Vector3 dir = diff.normalized;
-            float dist = diff.magnitude;
+        //     Vector3 diff = wheels[ip1].localPosition - wheels[i].localPosition;
+        //     Vector3 dir = diff.normalized;
+        //     float dist = diff.magnitude;
 
-            float tangent = TwoCircleTangentLength(r0, r1, dist);
-            float theta = TwoCircleTangentAngle(r0, r1, dist);
+        //     float tangent = TwoCircleTangentLength(r0, r1, dist);
+        //     float theta = TwoCircleTangentAngle(r0, r1, dist);
 
-            Vector3 tangentPointDir = RotateVectorOnX( dir, theta );
-            Vector3 tangentPointVector = tangentPointDir * r0;
-            Vector3 tangentDir = new Vector3(0, -tangentPointDir.z, tangentPointDir.y);
+        //     Vector3 tangentPointDir = RotateVectorOnX( dir, theta );
+        //     Vector3 tangentPointVector = tangentPointDir * r0;
+        //     Vector3 tangentDir = new Vector3(0, -tangentPointDir.z, tangentPointDir.y);
 
-            Vector3 lineP0 = wheels[i].localPosition + tangentPointVector;
-            Vector3 lineP1 = wheels[i].localPosition + tangentPointVector + tangentDir * tangent;
+        //     Vector3 lineP0 = wheels[i].localPosition + tangentPointVector;
+        //     Vector3 lineP1 = wheels[i].localPosition + tangentPointVector + tangentDir * tangent;
 
-            // Draw connecting curve
-            // if (i != 0)
-            // {
-            //     float arcAngle0 = Vector3.SignedAngle(lastLinePoint - wheels[i].localPosition, Vector3.forward, Vector3.right);
-            //     float arcAngle1 = Vector3.SignedAngle(lineP0 - wheels[i].localPosition, Vector3.forward, Vector3.right);
+        //     // Draw connecting curve
+        //     // if (i != 0)
+        //     // {
+        //     //     float arcAngle0 = Vector3.SignedAngle(lastLinePoint - wheels[i].localPosition, Vector3.forward, Vector3.right);
+        //     //     float arcAngle1 = Vector3.SignedAngle(lineP0 - wheels[i].localPosition, Vector3.forward, Vector3.right);
 
-            //     DrawArc(
-            //         t.TransformPoint(wheels[i].localPosition),
-            //         t.right,
-            //         r0,
-            //         arcAngle0 * Mathf.Deg2Rad,
-            //         arcAngle1 * Mathf.Deg2Rad,
-            //         16,
-            //         Color.magenta
-            //     );
-            // }
+        //     //     DrawArc(
+        //     //         t.TransformPoint(wheels[i].localPosition),
+        //     //         t.right,
+        //     //         r0,
+        //     //         arcAngle0 * Mathf.Deg2Rad,
+        //     //         arcAngle1 * Mathf.Deg2Rad,
+        //     //         16,
+        //     //         Color.magenta
+        //     //     );
+        //     // }
 
-            // Draw tangent line of both wheels
-            Gizmos.DrawLine(
-                t.TransformPoint( lineP0 ),
-                t.TransformPoint( lineP1 )
-            );
-        }
+        //     // Draw tangent line of both wheels
+        //     Gizmos.DrawLine(
+        //         t.TransformPoint( lineP0 ),
+        //         t.TransformPoint( lineP1 )
+        //     );
+        // }
 
         Gizmos.color = Color.yellow;
     }
