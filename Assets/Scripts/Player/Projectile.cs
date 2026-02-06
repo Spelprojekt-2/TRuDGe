@@ -12,7 +12,11 @@ public class Projectile : MonoBehaviour
 
     public void PrepareProjectile(GameObject shooter, Transform target)
     {
-        StartCoroutine(DeathTimer());
+        if (target == null)
+        {
+            StartCoroutine(DeathTimer());
+        }
+        
         this.shooter = shooter;
         this.target = target;
     }
