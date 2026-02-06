@@ -9,9 +9,9 @@ public class TankTestAudio : MonoBehaviour
 
     public void GrappleShoot()
     {
-        if (isInstance)
+        if (isInstance && instance.isValid())
         {
-            GrappleEnd();
+            instance.stop(STOP_MODE.IMMEDIATE);
         }
         isInstance = true;
         instance = tanksAudio.CreateGrappleInstance(gameObject);
