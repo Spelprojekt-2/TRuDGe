@@ -34,8 +34,14 @@ public class RaceController : MonoBehaviour
 
         for (int i = 0; i < racers.Count; i++)
         {
-            UpdateRaceProgress(racers[i]);
+            racers[i].bestLap = 0;
+            racers[i].lap = 0;
+            racers[i].raceProgress = 0;
+            racers[i].lapProgress = 0;
+            racers[i].racePosition = 0;
             racers[i].TrackLoaded(lapsOnThisTrack);
+            racers[i].UpdateLapCount();
+            UpdateRaceProgress(racers[i]);
         }
     }
 
@@ -90,17 +96,17 @@ public class RaceController : MonoBehaviour
     public void SummaryScene(Scene scene, LoadSceneMode loadmode)
     {
         if (scene.name != "AfterRace") return;
+        Cursor.lockState = CursorLockMode.None;
+
         string leaderboard = "";
         RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
         for (int i = 0; i < racersInOrder.Length; ++i)
         {
             racersInOrder[i].DisablePosition();
-            leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}";
+            leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}\n";
         }
 
         FindFirstObjectByType<TextMeshProUGUI>().text = leaderboard;
-        Debug.Log(scene.name);
-        Destroy(this);
     }
     void UpdateRaceProgress(RacerData racer)
     {

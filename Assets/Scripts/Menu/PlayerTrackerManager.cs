@@ -54,6 +54,22 @@ public class PlayerTrackerManager : MonoBehaviour
             scene.name == "AfterRace" ||
             scene.name == "MainMenu";
 
+        if (scene.name == "SelectionScreen")
+        {
+            if (PlayerInputManager.instance) PlayerInputManager.instance.EnableJoining();
+            for (int i = 0; i < playerInputs.Count; i++)
+            {
+                readyStates[i] = false;
+            }
+            MovePlayersToSpawnPoints();
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        if (isMenu)
+        {
+            RaceController rc = FindAnyObjectByType<RaceController>();
+            if (rc != null) StartCoroutine(DestroyNextFrame(rc.gameObject));
+        }
+
         if (!isMenu && !allPlayersSpawned)
         {
             allPlayersSpawned = true;
@@ -66,8 +82,6 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             UIList = FindFirstObjectByType<SelectionUIList>();
             allPlayersSpawned = false;
-            if (PlayerInputManager.instance)
-                PlayerInputManager.instance.EnableJoining();
         }
     }
 
@@ -165,5 +179,11 @@ private void UpdateAllPlayerCameras()
                 UIList.ReadyTextP4.gameObject.SetActive(false);
                 break;
         }
+    }
+
+    private System.Collections.IEnumerator DestroyNextFrame(GameObject raceController)
+    {
+        yield return null;
+        Destroy(raceController);
     }
 }
