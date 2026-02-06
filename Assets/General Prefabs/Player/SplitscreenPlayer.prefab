@@ -242,6 +242,33 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 38.053066
+      value: 6.00775
+      inSlope: 0.0009647222
+      outSlope: 0.0009647222
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.47233465
+      outWeight: 0
+    - serializedVersion: 3
+      time: 93.14662
+      value: 7.303667
+      inSlope: 0.0065749316
+      outSlope: 0.0065749316
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.29763627
+      outWeight: 0.28649557
+    - serializedVersion: 3
+      time: 94.47091
+      value: 7.3056183
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.94334567
+    - serializedVersion: 3
       time: 101.810455
       value: 9.0206995
       inSlope: 0
@@ -591,7 +618,7 @@ MonoBehaviour:
   showRig: 1
   showGroundSample: 2
   showLocalAxes: 0
-  topSpeed: 100
+  topSpeed: 90
   baseAcceleration: 50
   accelerationOverSpeedModifier:
     serializedVersion: 2
@@ -599,18 +626,27 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.0002185583
+      outSlope: 0.0002185583
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      time: 0.710156
+      value: 1.0001552
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9995741
+      value: 1.4982944
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -632,8 +668,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 1.0045118
+      value: 0.5999391
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -656,7 +692,7 @@ Rigidbody:
   m_GameObject: {fileID: 4523023332637477557}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0.5
+  m_Drag: 0.4
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
