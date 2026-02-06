@@ -15,11 +15,15 @@ public class PlayerTrackerManager : MonoBehaviour
     private SelectionUIList UIList;
     private void Awake()
     {
+        if (FindObjectsByType<PlayerTrackerManager>(FindObjectsSortMode.None).Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(this);
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
-        readyStates.Clear();
     }
     public void HandlePlayerJoined(PlayerInput input)
     {
@@ -38,6 +42,8 @@ public class PlayerTrackerManager : MonoBehaviour
 
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
+
+        if (SceneManager.GetActiveScene().name == "MainMenu") PlayerInputManager.instance.DisableJoining();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
@@ -54,7 +60,18 @@ public class PlayerTrackerManager : MonoBehaviour
             scene.name == "AfterRace" ||
             scene.name == "MainMenu";
 
-        if (scene.name == "SelectionScreen")
+        if (scene.name == "MainMenu")
+        {
+            Debug.Log(PlayerInputManager.instance);
+            if (PlayerInputManager.instance)
+            {
+                if(PlayerInputManager.instance.playerCount == 0)
+                {
+                    PlayerInputManager.instance.EnableJoining();
+                }                
+            }
+        }
+        else if (scene.name == "SelectionScreen")
         {
             if (PlayerInputManager.instance) PlayerInputManager.instance.EnableJoining();
             for (int i = 0; i < playerInputs.Count; i++)
@@ -64,6 +81,7 @@ public class PlayerTrackerManager : MonoBehaviour
             MovePlayersToSpawnPoints();
             Cursor.lockState = CursorLockMode.Locked;
         }
+
         if (isMenu)
         {
             RaceController rc = FindAnyObjectByType<RaceController>();
@@ -185,5 +203,10 @@ private void UpdateAllPlayerCameras()
     {
         yield return null;
         Destroy(raceController);
+    }
+
+    private void Update()
+    {
+        Debug.Log($"Players:{PlayerInputManager.instance.playerCount} CanJoin:{PlayerInputManager.instance.joiningEnabled}" );
     }
 }
