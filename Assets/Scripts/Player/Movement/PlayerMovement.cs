@@ -73,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Curve to modify acceleration based on current speed")]
     [SerializeField] private AnimationCurve accelerationOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.1f;
+    [HideInInspector] public bool externalIgnoreInAirAccelerationModifier = false;
     [HideInInspector] public float externalAccelerationModifier = 1f;
     [SerializeField] private float baseTurningSpeed = 3f;
     [Tooltip("Curve to modify turning speed based on current speed")]
@@ -213,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
                     Vector3.Dot(rb.linearVelocity, rotationRoot.forward) / topSpeed
             ) *
             // Air modifier
-            (isGrounded ? 1f : inAirAccelerationModifier) *
+            (isGrounded || externalIgnoreInAirAccelerationModifier ? 1f : inAirAccelerationModifier) *
             // External modifier
             externalAccelerationModifier,
             ForceMode.Acceleration

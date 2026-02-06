@@ -65,10 +65,11 @@ public class PlayerPowerups : MonoBehaviour
 
         playerMovement.externalAccelerationModifier = 2f;
         playerMovement.externalTopSpeedModifier = 2f;
-
+        playerMovement.externalIgnoreInAirAccelerationModifier = true;
         yield return new WaitForSeconds(2f);
 
         playerMovement.externalAccelerationModifier = normalAccelerationModifier;
         playerMovement.externalTopSpeedModifier = normalTopSpeedModifier;
+        playerMovement.externalIgnoreInAirAccelerationModifier = false;
     }
 }

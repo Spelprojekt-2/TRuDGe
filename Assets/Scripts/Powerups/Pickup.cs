@@ -7,11 +7,11 @@ public class Pickup : MonoBehaviour
 
     private PlayerPowerups player;
     private Collider col;
-    private MeshRenderer mesh;
+    private MeshRenderer[] meshes;
     private void Start()
     {
         col = GetComponent<Collider>();
-        mesh = GetComponent<MeshRenderer>();
+        meshes = GetComponentsInChildren<MeshRenderer>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -35,9 +35,15 @@ public class Pickup : MonoBehaviour
     private IEnumerator RespawnTimer()
     {
         col.enabled = false;
-        mesh.enabled = false;
+        foreach (var mesh in meshes)
+        {
+            mesh.enabled = false;
+        }
         yield return new WaitForSeconds(powerupRespawnTime);
         col.enabled = true;
-        mesh.enabled = true;
+        foreach (var mesh in meshes)
+        {
+            mesh.enabled = true;
+        }
     }
 }
