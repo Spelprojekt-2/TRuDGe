@@ -223,7 +223,15 @@ public class ObjectTreadAnimator : MonoBehaviour
     [SerializeField] private List<Wheel> wheels = new List<Wheel>();
     [SerializeField] private float innerTreadMargin = 0.2f;
     [SerializeField] private float outerTreadMargin = 0.2f;
-
+    [SerializeField] private float traverseDistance = 0.0f;
+    [SerializeField] private GameObject prefabA = null;
+    private GameObject oldPrefabA = null;
+    [SerializeField] private float segmentLengthA = 0.2f;
+    [Tooltip("Will be placed alternatingly with prefab a if defined")]
+    [SerializeField] private GameObject prefabB = null;
+    private GameObject oldPrefabB = null;
+    [SerializeField] private float segmentLenghtB = 0.2f;
+    private List<GameObject> segments;
     [Header("Gizmos")]
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Always;
 
@@ -232,6 +240,7 @@ public class ObjectTreadAnimator : MonoBehaviour
     void OnValidate()
     {
         treadSpline = new TreadSpline(wheels, innerTreadMargin, outerTreadMargin);
+        PlaceTread();
     }
     private void OnDrawGizmos()
     {
@@ -242,6 +251,55 @@ public class ObjectTreadAnimator : MonoBehaviour
     {
         if (showGizmos == ShowGizmoEnum.Selected)
             DrawGizmos();
+    }
+    private void PlaceTread()
+    {
+        if (prefabA != oldPrefabA || prefabB != oldPrefabB)
+        {
+            // Reinstantiate tread segments
+            for (int i = segments.Count - 1; i >= 0 ; i--)
+            {
+                Destroy(segments[i]);
+                segments.RemoveAt(i);
+            }
+
+            
+            if (prefabA == null) return;
+            if (prefabB == null)
+            {
+                int count = treadSpline.totalLength / segmentLengthA;
+                for (int i = 0; i < count; i++)
+                {
+                    GameObject newSegment = Instantiate(prefabA);
+                    segments.Add(newSegment);
+                }
+            }
+            else
+            {
+                int count = treadSpline.totalLength / (segmentLengthA + segmentLengthB);
+                for (int i = 0; i < count; i++)
+                {
+                    GameObject newSegment = Instantiate(prefabA);
+                    segments.Add(newSegment);
+                    newSegment = Instantiate(prefabB);
+                    segments.Add(newSegment);
+                }
+            }
+        }
+        float traversal = 0f;
+        int segmentI = 0;
+        while (traversal <= treadSpline.totalLength && segmentI < segments.Count)
+        {
+            segments[segmentI].localPosition = treadSpline.GetLocation(traversal);
+            segments[segmentI].localRotation = treadSpline.GetRotation(traversal);
+
+            if (prefabB == null)
+                traversal += segmentLengthA;
+            else
+                traversal += (segmentI % 2 == 0)? segmentLengthA : segmentLenghtB;
+                
+            segmentI++;
+        }
     }
     private void DrawGizmos()
     {
