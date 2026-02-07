@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using UnityEngine.Windows;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
@@ -43,7 +45,12 @@ public class PlayerTrackerManager : MonoBehaviour
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
 
-        if (SceneManager.GetActiveScene().name == "MainMenu") PlayerInputManager.instance.DisableJoining();
+        input.SwitchCurrentActionMap("UI");
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            FindAnyObjectByType<MainMenuUIController>().HideJoinPopup();
+            PlayerInputManager.instance.DisableJoining();
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
@@ -67,6 +74,7 @@ public class PlayerTrackerManager : MonoBehaviour
             {
                 if(PlayerInputManager.instance.playerCount == 0)
                 {
+                    FindAnyObjectByType<MainMenuUIController>().ShowJoinPopup();
                     PlayerInputManager.instance.EnableJoining();
                 }                
             }
@@ -78,7 +86,6 @@ public class PlayerTrackerManager : MonoBehaviour
             {
                 readyStates[i] = false;
             }
-            MovePlayersToSpawnPoints();
             Cursor.lockState = CursorLockMode.Locked;
         }
 
@@ -86,21 +93,32 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             RaceController rc = FindAnyObjectByType<RaceController>();
             if (rc != null) StartCoroutine(DestroyNextFrame(rc.gameObject));
+            UIList = FindFirstObjectByType<SelectionUIList>();
+            allPlayersSpawned = false;
         }
-
-        if (!isMenu && !allPlayersSpawned)
+        else if (!allPlayersSpawned)
         {
             allPlayersSpawned = true;
             if (PlayerInputManager.instance)
                 PlayerInputManager.instance.DisableJoining();
+        }
 
-            MovePlayersToSpawnPoints();
-        }
-        else if (isMenu)
+        for (int i = 0; i < playerInputs.Count; i++)
         {
-            UIList = FindFirstObjectByType<SelectionUIList>();
-            allPlayersSpawned = false;
+            switch (playerInputs[i].playerIndex)
+            {
+                case 0:
+                    playerInputs[i].SwitchCurrentActionMap(isMenu ? "UI" : "Player");
+                    if (!isMenu) playerInputs[i].GetComponent<PlayerCamera>().MinimapPrep();
+                    break;
+                default:
+                    if (SceneManager.GetActiveScene().name == "SelectionScreen") playerInputs[i].SwitchCurrentActionMap("UI");
+                    else playerInputs[i].SwitchCurrentActionMap(isMenu ? "Disabled" : "Player");
+                    break;
+            }
         }
+
+        MovePlayersToSpawnPoints();
     }
 
 
@@ -126,11 +144,6 @@ public class PlayerTrackerManager : MonoBehaviour
                 spawns[index].transform.position,
                 spawns[index].transform.rotation
             );
-
-            if (index == 0)
-                input.GetComponent<PlayerCamera>()?.MinimapPrep();
-
-            input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
             if (!isMenu) input.GetComponent<RacerData>().OnRacetrackScene();
         }
     }
@@ -207,6 +220,6 @@ private void UpdateAllPlayerCameras()
 
     private void Update()
     {
-        Debug.Log($"Players:{PlayerInputManager.instance.playerCount} CanJoin:{PlayerInputManager.instance.joiningEnabled}" );
+        Debug.Log($"Players:{PlayerInputManager.instance.playerCount} CanJoin:{PlayerInputManager.instance.joiningEnabled} P1_map:{(playerInputs.Count > 0 ? playerInputs[0].currentActionMap.name : "no player")}");
     }
 }

@@ -66,7 +66,6 @@ public class PlayerCamera : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
     }

@@ -24,7 +24,9 @@ public class RaceController : MonoBehaviour
 
     void Start()
     {
+        transform.SetParent(null, true);
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded -= SummaryScene;
         SceneManager.sceneLoaded += SummaryScene;
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
