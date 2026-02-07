@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,30 +10,37 @@ public class RacerData : MonoBehaviour
     public float raceProgress;
     public int racePosition;
     private int trackLaps;
+    public string racername;
+    private RaceController raceController;
 
-    public int bestLap;
+    public int currentValidLap;
     [SerializeField] TextMeshProUGUI lapCountText;
     [SerializeField] TextMeshProUGUI positionText;
     [SerializeField] private UnityEvent OnRaceFinish;
     [SerializeField] private UnityEvent OnRaceSceneStarted;
     [SerializeField] private UnityEvent OnRaceStart;
     [SerializeField] private UnityEvent OnNewLap;
+    private List<double> lapEndTimes = new List<double>();
+
 
     public void TrackLoaded(int lapsOnTrack)
     {
+        lapEndTimes.Clear();
+        raceController = FindFirstObjectByType<RaceController>();
         trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
     }
     public void NextLap()
     {
-        if (bestLap > lap)
+        if (currentValidLap > lap)
         {
-            lap = bestLap;
+            lap = currentValidLap;
         }
         else
         {
+            lapEndTimes.Add(raceController.GetRaceTime());
             lap++;
-            bestLap++;
+            currentValidLap++;
             OnNewLap?.Invoke();
             UpdateLapCount();
         }
@@ -59,12 +67,12 @@ public class RacerData : MonoBehaviour
 
     public void BackwardsLap()
     {
-        if (lap == bestLap)
+        if (lap == currentValidLap)
         {
             lap--;
         }
         else {
-            lap = bestLap - 1;
+            lap = currentValidLap - 1;
         }
 
     }
@@ -92,5 +100,25 @@ public class RacerData : MonoBehaviour
             default:
                 return racePosition + "th";
         }
+    }
+
+    public void SetName(string newName)
+    {
+        racername = newName;
+    }
+
+    public double[] GetLapTimes()
+    {
+        double[] lapTimes = new double[lapEndTimes.Count];
+        for (int i = 0; i < lapEndTimes.Count; i++)
+        {
+            if (i == 0) lapTimes[i] = lapEndTimes[i];
+            else lapTimes[i] = lapEndTimes[i] - lapEndTimes[i - 1]; ;
+        }
+        return lapTimes;
+    }
+    public double GetRaceTime()
+    {
+        return lapEndTimes[^1];
     }
 }

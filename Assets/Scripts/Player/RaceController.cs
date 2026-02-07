@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
+using System.Collections;
 
 public class RaceController : MonoBehaviour
 {
@@ -22,12 +22,14 @@ public class RaceController : MonoBehaviour
     private float timeToRaceStart;
     private bool raceStarted;
 
+    //Timer
+    private double raceStartTime;
+    private bool isPaused = false;
+    private double totalPausedTime = 0;
+    private double pauseStartTime = 0;
+
     void Start()
     {
-        transform.SetParent(null, true);
-        DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded -= SummaryScene;
-        SceneManager.sceneLoaded += SummaryScene;
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
 
@@ -36,7 +38,7 @@ public class RaceController : MonoBehaviour
 
         for (int i = 0; i < racers.Count; i++)
         {
-            racers[i].bestLap = 0;
+            racers[i].currentValidLap = 0;
             racers[i].lap = 0;
             racers[i].raceProgress = 0;
             racers[i].lapProgress = 0;
@@ -53,8 +55,10 @@ public class RaceController : MonoBehaviour
         {
             timeToRaceStart -= Time.deltaTime;
             if (timeToRaceStart < 3) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
-            if (timeToRaceStart < 0)
+            if (timeToRaceStart <= 0)
             {
+                totalPausedTime = 0;
+                raceStartTime = Time.realtimeSinceStartupAsDouble;
                 raceStarted = true;
                 for (int i = 0; i < racers.Count; i++)
                 {
@@ -69,11 +73,14 @@ public class RaceController : MonoBehaviour
             bool allDone = true;
             for (int i = 0; i < racers.Count; i++)
             {
-                if (racers[i].bestLap < lapsOnThisTrack) allDone = false;
+                if (racers[i].currentValidLap < lapsOnThisTrack) allDone = false;
             }
             if (allDone)
             {
-                SceneManager.LoadScene("AfterRace");
+                RacerData[] inorder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
+                FindFirstObjectByType<PlayerTrackerManager>().LoadLeaderboard(inorder);
+
+                StartCoroutine(WaitToAfterRace());
             }
         }
         if (racers.Count == 0 || trackSpline == null) return;
@@ -94,22 +101,6 @@ public class RaceController : MonoBehaviour
 
     }
 
-
-    public void SummaryScene(Scene scene, LoadSceneMode loadmode)
-    {
-        if (scene.name != "AfterRace") return;
-        Cursor.lockState = CursorLockMode.None;
-
-        string leaderboard = "";
-        RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
-        for (int i = 0; i < racersInOrder.Length; ++i)
-        {
-            racersInOrder[i].DisablePosition();
-            leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}\n";
-        }
-
-        GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = leaderboard;
-    }
     void UpdateRaceProgress(RacerData racer)
     {
         if (racer.lap >= lapsOnThisTrack)
@@ -174,6 +165,32 @@ public class RaceController : MonoBehaviour
         }
 
         return bestProgress; // 0–1 across entire container
+    }
+
+    private IEnumerator WaitToAfterRace()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("AfterRace");
+    }
+
+    public double GetRaceTime()
+    {
+        if (isPaused) return pauseStartTime - raceStartTime - totalPausedTime;
+        else return Time.realtimeSinceStartupAsDouble - raceStartTime - totalPausedTime;
+    }
+
+    public void PauseRace()
+    {
+        if (isPaused) return;
+        pauseStartTime = Time.realtimeSinceStartupAsDouble;
+        isPaused = true;
+    }
+
+    public void ResumeRace()
+    {
+        if (!isPaused) return;
+        totalPausedTime += Time.realtimeSinceStartupAsDouble - pauseStartTime;
+        isPaused = false;
     }
 
 }
