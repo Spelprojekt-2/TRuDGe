@@ -86,7 +86,6 @@ public class PlayerTrackerManager : MonoBehaviour
             {
                 readyStates[i] = false;
             }
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         if (isMenu)
@@ -216,10 +215,5 @@ private void UpdateAllPlayerCameras()
     {
         yield return null;
         Destroy(raceController);
-    }
-
-    private void Update()
-    {
-        Debug.Log($"Players:{PlayerInputManager.instance.playerCount} CanJoin:{PlayerInputManager.instance.joiningEnabled} P1_map:{(playerInputs.Count > 0 ? playerInputs[0].currentActionMap.name : "no player")}");
     }
 }
