@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class RacerData : MonoBehaviour
 {
+    public int index;
     public float lapProgress;
     public int lap;
     public float raceProgress;

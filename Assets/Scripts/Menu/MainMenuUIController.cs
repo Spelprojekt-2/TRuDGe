@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,16 +10,16 @@ public class MainMenuUIController : MonoBehaviour
     [SerializeField] private GameObject singlePlayerButtons;
     [SerializeField] private GameObject multiplayerButtons;
     [SerializeField] private GameObject settingsMenu;
-    public void ShowJoinPopup()
-    {
-        firstJoinPopup.SetActive(true);
-    }
 
-    public void HideJoinPopup()
+    private void Start()
     {
-        firstJoinPopup.SetActive(false);
+        ShowJoinPopup(PlayerTrackerManager.instance.GetPlayerCount() < 1);
     }
-
+    public void ShowJoinPopup(bool show)
+    {
+        firstJoinPopup.SetActive(show);
+        if (!show) StartCoroutine(SelectFirstButton());
+    }
     public void ShowSinglePlayerMenu()
     {
         singlePlayerButtons.SetActive(true);
@@ -64,4 +65,10 @@ public class MainMenuUIController : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(go);
     }
+
+    private IEnumerator SelectFirstButton()
+    {
+        yield return null;
+        SelectObject(mainMenuButtons[0].gameObject);
+    } 
 }

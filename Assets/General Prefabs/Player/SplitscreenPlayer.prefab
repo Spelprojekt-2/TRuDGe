@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 4948547773746624805}
+  data: {fileID: 1516440824473505753}
 --- !u!114 &603227144528213282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +575,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4955618456470722475}
         m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
-        m_MethodName: Ready
+        m_MethodName: Unready
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -590,7 +591,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4955618456470722475}
         m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
-        m_MethodName: Unready
+        m_MethodName: Ready
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -670,6 +671,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 96167161-7b25-49d6-bbf7-423ef2a85d92
     m_ActionName: 'Player/UsePowerUp[/Keyboard/space,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4955618456470722475}
+        m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
+        m_MethodName: Disconnect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fc74d9ef-be14-46e8-a3e2-77d88750f529
+    m_ActionName: 'UI/Disconnect[/Keyboard/escape,/XInputControllerWindows/start]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -858,6 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717e743af93de39458eb0ec5d24ef666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   lapProgress: 0
   lap: 0
   raceProgress: 0

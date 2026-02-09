@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class SelectionScreenScript : MonoBehaviour
 {
-    private PlayerTrackerManager playerTrackerManager;
     private PlayerInput input;
 
     private float timeSinceJoined;
@@ -11,7 +10,6 @@ public class SelectionScreenScript : MonoBehaviour
 
     private void Awake()
     {
-        playerTrackerManager = FindFirstObjectByType<PlayerTrackerManager>();
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
     }
@@ -26,7 +24,7 @@ public class SelectionScreenScript : MonoBehaviour
         if (!context.performed || !CanInteract())
             return;
 
-        playerTrackerManager.SetReady(input);
+        PlayerTrackerManager.instance.SetReady(input);
     }
 
     public void Unready(InputAction.CallbackContext context)
@@ -34,6 +32,14 @@ public class SelectionScreenScript : MonoBehaviour
         if (!context.performed || !CanInteract())
             return;
 
-        playerTrackerManager.SetUnready(input);
+        PlayerTrackerManager.instance.SetUnready(input);
+    }
+
+    public void Disconnect(InputAction.CallbackContext context)
+    {
+        if (!context.performed || !CanInteract())
+            return;
+
+        PlayerTrackerManager.instance.HandlePlayerLeft(input);
     }
 }
