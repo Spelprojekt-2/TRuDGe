@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using System;
+using UnityEngine.InputSystem.Users;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
@@ -53,19 +53,77 @@ public class PlayerTrackerManager : MonoBehaviour
         }
     }
 
+    public void HandlePlayerLeft(PlayerInput leavingInput)
+    {
+        if (leavingInput == null)
+            return;
+
+        int leavingIndex = leavingInput.playerIndex;
+        var higherIndices = playerInputs.Keys
+            .Where(k => k > leavingIndex)
+            .OrderBy(k => k)
+            .ToList();
+
+        // Simulate player leaving by shifting inputs per player
+        foreach (int index in higherIndices)
+        {
+            PlayerInput nextPlayer = playerInputs[index];
+            foreach (var device in nextPlayer.devices)
+            {
+                nextPlayer.SwitchCurrentControlScheme(device.displayName); // optional: update scheme
+                leavingInput.SwitchCurrentControlScheme(device.displayName); // optional
+                InputUser.PerformPairingWithDevice(device, leavingInput.user);
+            }
+            playerInputs[leavingIndex] = nextPlayer;
+            readyStates[leavingIndex] = readyStates[index];
+            playerInputs.Remove(index);
+            readyStates.Remove(index);
+            leavingIndex = index;
+        }
+
+        if (leavingInput.gameObject.activeSelf)
+        {
+            playerInputs.Remove(leavingInput.playerIndex);
+            readyStates.Remove(leavingInput.playerIndex);
+            Destroy(leavingInput.transform.root.gameObject);
+        }
+
+        RebuildPlayerInputs();
+        MovePlayersToSpawnPoints();
+        UpdateAllPlayerCameras();
+
+        PlayerInputManager.instance.EnableJoining();
+    }
+
+    private void RebuildPlayerInputs()
+    {
+        var oldPlayers = playerInputs.Values.ToList();
+        playerInputs.Clear();
+        readyStates.Clear();
+
+        for (int i = 0; i < oldPlayers.Count; i++)
+        {
+            playerInputs[i] = oldPlayers[i];
+            readyStates[i] = false; // reset ready states if needed
+        }
+    }
+
+
     void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
     {
+        isMenu =
+            scene.name == "SelectionScreen" ||
+            scene.name == "AfterRace" ||
+            scene.name == "MainMenu";
+
         playerInputs.Clear();
 
         foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
         {
             playerInputs[input.playerIndex] = input;
+            input.camera.enabled  = !isMenu;
         }
 
-        isMenu =
-            scene.name == "SelectionScreen" ||
-            scene.name == "AfterRace" ||
-            scene.name == "MainMenu";
         switch (scene.name)
         {
             case "MainMenu":
@@ -87,14 +145,7 @@ public class PlayerTrackerManager : MonoBehaviour
                 }
                 break;
             case "AfterRace":
-                string leaderboardtxt = "";
-
-                for (int i = 0; i < leaderboard.Length; i++)
-                {
-                    leaderboard[i].DisablePosition();
-                    leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername} Time:{FormatTime(leaderboard[i].GetRaceTime())}";
-                }
-                GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = leaderboardtxt;
+                GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = Leaderboard.GetLeaderboardString();
                 break;
 
 
@@ -102,7 +153,6 @@ public class PlayerTrackerManager : MonoBehaviour
         if (isMenu)
         {
             RaceController rc = FindAnyObjectByType<RaceController>();
-            if (rc != null) StartCoroutine(DestroyNextFrame(rc.gameObject));
             UIList = FindFirstObjectByType<SelectionUIList>();
             allPlayersSpawned = false;
         }
@@ -131,7 +181,6 @@ public class PlayerTrackerManager : MonoBehaviour
 
         MovePlayersToSpawnPoints();
     }
-
 
     void MovePlayersToSpawnPoints()
     {
@@ -179,6 +228,7 @@ private void UpdateAllPlayerCameras()
 
     public void SetReady(PlayerInput input)
     {
+        if (SceneManager.GetActiveScene().name != "SelectionScreen") return;
         int player = input.playerIndex;
         readyStates[player] = true;
         switch (player)
@@ -208,6 +258,7 @@ private void UpdateAllPlayerCameras()
     }
     public void SetUnready(PlayerInput input)
     {
+        if (SceneManager.GetActiveScene().name != "SelectionScreen") return;
         int player = input.playerIndex;
         readyStates[player] = false;
 
@@ -235,40 +286,4 @@ private void UpdateAllPlayerCameras()
             SetUnready(playerInputs[i]);
         }
     }
-
-    private System.Collections.IEnumerator DestroyNextFrame(GameObject raceController)
-    {
-        yield return null;
-        if (raceController) Destroy(raceController);
-    }
-
-    public void LoadLeaderboard(RacerData[] rd)
-    {
-        leaderboard = rd;
-    }
-
-    private string GetPosString(int pos)
-    {
-        switch (pos)
-        {
-            case 1:
-                return "1st";
-            case 2:
-                return "2nd";
-            case 3:
-                return "3rd";
-            default:
-                return pos + "th";
-        }
-    }
-
-    private string FormatTime(double time)
-    {
-        int minutes = (int)Math.Floor(time / 60);
-        int seconds = (int)Math.Floor(time % 60);
-        int milliseconds = (int)Math.Floor((time * 1000) % 1000);
-
-        return string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
-    }
-
 }
