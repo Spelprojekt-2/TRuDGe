@@ -78,7 +78,8 @@ public class Projectile : MonoBehaviour
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
             force.y = 0;
             col.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-            col.GetComponentInParent<Vibrations>().TriggerVibration(0.5f, 0.5f, 0.5f);
+            col.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
+            col.GetComponentInParent<PlayerPowerups>().DropGasTanks();
         }
         Destroy(gameObject);
     }

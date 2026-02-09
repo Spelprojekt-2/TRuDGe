@@ -13,7 +13,8 @@ public class Pickup : MonoBehaviour
     private PlayerPowerups player;
     private Collider col;
     private MeshRenderer[] meshes;
-    private void Start()
+    private bool visible = true;
+    private void Awake()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
@@ -55,6 +56,21 @@ public class Pickup : MonoBehaviour
         {
             mesh.enabled = true;
         }
+    }
+
+    public IEnumerator DroppedTanks()
+    {
+        col.enabled = false;
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (var mesh in meshes)
+            {
+                mesh.enabled = visible;
+                visible = !visible;
+            }
+            yield return new WaitForSeconds(0.3f);
+        }
+        col.enabled = true;
     }
     public void SetMagnetTarget(Transform player)
     {

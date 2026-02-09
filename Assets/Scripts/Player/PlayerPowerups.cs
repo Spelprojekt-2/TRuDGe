@@ -4,12 +4,14 @@ using System.Collections;
 using TMPro;
 public class PlayerPowerups : MonoBehaviour
 {
+    [SerializeField] private GameObject gasTank;
     [SerializeField] private GameObject homingMissile;
     [SerializeField] private int magnetPickupRange = 30;
     [SerializeField] private GameObject smokeScreen;
-    [SerializeField] private float smokeDuration = 10f;
-    [SerializeField] private TextMeshProUGUI currPowerUpText;
+    [SerializeField] private float smokeDuration = 7f;
+    [SerializeField] private GameObject landMine;
 
+    [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
     private int gasTankAmount = 0;
     private PowerUpType? type = null;
@@ -33,7 +35,8 @@ public class PlayerPowerups : MonoBehaviour
         homingMissle,
         turbo,
         magnet,
-        smoke
+        smoke,
+        landMine
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -83,6 +86,9 @@ public class PlayerPowerups : MonoBehaviour
                 Smokescreen();
                 break;
 
+            case PowerUpType.landMine:
+                Instantiate(landMine, transform.position, Quaternion.identity);
+                break;
             default:
                 return;
         }
@@ -133,10 +139,28 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Smoke Screen";
         }
+        else if(type == PowerUpType.landMine)
+        {
+            currPowerUpText.text = "Landmine";
+        }
         else
         {
             currPowerUpText.text = "";
         }
+    }
+
+    public void DropGasTanks()
+    {
+        if(gasTankAmount == 0) return;
+        for (int i = 0; i < gasTankAmount; i++)
+        {
+            float positionOffset = 10f;
+            Vector3 rndPos = new Vector3(Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
+            GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
+            StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
+        }
+        gasTankAmount = 0;
+        gasTankCounter.text = "Gastanks: 0";
     }
 
     IEnumerator Turbo()
@@ -170,4 +194,6 @@ public class PlayerPowerups : MonoBehaviour
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
         Destroy(spawnedSmoke, smokeDuration);
     }
+
+    
 }

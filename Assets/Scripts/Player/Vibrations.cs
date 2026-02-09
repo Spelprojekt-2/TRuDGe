@@ -3,16 +3,23 @@ using UnityEngine.InputSystem;
 using System.Collections;
 public class Vibrations : MonoBehaviour
 {
+    private PlayerInput playerInput;
+    private Gamepad pairedGamepad;
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
     public void TriggerVibration(float lowFreq, float highFreq, float duration)
     {
-        Gamepad gamepad = Gamepad.current;
+        Gamepad gamepad = GetPlayerGamepad();
 
         if (gamepad != null)
         {
             // lowFreq: Heavy/Thumpy (left motor), highFreq: Sharp/Buzzing (right motor)
-            //gamepad.SetMotorSpeeds(lowFreq, highFreq);
+            gamepad.SetMotorSpeeds(lowFreq, highFreq);
 
-            //StartCoroutine(StopVibration(duration, gamepad));
+            StartCoroutine(StopVibration(duration, gamepad));
         }
     }
 
@@ -20,5 +27,22 @@ public class Vibrations : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         gamepad.ResetHaptics();
+    }
+
+    private Gamepad GetPlayerGamepad()
+    {
+        foreach (var device in playerInput.user.pairedDevices)
+        {
+            if (device is Gamepad gamepad)
+            {
+                return gamepad;
+            }
+        }
+        return null;
+    }
+
+    private void OnDisable()
+    {
+        GetPlayerGamepad()?.ResetHaptics();
     }
 }
