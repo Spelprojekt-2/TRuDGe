@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class SelectionUIList : MonoBehaviour
     public void Unready()
     {
         trackSelection.SetActive(false);
+        PlayerInputManager.instance.EnableJoining();
         PlayerTrackerManager.instance.UnreadyAll();
     }
 

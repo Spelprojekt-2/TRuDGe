@@ -18,7 +18,7 @@ public class MainMenuUIController : MonoBehaviour
     public void ShowJoinPopup(bool show)
     {
         firstJoinPopup.SetActive(show);
-        if (!show) StartCoroutine(SelectFirstButton());
+        if (!show) StartCoroutine(Coroutines.SelectButton(mainMenuButtons[0].gameObject));
     }
     public void ShowSinglePlayerMenu()
     {
@@ -61,14 +61,8 @@ public class MainMenuUIController : MonoBehaviour
         SelectObject(mainMenuButtons[buttonToSelect].gameObject);
     }
 
-    void SelectObject(GameObject go)
+    public static void SelectObject(GameObject go)
     {
         EventSystem.current.SetSelectedGameObject(go);
     }
-
-    private IEnumerator SelectFirstButton()
-    {
-        yield return null;
-        SelectObject(mainMenuButtons[0].gameObject);
-    } 
 }

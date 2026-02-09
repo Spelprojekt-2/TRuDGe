@@ -4,22 +4,24 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
+using System.Collections;
 
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
 
     public static PlayerTrackerManager instance;
-    private Dictionary<int, PlayerInput> playerInputs = new();
+    public static Dictionary<int, PlayerInput> playerInputs { get; private set; }
     private Dictionary<int, bool> readyStates = new();
-
-    private bool allPlayersSpawned = false;
-    private bool isMenu = true;
-
+    public static bool isMenu { get; private set; }
     private SelectionUIList UIList;
+    private bool allPlayersSpawned = false;
 
     private void Awake()
     {
+        playerInputs = new();
         if (instance)
         {
             Destroy(gameObject);
@@ -125,7 +127,7 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             case "SelectionScreen":
                 {
-                    PlayerInputManager.instance.EnableJoining();
+                    if (playerInputs.Count < 4) PlayerInputManager.instance.EnableJoining();
                     readyStates.Clear();
                     foreach (int index in playerInputs.Keys)
                         readyStates[index] = false;
@@ -145,26 +147,7 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
         }
 
-        foreach (var kvp in playerInputs)
-        {
-            int index = kvp.Key;
-            PlayerInput input = kvp.Value;
-
-            if (index == 0)
-            {
-                input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
-                if (!isMenu)
-                    input.GetComponent<PlayerCamera>()?.MinimapPrep();
-            }
-            else
-            {
-                input.SwitchCurrentActionMap(
-                    scene.name == "SelectionScreen"
-                        ? "UI"
-                        : (isMenu ? "Disabled" : "Player")
-                );
-            }
-        }
+        StartCoroutine(Coroutines.SwapMaps());
 
         Cursor.lockState = isMenu ? CursorLockMode.Confined : CursorLockMode.Locked;
 
@@ -243,7 +226,20 @@ public class PlayerTrackerManager : MonoBehaviour
                 return;
         }
 
+        PlayerInputManager.instance.DisableJoining();
         UIList.OpenTrackSelection();
+
+        foreach (var kvp in playerInputs)
+        {
+            int index = kvp.Key;
+            Debug.Log(index);
+            PlayerInput inputs = kvp.Value;
+            inputs.SwitchCurrentActionMap(index == 0 ? "UI" : "Disabled");
+        }
+        var inputModule = EventSystem.current.currentInputModule as InputSystemUIInputModule;
+        inputModule.actionsAsset = playerInputs[0].actions;
+        inputModule.enabled = false;
+        inputModule.enabled = true;
     }
 
     public void SetUnready(PlayerInput input)
@@ -266,11 +262,46 @@ public class PlayerTrackerManager : MonoBehaviour
     public void UnreadyAll()
     {
         foreach (var input in playerInputs.Values)
+        {
             SetUnready(input);
+            input.SwitchCurrentActionMap("UI");
+        }
     }
 
     public int GetPlayerCount()
     {
         return playerInputs.Count;
+    }
+}
+public static class Coroutines
+{ 
+    public static IEnumerator SwapMaps()
+    {
+        yield return null;
+        foreach (var kvp in PlayerTrackerManager.playerInputs)
+        {
+            int index = kvp.Key;
+            PlayerInput input = kvp.Value;
+
+            if (index == 0)
+            {
+                input.SwitchCurrentActionMap(PlayerTrackerManager.isMenu ? "UI" : "Player");
+                if (!PlayerTrackerManager.isMenu) input.GetComponent<PlayerCamera>()?.MinimapPrep();
+            }
+            else
+            {
+                input.SwitchCurrentActionMap(
+                    SceneManager.GetActiveScene().name == "SelectionScreen"
+                        ? "UI"
+                        : (PlayerTrackerManager.isMenu ? "Disabled" : "Player")
+                );
+            }
+        }
+    }
+
+    public static IEnumerator SelectButton(GameObject gameObject)
+    {
+        yield return null;
+        MainMenuUIController.SelectObject(gameObject);
     }
 }
