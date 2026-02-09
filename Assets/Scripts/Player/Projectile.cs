@@ -41,14 +41,14 @@ public class Projectile : MonoBehaviour
         if (target != null && homing)
         {
             Vector3 targetPos = target.position;
-            //targetPos = new Vector3(target.position.x, target.position.y, target.position.z);
+            targetPos = new Vector3(target.position.x, target.position.y, target.position.z);
             transform.LookAt(targetPos);
 
-            Ray ray = new Ray(transform.position, transform.forward);
+            /*Ray ray = new Ray(transform.position, transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, 15f, groundLayer))
             {
                 transform.position += Vector3.up * 3f;
-            }
+            }*/
         }
     }
 

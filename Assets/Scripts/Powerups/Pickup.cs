@@ -14,6 +14,7 @@ public class Pickup : MonoBehaviour
     private Collider col;
     private MeshRenderer[] meshes;
     private bool visible = true;
+    private bool canRespawn = true;
     private void Awake()
     {
         startPos = transform.position;
@@ -36,7 +37,15 @@ public class Pickup : MonoBehaviour
             {
                 player.GainedPowerUp(probability.RandomizePowerUp(racePosition));
             }
-            StartCoroutine(RespawnTimer());
+
+            if (canRespawn)
+            {
+                StartCoroutine(RespawnTimer());
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -60,6 +69,7 @@ public class Pickup : MonoBehaviour
 
     public IEnumerator DroppedTanks()
     {
+        canRespawn = false;
         col.enabled = false;
         for (int i = 0; i < 3; i++)
         {

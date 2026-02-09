@@ -21,7 +21,7 @@ public class Landmine : MonoBehaviour
         Rigidbody rb = other.GetComponentInParent<Rigidbody>();
         Vector3 upwardForceVector = Vector3.up * upwardForce;
         upwardForceVector = new Vector3(rb.linearVelocity.x, upwardForceVector.y, rb.linearVelocity.z);
-        rb.AddForce(upwardForceVector, ForceMode.Impulse);
+        rb.AddForce(upwardForceVector, ForceMode.VelocityChange);
         Destroy(gameObject);
     }
 }
