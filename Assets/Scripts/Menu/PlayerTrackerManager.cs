@@ -3,23 +3,29 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
+using System;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
-    public string scene = "Level1";
     private Dictionary<int, PlayerInput> playerInputs = new();
     private bool allPlayersSpawned = false;
     private bool isMenu = true;
 
     private Dictionary<int, bool> readyStates = new();
     private SelectionUIList UIList;
+    private RacerData[] leaderboard;
     private void Awake()
     {
+        if (FindObjectsByType<PlayerTrackerManager>(FindObjectsSortMode.None).Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(this);
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
-        readyStates.Clear();
     }
     public void HandlePlayerJoined(PlayerInput input)
     {
@@ -38,6 +44,13 @@ public class PlayerTrackerManager : MonoBehaviour
 
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
+
+        input.SwitchCurrentActionMap("UI");
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            FindAnyObjectByType<MainMenuUIController>().HideJoinPopup();
+            PlayerInputManager.instance.DisableJoining();
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
@@ -53,36 +66,70 @@ public class PlayerTrackerManager : MonoBehaviour
             scene.name == "SelectionScreen" ||
             scene.name == "AfterRace" ||
             scene.name == "MainMenu";
-
-        if (scene.name == "SelectionScreen")
+        switch (scene.name)
         {
-            if (PlayerInputManager.instance) PlayerInputManager.instance.EnableJoining();
-            for (int i = 0; i < playerInputs.Count; i++)
-            {
-                readyStates[i] = false;
-            }
-            MovePlayersToSpawnPoints();
-            Cursor.lockState = CursorLockMode.Locked;
+            case "MainMenu":
+
+                if (PlayerInputManager.instance)
+                {
+                    if (PlayerInputManager.instance.playerCount == 0)
+                    {
+                        FindAnyObjectByType<MainMenuUIController>().ShowJoinPopup();
+                        PlayerInputManager.instance.EnableJoining();
+                    }
+                }
+                break;
+            case "SelectionScreen":
+                if (PlayerInputManager.instance) PlayerInputManager.instance.EnableJoining();
+                for (int i = 0; i < playerInputs.Count; i++)
+                {
+                    readyStates[i] = false;
+                }
+                break;
+            case "AfterRace":
+                string leaderboardtxt = "";
+
+                for (int i = 0; i < leaderboard.Length; i++)
+                {
+                    leaderboard[i].DisablePosition();
+                    leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername} Time:{FormatTime(leaderboard[i].GetRaceTime())}";
+                }
+                GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = leaderboardtxt;
+                break;
+
+
         }
         if (isMenu)
         {
             RaceController rc = FindAnyObjectByType<RaceController>();
             if (rc != null) StartCoroutine(DestroyNextFrame(rc.gameObject));
+            UIList = FindFirstObjectByType<SelectionUIList>();
+            allPlayersSpawned = false;
         }
-
-        if (!isMenu && !allPlayersSpawned)
+        else if (!allPlayersSpawned)
         {
             allPlayersSpawned = true;
             if (PlayerInputManager.instance)
                 PlayerInputManager.instance.DisableJoining();
+        }
 
-            MovePlayersToSpawnPoints();
-        }
-        else if (isMenu)
+        for (int i = 0; i < playerInputs.Count; i++)
         {
-            UIList = FindFirstObjectByType<SelectionUIList>();
-            allPlayersSpawned = false;
+            switch (playerInputs[i].playerIndex)
+            {
+                case 0:
+                    playerInputs[i].SwitchCurrentActionMap(isMenu ? "UI" : "Player");
+                    if (!isMenu) playerInputs[i].GetComponent<PlayerCamera>().MinimapPrep();
+                    break;
+                default:
+                    if (SceneManager.GetActiveScene().name == "SelectionScreen") playerInputs[i].SwitchCurrentActionMap("UI");
+                    else playerInputs[i].SwitchCurrentActionMap(isMenu ? "Disabled" : "Player");
+                    break;
+            }
         }
+        Cursor.lockState = isMenu ? CursorLockMode.Confined : CursorLockMode.Locked;
+
+        MovePlayersToSpawnPoints();
     }
 
 
@@ -108,12 +155,12 @@ public class PlayerTrackerManager : MonoBehaviour
                 spawns[index].transform.position,
                 spawns[index].transform.rotation
             );
-
-            if (index == 0)
-                input.GetComponent<PlayerCamera>()?.MinimapPrep();
-
-            input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
-            if (!isMenu) input.GetComponent<RacerData>().OnRacetrackScene();
+            if (!isMenu)
+            {
+                RacerData rd = input.GetComponent<RacerData>();
+                rd.SetName("Player " + (input.playerIndex + 1));
+                rd.OnRacetrackScene();
+            }
         }
     }
 
@@ -156,8 +203,8 @@ private void UpdateAllPlayerCameras()
                 return;
         }
 
-        Debug.Log("Everyone is ready!");
-        SceneManager.LoadScene(scene);
+
+        UIList.OpenTrackSelection();
     }
     public void SetUnready(PlayerInput input)
     {
@@ -178,12 +225,50 @@ private void UpdateAllPlayerCameras()
             case 3:
                 UIList.ReadyTextP4.gameObject.SetActive(false);
                 break;
+        } 
+    }
+
+    public void UnreadyAll()
+    {
+        for (int i = 0; i < playerInputs.Count; i++)
+        {
+            SetUnready(playerInputs[i]);
         }
     }
 
     private System.Collections.IEnumerator DestroyNextFrame(GameObject raceController)
     {
         yield return null;
-        Destroy(raceController);
+        if (raceController) Destroy(raceController);
     }
+
+    public void LoadLeaderboard(RacerData[] rd)
+    {
+        leaderboard = rd;
+    }
+
+    private string GetPosString(int pos)
+    {
+        switch (pos)
+        {
+            case 1:
+                return "1st";
+            case 2:
+                return "2nd";
+            case 3:
+                return "3rd";
+            default:
+                return pos + "th";
+        }
+    }
+
+    private string FormatTime(double time)
+    {
+        int minutes = (int)Math.Floor(time / 60);
+        int seconds = (int)Math.Floor(time % 60);
+        int milliseconds = (int)Math.Floor((time * 1000) % 1000);
+
+        return string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+    }
+
 }
