@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject gasTank;
@@ -23,6 +24,7 @@ public class PlayerPowerups : MonoBehaviour
     private void Start()
     {
         currPowerUpText.text = "";
+        gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
     }
     public void UsePowerUpInput(InputAction.CallbackContext context)
@@ -99,6 +101,11 @@ public class PlayerPowerups : MonoBehaviour
 
     private void Update()
     {
+        if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
+        {
+            gasTankAmount = 0;
+        }
+
         if (usedPowerUp)
         {
             UsePowerUp();
