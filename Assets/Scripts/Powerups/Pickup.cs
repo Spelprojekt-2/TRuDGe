@@ -4,6 +4,7 @@ public class Pickup : MonoBehaviour
 {
     [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
+    [SerializeField] private ProbabilityPickupSO probability;
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -12,7 +13,9 @@ public class Pickup : MonoBehaviour
     private PlayerPowerups player;
     private Collider col;
     private MeshRenderer[] meshes;
-    private void Start()
+    private bool visible = true;
+    private bool canRespawn = true;
+    private void Awake()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
@@ -24,17 +27,25 @@ public class Pickup : MonoBehaviour
         if (other.transform.root.CompareTag("Player"))
         {
             player = other.gameObject.GetComponentInParent<PlayerPowerups>();
+            int racePosition= player.GetComponent<RacerData>().racePosition;
+
             if(powerUpType == PlayerPowerups.PowerUpType.gasolineTank)
             {
                 player.GainedPowerUp(powerUpType);
             }
             else
             {
-                PlayerPowerups.PowerUpType randomPowerUp = (PlayerPowerups.PowerUpType)Random.Range(1, System.Enum.GetValues(typeof(PlayerPowerups.PowerUpType)).Length);
-                player.GainedPowerUp(randomPowerUp);
-                Debug.Log(randomPowerUp);
+                player.GainedPowerUp(probability.RandomizePowerUp(racePosition));
             }
-            StartCoroutine(RespawnTimer());
+
+            if (canRespawn)
+            {
+                StartCoroutine(RespawnTimer());
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -54,6 +65,22 @@ public class Pickup : MonoBehaviour
         {
             mesh.enabled = true;
         }
+    }
+
+    public IEnumerator DroppedTanks()
+    {
+        canRespawn = false;
+        col.enabled = false;
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (var mesh in meshes)
+            {
+                mesh.enabled = visible;
+                visible = !visible;
+            }
+            yield return new WaitForSeconds(0.3f);
+        }
+        col.enabled = true;
     }
     public void SetMagnetTarget(Transform player)
     {
