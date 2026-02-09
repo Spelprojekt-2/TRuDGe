@@ -4,6 +4,7 @@ public class Pickup : MonoBehaviour
 {
     [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
+    [SerializeField] private ProbabilityPickupSO probability;
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -24,15 +25,15 @@ public class Pickup : MonoBehaviour
         if (other.transform.root.CompareTag("Player"))
         {
             player = other.gameObject.GetComponentInParent<PlayerPowerups>();
+            int racePosition= player.GetComponent<RacerData>().racePosition;
+
             if(powerUpType == PlayerPowerups.PowerUpType.gasolineTank)
             {
                 player.GainedPowerUp(powerUpType);
             }
             else
             {
-                PlayerPowerups.PowerUpType randomPowerUp = (PlayerPowerups.PowerUpType)Random.Range(1, System.Enum.GetValues(typeof(PlayerPowerups.PowerUpType)).Length);
-                player.GainedPowerUp(randomPowerUp);
-                Debug.Log(randomPowerUp);
+                player.GainedPowerUp(probability.RandomizePowerUp(racePosition));
             }
             StartCoroutine(RespawnTimer());
         }

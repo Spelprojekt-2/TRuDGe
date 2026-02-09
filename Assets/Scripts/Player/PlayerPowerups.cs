@@ -6,7 +6,12 @@ public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject homingMissile;
     [SerializeField] private int magnetPickupRange = 30;
+    [SerializeField] private GameObject smokeScreen;
+    [SerializeField] private float smokeDuration = 10f;
     [SerializeField] private TextMeshProUGUI currPowerUpText;
+
+    [SerializeField] private TextMeshProUGUI gasTankCounter;
+    private int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
     private float normalTopSpeedModifier;
@@ -16,6 +21,7 @@ public class PlayerPowerups : MonoBehaviour
     private void Start()
     {
         currPowerUpText.text = "";
+        gasTankCounter.text = "Gastanks: 0";
     }
     public void UsePowerUpInput(InputAction.CallbackContext context)
     {
@@ -26,19 +32,25 @@ public class PlayerPowerups : MonoBehaviour
         gasolineTank,
         homingMissle,
         turbo,
-        magnet
+        magnet,
+        smoke
     };
     public void GainedPowerUp(PowerUpType type)
     {
         if (type == PowerUpType.gasolineTank)
         {
-            if (usingTurbo)
+            if (gasTankAmount < 10)
             {
-                normalTopSpeedModifier += 0.1f;
-            }
-            else
-            {
-                GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+                gasTankAmount++;
+                gasTankCounter.text = "Gastanks: " + gasTankAmount;
+                if (usingTurbo)
+                {
+                    normalTopSpeedModifier += 0.1f;
+                }
+                else
+                {
+                    GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+                }
             }
         }
         else
@@ -55,7 +67,7 @@ public class PlayerPowerups : MonoBehaviour
         switch (type)
         {
             case PowerUpType.homingMissle:
-                GetComponent<PlayerShooting>().Shoot(homingMissile);
+                GetComponent<PlayerShooting>().ShootHomingMissile(homingMissile);
                 break;
 
             case PowerUpType.turbo:
@@ -65,6 +77,10 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.magnet:
                 StartCoroutine(Magnet());
+                break;
+
+            case PowerUpType.smoke:
+                Smokescreen();
                 break;
 
             default:
@@ -113,6 +129,10 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Magnet";
         }
+        else if(type == PowerUpType.smoke)
+        {
+            currPowerUpText.text = "Smoke Screen";
+        }
         else
         {
             currPowerUpText.text = "";
@@ -143,5 +163,11 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
+    }
+
+    void Smokescreen()
+    {
+        GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
+        Destroy(spawnedSmoke, smokeDuration);
     }
 }

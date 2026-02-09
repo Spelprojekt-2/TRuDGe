@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(LineRenderer))]
 public class GrapplingBehaviour : MonoBehaviour
@@ -20,7 +21,24 @@ public class GrapplingBehaviour : MonoBehaviour
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
-    public void Toggle()
+
+    public void GrappleInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (!isInGrappleRange) return;
+            isGrappling = true;
+        }
+        else if (context.canceled)
+        {
+            isGrappling = false;
+        }
+
+        lineRenderer.enabled = isGrappling;
+        if (isGrappling)
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
+    }
+    /*public void Toggle()
     {
         if (isGrappling) isGrappling = false;
         else
@@ -32,7 +50,8 @@ public class GrapplingBehaviour : MonoBehaviour
         lineRenderer.enabled = isGrappling;
         if (isGrappling)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
-    }
+    }*/
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
