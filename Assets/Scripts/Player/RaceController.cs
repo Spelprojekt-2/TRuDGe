@@ -78,7 +78,7 @@ public class RaceController : MonoBehaviour
             if (allDone)
             {
                 RacerData[] inorder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
-                FindFirstObjectByType<PlayerTrackerManager>().LoadLeaderboard(inorder);
+                Leaderboard.SetLeaderboard(inorder);
 
                 StartCoroutine(WaitToAfterRace());
             }
