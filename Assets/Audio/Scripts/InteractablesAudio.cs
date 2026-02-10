@@ -6,5 +6,6 @@ using FMODUnity;
 public class InteractablesAudio : ScriptableObject
 {
     #region EventReferences
+    [SerializeField] private EventReference PowerupPickupEvent;
     #endregion
 }
