@@ -3,24 +3,27 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Windows;
 public class PlayerTrackerManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     public string scene = "Level1";
     private Dictionary<int, PlayerInput> playerInputs = new();
-    [SerializeField] private List<GameObject> players;
     private bool allPlayersSpawned = false;
+    private bool isMenu = true;
 
     private Dictionary<int, bool> readyStates = new();
     private SelectionUIList UIList;
     private void Awake()
     {
+        if (FindObjectsByType<PlayerTrackerManager>(FindObjectsSortMode.None).Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(this);
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
-        readyStates.Clear();
     }
     public void HandlePlayerJoined(PlayerInput input)
     {
@@ -39,6 +42,8 @@ public class PlayerTrackerManager : MonoBehaviour
 
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
+
+        if (SceneManager.GetActiveScene().name == "MainMenu") PlayerInputManager.instance.DisableJoining();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadmode)
@@ -50,9 +55,38 @@ public class PlayerTrackerManager : MonoBehaviour
             playerInputs[input.playerIndex] = input;
         }
 
-        bool isMenu =
+        isMenu =
             scene.name == "SelectionScreen" ||
+            scene.name == "AfterRace" ||
             scene.name == "MainMenu";
+
+        if (scene.name == "MainMenu")
+        {
+            Debug.Log(PlayerInputManager.instance);
+            if (PlayerInputManager.instance)
+            {
+                if(PlayerInputManager.instance.playerCount == 0)
+                {
+                    PlayerInputManager.instance.EnableJoining();
+                }                
+            }
+        }
+        else if (scene.name == "SelectionScreen")
+        {
+            if (PlayerInputManager.instance) PlayerInputManager.instance.EnableJoining();
+            for (int i = 0; i < playerInputs.Count; i++)
+            {
+                readyStates[i] = false;
+            }
+            MovePlayersToSpawnPoints();
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        if (isMenu)
+        {
+            RaceController rc = FindAnyObjectByType<RaceController>();
+            if (rc != null) StartCoroutine(DestroyNextFrame(rc.gameObject));
+        }
 
         if (!isMenu && !allPlayersSpawned)
         {
@@ -66,8 +100,6 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             UIList = FindFirstObjectByType<SelectionUIList>();
             allPlayersSpawned = false;
-            if (PlayerInputManager.instance)
-                PlayerInputManager.instance.EnableJoining();
         }
     }
 
@@ -98,20 +130,17 @@ public class PlayerTrackerManager : MonoBehaviour
             if (index == 0)
                 input.GetComponent<PlayerCamera>()?.MinimapPrep();
 
-            input.SwitchCurrentActionMap(
-                SceneManager.GetActiveScene().name == "SelectionScreen"
-                ? "UI"
-                : "Player"
-            );
+            input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
+            if (!isMenu) input.GetComponent<RacerData>().OnRacetrackScene();
         }
     }
 
 private void UpdateAllPlayerCameras()
     {
         int currentTotal = playerInputs.Count;
-        foreach (var player in players)
+        foreach (var player in playerInputs)
         {
-            var splitCam = player.GetComponentInChildren<SplitScreenCamera>();
+            var splitCam = player.Value.GetComponentInChildren<SplitScreenCamera>();
             if (splitCam != null)
             {
                 splitCam.SetupCamera(currentTotal);
@@ -168,5 +197,16 @@ private void UpdateAllPlayerCameras()
                 UIList.ReadyTextP4.gameObject.SetActive(false);
                 break;
         }
+    }
+
+    private System.Collections.IEnumerator DestroyNextFrame(GameObject raceController)
+    {
+        yield return null;
+        Destroy(raceController);
+    }
+
+    private void Update()
+    {
+        Debug.Log($"Players:{PlayerInputManager.instance.playerCount} CanJoin:{PlayerInputManager.instance.joiningEnabled}" );
     }
 }

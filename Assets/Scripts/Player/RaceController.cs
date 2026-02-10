@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Splines;
 using System.Linq;
 using System;
+using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class RaceController : MonoBehaviour
 {
@@ -14,21 +17,63 @@ public class RaceController : MonoBehaviour
     [SerializeField] private Transform startingLine;
     private float startLineOffset;
 
+    [SerializeField] private float timeBeforeStartCountdown;
+    [SerializeField] private TextMeshProUGUI countdownText;
+    private float timeToRaceStart;
+    private bool raceStarted;
+
     void Start()
     {
-        racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += SummaryScene;
+        timeToRaceStart = timeBeforeStartCountdown;
+        raceStarted = false;
 
+        racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
         startLineOffset = GetSplineProgress(startingLine.position);
 
         for (int i = 0; i < racers.Count; i++)
         {
-            UpdateRaceProgress(racers[i]);
+            racers[i].bestLap = 0;
+            racers[i].lap = 0;
+            racers[i].raceProgress = 0;
+            racers[i].lapProgress = 0;
+            racers[i].racePosition = 0;
             racers[i].TrackLoaded(lapsOnThisTrack);
+            racers[i].UpdateLapCount();
+            UpdateRaceProgress(racers[i]);
         }
     }
 
     private void Update()
     {
+        if (!raceStarted)
+        {
+            timeToRaceStart -= Time.deltaTime;
+            if (timeToRaceStart < 3) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
+            if (timeToRaceStart < 0)
+            {
+                raceStarted = true;
+                for (int i = 0; i < racers.Count; i++)
+                {
+                    Debug.Log("Race Started");
+                    racers[i].OnRaceStarted();
+                    countdownText.gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            bool allDone = true;
+            for (int i = 0; i < racers.Count; i++)
+            {
+                if (racers[i].bestLap < lapsOnThisTrack) allDone = false;
+            }
+            if (allDone)
+            {
+                SceneManager.LoadScene("AfterRace");
+            }
+        }
         if (racers.Count == 0 || trackSpline == null) return;
 
         for (int i = 0; i < racers.Count; i++)
@@ -44,8 +89,25 @@ public class RaceController : MonoBehaviour
                 racersInOrder[i].UpdatePosition(i + 1);
             }
         }
+
     }
 
+
+    public void SummaryScene(Scene scene, LoadSceneMode loadmode)
+    {
+        if (scene.name != "AfterRace") return;
+        Cursor.lockState = CursorLockMode.None;
+
+        string leaderboard = "";
+        RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
+        for (int i = 0; i < racersInOrder.Length; ++i)
+        {
+            racersInOrder[i].DisablePosition();
+            leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}\n";
+        }
+
+        GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = leaderboard;
+    }
     void UpdateRaceProgress(RacerData racer)
     {
         if (racer.lap >= lapsOnThisTrack)
@@ -67,7 +129,7 @@ public class RaceController : MonoBehaviour
 
             if (racer.lap == lapsOnThisTrack)
             {
-                racer.RaceFinished();
+                racer.OnRaceFinished();
                 racer.lapProgress = 0.5f;
                 racer.raceProgress = 1000 - racer.racePosition;
                 return;

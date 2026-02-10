@@ -13,7 +13,9 @@ public class RacerData : MonoBehaviour
     public int bestLap;
     [SerializeField] TextMeshProUGUI lapCountText;
     [SerializeField] TextMeshProUGUI positionText;
-    [SerializeField] private UnityEvent OnFinished;
+    [SerializeField] private UnityEvent OnRaceFinish;
+    [SerializeField] private UnityEvent OnRaceSceneStarted;
+    [SerializeField] private UnityEvent OnRaceStart;
     [SerializeField] private UnityEvent OnNewLap;
 
     public void TrackLoaded(int lapsOnTrack)
@@ -32,13 +34,29 @@ public class RacerData : MonoBehaviour
             lap++;
             bestLap++;
             OnNewLap?.Invoke();
-            lapCountText.text = $"Lap: {lap+1}/{trackLaps}";
+            UpdateLapCount();
         }
     }
-    public void RaceFinished()
+
+    public void UpdateLapCount()
     {
-        OnFinished?.Invoke();
+        lapCountText.text = $"Lap: {lap + 1}/{trackLaps}";
     }
+
+    public void OnRacetrackScene()
+    {
+        OnRaceSceneStarted?.Invoke();
+        positionText.gameObject.SetActive(true);
+    }
+    public void OnRaceStarted()
+    {
+        OnRaceStart?.Invoke();
+    }
+    public void OnRaceFinished()
+    {
+        OnRaceFinish?.Invoke();
+    }
+
     public void BackwardsLap()
     {
         if (lap == bestLap)
@@ -51,6 +69,10 @@ public class RacerData : MonoBehaviour
 
     }
 
+    public void DisablePosition()
+    {
+        if (positionText != null) positionText.gameObject.SetActive(false);
+    }
     public void UpdatePosition(int pos)
     {
         racePosition = pos;
