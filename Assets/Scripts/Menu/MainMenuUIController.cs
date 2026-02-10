@@ -6,19 +6,23 @@ using UnityEngine.UI;
 public class MainMenuUIController : MonoBehaviour
 {
     [SerializeField] private GameObject firstJoinPopup;
-    [SerializeField] private Button[] mainMenuButtons;
+    [SerializeField] private UIButton[] mainMenuButtons;
     [SerializeField] private GameObject singlePlayerButtons;
     [SerializeField] private GameObject multiplayerButtons;
     [SerializeField] private GameObject settingsMenu;
 
     private void Start()
     {
+        if (UISelection.playerSelections.Count > 0) UISelection.playerSelections[0].SwapSelection(mainMenuButtons[0]);
         ShowJoinPopup(PlayerTrackerManager.instance.GetPlayerCount() < 1);
     }
     public void ShowJoinPopup(bool show)
     {
         firstJoinPopup.SetActive(show);
-        if (!show) StartCoroutine(Coroutines.SelectButton(mainMenuButtons[0].gameObject));
+        if (!show)
+        {
+            CoroutineRunner.Run(SelectObject(mainMenuButtons[0]));
+        }
     }
     public void ShowSinglePlayerMenu()
     {
@@ -27,7 +31,7 @@ public class MainMenuUIController : MonoBehaviour
         {
             mainMenuButtons[i].enabled = false;
         }
-        SelectObject(singlePlayerButtons.GetComponentInChildren<Button>().gameObject);
+        CoroutineRunner.Run(SelectObject(singlePlayerButtons.GetComponentInChildren<UIButton>()));
     }
     public void ShowMultiplayerMenu()
     {
@@ -36,7 +40,7 @@ public class MainMenuUIController : MonoBehaviour
         {
             mainMenuButtons[i].enabled = false;
         }
-        SelectObject(multiplayerButtons.GetComponentInChildren<Button>().gameObject);
+        CoroutineRunner.Run(SelectObject(multiplayerButtons.GetComponentInChildren<UIButton>()));
     }
 
     public void ShowSettingsMenu()
@@ -46,7 +50,7 @@ public class MainMenuUIController : MonoBehaviour
         {
             mainMenuButtons[i].enabled = false;
         }
-        SelectObject(settingsMenu.GetComponentInChildren<Button>().gameObject);
+        CoroutineRunner.Run(SelectObject(settingsMenu.GetComponentInChildren<UIButton>()));
     }
 
     public void SelectMainMenu(int buttonToSelect)
@@ -58,11 +62,12 @@ public class MainMenuUIController : MonoBehaviour
         {
             mainMenuButtons[i].enabled = true;
         }
-        SelectObject(mainMenuButtons[buttonToSelect].gameObject);
+        CoroutineRunner.Run(SelectObject(mainMenuButtons[buttonToSelect]));
     }
 
-    public static void SelectObject(GameObject go)
+    private IEnumerator SelectObject(UIButton button)
     {
-        EventSystem.current.SetSelectedGameObject(go);
+        yield return null;
+        if (UISelection.playerSelections.Count > 0) UISelection.playerSelections[0].SwapSelection(button);
     }
 }

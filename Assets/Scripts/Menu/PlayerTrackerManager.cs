@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
+using System;
 using System.Collections;
 
 public class PlayerTrackerManager : MonoBehaviour
@@ -13,15 +13,16 @@ public class PlayerTrackerManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
 
     public static PlayerTrackerManager instance;
-    public static Dictionary<int, PlayerInput> playerInputs { get; private set; }
+    private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
-    public static bool isMenu { get; private set; }
-    private SelectionUIList UIList;
+
     private bool allPlayersSpawned = false;
+    private bool isMenu = true;
+
+    private SelectionScreenController UIList;
 
     private void Awake()
     {
-        playerInputs = new();
         if (instance)
         {
             Destroy(gameObject);
@@ -60,7 +61,10 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             FindAnyObjectByType<MainMenuUIController>()?.ShowJoinPopup(false);
             PlayerInputManager.instance.DisableJoining();
-
+        }
+        else if (SceneManager.GetActiveScene().name == "SelectionScreen")
+        {
+            CoroutineRunner.Run(SelectObject(rd.index, FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index)));
         }
     }
 
@@ -70,6 +74,7 @@ public class PlayerTrackerManager : MonoBehaviour
             return;
 
         RacerData leavingData = leavingInput.GetComponent<RacerData>();
+        UISelection.RemovePlayer(leavingData.GetComponent<UISelection>());
         int leavingIndex = leavingData.index;
 
         Destroy(leavingInput.transform.root.gameObject);
@@ -111,28 +116,29 @@ public class PlayerTrackerManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
     {
+        EventSystem es = FindAnyObjectByType<EventSystem>();
+        if (es) Destroy(es.gameObject);
+
         isMenu = scene.name == "MainMenu"
               || scene.name == "SelectionScreen"
               || scene.name == "AfterRace";
-
-
-        foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
-        {
-            RacerData rd = input.GetComponent<RacerData>();
-            playerInputs[rd.index] = input;
-            input.camera.enabled = !isMenu;
-        }
 
         switch (scene.name)
         {
             case "SelectionScreen":
                 {
-                    if (playerInputs.Count < 4) PlayerInputManager.instance.EnableJoining();
+                    foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+                    {
+                        RacerData rd = input.GetComponent<RacerData>();
+                        playerInputs[rd.index] = input;
+                        UISelection.playerSelections[rd.index].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index));
+                    }
+                    PlayerInputManager.instance.EnableJoining();
                     readyStates.Clear();
                     foreach (int index in playerInputs.Keys)
                         readyStates[index] = false;
 
-                    UIList = FindFirstObjectByType<SelectionUIList>();
+                    UIList = FindFirstObjectByType<SelectionScreenController>();
                     break;
                 }
 
@@ -144,10 +150,30 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
             case "AfterRace":
                 GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = Leaderboard.GetLeaderboardString();
+                CoroutineRunner.Run(SelectObject(0, FindAnyObjectByType<SceneController>().GetComponent<UIButton>()));
                 break;
         }
 
-        StartCoroutine(Coroutines.SwapMaps());
+        foreach (var kvp in playerInputs)
+        {
+            kvp.Value.camera.enabled = !isMenu;
+            int index = kvp.Key;
+            PlayerInput input = kvp.Value;
+
+            if (index == 0)
+            {
+                input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
+                if (!isMenu) input.GetComponent<PlayerCamera>()?.MinimapPrep();
+            }
+            else
+            {
+                input.SwitchCurrentActionMap(
+                    scene.name == "SelectionScreen"
+                        ? "UI"
+                        : (isMenu ? "Disabled" : "Player")
+                );
+            }
+        }
 
         Cursor.lockState = isMenu ? CursorLockMode.Confined : CursorLockMode.Locked;
 
@@ -232,14 +258,9 @@ public class PlayerTrackerManager : MonoBehaviour
         foreach (var kvp in playerInputs)
         {
             int index = kvp.Key;
-            Debug.Log(index);
             PlayerInput inputs = kvp.Value;
             inputs.SwitchCurrentActionMap(index == 0 ? "UI" : "Disabled");
         }
-        var inputModule = EventSystem.current.currentInputModule as InputSystemUIInputModule;
-        inputModule.actionsAsset = playerInputs[0].actions;
-        inputModule.enabled = false;
-        inputModule.enabled = true;
     }
 
     public void SetUnready(PlayerInput input)
@@ -262,46 +283,17 @@ public class PlayerTrackerManager : MonoBehaviour
     public void UnreadyAll()
     {
         foreach (var input in playerInputs.Values)
-        {
             SetUnready(input);
-            input.SwitchCurrentActionMap("UI");
-        }
     }
 
     public int GetPlayerCount()
     {
         return playerInputs.Count;
     }
-}
-public static class Coroutines
-{ 
-    public static IEnumerator SwapMaps()
+
+    private IEnumerator SelectObject(int index, UIButton button)
     {
         yield return null;
-        foreach (var kvp in PlayerTrackerManager.playerInputs)
-        {
-            int index = kvp.Key;
-            PlayerInput input = kvp.Value;
-
-            if (index == 0)
-            {
-                input.SwitchCurrentActionMap(PlayerTrackerManager.isMenu ? "UI" : "Player");
-                if (!PlayerTrackerManager.isMenu) input.GetComponent<PlayerCamera>()?.MinimapPrep();
-            }
-            else
-            {
-                input.SwitchCurrentActionMap(
-                    SceneManager.GetActiveScene().name == "SelectionScreen"
-                        ? "UI"
-                        : (PlayerTrackerManager.isMenu ? "Disabled" : "Player")
-                );
-            }
-        }
-    }
-
-    public static IEnumerator SelectButton(GameObject gameObject)
-    {
-        yield return null;
-        MainMenuUIController.SelectObject(gameObject);
+        if (UISelection.playerSelections.Count > index) UISelection.playerSelections[index].SwapSelection(button);
     }
 }
