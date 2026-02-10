@@ -224,16 +224,18 @@ public class ObjectTreadAnimator : MonoBehaviour
     [SerializeField] private float innerTreadMargin = 0.2f;
     [SerializeField] private float outerTreadMargin = 0.2f;
     [SerializeField] private float traverseDistance = 0.0f;
+    [SerializeField] private float traverseSpeed = 1.0f;
     [SerializeField] private GameObject prefabA = null;
     private GameObject oldPrefabA = null;
     [SerializeField] private float segmentLengthA = 0.2f;
     [Tooltip("Will be placed alternatingly with prefab a if defined")]
     [SerializeField] private GameObject prefabB = null;
     private GameObject oldPrefabB = null;
-    [SerializeField] private float segmentLenghtB = 0.2f;
-    private List<GameObject> segments;
+    [SerializeField] private float segmentLengthB = 0.2f;
+    private List<GameObject> segments = new List<GameObject>();
     [Header("Gizmos")]
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Always;
+    [SerializeField] private bool treadGizmos = true;
 
     private TreadSpline treadSpline;
 
@@ -241,6 +243,53 @@ public class ObjectTreadAnimator : MonoBehaviour
     {
         treadSpline = new TreadSpline(wheels, innerTreadMargin, outerTreadMargin);
         PlaceTread();
+    }
+    void Start()
+    {
+        // Reinstantiate tread segments
+        for (int i = segments.Count - 1; i >= 0 ; i--)
+        {
+            Destroy(segments[i]);
+            segments.RemoveAt(i);
+        }
+
+        
+        if (prefabA == null) return;
+        if (prefabB == null)
+        {
+            int count = (int)(treadSpline.totalLength / segmentLengthA);
+            for (int i = 0; i < count; i++)
+            {
+                GameObject newSegment = Instantiate(prefabA);
+                newSegment.transform.parent = transform;
+                segments.Add(newSegment);
+            }
+        }
+        else
+        {
+            int count = (int)(treadSpline.totalLength / (segmentLengthA + segmentLengthB));
+            for (int i = 0; i < count; i++)
+            {
+                GameObject newSegment = Instantiate(prefabA);
+                newSegment.transform.parent = transform;
+                segments.Add(newSegment);
+                newSegment = Instantiate(prefabB);
+                newSegment.transform.parent = transform;
+                segments.Add(newSegment);
+            }
+        }
+    }
+    void Update()
+    {
+        if (traverseSpeed != 0f)
+        {
+            traverseDistance += traverseSpeed * Time.deltaTime;
+            while (traverseDistance > treadSpline.totalLength)
+                traverseDistance -= treadSpline.totalLength;
+            while (traverseDistance < 0f)
+                traverseDistance += treadSpline.totalLength;
+            PlaceTread();
+        }
     }
     private void OnDrawGizmos()
     {
@@ -254,49 +303,25 @@ public class ObjectTreadAnimator : MonoBehaviour
     }
     private void PlaceTread()
     {
-        if (prefabA != oldPrefabA || prefabB != oldPrefabB)
-        {
-            // Reinstantiate tread segments
-            for (int i = segments.Count - 1; i >= 0 ; i--)
-            {
-                Destroy(segments[i]);
-                segments.RemoveAt(i);
-            }
-
+        // if (prefabA != oldPrefabA || prefabB != oldPrefabB)
+        // {
             
-            if (prefabA == null) return;
-            if (prefabB == null)
-            {
-                int count = treadSpline.totalLength / segmentLengthA;
-                for (int i = 0; i < count; i++)
-                {
-                    GameObject newSegment = Instantiate(prefabA);
-                    segments.Add(newSegment);
-                }
-            }
-            else
-            {
-                int count = treadSpline.totalLength / (segmentLengthA + segmentLengthB);
-                for (int i = 0; i < count; i++)
-                {
-                    GameObject newSegment = Instantiate(prefabA);
-                    segments.Add(newSegment);
-                    newSegment = Instantiate(prefabB);
-                    segments.Add(newSegment);
-                }
-            }
-        }
-        float traversal = 0f;
+        // }
+        float traversal = traverseDistance;
         int segmentI = 0;
-        while (traversal <= treadSpline.totalLength && segmentI < segments.Count)
+        while (segmentI < segments.Count)
         {
-            segments[segmentI].localPosition = treadSpline.GetLocation(traversal);
-            segments[segmentI].localRotation = treadSpline.GetRotation(traversal);
+            while (traversal > treadSpline.totalLength)
+                traversal -= treadSpline.totalLength;
+            while (traversal < 0f)
+                traversal += treadSpline.totalLength;
+            segments[segmentI].transform.localPosition = treadSpline.GetLocation(traversal);
+            segments[segmentI].transform.localRotation = treadSpline.GetRotation(traversal);
 
             if (prefabB == null)
                 traversal += segmentLengthA;
             else
-                traversal += (segmentI % 2 == 0)? segmentLengthA : segmentLenghtB;
+                traversal += (segmentI % 2 == 0)? segmentLengthA : segmentLengthB;
                 
             segmentI++;
         }
@@ -311,24 +336,28 @@ public class ObjectTreadAnimator : MonoBehaviour
             DrawCircle(worldPos, t.right, wheel.radius, 32, Color.cyan);
         }
         
-        Gizmos.color = Color.magenta;
-        
-        float segmentLength = 0.2f;
-        for (float d = segmentLength; d < treadSpline.totalLength; d += segmentLength)
+        if (treadGizmos)
         {
             Gizmos.color = Color.magenta;
-            Vector3 point0 = treadSpline.GetLocation(d - segmentLength);
-            Vector3 point1 = treadSpline.GetLocation(d);
-            Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point1));
+            
+            float segmentLength = 0.2f;
+            for (float d = segmentLength; d < treadSpline.totalLength; d += segmentLength)
+            {
+                Gizmos.color = Color.magenta;
+                Vector3 point0 = treadSpline.GetLocation(d - segmentLength);
+                Vector3 point1 = treadSpline.GetLocation(d);
+                Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point1));
 
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point0 + treadSpline.GetRotation(d - segmentLength) * Vector3.up * segmentLength));
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point0 + treadSpline.GetRotation(d - segmentLength) * Vector3.up * segmentLength));
 
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point0 + treadSpline.GetRotation(d - segmentLength) * Vector3.forward * segmentLength/2));
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(t.TransformPoint(point0), t.TransformPoint(point0 + treadSpline.GetRotation(d - segmentLength) * Vector3.forward * segmentLength/2));
+            }
+            
+            treadSpline.DrawGizmos();
         }
 
-        treadSpline.DrawGizmos();
 
 
         // Vector3 v0 = wheels[1].localPosition - wheels[0].localPosition;

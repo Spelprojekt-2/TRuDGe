@@ -149,11 +149,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheels:
-  - localPosition: {x: 0, y: 2.6, z: -6}
+  - localPosition: {x: 0, y: 2.6, z: -6.21}
     radius: 0.5
-  - localPosition: {x: 0, y: 0.48, z: -4}
+  - localPosition: {x: 0, y: -0.24, z: -4}
     radius: 1
-  - localPosition: {x: 0, y: -0.64, z: -1.5}
+  - localPosition: {x: 0, y: -0.64, z: -1.57}
     radius: 1
   - localPosition: {x: 0, y: -0.5, z: 1.5}
     radius: 1
@@ -163,11 +163,14 @@ MonoBehaviour:
     radius: 0.5
   innerTreadMargin: 0.2
   outerTreadMargin: 0.1
+  traverseDistance: 0
+  traverseSpeed: -8
+  prefabA: {fileID: 391402302645160151, guid: 5e4b98db93e956c44a5f5455ebaa8d36, type: 3}
+  segmentLengthA: 0.5
+  prefabB: {fileID: 4825398658061397371, guid: 510146fc247e9a74aacde514d3dfec81, type: 3}
+  segmentLengthB: 0.5
   showGizmos: 2
-  angle: 1.59
-  viktor: {x: -3, y: 0}
-  tanViktor: -1.5707964
-  aCosViktor: 3.1415927
+  treadGizmos: 0
 --- !u!4 &194927489
 Transform:
   m_ObjectHideFlags: 0
