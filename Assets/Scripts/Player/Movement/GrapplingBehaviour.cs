@@ -65,7 +65,11 @@ public class GrapplingBehaviour : MonoBehaviour
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, grapplePoint);
             
-            grappleElevationObject.LookAt(grapplePoint);
+            // float azimuth = Vector3.Angle((grapplePoint - grappleAzimuthObject.position).normalized, grappleAzimuthObject.forward);
+            // grappleAzimuthObject.localEulerAngles = new Vector3(0, azimuth, 0);
+            grappleAzimuthObject.LookAt(grapplePoint, grappleAzimuthObject.parent.up);
+            grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
+            grappleElevationObject.LookAt(grapplePoint, grappleAzimuthObject.up);
         }
 
 
