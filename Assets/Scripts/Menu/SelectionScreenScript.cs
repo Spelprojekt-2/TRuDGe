@@ -6,7 +6,7 @@ public class SelectionScreenScript : MonoBehaviour
     private PlayerInput input;
 
     private float timeSinceJoined;
-    private const float joinInputDelay = 0.5f;
+    private const float joinInputDelay = 0.1f;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class SelectionScreenScript : MonoBehaviour
 
     public void Ready(InputAction.CallbackContext context)
     {
-        if (!context.performed || !CanInteract())
+        if (!context.started || !CanInteract())
             return;
 
         PlayerTrackerManager.instance.SetReady(input);
