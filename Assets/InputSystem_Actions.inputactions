@@ -223,8 +223,8 @@
                 },
                 {
                     "name": "",
-                    "id": "7eeaa71c-5c80-4633-b4cf-4cc0f53fd3f7",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "90beb1eb-2f84-4ec9-b104-a5c706016427",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -245,19 +245,8 @@
                 },
                 {
                     "name": "",
-                    "id": "7eeaa71c-5c80-4633-b4cf-4cc0f53fd3f7",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Grapple",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "32eb75a1-377d-468d-8f5d-d4013a8036b5",
-                    "path": "<XInputController>/rightShoulder",
+                    "id": "4d6e297c-734b-44fc-903a-ff0cee7a6008",
+                    "path": "<XInputController>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -345,7 +334,18 @@
                 {
                     "name": "",
                     "id": "4d2ee3a9-76a1-4f4a-ab4a-9166b0240056",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reverse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52881c5c-1710-4fe8-a7b6-81eaeb811be0",
+                    "path": "<XInputController>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -391,7 +391,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Ready",
+                    "name": "Back",
                     "type": "Button",
                     "id": "7607c7b6-cd76-4816-beef-bd0341cfe950",
                     "expectedControlType": "",
@@ -400,7 +400,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Unready",
+                    "name": "Select",
                     "type": "Button",
                     "id": "15cef263-9014-4fd5-94d9-4e4a6234a6ef",
                     "expectedControlType": "",
@@ -416,6 +416,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Disconnect",
+                    "type": "Button",
+                    "id": "fc74d9ef-be14-46e8-a3e2-77d88750f529",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "7e2a3f69-fb36-47e6-9ed0-f676b94353ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -686,11 +704,11 @@
                 {
                     "name": "",
                     "id": "9e92bb26-7e3b-4ec4-b06b-3c8f8e498ddc",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Ready",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -701,7 +719,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Ready",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -712,18 +730,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Unready",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "1486e33f-cb6b-4c5b-a31d-7bb6b1a105d7",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Unready",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -737,8 +755,47 @@
                     "action": "Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "880f2cf8-28be-4a0f-9a7c-f821f7992e70",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Disconnect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b434343-5a58-41ce-bd8f-1ec34ae0e232",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Disconnect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17bc06f3-dfe4-4883-b04a-185018ce414e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Disabled",
+            "id": "ad532a6f-3423-4929-9fae-e2076d439328",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [
