@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEngine.EventSystems;
+using System;
+using System.Collections;
 
 public class PlayerTrackerManager : MonoBehaviour
 {
@@ -16,7 +19,7 @@ public class PlayerTrackerManager : MonoBehaviour
     private bool allPlayersSpawned = false;
     private bool isMenu = true;
 
-    private SelectionUIList UIList;
+    private SelectionScreenController UIList;
 
     private void Awake()
     {
@@ -58,7 +61,10 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             FindAnyObjectByType<MainMenuUIController>()?.ShowJoinPopup(false);
             PlayerInputManager.instance.DisableJoining();
-
+        }
+        else if (SceneManager.GetActiveScene().name == "SelectionScreen")
+        {
+            CoroutineRunner.Run(SelectObject(rd.index, FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index)));
         }
     }
 
@@ -68,6 +74,7 @@ public class PlayerTrackerManager : MonoBehaviour
             return;
 
         RacerData leavingData = leavingInput.GetComponent<RacerData>();
+        UISelection.RemovePlayer(leavingData.GetComponent<UISelection>());
         int leavingIndex = leavingData.index;
 
         Destroy(leavingInput.transform.root.gameObject);
@@ -109,28 +116,29 @@ public class PlayerTrackerManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
     {
+        EventSystem es = FindAnyObjectByType<EventSystem>();
+        if (es) Destroy(es.gameObject);
+
         isMenu = scene.name == "MainMenu"
               || scene.name == "SelectionScreen"
               || scene.name == "AfterRace";
-
-
-        foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
-        {
-            RacerData rd = input.GetComponent<RacerData>();
-            playerInputs[rd.index] = input;
-            input.camera.enabled = !isMenu;
-        }
 
         switch (scene.name)
         {
             case "SelectionScreen":
                 {
+                    foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+                    {
+                        RacerData rd = input.GetComponent<RacerData>();
+                        playerInputs[rd.index] = input;
+                        UISelection.playerSelections[rd.index].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index));
+                    }
                     PlayerInputManager.instance.EnableJoining();
                     readyStates.Clear();
                     foreach (int index in playerInputs.Keys)
                         readyStates[index] = false;
 
-                    UIList = FindFirstObjectByType<SelectionUIList>();
+                    UIList = FindFirstObjectByType<SelectionScreenController>();
                     break;
                 }
 
@@ -142,19 +150,20 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
             case "AfterRace":
                 GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = Leaderboard.GetLeaderboardString();
+                CoroutineRunner.Run(SelectObject(0, FindAnyObjectByType<SceneController>().GetComponent<UIButton>()));
                 break;
         }
 
         foreach (var kvp in playerInputs)
         {
+            kvp.Value.camera.enabled = !isMenu;
             int index = kvp.Key;
             PlayerInput input = kvp.Value;
 
             if (index == 0)
             {
                 input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
-                if (!isMenu)
-                    input.GetComponent<PlayerCamera>()?.MinimapPrep();
+                if (!isMenu) input.GetComponent<PlayerCamera>()?.MinimapPrep();
             }
             else
             {
@@ -243,7 +252,15 @@ public class PlayerTrackerManager : MonoBehaviour
                 return;
         }
 
+        PlayerInputManager.instance.DisableJoining();
         UIList.OpenTrackSelection();
+
+        foreach (var kvp in playerInputs)
+        {
+            int index = kvp.Key;
+            PlayerInput inputs = kvp.Value;
+            inputs.SwitchCurrentActionMap(index == 0 ? "UI" : "Disabled");
+        }
     }
 
     public void SetUnready(PlayerInput input)
@@ -272,5 +289,11 @@ public class PlayerTrackerManager : MonoBehaviour
     public int GetPlayerCount()
     {
         return playerInputs.Count;
+    }
+
+    private IEnumerator SelectObject(int index, UIButton button)
+    {
+        yield return null;
+        if (UISelection.playerSelections.Count > index) UISelection.playerSelections[index].SwapSelection(button);
     }
 }
