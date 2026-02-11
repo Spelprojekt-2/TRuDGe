@@ -22,6 +22,10 @@ public class BounceWalls : MonoBehaviour
             float speedBeforeHit = rb.linearVelocity.magnitude;
 
             ContactPoint contact = collision.GetContact(0);
+            Vector3 heading = contact.point - transform.position;
+
+            float dotProduct = Vector3.Dot(transform.forward, heading.normalized);
+
             Vector3 pushDirection = (transform.position - contact.point).normalized;
             pushDirection.y = 0;
 
@@ -29,7 +33,14 @@ public class BounceWalls : MonoBehaviour
             float clampedForce = Mathf.Clamp(rawSpeedForce, minBumpForce, maxBumpForce);
             rb.linearVelocity *= 0.5f;
 
-            rb.AddForce(pushDirection * clampedForce, ForceMode.Impulse);
+            if (dotProduct < 0)
+            {
+                rb.AddForce(pushDirection * clampedForce / 4, ForceMode.Impulse);
+            }
+            else
+            {
+                rb.AddForce(pushDirection * clampedForce, ForceMode.Impulse);
+            }
 
             if (rb.linearVelocity.magnitude > speedBeforeHit)
             {
@@ -37,6 +48,8 @@ public class BounceWalls : MonoBehaviour
             }
 
             rb.linearVelocity *= 0.9f;
+
+            
         }
     }
 }

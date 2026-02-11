@@ -3,6 +3,11 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using UnityEngine.Splines;
+using System.Linq;
+using Unity.Mathematics;
+
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject gasTank;
@@ -11,6 +16,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject smokeScreen;
     [SerializeField] private float smokeDuration = 7f;
     [SerializeField] private GameObject landMine;
+    [SerializeField] private GameObject airstrike;
+    [SerializeField] private float airstrikeForwardOffset;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -21,8 +28,11 @@ public class PlayerPowerups : MonoBehaviour
     private bool usingTurbo = false;
     private bool usingMagnet = false;
 
+    private RaceController raceController;
+
     private void Start()
     {
+        raceController = FindFirstObjectByType<RaceController>();
         currPowerUpText.text = "";
         gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
@@ -94,6 +104,17 @@ public class PlayerPowerups : MonoBehaviour
             case PowerUpType.landMine:
                 Instantiate(landMine, transform.position, Quaternion.identity);
                 break;
+
+            case PowerUpType.airstrike:
+                Airstrike();
+                break;
+
+            case PowerUpType.deployWall:
+                break;
+
+            case PowerUpType.eMP:
+                break;
+
             default:
                 return;
         }
@@ -178,7 +199,7 @@ public class PlayerPowerups : MonoBehaviour
         for (int i = 0; i < gasTankAmount / 2; i++)
         {
             float positionOffset = 10f;
-            Vector3 rndPos = new Vector3(Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
+            Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
@@ -216,5 +237,22 @@ public class PlayerPowerups : MonoBehaviour
     {
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
         Destroy(spawnedSmoke, smokeDuration);
+    }
+
+    void Airstrike()
+    {
+        RacerData leader = raceController.racers.OrderByDescending(x => x.raceProgress).FirstOrDefault();
+
+        if (leader != null && raceController.trackSpline != null)
+        {
+            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
+
+            float targetProgress = (currentProgress + airstrikeForwardOffset) % 1f;
+
+            Vector3 spawnLocalPos = raceController.trackSpline.EvaluatePosition(targetProgress);
+            Vector3 spawnWorldPos = raceController.trackSpline.transform.TransformPoint(spawnLocalPos);
+
+            Instantiate(airstrike, spawnWorldPos, Quaternion.identity);
+        }
     }
 }
