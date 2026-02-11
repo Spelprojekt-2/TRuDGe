@@ -38,7 +38,10 @@ public class PlayerPowerups : MonoBehaviour
         turbo,
         magnet,
         smoke,
-        landMine
+        landMine,
+        airstrike,
+        deployWall,
+        eMP
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -151,6 +154,18 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Landmine";
         }
+        else if (type == PowerUpType.airstrike)
+        {
+            currPowerUpText.text = "Airstrike";
+        }
+        else if (type == PowerUpType.deployWall)
+        {
+            currPowerUpText.text = "Deploy Wall";
+        }
+        else if (type == PowerUpType.eMP)
+        {
+            currPowerUpText.text = "EMP";
+        }
         else
         {
             currPowerUpText.text = "";
@@ -202,6 +217,4 @@ public class PlayerPowerups : MonoBehaviour
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
         Destroy(spawnedSmoke, smokeDuration);
     }
-
-    
 }
