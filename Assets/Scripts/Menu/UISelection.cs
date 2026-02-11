@@ -8,6 +8,8 @@ public class UISelection : MonoBehaviour
     public UIButton selection;
     public Color selectionColor;
     public RectTransform selectionHighlight;
+    public GameObject characterBackground;
+    public GameObject characterText;
 
     public void Start()
     {
@@ -19,6 +21,13 @@ public class UISelection : MonoBehaviour
         {
             playerSelections.Remove(this);
         }
+    }
+    public void SetHighlight(bool state)
+    {
+        if (characterBackground)
+            characterBackground.SetActive(state);
+        if (characterText)
+            characterText.SetActive(state);
     }
     public void LookInput(InputAction.CallbackContext context)
     {
@@ -51,11 +60,19 @@ public class UISelection : MonoBehaviour
     }
 
     public void SwapSelection(UIButton newButton)
-    {
-        if (!newButton) return;
-        selection = newButton;
-        SelectUIUpdate(newButton);
-    }
+{
+    if (!newButton || selection == newButton)
+        return;
+
+    if (selection)
+        selection.SetHighlight(false);
+
+    selection = newButton;
+
+    selection.SetHighlight(true);
+
+    SelectUIUpdate(newButton);
+}
 
     public void SwapPlayers(int p1index, int p2index)
     {

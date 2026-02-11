@@ -18,4 +18,13 @@ public class UIButton : MonoBehaviour
     public UIButton SwapRightSelection() => SwapRight;
     public UIButton SwapLeftSelection() => SwapLeft;
 
+    public GameObject characterBackground;
+    public GameObject characterText;
+    public void SetHighlight(bool state)
+    {
+        if (characterBackground)
+            characterBackground.SetActive(state);
+        if (characterText)
+            characterText.SetActive(state);
+    }
 }
