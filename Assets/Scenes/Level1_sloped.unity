@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 719254606}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -64154,10 +64154,10 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: f682fdcf4041e8c46bc863bf80880f99, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 200
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 350
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -113265,7 +113265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4029194333597442243, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: topSpeed
@@ -113277,7 +113277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 455.8
+      value: 297.2
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -113285,7 +113285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 645.6
+      value: 336.3
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalRotation.w
