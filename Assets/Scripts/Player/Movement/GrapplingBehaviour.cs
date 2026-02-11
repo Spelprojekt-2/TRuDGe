@@ -43,19 +43,6 @@ public class GrapplingBehaviour : MonoBehaviour
         if (isGrappling)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
     }
-    /*public void Toggle()
-    {
-        if (isGrappling) isGrappling = false;
-        else
-        {
-            if (!isInGrappleRange) return;
-            isGrappling = true;
-        }
-
-        lineRenderer.enabled = isGrappling;
-        if (isGrappling)
-            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
-    }*/
 
     void Start()
     {
@@ -70,8 +57,7 @@ public class GrapplingBehaviour : MonoBehaviour
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, grapplePoint);
             
-            // float azimuth = Vector3.Angle((grapplePoint - grappleAzimuthObject.position).normalized, grappleAzimuthObject.forward);
-            // grappleAzimuthObject.localEulerAngles = new Vector3(0, azimuth, 0);
+            // I know it's ugly but it works
             grappleAzimuthObject.LookAt(grapplePoint, grappleAzimuthObject.parent.up);
             grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
             grappleElevationObject.LookAt(grapplePoint, grappleAzimuthObject.up);
