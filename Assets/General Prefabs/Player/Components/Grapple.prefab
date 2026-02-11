@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2963052763164485293}
   - component: {fileID: 4390958769515604759}
   - component: {fileID: 5664280823835413462}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 29118914822687701}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.112999916, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3445206117057312034}
   - component: {fileID: 3697850294165961573}
   - component: {fileID: 8173727273192742796}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 1062731973836770642}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.321, z: 0}
+  m_LocalPosition: {x: 0, y: 0.256, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2370274047725445919}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Elevation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 1583874182827706321}
   - component: {fileID: 6929475110583037556}
   - component: {fileID: 7163429281134340681}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slider rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ Transform:
   m_GameObject: {fileID: 3768697726229419047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0208, y: 0.066, z: 0.527}
+  m_LocalPosition: {x: -0.0208, y: -0.0605, z: 0.527}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -430,7 +430,7 @@ MonoBehaviour:
   vehicleRigidbody: {fileID: 0}
   grappleAzimuthObject: {fileID: 5387242127863908767}
   grappleElevationObject: {fileID: 2370274047725445919}
-  grappleMuzzleOffset: {x: 0, y: 0.07, z: 0.62}
+  grappleMuzzleOffset: {x: 0, y: -0.055, z: 0.49}
   grappleHook: {fileID: 3768697726229419047}
   grapplePoint: {x: 0, y: 0, z: 0}
 --- !u!120 &832853339737233674
@@ -570,7 +570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5387242127863908767}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Azimuth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
