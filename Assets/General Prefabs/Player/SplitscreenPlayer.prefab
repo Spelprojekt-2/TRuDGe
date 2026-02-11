@@ -1166,6 +1166,8 @@ MonoBehaviour:
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
   landMine: {fileID: 403242051929924570, guid: 273b2bc73ffd72a4d839b4b4d6c6acc4, type: 3}
+  airstrike: {fileID: 5110331474918168107, guid: f3f0423727e1fcc4c85febae6a948d6b, type: 3}
+  airstrikeForwardOffset: 0.05
   currPowerUpText: {fileID: 4457974518802137047}
   gasTankCounter: {fileID: 6607039160849175221}
 --- !u!114 &116223656148645366
@@ -1235,7 +1237,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3563dc9cb162b8848ae1bee726d1c558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 100
+  minBumpForce: 30
+  maxBumpForce: 80
+  speedDivisor: 2
 --- !u!1 &4939748759974558919
 GameObject:
   m_ObjectHideFlags: 0
