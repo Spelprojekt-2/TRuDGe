@@ -104,6 +104,7 @@ public class PlayerPowerups : MonoBehaviour
         if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
         {
             gasTankAmount = 0;
+            gasTankCounter.text = "Gastanks: 0";
         }
 
         if (usedPowerUp)
@@ -159,7 +160,7 @@ public class PlayerPowerups : MonoBehaviour
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
-        for (int i = 0; i < gasTankAmount; i++)
+        for (int i = 0; i < gasTankAmount / 2; i++)
         {
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
