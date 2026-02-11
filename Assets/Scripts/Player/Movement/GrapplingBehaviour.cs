@@ -15,8 +15,11 @@ public class GrapplingBehaviour : MonoBehaviour
     [SerializeField] private Transform grappleElevationObject;
     [Tooltip("Location from which the grapple hook is fired")]
     [SerializeField] private Vector3 grappleMuzzleOffset = Vector3.zero;
+    [Tooltip("An aesthetic projectile on the end of the barrel when the vehicle isn't grappling")]
+    [SerializeField] private GameObject grappleHook;
     #endregion
 
+    [HeaderAttribute("Debug")]
     [SerializeField] private Vector3 grapplePoint = Vector3.zero;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
@@ -28,10 +31,12 @@ public class GrapplingBehaviour : MonoBehaviour
         {
             if (!isInGrappleRange) return;
             isGrappling = true;
+            if (grappleHook) grappleHook.SetActive(false);
         }
         else if (context.canceled)
         {
             isGrappling = false;
+            if (grappleHook) grappleHook.SetActive(true);
         }
 
         lineRenderer.enabled = isGrappling;
