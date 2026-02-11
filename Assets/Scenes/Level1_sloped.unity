@@ -89709,12 +89709,8 @@ MonoBehaviour:
   m_VersionIndex: 1543
   m_IsSelectable: 1
   m_SelectedFaces: 
-  m_SelectedEdges:
-  - a: 2
-    b: 1
-  - a: 21
-    b: 18
-  m_SelectedVertices: 02000000010000001500000012000000
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!4 &1405936247
 Transform:
   m_ObjectHideFlags: 0
@@ -116575,9 +116571,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4029194333597442243, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: topSpeed
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029194333597442243, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: baseAcceleration
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 139.1
+      value: 455.8
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -116585,7 +116589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 307.6
+      value: 645.6
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalRotation.w
