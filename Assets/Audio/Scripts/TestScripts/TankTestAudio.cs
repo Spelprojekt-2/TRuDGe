@@ -9,27 +9,27 @@ public class TankTestAudio : MonoBehaviour
 
     public void GrappleShoot()
     {
-        if (isInstance)
+        if (isInstance && instance.isValid())
         {
-            GrappleEnd();
+            instance.stop(STOP_MODE.IMMEDIATE);
         }
         isInstance = true;
-        instance = tanksAudio.CreateGrappleInstance(gameObject);
+        instance = tanksAudio.GrappleStartAudio(instance, gameObject);
     }
 
     public void GrappleHit()
     {
-        tanksAudio.ChangeGrappleState(instance, TanksAudio.GrappleState.Hit);
+        tanksAudio.SetGrappleState(instance, TanksAudio.GrappleState.Hit);
     }
 
     public void GrappleReturn()
     {
-        tanksAudio.ChangeGrappleState(instance, TanksAudio.GrappleState.Return);
+        tanksAudio.SetGrappleState(instance, TanksAudio.GrappleState.Return);
     }
 
     public void GrappleEnd()
     {
-        tanksAudio.ChangeGrappleState(instance, TanksAudio.GrappleState.End);
+        tanksAudio.SetGrappleState(instance, TanksAudio.GrappleState.End);
         isInstance = false;
     }
 }
