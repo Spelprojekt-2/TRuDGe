@@ -43,6 +43,6 @@ public class Vibrations : MonoBehaviour
 
     private void OnDisable()
     {
-        GetPlayerGamepad()?.ResetHaptics();
+        if (pairedGamepad != null) GetPlayerGamepad()?.ResetHaptics();
     }
 }
