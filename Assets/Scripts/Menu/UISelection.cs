@@ -10,22 +10,20 @@ public class UISelection : MonoBehaviour
     public Color selectionColor;
     public RectTransform selectionHighlight;
     public GameObject characterBackground;
-    public TMP_Text characterText;
+    public GameObject characterText;
+    public GameObject characterText1;
+    public GameObject characterText2;
+    public GameObject characterText3;
 
     private RacerData racerData;
 
     void Awake()
     {
-
+        racerData = GetComponent<RacerData>();
     }
     public void Start()
     {
         playerSelections.Add(this);
-        racerData = GetComponent<RacerData>();
-
-        if (selectionHighlight) selectionHighlight.gameObject.SetActive(false);
-        if (characterBackground) characterBackground.SetActive(false);
-        if (characterText) characterText.gameObject.SetActive(false);
     }
     public void OnDestroy()
     {
@@ -105,9 +103,31 @@ public class UISelection : MonoBehaviour
         selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
 
         if (characterBackground) characterBackground.SetActive(true);
-        if (characterText)
+        
+        RacerData rd = GetComponent<RacerData>();
+        if (rd.index == 0)
         {
-            characterText.gameObject.SetActive(true);
+            characterBackground.SetActive(true);
+            characterText = button.characterDescription;
+            characterText.SetActive(true);
+        }
+        if (rd.index == 1)
+        {
+            characterBackground.SetActive(true);
+            characterText1 = button.characterDescription;
+            characterText1.SetActive(true);
+        }
+        if (rd.index == 2)
+        {
+            characterBackground.SetActive(true);
+            characterText2 = button.characterDescription;
+            characterText2.SetActive(true);
+        }
+        if (rd.index == 3)
+        {
+            characterBackground.SetActive(true);
+            characterText3 = button.characterDescription;
+            characterText3.SetActive(true);
         }
     }
 }

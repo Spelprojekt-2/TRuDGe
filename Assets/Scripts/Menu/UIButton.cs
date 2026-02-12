@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIButton : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class UIButton : MonoBehaviour
     public UIButton SwapDown;
     public UIButton SwapLeft;
     public UIButton SwapRight;
+
+    public GameObject characterDescription;
 
     [Header("P1")]
     public GameObject characterBackground;
