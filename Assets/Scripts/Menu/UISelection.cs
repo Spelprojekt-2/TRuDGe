@@ -10,11 +10,22 @@ public class UISelection : MonoBehaviour
     public Color selectionColor;
     public RectTransform selectionHighlight;
     public GameObject characterBackground;
-    public GameObject characterText;
+    public TMP_Text characterText;
 
+    private RacerData racerData;
+
+    void Awake()
+    {
+
+    }
     public void Start()
     {
         playerSelections.Add(this);
+        racerData = GetComponent<RacerData>();
+
+        if (selectionHighlight) selectionHighlight.gameObject.SetActive(false);
+        if (characterBackground) characterBackground.SetActive(false);
+        if (characterText) characterText.gameObject.SetActive(false);
     }
     public void OnDestroy()
     {
@@ -54,7 +65,7 @@ public class UISelection : MonoBehaviour
     }
 
     public void SwapSelection(UIButton newButton)
-{
+    {   
     if (!newButton || selection == newButton)
         return;
 
@@ -66,7 +77,7 @@ public class UISelection : MonoBehaviour
     selection.SetHighlight(true);
 
     SelectUIUpdate(newButton);
-}
+    }
 
     public void SwapPlayers(int p1index, int p2index)
     {
@@ -93,6 +104,10 @@ public class UISelection : MonoBehaviour
         selectionHighlight.rotation = Quaternion.identity;
         selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
 
-        characterBackground.gameObject.SetActive(true); characterText.gameObject.SetActive(true);
+        if (characterBackground) characterBackground.SetActive(true);
+        if (characterText)
+        {
+            characterText.gameObject.SetActive(true);
+        }
     }
 }

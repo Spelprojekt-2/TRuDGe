@@ -13,16 +13,16 @@ public class UIButton : MonoBehaviour
     public GameObject characterText;
 
     [Header("P2")]
+    public GameObject characterBackground1;
+    public GameObject characterText1;
+
+    [Header("P3")]
     public GameObject characterBackground2;
     public GameObject characterText2;
 
-    [Header("P3")]
+    [Header("P4")]
     public GameObject characterBackground3;
     public GameObject characterText3;
-
-    [Header("P4")]
-    public GameObject characterBackground4;
-    public GameObject characterText4;
 
     public void Click()
     {
@@ -36,34 +36,34 @@ public class UIButton : MonoBehaviour
 
     public void SetHighlight(bool state)
     {
-        int playerIndex = GetComponent<RacerData>().index;
-        if (playerIndex == 0)
+        RacerData rd = FindObjectOfType<RacerData>();
+        if (rd.index == 0)
         {
             if (characterBackground)
             characterBackground.SetActive(state);
             if (characterText)
             characterText.SetActive(state);
         }
-        if (playerIndex == 1)
+        if (rd.index == 1)
+        {
+            if (characterBackground1)
+            characterBackground1.SetActive(state);
+            if (characterText1)
+            characterText1.SetActive(state);
+        }
+        if (rd.index == 2)
         {
             if (characterBackground2)
-            characterBackground2.SetActive(state);
+            characterBackground3.SetActive(state);
             if (characterText2)
             characterText2.SetActive(state);
         }
-        if (playerIndex == 2)
+        if (rd.index == 3)
         {
             if (characterBackground3)
             characterBackground3.SetActive(state);
             if (characterText3)
             characterText3.SetActive(state);
-        }
-        if (playerIndex == 3)
-        {
-            if (characterBackground4)
-            characterBackground4.SetActive(state);
-            if (characterText4)
-            characterText4.SetActive(state);
         }
     }
 }
