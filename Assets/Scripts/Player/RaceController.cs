@@ -170,7 +170,8 @@ public class RaceController : MonoBehaviour
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("AfterRace");
+        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TimeTrialMenu");
+        else SceneManager.LoadScene("AfterRace");
     }
 
     public double GetRaceTime()
