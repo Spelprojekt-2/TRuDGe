@@ -66,7 +66,6 @@ public class UISelection : MonoBehaviour
     selection.SetHighlight(true);
 
     SelectUIUpdate(newButton);
-    UpdateCharacterText(newButton);
 }
 
     public void SwapPlayers(int p1index, int p2index)
@@ -95,14 +94,5 @@ public class UISelection : MonoBehaviour
         selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
 
         characterBackground.gameObject.SetActive(true); characterText.gameObject.SetActive(true);
-    }
-    private void UpdateCharacterText(UIButton button)
-    {
-        TMPro.TMP_Text textComponent = characterText.GetComponent<TMPro.TMP_Text>();
-
-        if (textComponent != null)
-        {
-            textComponent.text = button.characterName + "\n\n" + button.characterDescription;
-        }
     }
 }
