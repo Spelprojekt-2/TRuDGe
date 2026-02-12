@@ -34,7 +34,7 @@ public static class Leaderboard
         }
     }
 
-    private static string FormatTime(double time)
+    public static string FormatTime(double time)
     {
         int minutes = (int)Math.Floor(time / 60);
         int seconds = (int)Math.Floor(time % 60);

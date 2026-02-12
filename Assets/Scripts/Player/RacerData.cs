@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,9 +15,13 @@ public class RacerData : MonoBehaviour
     public string racername;
     private RaceController raceController;
 
+    private bool isRacing;
     public int currentValidLap;
-    [SerializeField] TextMeshProUGUI lapCountText;
-    [SerializeField] TextMeshProUGUI positionText;
+    [SerializeField] private TextMeshProUGUI lapCountText;
+    [SerializeField] private TextMeshProUGUI positionText;
+    [SerializeField] private TextMeshProUGUI TimerText;
+    [SerializeField] private GameObject TimeTrialUI;
+    [SerializeField] private GameObject RaceUI;
     [SerializeField] private UnityEvent OnRaceFinish;
     [SerializeField] private UnityEvent OnRaceSceneStarted;
     [SerializeField] private UnityEvent OnRaceStart;
@@ -24,12 +29,21 @@ public class RacerData : MonoBehaviour
     private List<double> lapEndTimes = new List<double>();
 
 
+    private void Update()
+    {
+        if (!PlayerTrackerManager.instance.isTimeTrial || !isRacing) return;
+        TimerText.text = Leaderboard.FormatTime(raceController.GetRaceTime());
+    }
+
     public void TrackLoaded(int lapsOnTrack)
     {
         lapEndTimes.Clear();
         raceController = FindFirstObjectByType<RaceController>();
         trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
+        TimeTrialUI.SetActive(PlayerTrackerManager.instance.isTimeTrial);
+        RaceUI.SetActive(!PlayerTrackerManager.instance.isTimeTrial);
+        TimerText.text = "00:00.000";
     }
     public void NextLap()
     {
@@ -59,10 +73,12 @@ public class RacerData : MonoBehaviour
     }
     public void OnRaceStarted()
     {
+        isRacing = true;
         OnRaceStart?.Invoke();
     }
     public void OnRaceFinished()
     {
+        isRacing = false;
         OnRaceFinish?.Invoke();
     }
 
@@ -85,7 +101,7 @@ public class RacerData : MonoBehaviour
     public void UpdatePosition(int pos)
     {
         racePosition = pos;
-        positionText.text = GetPosString();
+        if (!PlayerTrackerManager.instance.isTimeTrial) positionText.text = GetPosString();
     }
 
     private string GetPosString()
