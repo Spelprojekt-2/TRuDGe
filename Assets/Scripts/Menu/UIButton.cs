@@ -3,6 +3,11 @@ using UnityEngine.UI;
 
 public class UIButton : MonoBehaviour
 {
+    [Header("Character Info")]
+    public string characterName;
+    [TextArea] 
+    public string characterDescription;
+
     public UIButton SwapUp;
     public UIButton SwapDown;
     public UIButton SwapLeft;

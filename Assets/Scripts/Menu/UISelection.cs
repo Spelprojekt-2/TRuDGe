@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using TMPro;
 
 public class UISelection : MonoBehaviour
 {
@@ -21,13 +22,6 @@ public class UISelection : MonoBehaviour
         {
             playerSelections.Remove(this);
         }
-    }
-    public void SetHighlight(bool state)
-    {
-        if (characterBackground)
-            characterBackground.SetActive(state);
-        if (characterText)
-            characterText.SetActive(state);
     }
     public void LookInput(InputAction.CallbackContext context)
     {
@@ -72,13 +66,14 @@ public class UISelection : MonoBehaviour
     selection.SetHighlight(true);
 
     SelectUIUpdate(newButton);
+    UpdateCharacterText(newButton);
 }
 
     public void SwapPlayers(int p1index, int p2index)
     {
         UISelection temp = playerSelections[p2index];
         playerSelections[p1index] = playerSelections[p2index];
-        playerSelections[p1index] = temp;
+        playerSelections[p2index] = temp;
     }
 
     public static void RemovePlayer(UISelection selection)
@@ -98,5 +93,16 @@ public class UISelection : MonoBehaviour
         selectionHighlight.localScale = Vector3.one;
         selectionHighlight.rotation = Quaternion.identity;
         selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
+
+        characterBackground.gameObject.SetActive(true); characterText.gameObject.SetActive(true);
+    }
+    private void UpdateCharacterText(UIButton button)
+    {
+        TMPro.TMP_Text textComponent = characterText.GetComponent<TMPro.TMP_Text>();
+
+        if (textComponent != null)
+        {
+            textComponent.text = button.characterName + "\n\n" + button.characterDescription;
+        }
     }
 }
