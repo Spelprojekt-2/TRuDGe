@@ -32,7 +32,6 @@ public class PlayerPowerups : MonoBehaviour
 
     private void Start()
     {
-        raceController = FindFirstObjectByType<RaceController>();
         currPowerUpText.text = "";
         gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
@@ -241,18 +240,26 @@ public class PlayerPowerups : MonoBehaviour
 
     void Airstrike()
     {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+
         RacerData leader = raceController.racers.OrderByDescending(x => x.raceProgress).FirstOrDefault();
 
-        if (leader != null && raceController.trackSpline != null)
+        if (leader != null)
         {
             float currentProgress = raceController.GetSplineProgress(leader.transform.position);
 
-            float targetProgress = (currentProgress + airstrikeForwardOffset) % 1f;
+            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
+            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
 
-            Vector3 spawnLocalPos = raceController.trackSpline.EvaluatePosition(targetProgress);
-            Vector3 spawnWorldPos = raceController.trackSpline.transform.TransformPoint(spawnLocalPos);
+            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
+            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
+            worldDirection.y = 0;
+            worldDirection.Normalize();
 
-            Instantiate(airstrike, spawnWorldPos, Quaternion.identity);
+            float distanceAhead = 100f;
+            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
+            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
         }
     }
 }
