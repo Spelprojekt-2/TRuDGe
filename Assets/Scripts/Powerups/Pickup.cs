@@ -9,6 +9,9 @@ public class Pickup : MonoBehaviour
     private Vector3 startPos;
     private Transform targetPlayer;
     [SerializeField] private float flySpeed = 0.03f;
+    
+    // Audio config
+    [SerializeField] private InteractablesAudio interactablesAudio;
 
     private PlayerPowerups player;
     private Collider col;
@@ -45,6 +48,12 @@ public class Pickup : MonoBehaviour
             else
             {
                 Destroy(gameObject);
+            }
+            
+            // Audio
+            if (interactablesAudio != null)
+            {
+                interactablesAudio.PlayPickupAudio(gameObject, powerUpType);
             }
         }
     }
