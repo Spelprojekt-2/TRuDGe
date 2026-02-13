@@ -16,6 +16,8 @@ public class UISelection : MonoBehaviour
     public GameObject characterText3;
 
     private RacerData racerData;
+    //public int playerIndex;
+
 
     void Awake()
     {
@@ -36,6 +38,7 @@ public class UISelection : MonoBehaviour
     {
         Vector2 input = context.ReadValue<Vector2>();
         int playerIndex = GetComponent<RacerData>().index;
+        
         if (input == Vector2.zero || !selection || !selectionHighlight.gameObject.activeSelf)
             return;
 
@@ -53,6 +56,7 @@ public class UISelection : MonoBehaviour
 
     public void Clicked(InputAction.CallbackContext context)
     {
+        int playerIndex = GetComponent<RacerData>().index;
         if (!selection) return;
         if (context.performed)
         {
@@ -64,15 +68,16 @@ public class UISelection : MonoBehaviour
 
     public void SwapSelection(UIButton newButton)
     {   
+        int playerIndex = GetComponent<RacerData>().index;
     if (!newButton || selection == newButton)
         return;
 
     if (selection)
-        selection.SetHighlight(false);
+        selection.SetHighlight(false, playerIndex);
 
     selection = newButton;
 
-    selection.SetHighlight(true);
+    selection.SetHighlight(true, playerIndex);
 
     SelectUIUpdate(newButton);
     }
@@ -104,7 +109,7 @@ public class UISelection : MonoBehaviour
 
         if (characterBackground) characterBackground.SetActive(true);
         
-        RacerData rd = GetComponent<RacerData>();
+        /*RacerData rd = GetComponent<RacerData>();
         if (rd.index == 0)
         {
             characterBackground.SetActive(true);
@@ -129,5 +134,6 @@ public class UISelection : MonoBehaviour
             characterText3 = button.characterDescription;
             characterText3.SetActive(true);
         }
+        */
     }
 }

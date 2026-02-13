@@ -37,36 +37,29 @@ public class UIButton : MonoBehaviour
     public UIButton SwapRightSelection() => SwapRight;
     public UIButton SwapLeftSelection() => SwapLeft;
 
-    public void SetHighlight(bool state)
+    public void SetHighlight(bool state, int playerIndex)
     {
-        RacerData rd = FindObjectOfType<RacerData>();
-        if (rd.index == 0)
-        {
-            if (characterBackground)
-            characterBackground.SetActive(state);
-            if (characterText)
-            characterText.SetActive(state);
-        }
-        if (rd.index == 1)
-        {
-            if (characterBackground1)
-            characterBackground1.SetActive(state);
-            if (characterText1)
-            characterText1.SetActive(state);
-        }
-        if (rd.index == 2)
-        {
-            if (characterBackground2)
-            characterBackground3.SetActive(state);
-            if (characterText2)
-            characterText2.SetActive(state);
-        }
-        if (rd.index == 3)
-        {
-            if (characterBackground3)
-            characterBackground3.SetActive(state);
-            if (characterText3)
-            characterText3.SetActive(state);
-        }
+        //RacerData rd = FindObjectOfType<RacerData>();
+        if (playerIndex == 0)
+    {
+        characterBackground?.SetActive(state);
+        characterText?.SetActive(state);
+    }
+    else if (playerIndex == 1)
+    {
+        characterBackground1?.SetActive(state);
+        characterText1?.SetActive(state);
+    }
+    else if (playerIndex == 2)
+    {
+        characterBackground2?.SetActive(state);
+        characterText2?.SetActive(state);
+    }
+    else if (playerIndex == 3)
+    {
+        characterBackground3?.SetActive(state);
+        characterText3?.SetActive(state);
+    }
+    
     }
 }
