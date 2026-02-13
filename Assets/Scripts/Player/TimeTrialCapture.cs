@@ -59,12 +59,32 @@ public class TimeTrialCapture : MonoBehaviour
         Debug.Log("Time trial capture cancelled.");
     }
 
+    /// <summary>
+    /// Loads a previously saved ghost recording from file.
+    /// Checks persistentDataPath first, then StreamingAssets.
+    /// </summary>
+    public List<InputFrame> LoadRecording()
+    {
+        string persistentPath = GetPersistentPath();
+        string streamingPath = GetStreamingPath();
+
+        if (File.Exists(persistentPath))
+            return LoadFromFile(persistentPath);
+
+        if (File.Exists(streamingPath))
+            return LoadFromFile(streamingPath);
+
+        Debug.LogWarning("No ghost recording found.");
+        return null;
+    }
+
     // ===================== Internal Saving =====================
 
     private void SaveToFile()
     {
         string path = GetPersistentPath();
 
+        // Check old recording length
         int oldCount = 0;
         if (File.Exists(path))
         {
@@ -79,19 +99,22 @@ public class TimeTrialCapture : MonoBehaviour
             return;
         }
 
-        RacerData rd = GetComponent<RacerData>();
         GhostRecording wrapper = new GhostRecording
         {
-            frames = recordedFrames,
-            time = rd.GetRaceTime()
+            frames = recordedFrames
         };
 
         string json = JsonUtility.ToJson(wrapper, true);
         File.WriteAllText(path, json);
 
+#if UNITY_EDITOR
+        // Save also to StreamingAssets in editor
+        Directory.CreateDirectory(Path.GetDirectoryName(GetStreamingPath()));
+        File.WriteAllText(GetStreamingPath(), json);
+#endif
+
         Debug.Log("Ghost saved to: " + path);
     }
-
 
     private List<InputFrame> LoadFromFile(string path)
     {
@@ -112,7 +135,5 @@ public struct InputFrame
 [System.Serializable]
 public class GhostRecording
 {
-    public string name;
-    public double time;
     public List<InputFrame> frames;
 }

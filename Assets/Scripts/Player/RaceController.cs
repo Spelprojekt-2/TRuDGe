@@ -59,7 +59,7 @@ public class RaceController : MonoBehaviour
             spawn.transform.GetPositionAndRotation(out Vector3 spawnPos, out Quaternion spawnRot);
             GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
             ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
-            ghostReplay.LoadGhostFile(PlayerTrackerManager.instance.pathToGhost);
+            ghostReplay.LoadGhostFile();
 
         }
     }
@@ -186,7 +186,7 @@ public class RaceController : MonoBehaviour
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelect");
         else SceneManager.LoadScene("AfterRace");
     }
 
@@ -209,4 +209,5 @@ public class RaceController : MonoBehaviour
         totalPausedTime += Time.realtimeSinceStartupAsDouble - pauseStartTime;
         isPaused = false;
     }
+
 }
