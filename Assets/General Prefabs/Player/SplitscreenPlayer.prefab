@@ -383,24 +383,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 40.14354
       value: 6.0021367
-      inSlope: 0.0006862395
-      outSlope: 0.0006862395
+      inSlope: 0.00046208914
+      outSlope: 0.00046208914
       tangentMode: 0
       weightedMode: 0
       inWeight: 1
-      outWeight: 0.33333334
+      outWeight: 0.52531534
     - serializedVersion: 3
-      time: 90.474365
-      value: 7.350048
-      inSlope: -0.00083342596
-      outSlope: -0.00083342596
+      time: 80.01051
+      value: 7.3212395
+      inSlope: 0.063550144
+      outSlope: 0.063550144
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.46081722
+      inWeight: 0.105808996
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 90.50381
-      value: 9.013463
+      time: 80.88839
+      value: 9.008664
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 0
@@ -930,28 +930,46 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0.00015013147
-      outSlope: 0.00015013147
-      tangentMode: 34
+      time: 0.0054893494
+      value: 1.2002525
+      inSlope: 0.007955574
+      outSlope: 0.007955574
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.21936679
+      value: 0.99633086
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7011308
-      value: 1.0001053
-      inSlope: -Infinity
-      outSlope: -Infinity
+      time: 0.21987277
+      value: 0.9962287
+      inSlope: 0.29363242
+      outSlope: 0.29363242
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.82760954
+      value: 1.4924247
+      inSlope: 0.07235288
+      outSlope: 0.07235288
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0
+      outWeight: 0.63675886
     - serializedVersion: 3
-      time: 0.999241
-      value: 1.5083537
-      inSlope: 1.7049013
-      outSlope: 1.7049013
+      time: 0.9827615
+      value: 1.4970508
+      inSlope: 0.02981616
+      outSlope: 0.02981616
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -1165,6 +1183,8 @@ MonoBehaviour:
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
   landMine: {fileID: 403242051929924570, guid: 273b2bc73ffd72a4d839b4b4d6c6acc4, type: 3}
+  airstrike: {fileID: 0}
+  airstrikeForwardOffset: 0
   currPowerUpText: {fileID: 4457974518802137047}
   gasTankCounter: {fileID: 6607039160849175221}
 --- !u!114 &116223656148645366
