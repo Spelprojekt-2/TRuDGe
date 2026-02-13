@@ -26,7 +26,6 @@ public class SplitScreenCamera : MonoBehaviour
 
     private void Start()
     {
-        if (!data) return;
         index = data.index;
         totalPlayers = PlayerInput.all.Count;
         cam = GetComponent<Camera>();

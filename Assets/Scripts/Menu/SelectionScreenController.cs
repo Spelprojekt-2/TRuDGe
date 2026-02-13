@@ -15,11 +15,17 @@ public class SelectionScreenController : MonoBehaviour
     public TextMeshProUGUI ReadyTextP4;
 
     [SerializeField] private UIButton[] preselectPlayer;
+    public void OpenTrackSelection()
+    {
+        trackSelection.SetActive(true);
+        CoroutineRunner.Run(SelectObject(trackSelection.transform.GetChild(1).GetComponentInChildren<UIButton>()));
+    }
 
     public void Unready()
     {
-        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TimeTrialMenu");
-        else SceneManager.LoadScene("SelectionScreen");
+        trackSelection.SetActive(false);
+        PlayerInputManager.instance.EnableJoining();
+        PlayerTrackerManager.instance.UnreadyAll();
     }
 
     public void LoadTrack(string sceneName)

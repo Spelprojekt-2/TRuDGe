@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,28 +12,17 @@ public class RacerData : MonoBehaviour
     public int racePosition;
     private int trackLaps;
     public string racername;
-    public bool isReplayGhost;
     private RaceController raceController;
 
-    private bool isRacing;
     public int currentValidLap;
-    [SerializeField] private TextMeshProUGUI lapCountText;
-    [SerializeField] private TextMeshProUGUI positionText;
-    [SerializeField] private TextMeshProUGUI TimerText;
-    [SerializeField] private GameObject TimeTrialUI;
-    [SerializeField] private GameObject RaceUI;
+    [SerializeField] TextMeshProUGUI lapCountText;
+    [SerializeField] TextMeshProUGUI positionText;
     [SerializeField] private UnityEvent OnRaceFinish;
     [SerializeField] private UnityEvent OnRaceSceneStarted;
     [SerializeField] private UnityEvent OnRaceStart;
     [SerializeField] private UnityEvent OnNewLap;
     private List<double> lapEndTimes = new List<double>();
-    [SerializeField] private TimeTrialCapture capture;
 
-    private void Update()
-    {
-        if (!PlayerTrackerManager.instance.isTimeTrial || !isRacing || isReplayGhost) return;
-        TimerText.text = Leaderboard.FormatTime(raceController.GetRaceTime());
-    }
 
     public void TrackLoaded(int lapsOnTrack)
     {
@@ -42,12 +30,6 @@ public class RacerData : MonoBehaviour
         raceController = FindFirstObjectByType<RaceController>();
         trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
-        if (isReplayGhost) return;
-        TimeTrialUI.SetActive(PlayerTrackerManager.instance.isTimeTrial);
-        RaceUI.SetActive(!PlayerTrackerManager.instance.isTimeTrial);
-        TimerText.text = "00:00.000";
-        if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
-        capture = GetComponent<TimeTrialCapture>();
     }
     public void NextLap()
     {
@@ -67,7 +49,6 @@ public class RacerData : MonoBehaviour
 
     public void UpdateLapCount()
     {
-        if (isReplayGhost) return;
         lapCountText.text = $"Lap: {lap + 1}/{trackLaps}";
     }
 
@@ -78,15 +59,11 @@ public class RacerData : MonoBehaviour
     }
     public void OnRaceStarted()
     {
-        isRacing = true;
         OnRaceStart?.Invoke();
-        if(PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
     }
     public void OnRaceFinished()
     {
-        isRacing = false;
         OnRaceFinish?.Invoke();
-        if (PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StopCapture();
     }
 
     public void BackwardsLap()
@@ -108,7 +85,7 @@ public class RacerData : MonoBehaviour
     public void UpdatePosition(int pos)
     {
         racePosition = pos;
-        if (!PlayerTrackerManager.instance.isTimeTrial) positionText.text = GetPosString();
+        positionText.text = GetPosString();
     }
 
     private string GetPosString()

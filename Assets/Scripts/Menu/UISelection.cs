@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using TMPro;
 
 public class UISelection : MonoBehaviour
 {
@@ -9,18 +8,7 @@ public class UISelection : MonoBehaviour
     public UIButton selection;
     public Color selectionColor;
     public RectTransform selectionHighlight;
-    public GameObject characterBackground;
-    public GameObject characterText;
-    public GameObject characterText1;
-    public GameObject characterText2;
-    public GameObject characterText3;
 
-    private RacerData racerData;
-    private bool stickHeld = false;
-    void Awake()
-    {
-        racerData = GetComponent<RacerData>();
-    }
     public void Start()
     {
         playerSelections.Add(this);
@@ -35,39 +23,24 @@ public class UISelection : MonoBehaviour
     public void LookInput(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-
-        if (!selection || !selectionHighlight.gameObject.activeSelf)
+        int playerIndex = GetComponent<RacerData>().index;
+        if (input == Vector2.zero || !selection || !selectionHighlight.gameObject.activeSelf)
             return;
-
-        if (input.magnitude < 0.5f)
-        {
-            stickHeld = false;
-            return;
-        }
-        if (stickHeld)
-            return;
-
-        stickHeld = true;
 
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
         {
-            if (input.x > 0)
-                SwapSelection(selection.SwapRightSelection());
-            else
-                SwapSelection(selection.SwapLeftSelection());
+            if (input.x > 0) SwapSelection(selection.SwapRightSelection());
+            else SwapSelection(selection.SwapLeftSelection());
         }
         else
         {
-            if (input.y > 0)
-                SwapSelection(selection.SwapUpSelection());
-            else
-                SwapSelection(selection.SwapDownSelection());
+            if (input.y > 0) SwapSelection(selection.SwapUpSelection());
+            else SwapSelection(selection.SwapDownSelection());
         }
     }
 
     public void Clicked(InputAction.CallbackContext context)
     {
-        int playerIndex = GetComponent<RacerData>().index;
         if (!selection) return;
         if (context.performed)
         {
@@ -78,26 +51,17 @@ public class UISelection : MonoBehaviour
     }
 
     public void SwapSelection(UIButton newButton)
-    {   
-        int playerIndex = GetComponent<RacerData>().index;
-    if (!newButton || selection == newButton)
-        return;
-
-    if (selection)
-        selection.SetHighlight(false, playerIndex);
-
-    selection = newButton;
-
-    selection.SetHighlight(true, playerIndex);
-
-    SelectUIUpdate(newButton);
+    {
+        if (!newButton) return;
+        selection = newButton;
+        SelectUIUpdate(newButton);
     }
 
     public void SwapPlayers(int p1index, int p2index)
     {
         UISelection temp = playerSelections[p2index];
         playerSelections[p1index] = playerSelections[p2index];
-        playerSelections[p2index] = temp;
+        playerSelections[p1index] = temp;
     }
 
     public static void RemovePlayer(UISelection selection)
@@ -117,34 +81,5 @@ public class UISelection : MonoBehaviour
         selectionHighlight.localScale = Vector3.one;
         selectionHighlight.rotation = Quaternion.identity;
         selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
-
-        if (characterBackground) characterBackground.SetActive(true);
-        
-        /*RacerData rd = GetComponent<RacerData>();
-        if (rd.index == 0)
-        {
-            characterBackground.SetActive(true);
-            characterText = button.characterDescription;
-            characterText.SetActive(true);
-        }
-        if (rd.index == 1)
-        {
-            characterBackground.SetActive(true);
-            characterText1 = button.characterDescription;
-            characterText1.SetActive(true);
-        }
-        if (rd.index == 2)
-        {
-            characterBackground.SetActive(true);
-            characterText2 = button.characterDescription;
-            characterText2.SetActive(true);
-        }
-        if (rd.index == 3)
-        {
-            characterBackground.SetActive(true);
-            characterText3 = button.characterDescription;
-            characterText3.SetActive(true);
-        }
-        */
     }
 }
