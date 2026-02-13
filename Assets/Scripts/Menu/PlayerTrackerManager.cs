@@ -14,6 +14,7 @@ public class PlayerTrackerManager : MonoBehaviour
 
     public static PlayerTrackerManager instance;
     public bool isTimeTrial = false;
+    public bool isTimeTrialWithGhost = false;
 
     private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
@@ -52,8 +53,7 @@ public class PlayerTrackerManager : MonoBehaviour
         readyStates[index] = false;
 
         DontDestroyOnLoad(input.transform.root.gameObject);
-
-        CoroutineRunner.Run(SwitchControllerMap(input, "UI"));
+        CoroutineRunner.Run(SwapMap(input, "UI"));
 
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
@@ -123,7 +123,8 @@ public class PlayerTrackerManager : MonoBehaviour
         isMenu = scene.name == "MainMenu"
               || scene.name == "SelectionScreen"
               || scene.name == "AfterRace"
-              || scene.name == "TimeTrialMenu";
+              || scene.name == "TimeTrialMenu"
+              || scene.name == "TrackSelect";
 
         switch (scene.name)
         {
@@ -162,6 +163,10 @@ public class PlayerTrackerManager : MonoBehaviour
                 GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = Leaderboard.GetLeaderboardString();
                 CoroutineRunner.Run(SelectObject(0, FindAnyObjectByType<SceneController>().GetComponent<UIButton>()));
                 break;
+            case "TrackSelect":
+                isTimeTrialWithGhost = false;
+                CoroutineRunner.Run(SelectObject(0, FindFirstObjectByType<SelectionScreenController>().transform.GetChild(1).GetComponentInChildren<UIButton>()));
+                break;
         }
 
         foreach (var kvp in playerInputs)
@@ -172,15 +177,15 @@ public class PlayerTrackerManager : MonoBehaviour
 
             if (index == 0)
             {
-                CoroutineRunner.Run(SwitchControllerMap(input, isMenu ? "UI" : "Player"));
-                if (!isMenu) input.GetComponent<PlayerCamera>()?.MinimapPrep();
+                CoroutineRunner.Run(SwapMap(input, isMenu ? "UI" : "Player"));
             }
             else
             {
-                CoroutineRunner.Run(SwitchControllerMap(input,
+                CoroutineRunner.Run(SwapMap(input,
                     scene.name == "SelectionScreen"
                         ? "UI"
-                        : (isMenu ? "Disabled" : "Player")));;
+                        : (isMenu ? "Disabled" : "Player")
+                ));
             }
         }
 
@@ -254,7 +259,7 @@ public class PlayerTrackerManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "TimeTrialMenu")
         {
-            UIList.OpenTrackSelection();
+            SceneManager.LoadScene("TrackSelect");
         }
         if (SceneManager.GetActiveScene().name != "SelectionScreen") return;
 
@@ -279,14 +284,14 @@ public class PlayerTrackerManager : MonoBehaviour
         }
 
         PlayerInputManager.instance.DisableJoining();
-        UIList.OpenTrackSelection();
 
         foreach (var kvp in playerInputs)
         {
             int index = kvp.Key;
             PlayerInput inputs = kvp.Value;
-            CoroutineRunner.Run(SwitchControllerMap(input, index == 0 ? "UI" : "Disabled"));
+            CoroutineRunner.Run(SwapMap(input, index == 0 ? "UI" : "Disabled"));
         }
+        SceneManager.LoadScene("TrackSelect");
     }
 
     public void SetUnready(PlayerInput input)
@@ -323,9 +328,24 @@ public class PlayerTrackerManager : MonoBehaviour
         if (UISelection.playerSelections.Count > index) UISelection.playerSelections[index].SwapSelection(button);
     }
 
-    private IEnumerator SwitchControllerMap(PlayerInput input, string map)
+    private IEnumerator SwapMap(PlayerInput input, string map)
     {
+        if (!input)
+            yield break;
         yield return null;
-        input.SwitchCurrentActionMap(map);
+
+        if (!input.enabled)
+            input.enabled = true;
+
+        if (!input.actions.enabled)
+        {
+            input.actions.Enable();
+            yield return null;
+        }
+
+        if (input.actions.FindActionMap(map, true) != null)
+        {
+            input.SwitchCurrentActionMap(map);
+        }
     }
 }

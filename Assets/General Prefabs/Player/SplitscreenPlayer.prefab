@@ -276,7 +276,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 17367
+    m_Bits: 18391
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -440,6 +440,7 @@ GameObject:
   - component: {fileID: 2094914520598921908}
   - component: {fileID: 2677582172380317115}
   - component: {fileID: 5493757530413151856}
+  - component: {fileID: 3195048925156937472}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -504,12 +505,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3195048925156937472}
+        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
+        m_MethodName: TurnInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4586681433911336767}
         m_TargetAssemblyTypeName: PlayerCamera, Assembly-CSharp
+        m_MethodName: LookInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3195048925156937472}
+        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
         m_MethodName: LookInput
         m_Mode: 0
         m_Arguments:
@@ -636,6 +661,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3195048925156937472}
+        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
+        m_MethodName: GasInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7706f44c-5882-402e-87b5-491642bb41f2
     m_ActionName: 'Player/Gas[/XInputControllerWindows/rightTrigger,/Keyboard/w]'
   - m_PersistentCalls:
@@ -652,12 +689,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3195048925156937472}
+        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
+        m_MethodName: ReverseInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 1c8619a9-0a5f-4c09-acca-dbcee349196e
     m_ActionName: 'Player/Reverse[/Keyboard/s,/XInputControllerWindows/leftTrigger]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8075224458996698583}
         m_TargetAssemblyTypeName: GrapplingBehaviour, Assembly-CSharp
+        m_MethodName: GrappleInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3195048925156937472}
+        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
         m_MethodName: GrappleInput
         m_Mode: 0
         m_Arguments:
@@ -900,6 +961,7 @@ MonoBehaviour:
   raceProgress: 0
   racePosition: 0
   racername: 
+  isReplayGhost: 0
   currentValidLap: 0
   lapCountText: {fileID: 4479765964928965092}
   positionText: {fileID: 3277330250164560602}
@@ -945,9 +1007,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8035972993285117548}
+        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
+        m_MethodName: set_maxAngularVelocity
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnRaceSceneStarted:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5775183119610709466}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 6668579927141968441}
         m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
         m_MethodName: set_enabled
@@ -972,17 +1058,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5775183119610709466}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 8035972993285117548}
+        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
+        m_MethodName: set_maxAngularVelocity
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 7
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   OnRaceStart:
     m_PersistentCalls:
@@ -1014,6 +1100,7 @@ MonoBehaviour:
   OnNewLap:
     m_PersistentCalls:
       m_Calls: []
+  capture: {fileID: 0}
 --- !u!114 &6581021729640459954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1119,8 @@ MonoBehaviour:
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
   landMine: {fileID: 403242051929924570, guid: 273b2bc73ffd72a4d839b4b4d6c6acc4, type: 3}
+  airstrike: {fileID: 0}
+  airstrikeForwardOffset: 0
   currPowerUpText: {fileID: 6527343299495456702}
   gasTankCounter: {fileID: 2749722371821799531}
 --- !u!114 &116223656148645366
@@ -1089,6 +1178,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3195048925156937472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 162eac8804ee2ec45b7f80f9461e3ae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capture: 0
 --- !u!1 &5516304864388716943
 GameObject:
   m_ObjectHideFlags: 0
