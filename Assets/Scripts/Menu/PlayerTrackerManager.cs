@@ -145,6 +145,7 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
             case "TimeTrialMenu":
                 isTimeTrial = true;
+                Debug.Log(playerInputs.Count);
                 while (playerInputs.Count > 1)
                 {
                     HandlePlayerLeft(playerInputs[playerInputs.Count]);
@@ -182,7 +183,7 @@ public class PlayerTrackerManager : MonoBehaviour
             else
             {
                 CoroutineRunner.Run(SwapMap(input,
-                    scene.name == "SelectionScreen"
+                    (scene.name == "SelectionScreen")
                         ? "UI"
                         : (isMenu ? "Disabled" : "Player")
                 ));
@@ -284,13 +285,6 @@ public class PlayerTrackerManager : MonoBehaviour
         }
 
         PlayerInputManager.instance.DisableJoining();
-
-        foreach (var kvp in playerInputs)
-        {
-            int index = kvp.Key;
-            PlayerInput inputs = kvp.Value;
-            CoroutineRunner.Run(SwapMap(input, index == 0 ? "UI" : "Disabled"));
-        }
         SceneManager.LoadScene("TrackSelect");
     }
 
