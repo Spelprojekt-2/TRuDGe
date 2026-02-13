@@ -124,7 +124,8 @@ public class PlayerTrackerManager : MonoBehaviour
               || scene.name == "SelectionScreen"
               || scene.name == "AfterRace"
               || scene.name == "TimeTrialMenu"
-              || scene.name == "TrackSelect";
+              || scene.name == "TrackSelect"
+              || scene.name == "TrackSelectTimeTrial";
 
         switch (scene.name)
         {
@@ -260,7 +261,7 @@ public class PlayerTrackerManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "TimeTrialMenu")
         {
-            SceneManager.LoadScene("TrackSelect");
+            SceneManager.LoadScene("TrackSelectTimeTrial");
         }
         if (SceneManager.GetActiveScene().name != "SelectionScreen") return;
 
