@@ -419,7 +419,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  fovAdjustmentSpeed: 10
+  fovAdjustmentSpeed: 7
 --- !u!1 &3731365114451405565
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,35 +930,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0054893494
-      value: 1.2002525
-      inSlope: 0.007955574
-      outSlope: 0.007955574
+      time: 0.024490356
+      value: 0.99834824
+      inSlope: 0.3311425
+      outSlope: 0.3311425
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 1
     - serializedVersion: 3
-      time: 0.21936679
-      value: 0.99633086
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.21987277
-      value: 0.9962287
-      inSlope: 0.29363242
-      outSlope: 0.29363242
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 1
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.82760954
-      value: 1.4924247
+      time: 0.20207548
+      value: 1.2984893
       inSlope: 0.07235288
       outSlope: 0.07235288
       tangentMode: 0
@@ -966,10 +948,19 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.63675886
     - serializedVersion: 3
+      time: 0.701478
+      value: 1.4956576
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    - serializedVersion: 3
       time: 0.9827615
       value: 1.4970508
-      inSlope: 0.02981616
-      outSlope: 0.02981616
+      inSlope: 0.0049530063
+      outSlope: 0.0049530063
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -977,7 +968,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inAirAccelerationModifier: 0.1
+  inAirAccelerationModifier: 0.25
   externalIgnoreInAirAccelerationModifier: 0
   externalAccelerationModifier: 1
   baseTurningSpeed: 3
