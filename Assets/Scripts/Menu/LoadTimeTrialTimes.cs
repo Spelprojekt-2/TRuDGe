@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
     [SerializeField] private UIButton GhostSelectionMenuFirstSelection;
     [SerializeField] private TextMeshProUGUI ghostTrackName;
     private UIButton lastSelection;
+    private string selectedScene;
     void Start()
     {
         DisplayLevelTimes(level1SceneName, level1Text);
@@ -43,12 +45,9 @@ public class LoadTimeTrialTimes : MonoBehaviour
         if (personal != null)
             personalTime = Leaderboard.FormatTime(personal.time);
 
-        textField.text = $"Gold: {officialTime}\nby: {officialAuthor}\n\nYour Time: {personalTime}";
+        textField.text = $"Official Time:\n{officialTime}\nby: {officialAuthor}\n\nYour Best: {personalTime}";
     }
 
-    /// <summary>
-    /// Loads the official ghost stored in StreamingAssets
-    /// </summary>
     private GhostRecording LoadOfficialGhostFile(string sceneName)
     {
         string path = System.IO.Path.Combine(Application.streamingAssetsPath, sceneName + "_Ghost.ghost");
@@ -64,9 +63,6 @@ public class LoadTimeTrialTimes : MonoBehaviour
         return wrapper;
     }
 
-    /// <summary>
-    /// Loads the player's personal ghost stored in PersistentDataPath
-    /// </summary>
     private GhostRecording LoadPlayerGhostFile(string sceneName)
     {
         string path = System.IO.Path.Combine(Application.persistentDataPath, sceneName + "_Ghost.ghost");
@@ -84,6 +80,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
     public void OpenSelectionMenu(string level)
     {
+        selectedScene = level;
         ghostTrackName.text = level;
         lastSelection = UISelection.playerSelections[0].selection;
         GhostSelectionMenu.SetActive(true);
@@ -98,8 +95,30 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
     private IEnumerator SelectObject(UIButton button)
     {
-        while (!button.gameObject.activeInHierarchy)
-            yield return null;
+        yield return null;
         UISelection.playerSelections[0].SwapSelection(button);
+    }
+
+    public void SelectOfficialGhost()
+    {
+        PlayerTrackerManager.instance.pathToGhost =
+            System.IO.Path.Combine(Application.streamingAssetsPath, selectedScene + "_Ghost.ghost");
+        PlayerTrackerManager.instance.isTimeTrialWithGhost = true;
+        SceneManager.LoadScene(selectedScene);
+    }
+
+    public void SelectPersonalGhost()
+    {
+        PlayerTrackerManager.instance.pathToGhost =
+            System.IO.Path.Combine(Application.persistentDataPath, selectedScene + "_Ghost.ghost");
+        PlayerTrackerManager.instance.isTimeTrialWithGhost = true;
+        SceneManager.LoadScene(selectedScene);
+    }
+
+    public void SelectSolo()
+    {
+        PlayerTrackerManager.instance.isTimeTrialWithGhost = false;
+        PlayerTrackerManager.instance.pathToGhost = null;
+        SceneManager.LoadScene(selectedScene);
     }
 }
