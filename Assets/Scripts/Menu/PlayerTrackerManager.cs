@@ -15,6 +15,7 @@ public class PlayerTrackerManager : MonoBehaviour
     public static PlayerTrackerManager instance;
     public bool isTimeTrial = false;
     public bool isTimeTrialWithGhost = false;
+    public string pathToGhost;
 
     private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
@@ -166,6 +167,7 @@ public class PlayerTrackerManager : MonoBehaviour
                 CoroutineRunner.Run(SelectObject(0, FindAnyObjectByType<SceneController>().GetComponent<UIButton>()));
                 break;
             case "TrackSelect":
+            case "TrackSelectTimeTrial":
                 isTimeTrialWithGhost = false;
                 CoroutineRunner.Run(SelectObject(0, FindFirstObjectByType<SelectionScreenController>().transform.GetChild(1).GetComponentInChildren<UIButton>()));
                 break;
@@ -342,5 +344,12 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             input.SwitchCurrentActionMap(map);
         }
+    }
+
+    public void SetGhostFile(string fullPath, bool isTimeTrialGhost)
+    {
+        pathToGhost = fullPath;
+        isTimeTrialWithGhost = isTimeTrialGhost;
+        Debug.Log($"Ghost set to: {fullPath} | TimeTrialGhost: {isTimeTrialGhost}");
     }
 }
