@@ -15,7 +15,7 @@ public static class Leaderboard
         for (int i = 0; i < leaderboard.Length; i++)
         {
             leaderboard[i].DisablePosition();
-            leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername} Time:{FormatTime(leaderboard[i].GetRaceTime())}\n\n";
+            leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername}\n";
         }
         return leaderboardtxt;
     }

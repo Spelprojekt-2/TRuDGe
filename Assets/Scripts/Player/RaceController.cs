@@ -79,7 +79,7 @@ public class RaceController : MonoBehaviour
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
-                    if (PlayerTrackerManager.instance.isTimeTrial) ghostReplay.PlayGhost();
+                    if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     countdownText.gameObject.SetActive(false);
                 }
             }
@@ -186,7 +186,8 @@ public class RaceController : MonoBehaviour
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("TrackSelect");
+        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelect");
+        else SceneManager.LoadScene("AfterRace");
     }
 
     public double GetRaceTime()
