@@ -16,8 +16,6 @@ public class UISelection : MonoBehaviour
     public GameObject characterText3;
 
     private RacerData racerData;
-    //public int playerIndex;
-
 
     void Awake()
     {

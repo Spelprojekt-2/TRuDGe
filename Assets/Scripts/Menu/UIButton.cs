@@ -39,7 +39,6 @@ public class UIButton : MonoBehaviour
 
     public void SetHighlight(bool state, int playerIndex)
     {
-        //RacerData rd = FindObjectOfType<RacerData>();
         if (playerIndex == 0)
     {
         characterBackground?.SetActive(state);
