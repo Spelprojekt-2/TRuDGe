@@ -12,7 +12,7 @@ public class RaceController : MonoBehaviour
 {
     public SplineContainer trackSpline;
     [SerializeField, Range(1, 5)] int lapsOnThisTrack = 3;
-    private List<RacerData> racers;
+    [HideInInspector] public List<RacerData> racers;
 
     [SerializeField] private Transform startingLine;
     private float startLineOffset;
@@ -138,7 +138,7 @@ public class RaceController : MonoBehaviour
     }
 
 
-    float GetSplineProgress(Vector3 worldPosition)
+    public float GetSplineProgress(Vector3 worldPosition)
     {
         float3 localPos = trackSpline.transform.InverseTransformPoint(worldPosition);
 
