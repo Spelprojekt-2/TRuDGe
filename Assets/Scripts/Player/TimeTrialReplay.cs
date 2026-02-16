@@ -36,7 +36,6 @@ public class TimeTrialReplay : MonoBehaviour
         }
 
         ApplyMotion(recordedFrames[playbackIndex]);
-        VerifyPosition(recordedFrames[playbackIndex]);
         playbackIndex++;
     }
 
@@ -78,7 +77,8 @@ public class TimeTrialReplay : MonoBehaviour
 
         recordedFrames = wrapper.frames ?? new List<InputFrame>();
         totalTime = wrapper.time;
-        ghostName = string.IsNullOrEmpty(wrapper.name) ? wrapper.name : "You";
+        ghostName = string.IsNullOrEmpty(wrapper.name) ? "You" : wrapper.name;
+
     }
 
     private void ApplyMotion(InputFrame frame)
@@ -86,17 +86,5 @@ public class TimeTrialReplay : MonoBehaviour
         rb.linearVelocity = frame.velocity;
         transform.rotation = Quaternion.Euler(frame.rotation);
         transform.position = frame.position;
-    }
-
-    private void VerifyPosition(InputFrame frame)
-    {
-        Vector3 expectedPosition = frame.position;
-        Vector3 actualPosition = transform.position;
-
-        if (expectedPosition != actualPosition)
-        {
-            Debug.LogWarning($"Position mismatch at frame {playbackIndex}: " +
-                             $"Expected: {expectedPosition}, Actual: {actualPosition}");
-        }
     }
 }

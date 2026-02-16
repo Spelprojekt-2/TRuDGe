@@ -65,32 +65,32 @@ public class TimeTrialCapture : MonoBehaviour
     {
         string path = GetPersistentPath();
 
-        int oldCount = 0;
+        RacerData rd = GetComponent<RacerData>();
+        double newTime = rd.GetRaceTime();
+
         if (File.Exists(path))
         {
             string oldJson = File.ReadAllText(path);
             GhostRecording oldWrapper = JsonUtility.FromJson<GhostRecording>(oldJson);
-            oldCount = oldWrapper.frames.Count;
+
+            if (oldWrapper != null && oldWrapper.time <= newTime)
+            {
+                Debug.Log("Existing time is better. Not overwriting.");
+                return;
+            }
         }
 
-        if (recordedFrames.Count < oldCount)
-        {
-            Debug.Log("New recording is shorter than existing ghost. Not overwriting.");
-            return;
-        }
-
-        RacerData rd = GetComponent<RacerData>();
         GhostRecording wrapper = new GhostRecording
         {
-            frames = recordedFrames,
-            time = rd.GetRaceTime()
+            time = newTime
         };
 
         string json = JsonUtility.ToJson(wrapper, true);
         File.WriteAllText(path, json);
 
-        Debug.Log("Ghost saved to: " + path);
+        Debug.Log("New best ghost saved! Time: " + newTime);
     }
+
 
 
     private List<InputFrame> LoadFromFile(string path)
