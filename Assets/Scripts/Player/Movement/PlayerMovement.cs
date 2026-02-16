@@ -81,6 +81,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.1f;
     [Tooltip("If true, current speed will be calculated from absolute velocity rather than forward velocity. (Does not affect top speed clamping)")]
     [SerializeField] private bool baseSpeedOnAbsoluteVelocity = false;
+    [Header("Friction")]
+    [Tooltip("The maximum friction acting sideways on the vehicle")]
+    [SerializeField] private float maxSidewaysFriction = 10f;
+    [Tooltip("Curve to modify sideways friction based on sideways velocity")]
+    [SerializeField] private AnimationCurve sidewaysFrictionOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+    [Tooltip("The maximum friction acting forward or backwards on the vehicle when the vehicle is not accelerating against the friction direction")]
+    [SerializeField] private float maxForwardFriction = 10f;
+    [Tooltip("Curve to modify forward friction based on forward velocity")]
+    [SerializeField] private AnimationCurve forwardFrictionOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+    [Header("Uprighting")]
     [Tooltip("How fast the vehicle uprights itself when on the ground")]
     [SerializeField] private float onGroundUprightingSpeed = 5f;
     [Tooltip("How fast the vehicle uprights itself when in the air")]
@@ -130,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessRayCasts();
         ProcessMovement();
+        ProcessFriction();
     }
     #endregion
 
@@ -224,6 +235,26 @@ public class PlayerMovement : MonoBehaviour
         if (rb.linearVelocity.magnitude != 0 && rb.linearVelocity.magnitude > topSpeed * externalTopSpeedModifier)
         {
             rb.linearVelocity = rb.linearVelocity.normalized * topSpeed * externalTopSpeedModifier;
+        }
+    }
+    private void ProcessFriction()
+    {
+        // Sideways friction
+        float rightVel = Vector3.Dot(rotationRoot.right, rb.linearVelocity);
+        rb.AddForce(
+            rotationRoot.right * (-1 * maxSidewaysFriction * sidewaysFrictionOverSpeedModifier.Evaluate(Mathf.Abs(rightVel))),
+            ForceMode.Acceleration
+        );
+
+        // Forward friction
+        float forwardVel = Vector3.Dot(rotationRoot.forward, rb.linearVelocity);
+        // Don't apply if tank is accelerating
+        if (Mathf.Sign(forwardVel) != moveInputVector.y)
+        {
+            rb.AddForce(
+                rotationRoot.forward * (-1 * maxForwardFriction * forwardFrictionOverSpeedModifier.Evaluate(Mathf.Abs(forwardVel))),
+                ForceMode.Acceleration
+            );
         }
     }
     #endregion
