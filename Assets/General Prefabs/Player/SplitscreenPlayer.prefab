@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 2094914520598921908}
   - component: {fileID: 2677582172380317115}
   - component: {fileID: 5493757530413151856}
+  - component: {fileID: 4028980751891896900}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -1165,6 +1166,8 @@ MonoBehaviour:
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
   landMine: {fileID: 403242051929924570, guid: 273b2bc73ffd72a4d839b4b4d6c6acc4, type: 3}
+  airstrike: {fileID: 0}
+  airstrikeForwardOffset: 0
   currPowerUpText: {fileID: 4457974518802137047}
   gasTankCounter: {fileID: 6607039160849175221}
 --- !u!114 &116223656148645366
@@ -1222,6 +1225,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4028980751891896900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b9ba2f33b085e478b5d6baa93c1c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tanksAudio: {fileID: 11400000, guid: cf33494b4de13894c9a77627f94aae60, type: 2}
+  grapplePos: {fileID: 2449827225276985528}
 --- !u!1 &4939748759974558919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,12 +2190,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+--- !u!1 &2449827225276985528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8006152340013823523, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+  m_PrefabInstance: {fileID: 5684696955890468507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8075224458996698583 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
   m_PrefabInstance: {fileID: 5684696955890468507}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2449827225276985528}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8676d4f3deb21e240b3a4cb0fabb3943, type: 3}
