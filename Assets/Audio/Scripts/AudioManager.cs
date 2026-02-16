@@ -19,6 +19,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
 
+    // Ambience stuff
+    [SerializeField] private EventReference AmbienceManagerRef;
+    private EventInstance ambienceInstance;
+
     private EventInstance musicInstance;
 
     public enum MusicID
@@ -119,6 +123,18 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
+    #region Ambience
+    private void StartAmbience()
+    {
+        if (ambienceInstance.isValid())
+        {
+            return;
+        }
+        ambienceInstance = RuntimeManager.CreateInstance(AmbienceManagerRef);
+        ambienceInstance.start();
+    }
+    #endregion
+
     #region Scene Handling
 
     private void OnSceneLoaded(Scene next, LoadSceneMode mode)
@@ -135,10 +151,12 @@ public class AudioManager : MonoBehaviour
 
             case "TimeTrial":
                 ChangeMusic(MusicID.TimeTrail);
+                StartAmbience();
                 break;
 
             case "Level1_sloped":
                 ChangeMusic(MusicID.Level1sloped);
+                StartAmbience();
                 break;
         }
     }
