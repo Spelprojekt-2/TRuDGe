@@ -2,20 +2,39 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using UnityEngine.Splines;
+using System.Linq;
+using Unity.Mathematics;
+
 public class PlayerPowerups : MonoBehaviour
 {
+    [SerializeField] private GameObject gasTank;
     [SerializeField] private GameObject homingMissile;
     [SerializeField] private int magnetPickupRange = 30;
+    [SerializeField] private GameObject smokeScreen;
+    [SerializeField] private float smokeDuration = 7f;
+    [SerializeField] private GameObject landMine;
+    [SerializeField] private GameObject airstrike;
+    [SerializeField] private float airstrikeForwardOffset;
+
     [SerializeField] private TextMeshProUGUI currPowerUpText;
+    [SerializeField] private TextMeshProUGUI gasTankCounter;
+    private int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
     private float normalTopSpeedModifier;
     private bool usingTurbo = false;
     private bool usingMagnet = false;
 
+    private RaceController raceController;
+
     private void Start()
     {
         currPowerUpText.text = "";
+        gasTankAmount = 0;
+        gasTankCounter.text = "Gastanks: 0";
     }
     public void UsePowerUpInput(InputAction.CallbackContext context)
     {
@@ -26,19 +45,29 @@ public class PlayerPowerups : MonoBehaviour
         gasolineTank,
         homingMissle,
         turbo,
-        magnet
+        magnet,
+        smoke,
+        landMine,
+        airstrike,
+        deployWall,
+        eMP
     };
     public void GainedPowerUp(PowerUpType type)
     {
         if (type == PowerUpType.gasolineTank)
         {
-            if (usingTurbo)
+            if (gasTankAmount < 10)
             {
-                normalTopSpeedModifier += 0.1f;
-            }
-            else
-            {
-                GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+                gasTankAmount++;
+                gasTankCounter.text = "Gastanks: " + gasTankAmount;
+                if (usingTurbo)
+                {
+                    normalTopSpeedModifier += 0.1f;
+                }
+                else
+                {
+                    GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+                }
             }
         }
         else
@@ -55,7 +84,7 @@ public class PlayerPowerups : MonoBehaviour
         switch (type)
         {
             case PowerUpType.homingMissle:
-                GetComponent<PlayerShooting>().Shoot(homingMissile);
+                GetComponent<PlayerShooting>().ShootHomingMissile(homingMissile);
                 break;
 
             case PowerUpType.turbo:
@@ -65,6 +94,24 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.magnet:
                 StartCoroutine(Magnet());
+                break;
+
+            case PowerUpType.smoke:
+                Smokescreen();
+                break;
+
+            case PowerUpType.landMine:
+                Instantiate(landMine, transform.position, Quaternion.identity);
+                break;
+
+            case PowerUpType.airstrike:
+                Airstrike();
+                break;
+
+            case PowerUpType.deployWall:
+                break;
+
+            case PowerUpType.eMP:
                 break;
 
             default:
@@ -77,6 +124,12 @@ public class PlayerPowerups : MonoBehaviour
 
     private void Update()
     {
+        if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
+        {
+            gasTankAmount = 0;
+            gasTankCounter.text = "Gastanks: 0";
+        }
+
         if (usedPowerUp)
         {
             UsePowerUp();
@@ -113,10 +166,44 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Magnet";
         }
+        else if(type == PowerUpType.smoke)
+        {
+            currPowerUpText.text = "Smoke Screen";
+        }
+        else if(type == PowerUpType.landMine)
+        {
+            currPowerUpText.text = "Landmine";
+        }
+        else if (type == PowerUpType.airstrike)
+        {
+            currPowerUpText.text = "Airstrike";
+        }
+        else if (type == PowerUpType.deployWall)
+        {
+            currPowerUpText.text = "Deploy Wall";
+        }
+        else if (type == PowerUpType.eMP)
+        {
+            currPowerUpText.text = "EMP";
+        }
         else
         {
             currPowerUpText.text = "";
         }
+    }
+
+    public void DropGasTanks()
+    {
+        if(gasTankAmount == 0) return;
+        for (int i = 0; i < gasTankAmount / 2; i++)
+        {
+            float positionOffset = 10f;
+            Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
+            GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
+            StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
+        }
+        gasTankAmount = 0;
+        gasTankCounter.text = "Gastanks: 0";
     }
 
     IEnumerator Turbo()
@@ -143,5 +230,36 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
+    }
+
+    void Smokescreen()
+    {
+        GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
+        Destroy(spawnedSmoke, smokeDuration);
+    }
+
+    void Airstrike()
+    {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+
+        RacerData leader = raceController.racers.OrderByDescending(x => x.raceProgress).FirstOrDefault();
+
+        if (leader != null)
+        {
+            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
+
+            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
+            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
+
+            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
+            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
+            worldDirection.y = 0;
+            worldDirection.Normalize();
+
+            float distanceAhead = 100f;
+            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
+            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
+        }
     }
 }

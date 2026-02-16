@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(LineRenderer))]
 public class GrapplingBehaviour : MonoBehaviour
@@ -14,13 +15,35 @@ public class GrapplingBehaviour : MonoBehaviour
     [SerializeField] private Transform grappleElevationObject;
     [Tooltip("Location from which the grapple hook is fired")]
     [SerializeField] private Vector3 grappleMuzzleOffset = Vector3.zero;
+    [Tooltip("An aesthetic projectile on the end of the barrel when the vehicle isn't grappling")]
+    [SerializeField] private GameObject grappleHook;
     #endregion
 
+    [HeaderAttribute("Debug")]
     [SerializeField] private Vector3 grapplePoint = Vector3.zero;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
-    public void Toggle()
+
+    public void GrappleInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (!isInGrappleRange) return;
+            isGrappling = true;
+            if (grappleHook) grappleHook.SetActive(false);
+        }
+        else if (context.canceled)
+        {
+            isGrappling = false;
+            if (grappleHook) grappleHook.SetActive(true);
+        }
+
+        lineRenderer.enabled = isGrappling;
+        if (isGrappling)
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
+    }
+    /*public void Toggle()
     {
         if (isGrappling) isGrappling = false;
         else
@@ -32,7 +55,8 @@ public class GrapplingBehaviour : MonoBehaviour
         lineRenderer.enabled = isGrappling;
         if (isGrappling)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
-    }
+    }*/
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -46,7 +70,11 @@ public class GrapplingBehaviour : MonoBehaviour
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, grapplePoint);
             
-            grappleElevationObject.LookAt(grapplePoint);
+            // float azimuth = Vector3.Angle((grapplePoint - grappleAzimuthObject.position).normalized, grappleAzimuthObject.forward);
+            // grappleAzimuthObject.localEulerAngles = new Vector3(0, azimuth, 0);
+            grappleAzimuthObject.LookAt(grapplePoint, grappleAzimuthObject.parent.up);
+            grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
+            grappleElevationObject.LookAt(grapplePoint, grappleAzimuthObject.up);
         }
 
 

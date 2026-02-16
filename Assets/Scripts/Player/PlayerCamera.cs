@@ -66,7 +66,6 @@ public class PlayerCamera : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
     }
@@ -82,7 +81,8 @@ public class PlayerCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        screenSize = cam.rect.size * new Vector2(Screen.width, Screen.height);
+        float viewWidth = cam.pixelWidth;
+        float viewHeight = cam.pixelHeight;
 
         ApplyAimAssist();
 
@@ -92,32 +92,33 @@ public class PlayerCamera : MonoBehaviour
         float currentSens = isOverEnemy ? sensitivity * sensitivityReduction : sensitivity;
         cursorPos += mouseDelta * currentSens;
 
-        cursorPos.x = Mathf.Clamp(cursorPos.x, -screenSize.x / 2, screenSize.x / 2);
-        cursorPos.y = Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, screenSize.y / 2);
+        cursorPos.x = Mathf.Clamp(cursorPos.x, -viewWidth / 2f, viewWidth / 2f);
+        cursorPos.y = Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
+
         crosshair.anchoredPosition = cursorPos;
 
 
 
-        if (cursorPos.x > screenSize.x / 2 - distanceFromScreenEdge.x) // Right
+        if (cursorPos.x > viewWidth / 2 - distanceFromScreenEdge.x) // Right
         {
-            panningDist.x = cursorPos.x - (screenSize.x / 2 - distanceFromScreenEdge.x);
+            panningDist.x = cursorPos.x - (viewWidth / 2 - distanceFromScreenEdge.x);
         }
-        else if (cursorPos.x < -screenSize.x / 2 + distanceFromScreenEdge.x) // Left
+        else if (cursorPos.x < -viewWidth / 2 + distanceFromScreenEdge.x) // Left
         {
-            panningDist.x = cursorPos.x - (-screenSize.x / 2 + distanceFromScreenEdge.x);
+            panningDist.x = cursorPos.x - (-viewWidth / 2 + distanceFromScreenEdge.x);
         }
         else
         {
             panningDist.x = 0;
         }
 
-        if (cursorPos.y > screenSize.y / 2 - distanceFromScreenEdge.y) // Up
+        if (cursorPos.y > viewHeight / 2 - distanceFromScreenEdge.y) // Up
         {
-            panningDist.y = cursorPos.y - (screenSize.y / 2 - distanceFromScreenEdge.y);
+            panningDist.y = cursorPos.y - (viewHeight / 2 - distanceFromScreenEdge.y);
         }
-        else if (cursorPos.y < -screenSize.y / 2 + distanceFromScreenEdge.y) // Down
+        else if (cursorPos.y < -viewHeight / 2 + distanceFromScreenEdge.y) // Down
         {
-            panningDist.y = cursorPos.y - (-screenSize.y / 2 + distanceFromScreenEdge.y);
+            panningDist.y = cursorPos.y - (-viewHeight / 2 + distanceFromScreenEdge.y);
         }
         else
         {
@@ -183,16 +184,13 @@ public class PlayerCamera : MonoBehaviour
             if (lookInputVector.magnitude >= 0f)
             {
                 Vector3 screenPos = cam.WorldToScreenPoint(currentHitCol.transform.position);
-                Rect pixelRect = cam.pixelRect;
-                Vector2 centeredTarget;
-                centeredTarget.x = (screenPos.x - pixelRect.x) - (pixelRect.width / 2f);
-                centeredTarget.y = (screenPos.y - pixelRect.y) - (pixelRect.height / 2f);
 
-                cursorPos = Vector2.Lerp(cursorPos, centeredTarget, assistStrength * Time.deltaTime * 5f);
-                //cursorPos = centeredTarget; 
+                Vector2 localTarget;
+                localTarget.x = (screenPos.x - cam.pixelRect.xMin) - (cam.pixelWidth / 2f);
+                localTarget.y = (screenPos.y - cam.pixelRect.yMin) - (cam.pixelHeight / 2f);
+
+                cursorPos = Vector2.Lerp(cursorPos, localTarget, assistStrength * Time.deltaTime * 5f);
             }
-
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
         }
         else
         {
