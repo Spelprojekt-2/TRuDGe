@@ -34,7 +34,7 @@ public class CharacterStats : MonoBehaviour
 
     public void SwapCharacterStats(int playerIndex)
     {
-        if (SceneManager.GetActiveScene().name == "SelectionScreen")
+        if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
         {
         string selectedCharacter = characterName.text;
         if (playerIndex == 0)

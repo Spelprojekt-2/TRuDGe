@@ -45,7 +45,7 @@ public class UIButton : MonoBehaviour
 
     public void SetHighlight(bool state, int playerIndex)
     {
-        if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+        if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu" || SceneManager.GetActiveScene().name == "MainMenu")
         {
             Stats = GetComponent<CharacterStats>();
             Stats.SwapCharacterStats(playerIndex);
