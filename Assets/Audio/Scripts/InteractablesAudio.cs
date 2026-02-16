@@ -10,12 +10,12 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference GasolinePickupEvent;
     #endregion
 
-    public void PlayPickupAudio(GameObject obj, PlayerPowerups.PowerUpType powerUpType)
+    public void PlayPickupAudio(PlayerPowerups.PowerUpType powerUpType)
     {
         switch (powerUpType)
         {
             case PlayerPowerups.PowerUpType.gasolineTank:
-                RuntimeManager.PlayOneShot(GasolinePickupEvent, obj.transform.position);
+                RuntimeManager.PlayOneShot(GasolinePickupEvent);
                 break;
         }
     }
