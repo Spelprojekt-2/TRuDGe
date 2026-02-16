@@ -390,7 +390,7 @@ MonoBehaviour:
       inWeight: 1
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 90.474365
+      time: 80.01051
       value: 7.350048
       inSlope: -0.00083342596
       outSlope: -0.00083342596
@@ -399,8 +399,8 @@ MonoBehaviour:
       inWeight: 0.46081722
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 90.50381
-      value: 9.013463
+      time: 80.888374
+      value: 9.003865
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 0
@@ -921,8 +921,9 @@ MonoBehaviour:
   flipRaycastRigZ: 0
   rayCastLength: 6
   showRig: 1
-  showGroundSample: 2
+  showGroundSample: 1
   showLocalAxes: 0
+  showForces: 2
   topSpeed: 90
   externalTopSpeedModifier: 1
   baseAcceleration: 40
@@ -932,26 +933,53 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.00015013147
-      outSlope: 0.00015013147
+      inSlope: 1.4244446
+      outSlope: 1.4244446
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7011308
-      value: 1.0001053
+      time: 0.20740128
+      value: 1.2954316
+      inSlope: 0.020894261
+      outSlope: 0.020894261
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.21711344
+      value: 1.2945668
+      inSlope: 0.032916874
+      outSlope: 0.032916874
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6939131
+      value: 1.2930282
       inSlope: -Infinity
       outSlope: -Infinity
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7039079
+      value: 1.5076545
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 0.999241
       value: 1.5083537
-      inSlope: 1.7049013
-      outSlope: 1.7049013
+      inSlope: 0.0023673694
+      outSlope: 0.0023673694
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -989,6 +1017,56 @@ MonoBehaviour:
     m_RotationOrder: 4
   inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
+  maxSidewaysFriction: 10
+  sidewaysFrictionOverSpeedModifier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.033333335
+      outSlope: 0.033333335
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 30
+      value: 1
+      inSlope: 0.033333335
+      outSlope: 0.033333335
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxForwardFriction: 10
+  forwardFrictionOverSpeedModifier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.033333335
+      outSlope: 0.033333335
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 30
+      value: 1
+      inSlope: 0.033333335
+      outSlope: 0.033333335
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
 --- !u!54 &8035972993285117548
@@ -1165,6 +1243,8 @@ MonoBehaviour:
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
   landMine: {fileID: 403242051929924570, guid: 273b2bc73ffd72a4d839b4b4d6c6acc4, type: 3}
+  airstrike: {fileID: 0}
+  airstrikeForwardOffset: 0
   currPowerUpText: {fileID: 4457974518802137047}
   gasTankCounter: {fileID: 6607039160849175221}
 --- !u!114 &116223656148645366
@@ -2045,6 +2125,10 @@ PrefabInstance:
     - target: {fileID: 4999255344622615477, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6742146488655823200, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6742146488655823200, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_Center.y
