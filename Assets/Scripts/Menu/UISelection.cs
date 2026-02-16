@@ -72,7 +72,7 @@ public class UISelection : MonoBehaviour
 
     if (selection)
         selection.SetHighlight(false, playerIndex);
-
+        
     selection = newButton;
 
     selection.SetHighlight(true, playerIndex);
