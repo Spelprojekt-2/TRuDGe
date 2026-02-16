@@ -458,7 +458,7 @@ RectTransform:
   m_Father: {fileID: 1325797665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 69148138}
   - component: {fileID: 69148137}
   - component: {fileID: 69148140}
+  - component: {fileID: 69148141}
   m_Layer: 5
   m_Name: Tristano Martinelli
   m_TagString: Untagged
@@ -670,16 +671,41 @@ MonoBehaviour:
   characterDescription: {fileID: 1594631517}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 1594631517}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 143051861}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 300293831}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 1978700967}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &69148141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69148135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 1525937938}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &78178243
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &78178244
 RectTransform:
   m_ObjectHideFlags: 0
@@ -917,7 +943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -947,6 +973,7 @@ GameObject:
   - component: {fileID: 160596060}
   - component: {fileID: 160596059}
   - component: {fileID: 160596062}
+  - component: {fileID: 160596063}
   m_Layer: 5
   m_Name: Ragana Vilkaite
   m_TagString: Untagged
@@ -1099,16 +1126,41 @@ MonoBehaviour:
   characterDescription: {fileID: 1390390898}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 1390390898}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 65853224}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 349989439}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 1993549900}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &160596063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160596057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 1105283856}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &163021791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1328,7 @@ RectTransform:
   m_Father: {fileID: 826786298}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1494,6 +1546,7 @@ GameObject:
   - component: {fileID: 266209794}
   - component: {fileID: 266209793}
   - component: {fileID: 266209796}
+  - component: {fileID: 266209797}
   m_Layer: 5
   m_Name: "Carla Cap\xF4"
   m_TagString: Untagged
@@ -1646,16 +1699,41 @@ MonoBehaviour:
   characterDescription: {fileID: 748200693}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 748200693}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 405335115}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 187547806}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 54235861}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &266209797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266209791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 272563831}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &272563829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,7 +2514,7 @@ RectTransform:
   m_Father: {fileID: 1870335802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2516,7 +2594,7 @@ RectTransform:
   m_Father: {fileID: 1723133847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2990,8 +3068,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1052490949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3127,7 +3205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3229,7 +3307,7 @@ RectTransform:
   m_Father: {fileID: 238187990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3394,7 +3472,7 @@ RectTransform:
   m_Father: {fileID: 1198726886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3468,8 +3546,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1192737382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3544,7 +3622,7 @@ RectTransform:
   m_Father: {fileID: 1635527673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4002,7 +4080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4256,7 +4334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &736947912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4782,7 +4860,7 @@ RectTransform:
   m_Father: {fileID: 517097802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4842,6 +4920,7 @@ GameObject:
   - component: {fileID: 806383952}
   - component: {fileID: 806383951}
   - component: {fileID: 806383954}
+  - component: {fileID: 806383955}
   m_Layer: 5
   m_Name: "Andr\xE9 Nuskea"
   m_TagString: Untagged
@@ -4994,16 +5073,41 @@ MonoBehaviour:
   characterDescription: {fileID: 1562600284}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 1562600284}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 2020734490}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 924788909}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 89376799}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &806383955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806383949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 1276947726}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &818018113
 GameObject:
   m_ObjectHideFlags: 0
@@ -5225,7 +5329,7 @@ RectTransform:
   m_Father: {fileID: 163021792}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6102,7 +6206,7 @@ RectTransform:
   m_Father: {fileID: 1620312116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6995,8 +7099,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1368831710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7298,8 +7402,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2082658091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8503,8 +8607,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1478866321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8863,8 +8967,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1820022894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9084,8 +9188,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1552247320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9803,8 +9907,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 296810076}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10051,8 +10155,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1996202888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10539,6 +10643,7 @@ GameObject:
   - component: {fileID: 1718559258}
   - component: {fileID: 1718559257}
   - component: {fileID: 1718559260}
+  - component: {fileID: 1718559261}
   m_Layer: 5
   m_Name: King Napoleon III
   m_TagString: Untagged
@@ -10691,16 +10796,41 @@ MonoBehaviour:
   characterDescription: {fileID: 1023663338}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 1023663338}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 1136830750}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 1567030756}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 492940526}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &1718559261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718559255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 2078467452}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &1721690817
 GameObject:
   m_ObjectHideFlags: 0
@@ -10733,8 +10863,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1221422197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11116,16 +11246,16 @@ MonoBehaviour:
   characterDescription: {fileID: 1920543474}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 1920543474}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 960677590}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 802850696}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 136673465}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
 --- !u!114 &1754891131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11139,18 +11269,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 402121095}
-  topSpeedSlider: {fileID: 0}
-  accelerationSlider: {fileID: 0}
-  turnSpeedSlider: {fileID: 0}
-  topSpeedSlider1: {fileID: 0}
-  accelerationSlider1: {fileID: 0}
-  turnSpeedSlider1: {fileID: 0}
-  topSpeedSlider2: {fileID: 0}
-  accelerationSlider2: {fileID: 0}
-  turnSpeedSlider2: {fileID: 0}
-  topSpeedSlider3: {fileID: 0}
-  accelerationSlider3: {fileID: 0}
-  turnSpeedSlider3: {fileID: 0}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &1807101392
 GameObject:
   m_ObjectHideFlags: 0
@@ -11321,8 +11451,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2089006719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11507,6 +11637,7 @@ GameObject:
   - component: {fileID: 1885172912}
   - component: {fileID: 1885172911}
   - component: {fileID: 1885172914}
+  - component: {fileID: 1885172915}
   m_Layer: 5
   m_Name: Nina Hagen
   m_TagString: Untagged
@@ -11659,16 +11790,41 @@ MonoBehaviour:
   characterDescription: {fileID: 1031655904}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 1031655904}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 1864243314}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 1161415446}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 414429597}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &1885172915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885172909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 1418714434}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &1909872696
 GameObject:
   m_ObjectHideFlags: 0
@@ -11835,8 +11991,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1040552293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11893,7 +12049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1961004084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12302,7 +12458,7 @@ RectTransform:
   m_Father: {fileID: 295596116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12493,6 +12649,7 @@ GameObject:
   - component: {fileID: 2082147772}
   - component: {fileID: 2082147771}
   - component: {fileID: 2082147774}
+  - component: {fileID: 2082147775}
   m_Layer: 5
   m_Name: Leonie Arenberg
   m_TagString: Untagged
@@ -12646,16 +12803,41 @@ MonoBehaviour:
   characterDescription: {fileID: 52109530}
   characterBackground: {fileID: 1421905729}
   characterText: {fileID: 52109530}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 78178243}
   characterBackground1: {fileID: 99404320}
   characterText1: {fileID: 2098737495}
-  characterStats1: {fileID: 0}
+  characterStats1: {fileID: 1961004083}
   characterBackground2: {fileID: 1833617490}
   characterText2: {fileID: 2094514345}
-  characterStats2: {fileID: 0}
+  characterStats2: {fileID: 2083992874}
   characterBackground3: {fileID: 1318355194}
   characterText3: {fileID: 1824867913}
-  characterStats3: {fileID: 0}
+  characterStats3: {fileID: 736947911}
+--- !u!114 &2082147775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082147769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81254918cfcb96040a13434c66d76323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: {fileID: 1337100061}
+  topSpeedSlider: {fileID: 18671434}
+  accelerationSlider: {fileID: 113923056}
+  turnSpeedSlider: {fileID: 316110517}
+  topSpeedSlider1: {fileID: 1435648851}
+  accelerationSlider1: {fileID: 402194910}
+  turnSpeedSlider1: {fileID: 2060831315}
+  topSpeedSlider2: {fileID: 818018113}
+  accelerationSlider2: {fileID: 787218567}
+  turnSpeedSlider2: {fileID: 1016827977}
+  topSpeedSlider3: {fileID: 725364788}
+  accelerationSlider3: {fileID: 1909872696}
+  turnSpeedSlider3: {fileID: 592067315}
 --- !u!1 &2082658090
 GameObject:
   m_ObjectHideFlags: 0
@@ -12707,7 +12889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2083992875
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12872,7 +13054,7 @@ RectTransform:
   m_Father: {fileID: 1078499928}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13214,7 +13396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8180816751454175232, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive

@@ -47,6 +47,8 @@ public class UIButton : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
         {
+            Stats = GetComponent<CharacterStats>();
+            Stats.SwapCharacterStats(playerIndex);
             if (playerIndex == 0)
             {
                 characterBackground?.SetActive(state);
