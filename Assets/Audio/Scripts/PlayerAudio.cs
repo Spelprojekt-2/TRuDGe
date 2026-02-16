@@ -62,8 +62,7 @@ public class PlayerAudio : MonoBehaviour
     #region GrappleFunctions
     public void GrappleStart()
     {
-        Debug.LogError("called");
-        if (hasGrapple && shootInstance.isValid())
+        if (hasGrapple && grappleInstance.isValid())
         {
             grappleInstance.stop(STOP_MODE.IMMEDIATE);
         }

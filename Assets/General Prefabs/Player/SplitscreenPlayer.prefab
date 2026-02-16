@@ -211,10 +211,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7913166191568065603}
   - component: {fileID: 2227583658322248293}
-  - component: {fileID: 3621178358766502698}
   - component: {fileID: 8942500506450043773}
   - component: {fileID: 6106206422992046480}
   - component: {fileID: 603227144528213282}
+  - component: {fileID: 5197298123250508751}
+  - component: {fileID: 4377895309550161275}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -288,14 +289,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3621178358766502698
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3010010027984510216}
-  m_Enabled: 0
 --- !u!114 &8942500506450043773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +413,33 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fovAdjustmentSpeed: 10
+--- !u!114 &5197298123250508751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 4523023332637477557}
+--- !u!114 &4377895309550161275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e185582920dbfa24fa866066c574ada6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attenuationObject: {fileID: 4523023332637477557}
 --- !u!1 &3731365114451405565
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,6 +898,7 @@ MonoBehaviour:
   isOverEnemy: 0
   currentTarget: {fileID: 0}
   distanceFromScreenEdge: {x: 430, y: 100}
+  showAimRay: 0
   cam: {fileID: 2227583658322248293}
   uiCameraTag: UICamera
 --- !u!114 &6668579927141968441
@@ -1019,55 +1040,9 @@ MonoBehaviour:
   inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
   maxSidewaysFriction: 10
-  sidewaysFrictionOverSpeedModifier:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.033333335
-      outSlope: 0.033333335
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 30
-      value: 1
-      inSlope: 0.033333335
-      outSlope: 0.033333335
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  velocityForMaxSidewaysFriction: 30
   maxForwardFriction: 10
-  forwardFrictionOverSpeedModifier:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.033333335
-      outSlope: 0.033333335
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 30
-      value: 1
-      inSlope: 0.033333335
-      outSlope: 0.033333335
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  velocityForMaxForwardFriction: 30
   onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
 --- !u!54 &8035972993285117548
@@ -2236,6 +2211,10 @@ PrefabInstance:
       propertyPath: rigidbody
       value: 
       objectReference: {fileID: 8035972993285117548}
+    - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: playerAudio
+      value: 
+      objectReference: {fileID: 4028980751891896900}
     - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
       propertyPath: playerCamera
       value: 
