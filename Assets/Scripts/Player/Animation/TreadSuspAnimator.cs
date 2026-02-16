@@ -4,80 +4,90 @@ using System.Collections.Generic;
 [RequireComponent(typeof(SkinnedMeshRenderer))]
 public class TreadSuspAnimator : MonoBehaviour
 {
-    private Transform t;
+    [System.Serializable]
+    public struct Wheel
+    {
+        public Transform wheelObject;
+        public Vector3 restPosition;
+        public Vector3 rayCastPosition;
+        public Wheel(Transform wheelObject, Vector3 restPosition, Vector3 rayCastPosition)
+        {
+            this.wheelObject = wheelObject;
+            this.restPosition = restPosition;
+            this.rayCastPosition = rayCastPosition;
+        }
+        public void SetSuspensionHeight(float height)
+        {
+            wheelObject.localPosition = restPosition - new Vector3( 0, height, 0);
+        }
+    }
     private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private List<Vector3> wheelPositions = new List<Vector3>();
-    private List<Vector3> hitPositions = new List<Vector3>();
-    private int suspendedWheelCount = 4;
+    [SerializeField] private List<Wheel> wheels = new List<Wheel>();
+    private Vector3[] hitPositions = new Vector3[3];
 
-    [SerializeField][Range(0,0.5f)] private float minSuspensionDistance = 0.2f;
-    [SerializeField][Range(0,0.5f)] private float maxSuspensionDistance = 0.5f;
-    [SerializeField] private float lossyScale;
-    [SerializeField] private bool showGizmos = false;
-
-    private void Awake()
-    {
-        t = GetComponent<Transform>();
-        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
-        suspendedWheelCount = wheelPositions.Count;
-    }
-
+    [SerializeField][Range(0,0.5f)] private float minSuspensionDistance = 0.3f;
+    [SerializeField][Range(-100,0)] private float minBlendShapeValue = -100f;
+    [SerializeField][Range(0,0.5f)] private float maxSuspensionDistance = 0.3f;
+    [SerializeField][Range(0,100)] private float maxBlendShapeValue = 100f;
+    [Header("Gizmos")]
+    [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Never;
     void Start()
     {
-        t = GetComponent<Transform>();
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
-        suspendedWheelCount = wheelPositions.Count;
-        if (hitPositions.Count != suspendedWheelCount)
-        {
-            hitPositions = new List<Vector3>(new Vector3[suspendedWheelCount]);
-        }
     }
-
-    void OnValidate()
-    {
-        t = GetComponent<Transform>();
-        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
-        suspendedWheelCount = wheelPositions.Count;
-        if (hitPositions.Count != suspendedWheelCount)
-        {
-            hitPositions = new List<Vector3>(new Vector3[suspendedWheelCount]);
-        }
-    }
-
     void Update()
     {
-        lossyScale = t.lossyScale.y;
-        for (int i = 0; i < suspendedWheelCount; i++)
+        float lossyScale = transform.lossyScale.y;
+        Vector3[] hits = new Vector3[wheels.Count];
+        for (int i = 0; i < wheels.Count; i++)
         {
-            Vector3 worldPos = t.position + t.rotation * wheelPositions[i];
-            Ray ray = new Ray(worldPos + t.up * 0.5f * t.lossyScale.y, -t.up);
+            Vector3 worldPos = transform.TransformPoint(wheels[i].rayCastPosition);
+            Ray ray = new Ray(worldPos + transform.up * 0.5f * lossyScale, -transform.up);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, maxSuspensionDistance + minSuspensionDistance, groundLayer))
             {
-                float distance = hitInfo.distance;
-                float blendShapeValue = distance * 100f / t.lossyScale.y;
+                float distance = hitInfo.distance - 0.5f * lossyScale;
+
+                wheels[i].SetSuspensionHeight(distance);
+
+                float blendShapeValue = Mathf.Lerp(
+                    minBlendShapeValue, maxBlendShapeValue,
+                    Mathf.InverseLerp(-minSuspensionDistance, maxSuspensionDistance, distance)
+                );
                 skinnedMeshRenderer.SetBlendShapeWeight(i, blendShapeValue);
-                hitPositions[i] = hitInfo.point;
+                hits[i] = hitInfo.point;
             }
             else
             {
-                skinnedMeshRenderer.SetBlendShapeWeight(i, 100f);
+                wheels[i].SetSuspensionHeight(maxSuspensionDistance);
+                skinnedMeshRenderer.SetBlendShapeWeight(i, maxBlendShapeValue);
             }
         }
+        hitPositions = hits;
+    }
+    void OnDrawGizmos()
+    {
+        if (showGizmos == ShowGizmoEnum.Always) DrawGizmos();
     }
     void OnDrawGizmosSelected()
     {
-        if (!showGizmos) return;
-        Gizmos.color = Color.blue;
-        foreach (Vector3 localPos in wheelPositions)
+        if (showGizmos == ShowGizmoEnum.Selected) DrawGizmos();
+    }
+    void DrawGizmos()
+    {
+        foreach (Wheel wheel in wheels)
         {
-            Vector3 worldPos = t.position + t.rotation * localPos;
-            Gizmos.DrawLine(worldPos + t.up * minSuspensionDistance, worldPos - t.up * maxSuspensionDistance);
-            Gizmos.DrawSphere(worldPos, 0.05f);
+            Gizmos.color = Color.blue;
+            Vector3 worldPos = transform.TransformPoint(wheel.rayCastPosition);
+            Gizmos.DrawLine(worldPos + transform.up * minSuspensionDistance, worldPos - transform.up * maxSuspensionDistance);
+            Gizmos.DrawWireSphere(worldPos, 0.05f);
+            
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.TransformPoint(wheel.restPosition), 0.05f);
         }
+        Gizmos.color = Color.red;
         foreach (Vector3 hitPos in hitPositions)
         {
-            Gizmos.color = Color.red;
             Gizmos.DrawSphere(hitPos, 0.07f);
         }
     }
