@@ -13,6 +13,7 @@ public class RacerData : MonoBehaviour
     public int racePosition;
     private int trackLaps;
     public string racername;
+    public bool isReplayGhost;
     private RaceController raceController;
 
     private bool isRacing;
@@ -27,11 +28,11 @@ public class RacerData : MonoBehaviour
     [SerializeField] private UnityEvent OnRaceStart;
     [SerializeField] private UnityEvent OnNewLap;
     private List<double> lapEndTimes = new List<double>();
-
+    [SerializeField] private TimeTrialCapture capture;
 
     private void Update()
     {
-        if (!PlayerTrackerManager.instance.isTimeTrial || !isRacing) return;
+        if (!PlayerTrackerManager.instance.isTimeTrial || !isRacing || isReplayGhost) return;
         TimerText.text = Leaderboard.FormatTime(raceController.GetRaceTime());
     }
 
@@ -41,9 +42,12 @@ public class RacerData : MonoBehaviour
         raceController = FindFirstObjectByType<RaceController>();
         trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
+        if (isReplayGhost) return;
         TimeTrialUI.SetActive(PlayerTrackerManager.instance.isTimeTrial);
         RaceUI.SetActive(!PlayerTrackerManager.instance.isTimeTrial);
         TimerText.text = "00:00.000";
+        if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
+        capture = GetComponent<TimeTrialCapture>();
     }
     public void NextLap()
     {
@@ -63,6 +67,7 @@ public class RacerData : MonoBehaviour
 
     public void UpdateLapCount()
     {
+        if (isReplayGhost) return;
         lapCountText.text = $"Lap: {lap + 1}/{trackLaps}";
     }
 
@@ -75,11 +80,13 @@ public class RacerData : MonoBehaviour
     {
         isRacing = true;
         OnRaceStart?.Invoke();
+        if(PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
     }
     public void OnRaceFinished()
     {
         isRacing = false;
         OnRaceFinish?.Invoke();
+        if (PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StopCapture();
     }
 
     public void BackwardsLap()
