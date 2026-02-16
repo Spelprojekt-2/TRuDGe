@@ -34,7 +34,7 @@ public class RaceController : MonoBehaviour
         raceStarted = false;
 
         racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
-        startLineOffset = GetSplineProgress(startingLine.position);
+        if (startingLine) startLineOffset = GetSplineProgress(startingLine.position);
 
         for (int i = 0; i < racers.Count; i++)
         {
@@ -54,7 +54,7 @@ public class RaceController : MonoBehaviour
         if (!raceStarted)
         {
             timeToRaceStart -= Time.deltaTime;
-            if (timeToRaceStart < 3) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
+            if (timeToRaceStart < 3 && timeToRaceStart > 0) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
             if (timeToRaceStart <= 0)
             {
                 totalPausedTime = 0;
@@ -64,7 +64,7 @@ public class RaceController : MonoBehaviour
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
-                    countdownText.gameObject.SetActive(false);
+                    countdownText?.gameObject.SetActive(false);
                 }
             }
         }
@@ -103,6 +103,7 @@ public class RaceController : MonoBehaviour
 
     void UpdateRaceProgress(RacerData racer)
     {
+        if (!trackSpline) return;
         if (racer.lap >= lapsOnThisTrack)
         {
             racer.raceProgress = 1000 - racer.racePosition;
@@ -164,7 +165,7 @@ public class RaceController : MonoBehaviour
             }
         }
 
-        return bestProgress; // 0–1 across entire container
+        return bestProgress; // 0ï¿½1 across entire container
     }
 
     private IEnumerator WaitToAfterRace()
