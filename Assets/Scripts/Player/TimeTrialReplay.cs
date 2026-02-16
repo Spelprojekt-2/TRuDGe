@@ -12,7 +12,6 @@ public class TimeTrialReplay : MonoBehaviour
     private int playbackIndex = 0;
     private Rigidbody rb;
 
-    // Ghost metadata
     private string ghostName;
     private double totalTime;
 
