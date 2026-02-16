@@ -15,7 +15,7 @@ public static class Leaderboard
         for (int i = 0; i < leaderboard.Length; i++)
         {
             leaderboard[i].DisablePosition();
-            leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername}\n";
+            leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername} Time:{FormatTime(leaderboard[i].GetRaceTime())}\n\n";
         }
         return leaderboardtxt;
     }
@@ -34,7 +34,7 @@ public static class Leaderboard
         }
     }
 
-    public static string FormatTime(double time)
+    private static string FormatTime(double time)
     {
         int minutes = (int)Math.Floor(time / 60);
         int seconds = (int)Math.Floor(time % 60);

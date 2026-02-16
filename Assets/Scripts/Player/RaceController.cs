@@ -28,9 +28,6 @@ public class RaceController : MonoBehaviour
     private double totalPausedTime = 0;
     private double pauseStartTime = 0;
 
-    [SerializeField] private GameObject ghostPrefab;
-    private TimeTrialReplay ghostReplay;
-
     void Start()
     {
         timeToRaceStart = timeBeforeStartCountdown;
@@ -50,25 +47,13 @@ public class RaceController : MonoBehaviour
             racers[i].UpdateLapCount();
             UpdateRaceProgress(racers[i]);
         }
-        if (PlayerTrackerManager.instance.isTimeTrial && PlayerTrackerManager.instance.isTimeTrialWithGhost)
-        {
-            SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
-    .OrderBy(s => s.name)
-    .ToArray()[0];
-
-            spawn.transform.GetPositionAndRotation(out Vector3 spawnPos, out Quaternion spawnRot);
-            GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
-            ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
-            ghostReplay.LoadGhostFile();
-
-        }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!raceStarted)
         {
-            timeToRaceStart -= Time.fixedDeltaTime;
+            timeToRaceStart -= Time.deltaTime;
             if (timeToRaceStart < 3) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
             if (timeToRaceStart <= 0)
             {
@@ -79,7 +64,6 @@ public class RaceController : MonoBehaviour
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
-                    if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     countdownText.gameObject.SetActive(false);
                 }
             }
@@ -186,8 +170,7 @@ public class RaceController : MonoBehaviour
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelect");
-        else SceneManager.LoadScene("AfterRace");
+        SceneManager.LoadScene("AfterRace");
     }
 
     public double GetRaceTime()
