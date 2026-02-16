@@ -11,6 +11,7 @@ public class PlayerAudio : MonoBehaviour
 
     // GameOBJs
     [SerializeField] private GameObject grapplePos;
+    [SerializeField] private GameObject canonPos;
 
     // Checks
     private bool hasGrapple;
@@ -33,14 +34,14 @@ public class PlayerAudio : MonoBehaviour
     }
 
     #region ShootProjectileFunctions
-    public void ShootStart(GameObject projectileOBJ)
+    public void ShootStart()
     {
         if (hasShoot && shootInstance.isValid())
         {
             shootInstance.stop(STOP_MODE.IMMEDIATE);
         }
         hasShoot = true;
-        shootInstance = tanksAudio.ShootStartAudio(new EventInstance(), projectileOBJ);
+        shootInstance = tanksAudio.ShootStartAudio(new EventInstance(), canonPos);
     }
 
     public void ShootHit(GameObject projectileOBJ)

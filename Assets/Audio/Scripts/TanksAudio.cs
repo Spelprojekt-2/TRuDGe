@@ -32,7 +32,6 @@ public class TanksAudio : ScriptableObject
         instance = RuntimeManager.CreateInstance(grappleEvent);
         RuntimeManager.AttachInstanceToGameObject(instance, obj);
         instance.start();
-        Debug.LogWarning("START");
         return instance;
     }
 
@@ -58,7 +57,6 @@ public class TanksAudio : ScriptableObject
                 // ___End state:
             case GrappleState.End:
                 instance.setParameterByName("GrappleState", 3f);
-                Debug.LogWarning("END");
                 instance.release();
                 break;
         }

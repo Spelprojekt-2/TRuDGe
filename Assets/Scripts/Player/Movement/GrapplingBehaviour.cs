@@ -35,7 +35,7 @@ public class GrapplingBehaviour : MonoBehaviour
             if (!isInGrappleRange) return;
             isGrappling = true;
 
-            // Change audio behaviour
+            // Start grapple audio
             playerAudio.GrappleStart();
 
             if (grappleHook) grappleHook.SetActive(false);
