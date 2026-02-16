@@ -7,8 +7,6 @@ public class TimeTrialCapture : MonoBehaviour
     public bool capture;
 
     private List<InputFrame> recordedFrames = new();
-
-    // Automatically uses the current scene name for the ghost file
     private string FileName => UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + "_Ghost.ghost";
 
     private string GetPersistentPath()
@@ -25,12 +23,11 @@ public class TimeTrialCapture : MonoBehaviour
     {
         if (!capture) return;
 
-        // Capture velocity, rotation, and position
         InputFrame frame = new InputFrame
         {
-            velocity = GetComponent<Rigidbody>().linearVelocity,  // Capture velocity
-            rotation = transform.rotation.eulerAngles,       // Capture rotation (Euler angles)
-            position = transform.position                    // Capture position
+            velocity = GetComponent<Rigidbody>().linearVelocity,
+            rotation = transform.rotation.eulerAngles,
+            position = transform.position
         };
 
         recordedFrames.Add(frame);
@@ -58,8 +55,6 @@ public class TimeTrialCapture : MonoBehaviour
         recordedFrames.Clear();
         Debug.Log("Time trial capture cancelled.");
     }
-
-    // ===================== Internal Saving =====================
 
     private void SaveToFile()
     {
