@@ -3,9 +3,13 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class RacerData : MonoBehaviour
 {
+    [SerializeField] private Sprite[] positionSprites;
+    [SerializeField] private Sprite[] lapCountSprites;
+
     public int index;
     public float lapProgress;
     public int lap;
@@ -18,8 +22,8 @@ public class RacerData : MonoBehaviour
 
     private bool isRacing;
     public int currentValidLap;
-    [SerializeField] private TextMeshProUGUI lapCountText;
-    [SerializeField] private TextMeshProUGUI positionText;
+    [SerializeField] private Image lapCountImage;
+    [SerializeField] private Image positionImage;
     [SerializeField] private TextMeshProUGUI TimerText;
     [SerializeField] private GameObject TimeTrialUI;
     [SerializeField] private GameObject RaceUI;
@@ -67,14 +71,14 @@ public class RacerData : MonoBehaviour
 
     public void UpdateLapCount()
     {
-        if (isReplayGhost) return;
-        lapCountText.text = $"Lap: {lap + 1}/{trackLaps}";
+        if (isReplayGhost || lap >= lapCountSprites.Length) return;
+        lapCountImage.sprite = lapCountSprites[lap];
     }
 
     public void OnRacetrackScene()
     {
         OnRaceSceneStarted?.Invoke();
-        positionText.gameObject.SetActive(true);
+        positionImage.gameObject.SetActive(true);
     }
     public void OnRaceStarted()
     {
@@ -103,27 +107,12 @@ public class RacerData : MonoBehaviour
 
     public void DisablePosition()
     {
-        if (positionText != null) positionText.gameObject.SetActive(false);
+        if (positionImage != null) positionImage.gameObject.SetActive(false);
     }
     public void UpdatePosition(int pos)
     {
         racePosition = pos;
-        if (!PlayerTrackerManager.instance.isTimeTrial) positionText.text = GetPosString();
-    }
-
-    private string GetPosString()
-    {
-        switch (racePosition)
-        {
-            case 1:
-                return "1st";
-            case 2:
-                return "2nd";
-            case 3:
-                return "3rd";
-            default:
-                return racePosition + "th";
-        }
+        if (!PlayerTrackerManager.instance.isTimeTrial) positionImage.sprite = positionSprites[pos - 1];
     }
 
     public void SetName(string newName)
