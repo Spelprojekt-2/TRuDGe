@@ -33,7 +33,6 @@ public class TimeTrialCapture : MonoBehaviour
         recordedFrames.Add(frame);
     }
 
-    // ===================== Public Control Methods =====================
 
     public void StartCapture()
     {
@@ -77,14 +76,17 @@ public class TimeTrialCapture : MonoBehaviour
 
         GhostRecording wrapper = new GhostRecording
         {
-            time = newTime
+            time = newTime,
+            frames = recordedFrames,
+            name = "You"
         };
 
         string json = JsonUtility.ToJson(wrapper, true);
         File.WriteAllText(path, json);
 
-        Debug.Log("New best ghost saved! Time: " + newTime);
+        Debug.Log("New best ghost saved! Time: " + newTime + ", frames saved: " + recordedFrames.Count);
     }
+
 
 
 
