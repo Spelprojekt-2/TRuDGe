@@ -95,7 +95,7 @@ public class UISelection : MonoBehaviour
     private void SelectUIUpdate(UIButton button)
     {
         selectionHighlight.gameObject.SetActive(true);
-        selectionHighlight.transform.parent = button.transform.parent;
+        selectionHighlight.transform.SetParent(button.transform.parent);
         selectionHighlight.SetSiblingIndex(0);
         selectionHighlight.position = button.GetComponent<RectTransform>().position;
         selectionHighlight.localScale = Vector3.one;
