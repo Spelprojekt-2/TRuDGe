@@ -211,10 +211,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7913166191568065603}
   - component: {fileID: 2227583658322248293}
-  - component: {fileID: 3621178358766502698}
   - component: {fileID: 8942500506450043773}
   - component: {fileID: 6106206422992046480}
   - component: {fileID: 603227144528213282}
+  - component: {fileID: 5197298123250508751}
+  - component: {fileID: 4377895309550161275}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -276,7 +277,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 18391
+    m_Bits: 17367
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -288,14 +289,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3621178358766502698
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3010010027984510216}
-  m_Enabled: 0
 --- !u!114 &8942500506450043773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +413,33 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fovAdjustmentSpeed: 10
+--- !u!114 &5197298123250508751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 4523023332637477557}
+--- !u!114 &4377895309550161275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e185582920dbfa24fa866066c574ada6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attenuationObject: {fileID: 4523023332637477557}
 --- !u!1 &4523023332637477557
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +460,8 @@ GameObject:
   - component: {fileID: 2094914520598921908}
   - component: {fileID: 2677582172380317115}
   - component: {fileID: 5493757530413151856}
-  - component: {fileID: 3195048925156937472}
+  - component: {fileID: 4028980751891896900}
+  - component: {fileID: 576007681794308752}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -505,36 +526,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3195048925156937472}
-        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
-        m_MethodName: TurnInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4586681433911336767}
         m_TargetAssemblyTypeName: PlayerCamera, Assembly-CSharp
-        m_MethodName: LookInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3195048925156937472}
-        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
         m_MethodName: LookInput
         m_Mode: 0
         m_Arguments:
@@ -661,18 +658,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3195048925156937472}
-        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
-        m_MethodName: GasInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_ActionId: 7706f44c-5882-402e-87b5-491642bb41f2
     m_ActionName: 'Player/Gas[/XInputControllerWindows/rightTrigger,/Keyboard/w]'
   - m_PersistentCalls:
@@ -689,36 +674,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3195048925156937472}
-        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
-        m_MethodName: ReverseInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_ActionId: 1c8619a9-0a5f-4c09-acca-dbcee349196e
     m_ActionName: 'Player/Reverse[/Keyboard/s,/XInputControllerWindows/leftTrigger]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8075224458996698583}
         m_TargetAssemblyTypeName: GrapplingBehaviour, Assembly-CSharp
-        m_MethodName: GrappleInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3195048925156937472}
-        m_TargetAssemblyTypeName: TimeTrialCapture, Assembly-CSharp
         m_MethodName: GrappleInput
         m_Mode: 0
         m_Arguments:
@@ -769,7 +730,7 @@ MonoBehaviour:
     m_ActionName: 'UI/Click[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: df70fa95-8a34-4494-b137-73ab6b9c7d37
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 2227583658322248293}
 --- !u!114 &4586681433911336767
@@ -989,8 +950,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionSprites:
-  - {fileID: 21300000, guid: 04025d61cca29604e94644c6318c3bfc, type: 3}
-  - {fileID: 21300000, guid: 42da0f8e9d893a34fb2d73dfe51680e7, type: 3}
+  - {fileID: 21300000, guid: 56b939c021013684aa3c8a0cca86fdd2, type: 3}
+  - {fileID: 21300000, guid: f7ea93851983dcb44aac16297b00449f, type: 3}
   - {fileID: 21300000, guid: 774c8d1c5320fe14dbe6a0fff149e4dd, type: 3}
   - {fileID: 21300000, guid: d51a5540d2c93854e9c39501c22a8d32, type: 3}
   lapCountSprites:
@@ -1013,45 +974,9 @@ MonoBehaviour:
   OnRaceFinish:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6668579927141968441}
-        m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4029194333597442243}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 8035972993285117548}
         m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_maxAngularVelocity
+        m_MethodName: set_angularDamping
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1059,14 +984,11 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-  OnRaceSceneStarted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 6668579927141968441}
+        m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
+        m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1074,8 +996,23 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4029194333597442243}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRaceSceneStarted:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 6668579927141968441}
         m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
         m_MethodName: set_enabled
@@ -1102,7 +1039,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8035972993285117548}
         m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_maxAngularVelocity
+        m_MethodName: set_angularDamping
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1110,7 +1047,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 7
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
   OnRaceStart:
     m_PersistentCalls:
@@ -1142,7 +1079,7 @@ MonoBehaviour:
   OnNewLap:
     m_PersistentCalls:
       m_Calls: []
-  capture: {fileID: 0}
+  capture: {fileID: 576007681794308752}
 --- !u!114 &6581021729640459954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1165,6 +1102,7 @@ MonoBehaviour:
   airstrikeForwardOffset: 0
   currPowerUpText: {fileID: 6527343299495456702}
   gasTankCounter: {fileID: 2749722371821799531}
+  interactablesAudio: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
 --- !u!114 &116223656148645366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,12 +1149,16 @@ MonoBehaviour:
   characterDescription: {fileID: 0}
   characterBackground: {fileID: 0}
   characterText: {fileID: 0}
+  characterStats: {fileID: 0}
   characterBackground1: {fileID: 0}
   characterText1: {fileID: 0}
+  characterStats1: {fileID: 0}
   characterBackground2: {fileID: 0}
   characterText2: {fileID: 0}
+  characterStats2: {fileID: 0}
   characterBackground3: {fileID: 0}
   characterText3: {fileID: 0}
+  characterStats3: {fileID: 0}
 --- !u!114 &5493757530413151856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,7 +1171,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3195048925156937472
+--- !u!114 &4028980751891896900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b9ba2f33b085e478b5d6baa93c1c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tanksAudio: {fileID: 11400000, guid: cf33494b4de13894c9a77627f94aae60, type: 2}
+  grapplePos: {fileID: 2449827225276985528}
+  canonPos: {fileID: 5677198736417781030}
+  playerMovement: {fileID: 4029194333597442243}
+--- !u!114 &576007681794308752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1693,6 +1651,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -5543813117073823124, guid: cd99863febe9bb9488311e2aae175d0c, type: 3}
   m_PrefabInstance: {fileID: 625172141187077784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5677198736417781030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5072312035159008190, guid: cd99863febe9bb9488311e2aae175d0c, type: 3}
+  m_PrefabInstance: {fileID: 625172141187077784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6091519507777844840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6639540017475150064, guid: cd99863febe9bb9488311e2aae175d0c, type: 3}
@@ -1950,6 +1913,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8035972993285117548}
     - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: playerAudio
+      value: 
+      objectReference: {fileID: 4028980751891896900}
+    - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 2227583658322248293}
@@ -1986,12 +1953,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+--- !u!1 &2449827225276985528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8006152340013823523, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+  m_PrefabInstance: {fileID: 5684696955890468507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8075224458996698583 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
   m_PrefabInstance: {fileID: 5684696955890468507}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2449827225276985528}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8676d4f3deb21e240b3a4cb0fabb3943, type: 3}
@@ -2098,10 +2070,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 5221744507791602993}
-    - target: {fileID: 7870398275769144297, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
-      propertyPath: m_Name
-      value: TTUI
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
