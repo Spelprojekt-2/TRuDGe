@@ -813,7 +813,7 @@ MonoBehaviour:
   showForces: 0
   topSpeed: 90
   externalTopSpeedModifier: 1
-  baseAcceleration: 40
+  baseAcceleration: 25
   accelerationOverSpeedModifier:
     serializedVersion: 2
     m_Curve:
@@ -904,10 +904,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
-  maxSidewaysFriction: 10
-  velocityForMaxSidewaysFriction: 30
-  maxForwardFriction: 10
-  velocityForMaxForwardFriction: 30
+  maxSidewaysFriction: 60
+  velocityForMaxSidewaysFriction: 50
+  maxForwardFriction: 50
+  velocityForMaxForwardFriction: 50
   onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
 --- !u!54 &8035972993285117548
