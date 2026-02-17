@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -109,7 +110,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
     {
         PlayerTrackerManager.instance.pathToGhost =
             System.IO.Path.Combine(Application.persistentDataPath, selectedScene + "_Ghost.ghost");
-        PlayerTrackerManager.instance.isTimeTrialWithGhost = true;
+        PlayerTrackerManager.instance.isTimeTrialWithGhost = File.Exists(PlayerTrackerManager.instance.pathToGhost);
         SceneManager.LoadScene(selectedScene);
     }
 
