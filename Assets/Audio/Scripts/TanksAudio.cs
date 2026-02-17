@@ -103,4 +103,31 @@ public class TanksAudio : ScriptableObject
         instance.keyOff();
         return instance;
     }
+
+    public EventInstance VehicleEngineStartAudio(EventInstance instance, GameObject engineOBJ)
+    {
+        // Fail check
+        if (vehicleEngineEvent.IsNull)
+        {
+            Debug.LogWarning("TanksAudio: vehicleEngineEvent is missing!");
+            return instance;
+        }
+        instance = RuntimeManager.CreateInstance(vehicleEngineEvent);
+        RuntimeManager.AttachInstanceToGameObject(instance, engineOBJ);
+        instance.start();
+        return instance;
+    }
+
+    /*
+    public EventInstance VehicleEngineRPM(EventInstance instance, float newRPM)
+    {
+        if (!instance.isValid())
+        {
+            Debug.LogWarning("TanksAudio: given EventInstance is not valid!");
+            return instance;
+        }
+        instance.setParameterByName("RPM", newRPM);
+        return instance;
+    }
+    */
 }

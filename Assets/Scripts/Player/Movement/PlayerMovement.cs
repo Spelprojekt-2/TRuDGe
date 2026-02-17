@@ -265,6 +265,14 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
+    #region Audio
+    public float GetNormalizedSpeed()
+    {
+        float forwardSpeed = Mathf.Abs(Vector3.Dot(rb.linearVelocity, rotationRoot.forward));
+        return Mathf.Clamp01(forwardSpeed / topSpeed);
+    }
+    #endregion
+
     #region Debug
     public void OnDrawGizmos()
     {
