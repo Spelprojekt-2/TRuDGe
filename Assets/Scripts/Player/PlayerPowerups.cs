@@ -195,20 +195,34 @@ public class PlayerPowerups : MonoBehaviour
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
-        for (int i = 0; i < gasTankAmount / 2; i++) //Droppar hälften av gas tanksen när, det avrundas nedåt till närmaste heltal om det blir en decimal, tex om det blir 5/2 = 2.5 så droppas 2 tanks
+
+        //Debug.Log("GastanksAmount: " + gasTankAmount);
+        float gasTanksToDrop = gasTankAmount / 2f;
+        //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
+        gasTanksToDrop = Mathf.CeilToInt(gasTanksToDrop); //Avrundar gastanks uppåt till närmsta heltal
+        if (gasTanksToDrop <= 2)
+        {
+            gasTanksToDrop = 2;
+        }
+
+        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
         {
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
+
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
 
-        Debug.Log(GetComponent<PlayerMovement>().externalTopSpeedModifier);
-        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f; //Resetar topspeed till startvärdet
-        Debug.Log(GetComponent<PlayerMovement>().externalTopSpeedModifier);
-        normalTopSpeedModifier = 1f;
-        gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+        gasTankAmount = (int)gasTanksToDrop;
+        gasTankCounter.text = "Gastanks: " + gasTanksToDrop;
+
+        //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
+
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f + (0.1f * gasTankAmount); //Halverar topspeed
+        normalTopSpeedModifier = 1f + +(0.1f * gasTankAmount);
+
+        //Debug.Log("ExternalTopSpeed after changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
     }
 
     IEnumerator Turbo()
