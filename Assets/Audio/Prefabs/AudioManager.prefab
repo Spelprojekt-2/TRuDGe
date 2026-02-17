@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6769963125977446983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2979841361678919410}
+  - component: {fileID: 8771889658975714457}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2979841361678919410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769963125977446983}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8771889658975714457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769963125977446983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1702b12c2442e2342b031b811fd3814d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  busesToMute: []
+  Music_MainMenuRef:
+    Guid:
+      Data1: -614704933
+      Data2: 1191249278
+      Data3: -1894445404
+      Data4: 261789135
+    Path: event:/Music/Prioriteras/Music_MainMenu
+  Music_SelectionScreenRef:
+    Guid:
+      Data1: 449758107
+      Data2: 1209587574
+      Data3: 2005850546
+      Data4: 513175832
+    Path: event:/Music/Prioriteras/Music_SelectionScreen
+  Music_TimeTrailRef:
+    Guid:
+      Data1: -1444282129
+      Data2: 1185936504
+      Data3: 296366725
+      Data4: -2098039130
+    Path: event:/Music/Prioriteras/Singleplayer/Music_TimeTrial
+  Music_Level1_slopedRef:
+    Guid:
+      Data1: -1301532809
+      Data2: 1079976435
+      Data3: -916184648
+      Data4: -1247738214
+    Path: event:/Music/Prioriteras/Multiplayer/Music_InGame
+  AmbienceManagerRef:
+    Guid:
+      Data1: 1221049368
+      Data2: 1137687308
+      Data3: 1691657406
+      Data4: -1221083547
+    Path: event:/Sound/Environment/Ambience/AmbienceManager
