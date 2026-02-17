@@ -708,7 +708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1891,11 +1891,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackSpline: {fileID: 0}
-  lapsOnThisTrack: 3
+  lapsOnThisTrack: 1
   racers: []
   startingLine: {fileID: 0}
   timeBeforeStartCountdown: 0
   countdownText: {fileID: 0}
+  ghostPrefab: {fileID: 0}
 --- !u!1 &1140439794
 GameObject:
   m_ObjectHideFlags: 0
