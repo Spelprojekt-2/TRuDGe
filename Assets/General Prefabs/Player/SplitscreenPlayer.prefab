@@ -730,7 +730,7 @@ MonoBehaviour:
     m_ActionName: 'UI/Click[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: df70fa95-8a34-4494-b137-73ab6b9c7d37
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 2227583658322248293}
 --- !u!114 &4586681433911336767
@@ -810,7 +810,7 @@ MonoBehaviour:
   showRig: 1
   showGroundSample: 1
   showLocalAxes: 0
-  showForces: 2
+  showForces: 0
   topSpeed: 90
   externalTopSpeedModifier: 1
   baseAcceleration: 40
@@ -976,7 +976,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8035972993285117548}
         m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_angularDamping
+        m_MethodName: set_linearDamping
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1039,7 +1039,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8035972993285117548}
         m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_angularDamping
+        m_MethodName: set_maxLinearVelocity
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
