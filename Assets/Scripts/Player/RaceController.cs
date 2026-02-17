@@ -180,7 +180,7 @@ public class RaceController : MonoBehaviour
             }
         }
 
-        return bestProgress; // 0–1 across entire container
+        return bestProgress; // 0â€“1 across entire container
     }
 
     private IEnumerator WaitToAfterRace()
