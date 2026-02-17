@@ -28,13 +28,16 @@ public class RaceController : MonoBehaviour
     private double totalPausedTime = 0;
     private double pauseStartTime = 0;
 
+    [SerializeField] private GameObject ghostPrefab;
+    private TimeTrialReplay ghostReplay;
+
     void Start()
     {
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
 
         racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
-        if (startingLine) startLineOffset = GetSplineProgress(startingLine.position);
+        startLineOffset = GetSplineProgress(startingLine.position);
 
         for (int i = 0; i < racers.Count; i++)
         {
@@ -47,14 +50,26 @@ public class RaceController : MonoBehaviour
             racers[i].UpdateLapCount();
             UpdateRaceProgress(racers[i]);
         }
+        if (PlayerTrackerManager.instance.isTimeTrial && PlayerTrackerManager.instance.isTimeTrialWithGhost)
+        {
+            SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
+    .OrderBy(s => s.name)
+    .ToArray()[0];
+
+            spawn.transform.GetPositionAndRotation(out Vector3 spawnPos, out Quaternion spawnRot);
+            GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
+            ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
+            ghostReplay.LoadGhostFile(PlayerTrackerManager.instance.pathToGhost);
+
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!raceStarted)
         {
-            timeToRaceStart -= Time.deltaTime;
-            if (timeToRaceStart < 3 && timeToRaceStart > 0) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
+            timeToRaceStart -= Time.fixedDeltaTime;
+            if (timeToRaceStart < 3) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
             if (timeToRaceStart <= 0)
             {
                 totalPausedTime = 0;
@@ -64,7 +79,8 @@ public class RaceController : MonoBehaviour
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
-                    countdownText?.gameObject.SetActive(false);
+                    if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
+                    countdownText.gameObject.SetActive(false);
                 }
             }
         }
@@ -103,7 +119,6 @@ public class RaceController : MonoBehaviour
 
     void UpdateRaceProgress(RacerData racer)
     {
-        if (!trackSpline) return;
         if (racer.lap >= lapsOnThisTrack)
         {
             racer.raceProgress = 1000 - racer.racePosition;
@@ -165,13 +180,14 @@ public class RaceController : MonoBehaviour
             }
         }
 
-        return bestProgress; // 0ï¿½1 across entire container
+        return bestProgress; // 0–1 across entire container
     }
 
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("AfterRace");
+        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        else SceneManager.LoadScene("AfterRace");
     }
 
     public double GetRaceTime()
@@ -193,5 +209,4 @@ public class RaceController : MonoBehaviour
         totalPausedTime += Time.realtimeSinceStartupAsDouble - pauseStartTime;
         isPaused = false;
     }
-
 }
