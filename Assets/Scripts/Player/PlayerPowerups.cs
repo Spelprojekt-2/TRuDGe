@@ -24,7 +24,7 @@ public class PlayerPowerups : MonoBehaviour
     private int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
-    private float normalTopSpeedModifier;
+    private float normalTopSpeedModifier = 1;
     private bool usingTurbo = false;
     private bool usingMagnet = false;
 
@@ -195,13 +195,18 @@ public class PlayerPowerups : MonoBehaviour
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
-        for (int i = 0; i < gasTankAmount / 2; i++)
+        for (int i = 0; i < gasTankAmount / 2; i++) //Droppar hälften av gas tanksen när, det avrundas nedåt till närmaste heltal om det blir en decimal, tex om det blir 5/2 = 2.5 så droppas 2 tanks
         {
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
+
+        Debug.Log(GetComponent<PlayerMovement>().externalTopSpeedModifier);
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f; //Resetar topspeed till startvärdet
+        Debug.Log(GetComponent<PlayerMovement>().externalTopSpeedModifier);
+        normalTopSpeedModifier = 1f;
         gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
     }

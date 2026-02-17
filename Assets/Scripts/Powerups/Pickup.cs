@@ -76,9 +76,9 @@ public class Pickup : MonoBehaviour
             foreach (var mesh in meshes)
             {
                 mesh.enabled = visible;
-                visible = !visible;
             }
             yield return new WaitForSeconds(0.3f);
+            visible = !visible;
         }
         col.enabled = true;
     }
