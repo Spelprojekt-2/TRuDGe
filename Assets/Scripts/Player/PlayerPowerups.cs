@@ -8,6 +8,7 @@ using UnityEngine.Splines;
 using System.Linq;
 using Unity.Mathematics;
 
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject gasTank;
@@ -31,10 +32,13 @@ public class PlayerPowerups : MonoBehaviour
     private RaceController raceController;
 
     // Audio
-    [SerializeField] private InteractablesAudio interactablesAudio;
+    private PlayerAudio playerAudio;
 
     private void Start()
     {
+        // Get player audio
+        playerAudio = GetComponent<PlayerAudio>();
+
         currPowerUpText.text = "";
         gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
@@ -58,10 +62,7 @@ public class PlayerPowerups : MonoBehaviour
     public void GainedPowerUp(PowerUpType type)
     {
         // Play audio
-        if (interactablesAudio != null)
-        {
-            interactablesAudio.PlayPickupAudio(type);
-        }
+        playerAudio.PickupAudio(type);
         
         if (type == PowerUpType.gasolineTank)
         {
@@ -110,7 +111,8 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.landMine:
-                Instantiate(landMine, transform.position, Quaternion.identity);
+                GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
+                playerAudio.PlayLandminePlaceAudio(landmine); // Play audio
                 break;
 
             case PowerUpType.airstrike:
