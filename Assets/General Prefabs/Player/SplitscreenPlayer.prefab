@@ -211,10 +211,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7913166191568065603}
   - component: {fileID: 2227583658322248293}
-  - component: {fileID: 3621178358766502698}
   - component: {fileID: 8942500506450043773}
   - component: {fileID: 6106206422992046480}
   - component: {fileID: 603227144528213282}
+  - component: {fileID: 5197298123250508751}
+  - component: {fileID: 4377895309550161275}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -288,14 +289,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3621178358766502698
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3010010027984510216}
-  m_Enabled: 0
 --- !u!114 &8942500506450043773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +383,7 @@ MonoBehaviour:
       inWeight: 1
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 90.474365
+      time: 80.01051
       value: 7.350048
       inSlope: -0.00083342596
       outSlope: -0.00083342596
@@ -399,8 +392,8 @@ MonoBehaviour:
       inWeight: 0.46081722
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 90.50381
-      value: 9.013463
+      time: 80.888374
+      value: 9.003865
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 0
@@ -420,6 +413,33 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fovAdjustmentSpeed: 10
+--- !u!114 &5197298123250508751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 4523023332637477557}
+--- !u!114 &4377895309550161275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010010027984510216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e185582920dbfa24fa866066c574ada6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attenuationObject: {fileID: 4523023332637477557}
 --- !u!1 &3731365114451405565
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +596,7 @@ GameObject:
   - component: {fileID: 2094914520598921908}
   - component: {fileID: 2677582172380317115}
   - component: {fileID: 5493757530413151856}
+  - component: {fileID: 4028980751891896900}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -877,6 +898,7 @@ MonoBehaviour:
   isOverEnemy: 0
   currentTarget: {fileID: 0}
   distanceFromScreenEdge: {x: 430, y: 100}
+  showAimRay: 0
   cam: {fileID: 2227583658322248293}
   uiCameraTag: UICamera
 --- !u!114 &6668579927141968441
@@ -921,8 +943,9 @@ MonoBehaviour:
   flipRaycastRigZ: 0
   rayCastLength: 6
   showRig: 1
-  showGroundSample: 2
+  showGroundSample: 1
   showLocalAxes: 0
+  showForces: 2
   topSpeed: 90
   externalTopSpeedModifier: 1
   baseAcceleration: 40
@@ -932,26 +955,53 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.00015013147
-      outSlope: 0.00015013147
+      inSlope: 1.4244446
+      outSlope: 1.4244446
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7011308
-      value: 1.0001053
+      time: 0.20740128
+      value: 1.2954316
+      inSlope: 0.020894261
+      outSlope: 0.020894261
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.21711344
+      value: 1.2945668
+      inSlope: 0.032916874
+      outSlope: 0.032916874
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6939131
+      value: 1.2930282
       inSlope: -Infinity
       outSlope: -Infinity
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7039079
+      value: 1.5076545
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 0.999241
       value: 1.5083537
-      inSlope: 1.7049013
-      outSlope: 1.7049013
+      inSlope: 0.0023673694
+      outSlope: 0.0023673694
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -989,6 +1039,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
+  maxSidewaysFriction: 10
+  velocityForMaxSidewaysFriction: 30
+  maxForwardFriction: 10
+  velocityForMaxForwardFriction: 30
   onGroundUprightingSpeed: 5
   inAirUprightingSpeed: 1
 --- !u!54 &8035972993285117548
@@ -1165,8 +1219,11 @@ MonoBehaviour:
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
   landMine: {fileID: 403242051929924570, guid: 273b2bc73ffd72a4d839b4b4d6c6acc4, type: 3}
+  airstrike: {fileID: 0}
+  airstrikeForwardOffset: 0
   currPowerUpText: {fileID: 4457974518802137047}
   gasTankCounter: {fileID: 6607039160849175221}
+  interactablesAudio: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
 --- !u!114 &116223656148645366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,6 +1279,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4028980751891896900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b9ba2f33b085e478b5d6baa93c1c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tanksAudio: {fileID: 11400000, guid: cf33494b4de13894c9a77627f94aae60, type: 2}
+  grapplePos: {fileID: 2449827225276985528}
+  canonPos: {fileID: 5677198736417781030}
+  playerMovement: {fileID: 4029194333597442243}
+  engingeRef:
+    Guid:
+      Data1: 2122577353
+      Data2: 1123776375
+      Data3: 1661577652
+      Data4: 1297121309
+    Path: event:/Sound/Tanks/VehicleEngine
 --- !u!1 &4939748759974558919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,6 +1964,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -5543813117073823124, guid: cd99863febe9bb9488311e2aae175d0c, type: 3}
   m_PrefabInstance: {fileID: 625172141187077784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5677198736417781030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5072312035159008190, guid: cd99863febe9bb9488311e2aae175d0c, type: 3}
+  m_PrefabInstance: {fileID: 625172141187077784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6091519507777844840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6639540017475150064, guid: cd99863febe9bb9488311e2aae175d0c, type: 3}
@@ -2047,6 +2132,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6742146488655823200, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6742146488655823200, guid: afd40050ff725d04ca77ff08be15ec34, type: 3}
       propertyPath: m_Center.y
       value: 1
       objectReference: {fileID: 0}
@@ -2137,6 +2226,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8035972993285117548}
     - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+      propertyPath: playerAudio
+      value: 
+      objectReference: {fileID: 4028980751891896900}
+    - target: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 2227583658322248293}
@@ -2173,12 +2266,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+--- !u!1 &2449827225276985528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8006152340013823523, guid: 8f15b085a70e53341866399247cb99da, type: 3}
+  m_PrefabInstance: {fileID: 5684696955890468507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8075224458996698583 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4536510343757941580, guid: 8f15b085a70e53341866399247cb99da, type: 3}
   m_PrefabInstance: {fileID: 5684696955890468507}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2449827225276985528}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8676d4f3deb21e240b3a4cb0fabb3943, type: 3}

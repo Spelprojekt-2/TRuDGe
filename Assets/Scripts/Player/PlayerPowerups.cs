@@ -30,6 +30,9 @@ public class PlayerPowerups : MonoBehaviour
 
     private RaceController raceController;
 
+    // Audio
+    [SerializeField] private InteractablesAudio interactablesAudio;
+
     private void Start()
     {
         currPowerUpText.text = "";
@@ -54,6 +57,12 @@ public class PlayerPowerups : MonoBehaviour
     };
     public void GainedPowerUp(PowerUpType type)
     {
+        // Play audio
+        if (interactablesAudio != null)
+        {
+            interactablesAudio.PlayPickupAudio(type);
+        }
+        
         if (type == PowerUpType.gasolineTank)
         {
             if (gasTankAmount < 10)

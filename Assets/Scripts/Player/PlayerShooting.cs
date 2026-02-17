@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
@@ -12,9 +13,16 @@ public class PlayerShooting : MonoBehaviour
     private bool isShooting = false;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private PlayerCamera playerCam;
+
+    // Audio refs
+    PlayerAudio playerAudio;
+
     private void Start()
     {
         timer = fireRate;
+
+        // Get PlayerAudio.
+        playerAudio = GetComponent<PlayerAudio>();
     }
     public void ShootInput(InputAction.CallbackContext context)
     {
@@ -53,6 +61,9 @@ public class PlayerShooting : MonoBehaviour
         );
 
         bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null);
+
+        // Play shoot audio
+        playerAudio.ShootStart();
     }
 
     public void ShootHomingMissile(GameObject prefab)
