@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class RacerData : MonoBehaviour
 {
+    [SerializeField] private Sprite[] positionSprites;
+    [SerializeField] private Sprite[] lapCountSprites;
+
     public int index;
     public float lapProgress;
     public int lap;
@@ -12,17 +17,28 @@ public class RacerData : MonoBehaviour
     public int racePosition;
     private int trackLaps;
     public string racername;
+    public bool isReplayGhost;
     private RaceController raceController;
 
+    private bool isRacing;
     public int currentValidLap;
-    [SerializeField] TextMeshProUGUI lapCountText;
-    [SerializeField] TextMeshProUGUI positionText;
+    [SerializeField] private Image lapCountImage;
+    [SerializeField] private Image positionImage;
+    [SerializeField] private TextMeshProUGUI TimerText;
+    [SerializeField] private GameObject TimeTrialUI;
+    [SerializeField] private GameObject RaceUI;
     [SerializeField] private UnityEvent OnRaceFinish;
     [SerializeField] private UnityEvent OnRaceSceneStarted;
     [SerializeField] private UnityEvent OnRaceStart;
     [SerializeField] private UnityEvent OnNewLap;
     private List<double> lapEndTimes = new List<double>();
+    [SerializeField] private TimeTrialCapture capture;
 
+    private void Update()
+    {
+        if (!PlayerTrackerManager.instance.isTimeTrial || !isRacing || isReplayGhost) return;
+        TimerText.text = Leaderboard.FormatTime(raceController.GetRaceTime());
+    }
 
     public void TrackLoaded(int lapsOnTrack)
     {
@@ -30,6 +46,12 @@ public class RacerData : MonoBehaviour
         raceController = FindFirstObjectByType<RaceController>();
         trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
+        if (isReplayGhost) return;
+        TimeTrialUI.SetActive(PlayerTrackerManager.instance.isTimeTrial);
+        RaceUI.SetActive(!PlayerTrackerManager.instance.isTimeTrial);
+        TimerText.text = "00:00.000";
+        if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
+        capture = GetComponent<TimeTrialCapture>();
     }
     public void NextLap()
     {
@@ -49,21 +71,26 @@ public class RacerData : MonoBehaviour
 
     public void UpdateLapCount()
     {
-        lapCountText.text = $"Lap: {lap + 1}/{trackLaps}";
+        if (isReplayGhost || lap >= lapCountSprites.Length) return;
+        lapCountImage.sprite = lapCountSprites[lap];
     }
 
     public void OnRacetrackScene()
     {
         OnRaceSceneStarted?.Invoke();
-        positionText.gameObject.SetActive(true);
+        positionImage.gameObject.SetActive(true);
     }
     public void OnRaceStarted()
     {
+        isRacing = true;
         OnRaceStart?.Invoke();
+        if(PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
     }
     public void OnRaceFinished()
     {
+        isRacing = false;
         OnRaceFinish?.Invoke();
+        if (PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StopCapture();
     }
 
     public void BackwardsLap()
@@ -80,27 +107,12 @@ public class RacerData : MonoBehaviour
 
     public void DisablePosition()
     {
-        if (positionText != null) positionText.gameObject.SetActive(false);
+        if (positionImage != null) positionImage.gameObject.SetActive(false);
     }
     public void UpdatePosition(int pos)
     {
         racePosition = pos;
-        positionText.text = GetPosString();
-    }
-
-    private string GetPosString()
-    {
-        switch (racePosition)
-        {
-            case 1:
-                return "1st";
-            case 2:
-                return "2nd";
-            case 3:
-                return "3rd";
-            default:
-                return racePosition + "th";
-        }
+        if (!PlayerTrackerManager.instance.isTimeTrial) positionImage.sprite = positionSprites[pos - 1];
     }
 
     public void SetName(string newName)

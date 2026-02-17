@@ -13,9 +13,12 @@ public class PlayerTrackerManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
 
     public static PlayerTrackerManager instance;
+    public bool isTimeTrial = false;
+    public bool isTimeTrialWithGhost = false;
+    public string pathToGhost;
+
     private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
-
     private bool allPlayersSpawned = false;
     private bool isMenu = true;
 
@@ -51,8 +54,7 @@ public class PlayerTrackerManager : MonoBehaviour
         readyStates[index] = false;
 
         DontDestroyOnLoad(input.transform.root.gameObject);
-
-        input.SwitchCurrentActionMap("UI");
+        CoroutineRunner.Run(SwapMap(input, "UI"));
 
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
@@ -121,27 +123,38 @@ public class PlayerTrackerManager : MonoBehaviour
 
         isMenu = scene.name == "MainMenu"
               || scene.name == "SelectionScreen"
-              || scene.name == "AfterRace";
+              || scene.name == "AfterRace"
+              || scene.name == "TimeTrialMenu"
+              || scene.name == "TrackSelect"
+              || scene.name == "TrackSelectTimeTrial";
 
         switch (scene.name)
         {
             case "SelectionScreen":
+                isTimeTrial = false;
+                foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
                 {
-                    foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
-                    {
-                        RacerData rd = input.GetComponent<RacerData>();
-                        playerInputs[rd.index] = input;
-                        UISelection.playerSelections[rd.index].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index));
-                    }
-                    PlayerInputManager.instance.EnableJoining();
-                    readyStates.Clear();
-                    foreach (int index in playerInputs.Keys)
-                        readyStates[index] = false;
-
-                    UIList = FindFirstObjectByType<SelectionScreenController>();
-                    break;
+                    RacerData rd = input.GetComponent<RacerData>();
+                    playerInputs[rd.index] = input;
+                    UISelection.playerSelections[rd.index].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index));
                 }
+                PlayerInputManager.instance.EnableJoining();
+                readyStates.Clear();
+                foreach (int index in playerInputs.Keys)
+                    readyStates[index] = false;
 
+                UIList = FindFirstObjectByType<SelectionScreenController>();
+                break;
+            case "TimeTrialMenu":
+                isTimeTrial = true;
+                for (int i = playerInputs.Count - 1; i > 0; i--)
+                {
+                    HandlePlayerLeft(playerInputs[i]);
+                }
+                PlayerInputManager.instance.DisableJoining();
+                UIList = FindFirstObjectByType<SelectionScreenController>();
+                UISelection.playerSelections[0].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(0));
+                break;
             case "MainMenu":
                 if (playerInputs.Count < 1)
                 {
@@ -152,35 +165,53 @@ public class PlayerTrackerManager : MonoBehaviour
                 GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = Leaderboard.GetLeaderboardString();
                 CoroutineRunner.Run(SelectObject(0, FindAnyObjectByType<SceneController>().GetComponent<UIButton>()));
                 break;
+            case "TrackSelect":
+            case "TrackSelectTimeTrial":
+                isTimeTrialWithGhost = false;
+                CoroutineRunner.Run(SelectObject(0, FindFirstObjectByType<SelectionScreenController>().transform.GetChild(1).GetComponentInChildren<UIButton>()));
+                break;
         }
 
         foreach (var kvp in playerInputs)
         {
-            kvp.Value.camera.enabled = !isMenu;
+            if (kvp.Value.camera) kvp.Value.camera.enabled = !isMenu;
             int index = kvp.Key;
             PlayerInput input = kvp.Value;
 
             if (index == 0)
             {
-                input.SwitchCurrentActionMap(isMenu ? "UI" : "Player");
-                if (!isMenu) input.GetComponent<PlayerCamera>()?.MinimapPrep();
+                CoroutineRunner.Run(SwapMap(input, isMenu ? "UI" : "Player"));
             }
             else
             {
-                input.SwitchCurrentActionMap(
-                    scene.name == "SelectionScreen"
+                CoroutineRunner.Run(SwapMap(input,
+                    (scene.name == "SelectionScreen")
                         ? "UI"
                         : (isMenu ? "Disabled" : "Player")
-                );
+                ));
             }
         }
 
         Cursor.lockState = isMenu ? CursorLockMode.Confined : CursorLockMode.Locked;
 
-        if (!isMenu && !allPlayersSpawned)
+        if (!isMenu)
         {
-            allPlayersSpawned = true;
-            PlayerInputManager.instance?.DisableJoining();
+            if (!allPlayersSpawned)
+            {
+                allPlayersSpawned = true;
+                PlayerInputManager.instance?.DisableJoining();
+            }
+            if (isTimeTrial)
+            {
+                Pickup[] pickups = FindObjectsByType<Pickup>(FindObjectsSortMode.None);
+                for (int i = pickups.Length - 1; i >= 0; i--)
+                {
+                    if (pickups[i].powerUpType != PlayerPowerups.PowerUpType.gasolineTank)
+                    {
+                        Destroy(pickups[i].gameObject);
+                    }
+                }
+            }
         }
 
         MovePlayersToSpawnPoints();
@@ -229,8 +260,11 @@ public class PlayerTrackerManager : MonoBehaviour
 
     public void SetReady(PlayerInput input)
     {
-        if (SceneManager.GetActiveScene().name != "SelectionScreen")
-            return;
+        if (SceneManager.GetActiveScene().name == "TimeTrialMenu")
+        {
+            SceneManager.LoadScene("TrackSelectTimeTrial");
+        }
+        if (SceneManager.GetActiveScene().name != "SelectionScreen") return;
 
         int player = input.GetComponent<RacerData>().index;
 
@@ -253,14 +287,7 @@ public class PlayerTrackerManager : MonoBehaviour
         }
 
         PlayerInputManager.instance.DisableJoining();
-        UIList.OpenTrackSelection();
-
-        foreach (var kvp in playerInputs)
-        {
-            int index = kvp.Key;
-            PlayerInput inputs = kvp.Value;
-            inputs.SwitchCurrentActionMap(index == 0 ? "UI" : "Disabled");
-        }
+        SceneManager.LoadScene("TrackSelect");
     }
 
     public void SetUnready(PlayerInput input)
@@ -295,5 +322,33 @@ public class PlayerTrackerManager : MonoBehaviour
     {
         yield return null;
         if (UISelection.playerSelections.Count > index) UISelection.playerSelections[index].SwapSelection(button);
+    }
+
+    private IEnumerator SwapMap(PlayerInput input, string map)
+    {
+        if (!input)
+            yield break;
+        yield return null;
+
+        if (!input.enabled)
+            input.enabled = true;
+
+        if (!input.actions.enabled)
+        {
+            input.actions.Enable();
+            yield return null;
+        }
+
+        if (input.actions.FindActionMap(map, true) != null)
+        {
+            input.SwitchCurrentActionMap(map);
+        }
+    }
+
+    public void SetGhostFile(string fullPath, bool isTimeTrialGhost)
+    {
+        pathToGhost = fullPath;
+        isTimeTrialWithGhost = isTimeTrialGhost;
+        Debug.Log($"Ghost set to: {fullPath} | TimeTrialGhost: {isTimeTrialGhost}");
     }
 }

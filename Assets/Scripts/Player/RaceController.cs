@@ -27,7 +27,9 @@ public class RaceController : MonoBehaviour
     private bool isPaused = false;
     private double totalPausedTime = 0;
     private double pauseStartTime = 0;
-    private int lastCountdownSecond = -1;
+
+    [SerializeField] private GameObject ghostPrefab;
+    private TimeTrialReplay ghostReplay;
 
     void Start()
     {
@@ -48,28 +50,28 @@ public class RaceController : MonoBehaviour
             racers[i].UpdateLapCount();
             UpdateRaceProgress(racers[i]);
         }
+        if (PlayerTrackerManager.instance.isTimeTrial && PlayerTrackerManager.instance.isTimeTrialWithGhost)
+        {
+            SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
+    .OrderBy(s => s.name)
+    .ToArray()[0];
+
+            spawn.transform.GetPositionAndRotation(out Vector3 spawnPos, out Quaternion spawnRot);
+            GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
+            ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
+            ghostReplay.LoadGhostFile(PlayerTrackerManager.instance.pathToGhost);
+
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!raceStarted)
         {
-            timeToRaceStart -= Time.deltaTime;
-            if (timeToRaceStart <= 3 && timeToRaceStart > 0)
-            {
-                int currentSecond = Mathf.FloorToInt(timeToRaceStart + 1);
-
-                if (currentSecond != lastCountdownSecond)
-                {
-                    lastCountdownSecond = currentSecond;
-                    countdownText.text = currentSecond.ToString();
-                    AudioManager.Instance.PlayCountdownAudio(); // Play countdown audio
-                }
-            }
+            timeToRaceStart -= Time.fixedDeltaTime;
+            if (timeToRaceStart < 3 && countdownText) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
             if (timeToRaceStart <= 0)
             {
-                AudioManager.Instance.PlayCountdownAudio(true); // Play final countdown audio
-
                 totalPausedTime = 0;
                 raceStartTime = Time.realtimeSinceStartupAsDouble;
                 raceStarted = true;
@@ -77,6 +79,7 @@ public class RaceController : MonoBehaviour
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
+                    if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     countdownText.gameObject.SetActive(false);
                 }
             }
@@ -177,13 +180,14 @@ public class RaceController : MonoBehaviour
             }
         }
 
-        return bestProgress; // 0–1 across entire container
+        return bestProgress; // 0â€“1 across entire container
     }
 
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("AfterRace");
+        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        else SceneManager.LoadScene("AfterRace");
     }
 
     public double GetRaceTime()
@@ -205,5 +209,4 @@ public class RaceController : MonoBehaviour
         totalPausedTime += Time.realtimeSinceStartupAsDouble - pauseStartTime;
         isPaused = false;
     }
-
 }
