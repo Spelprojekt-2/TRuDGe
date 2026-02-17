@@ -72,9 +72,18 @@ public class UISelection : MonoBehaviour
 
     public void SwapSelection(UIButton newButton)
     {
-        if (!newButton) return;
-        selection = newButton;
-        SelectUIUpdate(newButton);
+         int playerIndex = GetComponent<RacerData>().index;
+    if (!newButton || selection == newButton)
+        return;
+
+    if (selection)
+        selection.SetHighlight(false, playerIndex);
+
+    selection = newButton;
+
+    selection.SetHighlight(true, playerIndex);
+
+    SelectUIUpdate(newButton);
     }
 
     public void SwapPlayers(int p1index, int p2index)
