@@ -16,7 +16,6 @@ public class FeedbackAudio : ScriptableObject
         }
 
         // Play oneshot countdown audio
-        EventInstance inst = RuntimeManager.CreateInstance(CountdownRef);
         if (endCountdown)
         {
             RuntimeManager.StudioSystem.setParameterByName("EndCountdown", 1);
@@ -25,6 +24,6 @@ public class FeedbackAudio : ScriptableObject
         {
             RuntimeManager.StudioSystem.setParameterByName("EndCountdown", 0);
         }
-        inst.start();
+        RuntimeManager.PlayOneShot(CountdownRef);
     }
 }
