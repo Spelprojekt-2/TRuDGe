@@ -174,4 +174,11 @@ public class AudioManager : MonoBehaviour
         }
     }
     #endregion
+
+    #region Player Handling
+    public void UpdatePlayerCount(int count)
+    {
+        RuntimeManager.StudioSystem.setParameterByName("PlayerCount", count);
+    }
+    #endregion
 }
