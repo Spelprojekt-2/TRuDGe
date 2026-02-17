@@ -103,6 +103,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.magnet:
+                playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
                 StartCoroutine(Magnet());
                 break;
 
@@ -112,7 +113,7 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.landMine:
                 GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
-                playerAudio.PlayLandminePlaceAudio(landmine); // Play audio
+                playerAudio.PlayLandminePlaceAudio(landmine); // Play landmine audio
                 break;
 
             case PowerUpType.airstrike:
@@ -241,6 +242,7 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
+        playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
     }
 
     void Smokescreen()

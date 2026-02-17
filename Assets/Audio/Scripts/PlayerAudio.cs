@@ -11,6 +11,7 @@ public class PlayerAudio : MonoBehaviour
     private EventInstance grappleInstance;
     private EventInstance shootInstance;
     private EventInstance engineInstance;
+    private EventInstance magnetInstance;
 
     // GameOBJs
     [SerializeField] private GameObject grapplePos;
@@ -127,6 +128,26 @@ public class PlayerAudio : MonoBehaviour
             return;
         }
         interactablesAudio.LandminePlaceAudio(landmineOBJ);
+    }
+
+    public void ToggleMagnetAudio(bool mode, GameObject obj)
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+
+        if (mode)
+        {
+            // Start magnet audio
+            magnetInstance = interactablesAudio.StartMagnetAudio(magnetInstance, obj);
+        }
+        else
+        {
+            // Stop magnet audio
+            magnetInstance = interactablesAudio.StopMagnetAudio(magnetInstance);
+        }
     }
     #endregion
 }
