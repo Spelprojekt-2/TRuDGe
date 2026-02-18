@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private TanksAudio tanksAudio;
+    [SerializeField] private InteractablesAudio interactablesAudio;
 
     // EventInstances
     private EventInstance grappleInstance;
@@ -47,7 +48,7 @@ public class PlayerAudio : MonoBehaviour
             ShootEnd();
     }
 
-    #region ShootProjectileFunctions
+    #region ShootFunctions
     public void ShootStart()
     {
         if (hasShoot && shootInstance.isValid())
@@ -104,6 +105,28 @@ public class PlayerAudio : MonoBehaviour
             tanksAudio.SetGrappleState(grappleInstance, TanksAudio.GrappleState.End);
             hasGrapple = false;
         }
+    }
+    #endregion
+
+    #region PowerupFunctions
+    public void PickupAudio(PlayerPowerups.PowerUpType type)
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.PlayPickupAudio(type);
+    }
+
+    public void PlayLandminePlaceAudio(GameObject landmineOBJ)
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.LandminePlaceAudio(landmineOBJ);
     }
     #endregion
 }

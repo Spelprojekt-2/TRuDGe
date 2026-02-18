@@ -456,16 +456,20 @@ MonoBehaviour:
   SwapUp: {fileID: 0}
   SwapDown: {fileID: 1193884641}
   SwapLeft: {fileID: 1290734563}
-  SwapRight: {fileID: 762764410}
+  SwapRight: {fileID: 1290734563}
   characterDescription: {fileID: 0}
   characterBackground: {fileID: 0}
   characterText: {fileID: 0}
+  characterStats: {fileID: 0}
   characterBackground1: {fileID: 0}
   characterText1: {fileID: 0}
+  characterStats1: {fileID: 0}
   characterBackground2: {fileID: 0}
   characterText2: {fileID: 0}
+  characterStats2: {fileID: 0}
   characterBackground3: {fileID: 0}
   characterText3: {fileID: 0}
+  characterStats3: {fileID: 0}
 --- !u!1 &275389518
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,9 +907,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level1
-
-'
+  m_text: Coming Soon...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1067,19 +1069,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 762764408}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1384180801}
-        m_TargetAssemblyTypeName: SelectionUIList, Assembly-CSharp
-        m_MethodName: LoadTrack
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level1
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &762764408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,12 +1127,16 @@ MonoBehaviour:
   characterDescription: {fileID: 0}
   characterBackground: {fileID: 0}
   characterText: {fileID: 0}
+  characterStats: {fileID: 0}
   characterBackground1: {fileID: 0}
   characterText1: {fileID: 0}
+  characterStats1: {fileID: 0}
   characterBackground2: {fileID: 0}
   characterText2: {fileID: 0}
+  characterStats2: {fileID: 0}
   characterBackground3: {fileID: 0}
   characterText3: {fileID: 0}
+  characterStats3: {fileID: 0}
 --- !u!1 &829595202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,12 +2089,16 @@ MonoBehaviour:
   characterDescription: {fileID: 0}
   characterBackground: {fileID: 0}
   characterText: {fileID: 0}
+  characterStats: {fileID: 0}
   characterBackground1: {fileID: 0}
   characterText1: {fileID: 0}
+  characterStats1: {fileID: 0}
   characterBackground2: {fileID: 0}
   characterText2: {fileID: 0}
+  characterStats2: {fileID: 0}
   characterBackground3: {fileID: 0}
   characterText3: {fileID: 0}
+  characterStats3: {fileID: 0}
 --- !u!1 &1253350374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2314,7 +2312,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Driving
+          m_StringArgument: TrainingGround
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1290734561
@@ -2374,12 +2372,16 @@ MonoBehaviour:
   characterDescription: {fileID: 0}
   characterBackground: {fileID: 0}
   characterText: {fileID: 0}
+  characterStats: {fileID: 0}
   characterBackground1: {fileID: 0}
   characterText1: {fileID: 0}
+  characterStats1: {fileID: 0}
   characterBackground2: {fileID: 0}
   characterText2: {fileID: 0}
+  characterStats2: {fileID: 0}
   characterBackground3: {fileID: 0}
   characterText3: {fileID: 0}
+  characterStats3: {fileID: 0}
 --- !u!1 &1384180796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,9 +2718,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Driving
-
-'
+  m_text: Training Ground
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2956,9 +2956,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level1_sloped
-
-'
+  m_text: Schlammrennstrecke
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

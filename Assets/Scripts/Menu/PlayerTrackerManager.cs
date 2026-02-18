@@ -147,10 +147,9 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
             case "TimeTrialMenu":
                 isTimeTrial = true;
-                Debug.Log(playerInputs.Count);
-                while (playerInputs.Count > 1)
+                for (int i = playerInputs.Count - 1; i > 0; i--)
                 {
-                    HandlePlayerLeft(playerInputs[playerInputs.Count]);
+                    HandlePlayerLeft(playerInputs[i]);
                 }
                 PlayerInputManager.instance.DisableJoining();
                 UIList = FindFirstObjectByType<SelectionScreenController>();
