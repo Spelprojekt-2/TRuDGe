@@ -18,6 +18,7 @@ public class VideoManager : MonoBehaviour
     [Header("Subtitles")]
     public TextMeshProUGUI subtitlesText;
     public float timer;
+    int subtitleIndex = 0;
 
     [Header("Scene")]
     public string SwitchScene = "Level1_sloped";
@@ -30,16 +31,23 @@ public class VideoManager : MonoBehaviour
         }
         timer += Time.deltaTime;
 
-        if (timer == 8);
-        {
-            subtitlesText.text = "obstacles and ending off with another right turn toward the goal. ";
-        }
-        if (timer == 16)
-        {
-
-        }
+        if (timer >= 8f && subtitleIndex == 0)
+    {
+        subtitlesText.text = "obstacles and ending off with another right turn toward the goal. Schlammrennstrecke was originally designed";
+        subtitleIndex = 1;
     }
-    
+    else if (timer >= 15f && subtitleIndex == 1)
+    {
+        subtitlesText.text = "for drifting with cars but unfortunately most of it was destroyed during “The Battle of Schlamm” in the war.";
+        subtitleIndex = 2;
+    }
+    else if (timer >= 22f && subtitleIndex == 2)
+    {
+        subtitlesText.text = "In 2055 it was repaired, forming the amazing track we see today!";
+        subtitleIndex = 3;
+    }
+    }
+
     void Start()
     {
         voiceAudio.PlayAnnouncement();
@@ -59,16 +67,12 @@ public class VideoManager : MonoBehaviour
         video2.gameObject.SetActive(false);
         video3.Play();
         video3.loopPointReached += SwapVideo3;
-
-        subtitlesText.text = "Schlammrennstrecke was originally designed for drifting with cars but unfortunately most of it was destroyed during “The Battle of Schlamm” in the war.";
     }
     public void SwapVideo3(VideoPlayer vp)
     {
         video3.gameObject.SetActive(false);
         video4.Play();
         video4.loopPointReached += SwapVideo4;
-
-        subtitlesText.text = "In 2055 it was repaired, forming the amazing track we see today!";
     }
     public void SwapVideo4(VideoPlayer vp)
     {
