@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using UnityEngine.InputSystem;
 
 public class VideoManager : MonoBehaviour
 {
@@ -10,11 +11,21 @@ public class VideoManager : MonoBehaviour
     public VideoPlayer video4;
     public VideoPlayer video5;
     public VideoPlayer video6;
+    public AudioSource announcment;
 
     public string SwitchScene = "Level1_sloped";
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SwitchScenes();
+        }
+    }
+    
     void Start()
     {
+        announcment.Play();
         video1.Play();
         video1.loopPointReached += SwapVideo1;
     }
