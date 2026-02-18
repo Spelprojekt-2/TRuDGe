@@ -23,7 +23,7 @@ public class PlayerPowerups : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
-    private int gasTankAmount = 0;
+    public int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
     private float normalTopSpeedModifier = 1;
