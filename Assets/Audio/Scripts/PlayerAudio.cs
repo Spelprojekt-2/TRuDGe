@@ -1,16 +1,22 @@
 using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private TanksAudio tanksAudio;
+    [SerializeField] private InteractablesAudio interactablesAudio;
 
     // EventInstances
     private EventInstance grappleInstance;
     private EventInstance shootInstance;
+    private EventInstance engineInstance;
 
     // GameOBJs
     [SerializeField] private GameObject grapplePos;
+    [SerializeField] private GameObject canonPos;
+
+    [SerializeField] private PlayerMovement playerMovement;
 
     // Checks
     private bool hasGrapple;
@@ -24,6 +30,16 @@ public class PlayerAudio : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        engineInstance = tanksAudio.VehicleEngineStartAudio(new EventInstance(), gameObject);
+    }
+
+    private void LateUpdate()
+    {
+        engineInstance.setParameterByName("RPM", playerMovement.GetNormalizedSpeed());
+    }
+
     private void OnDisable()
     {
         if (grappleInstance.isValid())
@@ -32,15 +48,15 @@ public class PlayerAudio : MonoBehaviour
             ShootEnd();
     }
 
-    #region ShootProjectileFunctions
-    public void ShootStart(GameObject projectileOBJ)
+    #region ShootFunctions
+    public void ShootStart()
     {
         if (hasShoot && shootInstance.isValid())
         {
-            shootInstance.stop(STOP_MODE.IMMEDIATE);
+            shootInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
         hasShoot = true;
-        shootInstance = tanksAudio.ShootStartAudio(new EventInstance(), projectileOBJ);
+        shootInstance = tanksAudio.ShootStartAudio(new EventInstance(), canonPos);
     }
 
     public void ShootHit(GameObject projectileOBJ)
@@ -62,10 +78,9 @@ public class PlayerAudio : MonoBehaviour
     #region GrappleFunctions
     public void GrappleStart()
     {
-        Debug.LogError("called");
-        if (hasGrapple && shootInstance.isValid())
+        if (hasGrapple && grappleInstance.isValid())
         {
-            grappleInstance.stop(STOP_MODE.IMMEDIATE);
+            grappleInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
         hasGrapple = true;
         grappleInstance = tanksAudio.GrappleStartAudio(new EventInstance(), grapplePos);
@@ -90,6 +105,28 @@ public class PlayerAudio : MonoBehaviour
             tanksAudio.SetGrappleState(grappleInstance, TanksAudio.GrappleState.End);
             hasGrapple = false;
         }
+    }
+    #endregion
+
+    #region PowerupFunctions
+    public void PickupAudio(PlayerPowerups.PowerUpType type)
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.PlayPickupAudio(type);
+    }
+
+    public void PlayLandminePlaceAudio(GameObject landmineOBJ)
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.LandminePlaceAudio(landmineOBJ);
     }
     #endregion
 }

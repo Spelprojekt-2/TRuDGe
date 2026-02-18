@@ -3,6 +3,12 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using UnityEngine.Splines;
+using System.Linq;
+using Unity.Mathematics;
+
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject gasTank;
@@ -11,6 +17,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject smokeScreen;
     [SerializeField] private float smokeDuration = 7f;
     [SerializeField] private GameObject landMine;
+    [SerializeField] private GameObject airstrike;
+    [SerializeField] private float airstrikeForwardOffset;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -21,8 +29,16 @@ public class PlayerPowerups : MonoBehaviour
     private bool usingTurbo = false;
     private bool usingMagnet = false;
 
+    private RaceController raceController;
+
+    // Audio
+    private PlayerAudio playerAudio;
+
     private void Start()
     {
+        // Get player audio
+        playerAudio = GetComponent<PlayerAudio>();
+
         currPowerUpText.text = "";
         gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
@@ -38,10 +54,16 @@ public class PlayerPowerups : MonoBehaviour
         turbo,
         magnet,
         smoke,
-        landMine
+        landMine,
+        airstrike,
+        deployWall,
+        eMP
     };
     public void GainedPowerUp(PowerUpType type)
     {
+        // Play audio
+        playerAudio.PickupAudio(type);
+        
         if (type == PowerUpType.gasolineTank)
         {
             if (gasTankAmount < 10)
@@ -89,8 +111,20 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.landMine:
-                Instantiate(landMine, transform.position, Quaternion.identity);
+                GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
+                playerAudio.PlayLandminePlaceAudio(landmine); // Play audio
                 break;
+
+            case PowerUpType.airstrike:
+                Airstrike();
+                break;
+
+            case PowerUpType.deployWall:
+                break;
+
+            case PowerUpType.eMP:
+                break;
+
             default:
                 return;
         }
@@ -104,6 +138,7 @@ public class PlayerPowerups : MonoBehaviour
         if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
         {
             gasTankAmount = 0;
+            gasTankCounter.text = "Gastanks: 0";
         }
 
         if (usedPowerUp)
@@ -150,6 +185,18 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Landmine";
         }
+        else if (type == PowerUpType.airstrike)
+        {
+            currPowerUpText.text = "Airstrike";
+        }
+        else if (type == PowerUpType.deployWall)
+        {
+            currPowerUpText.text = "Deploy Wall";
+        }
+        else if (type == PowerUpType.eMP)
+        {
+            currPowerUpText.text = "EMP";
+        }
         else
         {
             currPowerUpText.text = "";
@@ -159,10 +206,10 @@ public class PlayerPowerups : MonoBehaviour
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
-        for (int i = 0; i < gasTankAmount; i++)
+        for (int i = 0; i < gasTankAmount / 2; i++)
         {
             float positionOffset = 10f;
-            Vector3 rndPos = new Vector3(Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
+            Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
@@ -202,5 +249,28 @@ public class PlayerPowerups : MonoBehaviour
         Destroy(spawnedSmoke, smokeDuration);
     }
 
-    
+    void Airstrike()
+    {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+
+        RacerData leader = raceController.racers.OrderByDescending(x => x.raceProgress).FirstOrDefault();
+
+        if (leader != null)
+        {
+            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
+
+            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
+            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
+
+            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
+            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
+            worldDirection.y = 0;
+            worldDirection.Normalize();
+
+            float distanceAhead = 100f;
+            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
+            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
+        }
+    }
 }

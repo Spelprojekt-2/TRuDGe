@@ -1,4 +1,3 @@
-using Unity.Properties;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ShowGizmoEnum showRig = ShowGizmoEnum.Selected;
     [SerializeField] private ShowGizmoEnum showGroundSample = ShowGizmoEnum.Always;
     [SerializeField] private ShowGizmoEnum showLocalAxes = ShowGizmoEnum.Never;
+    [SerializeField] private ShowGizmoEnum showForces = ShowGizmoEnum.Always;
 
     private Vector3[] rigPoints => new Vector3[3]
     {
@@ -81,6 +81,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.1f;
     [Tooltip("If true, current speed will be calculated from absolute velocity rather than forward velocity. (Does not affect top speed clamping)")]
     [SerializeField] private bool baseSpeedOnAbsoluteVelocity = false;
+    [Header("Friction")]
+    [Tooltip("The maximum friction acting sideways on the vehicle")]
+    [SerializeField] private float maxSidewaysFriction = 10f;
+    // [Tooltip("Curve to modify sideways friction based on sideways velocity")]
+    // [SerializeField] private AnimationCurve sidewaysFrictionOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+    [Tooltip("The required directional velocity required to reach max friction")]
+    [SerializeField] private float velocityForMaxSidewaysFriction = 30f;
+    [Tooltip("The maximum friction acting forward or backwards on the vehicle when the vehicle is not accelerating against the friction direction")]
+    [SerializeField] private float maxForwardFriction = 10f;
+    // [Tooltip("Curve to modify forward friction based on forward velocity")]
+    // [SerializeField] private AnimationCurve forwardFrictionOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+    [Tooltip("The required directional velocity required to reach max friction")]
+    [SerializeField] private float velocityForMaxForwardFriction = 30f;
+    [Header("Uprighting")]
     [Tooltip("How fast the vehicle uprights itself when on the ground")]
     [SerializeField] private float onGroundUprightingSpeed = 5f;
     [Tooltip("How fast the vehicle uprights itself when in the air")]
@@ -130,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessRayCasts();
         ProcessMovement();
+        ProcessFriction();
     }
     #endregion
 
@@ -226,6 +241,36 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = rb.linearVelocity.normalized * topSpeed * externalTopSpeedModifier;
         }
     }
+    private void ProcessFriction()
+    {
+        if (!isGrounded) return;
+
+        // Sideways friction
+        float rightVel = Vector3.Dot(rotationRoot.right, rb.linearVelocity);
+        rb.AddForce(
+            rotationRoot.right * (-1 * maxSidewaysFriction * Mathf.Clamp(rightVel / velocityForMaxSidewaysFriction, -1, 1)),
+            ForceMode.Acceleration
+        );
+
+        // Forward friction
+        float forwardVel = Vector3.Dot(rotationRoot.forward, rb.linearVelocity);
+        // Don't apply if tank is accelerating
+        if (Mathf.Sign(forwardVel) != moveInputVector.y)
+        {
+            rb.AddForce(
+                rotationRoot.forward * (-1 * maxForwardFriction * Mathf.Clamp(forwardVel / velocityForMaxForwardFriction, -1, 1)),
+                ForceMode.Acceleration
+            );
+        }
+    }
+    #endregion
+
+    #region Audio
+    public float GetNormalizedSpeed()
+    {
+        float forwardSpeed = Mathf.Abs(Vector3.Dot(rb.linearVelocity, rotationRoot.forward));
+        return Mathf.Clamp01(forwardSpeed / topSpeed);
+    }
     #endregion
 
     #region Debug
@@ -234,12 +279,14 @@ public class PlayerMovement : MonoBehaviour
         if (showRig == ShowGizmoEnum.Always) DrawRigGizmos();
         if (showGroundSample == ShowGizmoEnum.Always) DrawGroundSampleGizmos();
         if (showLocalAxes == ShowGizmoEnum.Always) DrawLocalAxesGizmos();
+        if (showForces == ShowGizmoEnum.Always) DrawForces();
     }
     public void OnDrawGizmosSelected()
     {
         if (showRig == ShowGizmoEnum.Selected) DrawRigGizmos();
         if (showGroundSample == ShowGizmoEnum.Selected) DrawGroundSampleGizmos();
         if (showLocalAxes == ShowGizmoEnum.Selected) DrawLocalAxesGizmos();
+        if (showForces == ShowGizmoEnum.Selected) DrawForces();
     }
     private void DrawRigGizmos()
     {
@@ -297,6 +344,44 @@ public class PlayerMovement : MonoBehaviour
             transform.position,
             transform.position + rotationRoot.right * 5f
         );
+    }
+    private void DrawForces()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            transform.position,
+            transform.position +
+            transform.up * Vector3.Dot(rb.linearVelocity, rotationRoot.forward) * 0.1f
+        );
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(
+            transform.position,
+            transform.position + 
+            transform.right * Vector3.Dot(rb.linearVelocity, rotationRoot.right) * 0.1f
+        );
+        
+        if (isGrounded)
+        {
+            Gizmos.color = Color.cyan;
+            float rightVel = Vector3.Dot(rotationRoot.right, rb.linearVelocity);
+            Gizmos.DrawLine(
+                transform.position,
+                transform.position +
+                rotationRoot.right * (-0.1f * maxSidewaysFriction * Mathf.Clamp(rightVel / velocityForMaxForwardFriction, -1, 1))
+            );
+
+            Gizmos.color = Color.yellow;
+            float forwardVel = Vector3.Dot(rotationRoot.forward, rb.linearVelocity);
+            // Don't apply if tank is accelerating
+            if (Mathf.Sign(forwardVel) != moveInputVector.y)
+            {
+                Gizmos.DrawLine(
+                    transform.position,
+                    transform.position +
+                    rotationRoot.up * (-0.1f * maxForwardFriction * Mathf.Clamp(forwardVel / velocityForMaxSidewaysFriction, -1, 1))
+                );
+            }
+        }
     }
     #endregion
 }

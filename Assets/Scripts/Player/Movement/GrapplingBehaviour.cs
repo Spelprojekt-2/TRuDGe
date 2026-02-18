@@ -25,17 +25,28 @@ public class GrapplingBehaviour : MonoBehaviour
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
 
+    // Audio refs
+    [SerializeField] private PlayerAudio playerAudio;
+
     public void GrappleInput(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             if (!isInGrappleRange) return;
             isGrappling = true;
+
+            // Start grapple audio
+            playerAudio.GrappleStart();
+
             if (grappleHook) grappleHook.SetActive(false);
         }
         else if (context.canceled)
         {
             isGrappling = false;
+
+            // Change audio behaviour
+            playerAudio.GrappleEnd();
+
             if (grappleHook) grappleHook.SetActive(true);
         }
 
