@@ -14,6 +14,7 @@ public class InteractablesAudio : ScriptableObject
     [Header("Usage")]
     [SerializeField] private EventReference LandminePlaceRef;
     [SerializeField] private EventReference LandmineTriggerRef;
+    [SerializeField] private EventReference MagnetRef;
     #endregion
 
     public void PlayPickupAudio(PlayerPowerups.PowerUpType powerUpType)
@@ -33,7 +34,7 @@ public class InteractablesAudio : ScriptableObject
     {
         if (LandminePlaceRef.IsNull)
         {
-            Debug.LogWarning("InteractablesAudio: LandminePlaceRef is missing!");
+            Debug.LogError("InteractablesAudio: LandminePlaceRef is missing!");
             return;
         }
         RuntimeManager.PlayOneShotAttached(LandminePlaceRef, landmineOBJ);
@@ -43,9 +44,36 @@ public class InteractablesAudio : ScriptableObject
     {
         if (LandmineTriggerRef.IsNull)
         {
-            Debug.LogWarning("InteractablesAudio: LandmineTriggerRef is missing!");
+            Debug.LogError("InteractablesAudio: LandmineTriggerRef is missing!");
             return;
         }
         RuntimeManager.PlayOneShotAttached(LandmineTriggerRef, landmineOBJ);
+    }
+
+    public EventInstance StartMagnetAudio(EventInstance instance, GameObject obj)
+    {
+        if (MagnetRef.IsNull)
+        {
+            Debug.LogError("InteractablesAudio: MagnetRef is missing!");
+            return instance;
+        }
+
+        if (instance.isValid())
+        {
+            instance = StopMagnetAudio(instance);
+        }
+
+        // Create magnet instance
+        instance = RuntimeManager.CreateInstance(MagnetRef);
+        RuntimeManager.AttachInstanceToGameObject(instance, obj);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance StopMagnetAudio(EventInstance instance)
+    {
+        instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        instance.release();
+        return instance;
     }
 }

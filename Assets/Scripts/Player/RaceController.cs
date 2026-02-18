@@ -27,6 +27,7 @@ public class RaceController : MonoBehaviour
     private bool isPaused = false;
     private double totalPausedTime = 0;
     private double pauseStartTime = 0;
+    private int lastCountdownSecond = -1;
 
     [SerializeField] private GameObject ghostPrefab;
     private TimeTrialReplay ghostReplay;
@@ -69,9 +70,21 @@ public class RaceController : MonoBehaviour
         if (!raceStarted)
         {
             timeToRaceStart -= Time.fixedDeltaTime;
-            if (timeToRaceStart < 3 && countdownText) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
+            if (timeToRaceStart <= 3 && timeToRaceStart > 0)
+            {
+                int currentSecond = Mathf.FloorToInt(timeToRaceStart + 1);
+
+                if (currentSecond != lastCountdownSecond)
+                {
+                    lastCountdownSecond = currentSecond;
+                    countdownText.text = currentSecond.ToString();
+                    AudioManager.Instance.PlayCountdownAudio(); // Play countdown audio
+                }
+            }
             if (timeToRaceStart <= 0)
             {
+                AudioManager.Instance.PlayCountdownAudio(true); // Play final countdown audio
+
                 totalPausedTime = 0;
                 raceStartTime = Time.realtimeSinceStartupAsDouble;
                 raceStarted = true;
