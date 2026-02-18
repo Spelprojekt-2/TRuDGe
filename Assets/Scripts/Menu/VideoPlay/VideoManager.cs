@@ -13,7 +13,7 @@ public class VideoManager : MonoBehaviour
     public VideoPlayer video4;
     public VideoPlayer video5;
     public VideoPlayer video6;
-    public AudioSource announcment;
+    [SerializeField] private VoiceAudio voiceAudio;
 
     [Header("Subtitles")]
     public TextMeshProUGUI subtitlesText;
@@ -42,7 +42,7 @@ public class VideoManager : MonoBehaviour
     
     void Start()
     {
-        announcment.Play();
+        voiceAudio.PlayAnnouncement();
         video1.Play();
         video1.loopPointReached += SwapVideo1;
     }

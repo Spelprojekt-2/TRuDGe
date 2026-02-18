@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference Music_SelectionScreenRef;
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
+    [SerializeField] private EventReference Music_TrainingGround;
     private EventInstance musicInstance;
 
     public enum MusicID
@@ -27,7 +28,8 @@ public class AudioManager : MonoBehaviour
         MainMenu = 0,
         SelectionScreen = 1,
         TimeTrail = 2,
-        Level1sloped = 3
+        Level1sloped = 3,
+        TrainingGround = 4
     }
 
     // SFX config
@@ -92,6 +94,10 @@ public class AudioManager : MonoBehaviour
             case MusicID.Level1sloped:
                 musicInstance = RuntimeManager.CreateInstance(Music_Level1_slopedRef);
                 break;
+            
+            case MusicID.TrainingGround:
+                musicInstance = RuntimeManager.CreateInstance(Music_TrainingGround);
+                break;
         }
 
         musicInstance.start();
@@ -152,23 +158,33 @@ public class AudioManager : MonoBehaviour
     #region Scene Handling
     private void OnSceneLoaded(Scene next, LoadSceneMode mode)
     {
-        switch (next.name)
+        Debug.Log(next.buildIndex);
+        switch (next.buildIndex)
         {
-            case "MainMenu":
+            case 0:
                 ChangeMusic(MusicID.MainMenu);
                 break;
 
-            case "SelectionScreen":
+            case 1:
                 ChangeMusic(MusicID.SelectionScreen);
                 break;
 
-            case "TimeTrial":
-                ChangeMusic(MusicID.TimeTrail);
+            case 2:
+            Debug.Log("Should change");
+                ChangeMusic(MusicID.SelectionScreen);
+                break;
+
+            case 3:
+                ChangeMusic(MusicID.SelectionScreen);
+                break;
+
+            case 9:
+                ChangeMusic(MusicID.Level1sloped);
                 StartAmbience();
                 break;
 
-            case "Level1_sloped":
-                ChangeMusic(MusicID.Level1sloped);
+            case 10:
+                ChangeMusic(MusicID.TrainingGround);
                 StartAmbience();
                 break;
         }
