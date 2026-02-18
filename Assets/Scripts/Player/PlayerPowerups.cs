@@ -19,6 +19,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject landMine;
     [SerializeField] private GameObject airstrike;
     [SerializeField] private float airstrikeForwardOffset;
+    [SerializeField] private GameObject deployedWall;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -120,6 +121,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.deployWall:
+                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(Vector3.right));
                 break;
 
             case PowerUpType.eMP:
