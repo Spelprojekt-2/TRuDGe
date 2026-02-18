@@ -95,7 +95,7 @@ public class PlayerCamera : MonoBehaviour
         cursorPos += mouseDelta * currentSens;
 
         cursorPos.x = Mathf.Clamp(cursorPos.x, -viewWidth / 2f, viewWidth / 2f);
-        cursorPos.y = Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
+        cursorPos.y = 200; // Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
 
         crosshair.anchoredPosition = cursorPos;
 

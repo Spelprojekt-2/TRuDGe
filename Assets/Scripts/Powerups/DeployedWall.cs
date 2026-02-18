@@ -9,7 +9,7 @@ public class DeployedWall : MonoBehaviour
     {
         for (int i = 0; i < walls.Length; i++)
         {
-            wallHealth[i] = 3;
+            wallHealth[i] = 1;
             if (walls[i] != null)
             {
                 WallChildListener listener = walls[i].AddComponent<WallChildListener>();
@@ -43,6 +43,10 @@ public class WallChildListener : MonoBehaviour
         myIndex = index;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        mainScript.OnChildHit(myIndex);
+    }
     private void OnCollisionEnter(Collision other)
     {
         mainScript.OnChildHit(myIndex);
