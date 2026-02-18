@@ -76,8 +76,32 @@ PrefabInstance:
       propertyPath: projectileSpeed
       value: 100
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6386624414004501194, guid: 271276feb06b7384491584fb49dcf9a7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4325890104349121320, guid: 271276feb06b7384491584fb49dcf9a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 624332229938428572}
   m_SourcePrefab: {fileID: 100100000, guid: 271276feb06b7384491584fb49dcf9a7, type: 3}
+--- !u!1 &3763159829829621810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4325890104349121320, guid: 271276feb06b7384491584fb49dcf9a7, type: 3}
+  m_PrefabInstance: {fileID: 590477103281521434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &624332229938428572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763159829829621810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ddc68ccbc72f024a907aedaf8b95f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 200
+  lockOnRange: 15
+  hitRange: 2

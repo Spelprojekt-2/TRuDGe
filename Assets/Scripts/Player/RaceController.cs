@@ -38,7 +38,7 @@ public class RaceController : MonoBehaviour
         raceStarted = false;
 
         racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
-        startLineOffset = GetSplineProgress(startingLine.position);
+        if (trackSpline) startLineOffset = GetSplineProgress(startingLine.position);
 
         for (int i = 0; i < racers.Count; i++)
         {
@@ -49,8 +49,11 @@ public class RaceController : MonoBehaviour
             racers[i].racePosition = 0;
             racers[i].TrackLoaded(lapsOnThisTrack);
             racers[i].UpdateLapCount();
-            UpdateRaceProgress(racers[i]);
+            if (trackSpline) UpdateRaceProgress(racers[i]);
         }
+
+        if (!trackSpline) return;
+
         if (PlayerTrackerManager.instance.isTimeTrial && PlayerTrackerManager.instance.isTimeTrialWithGhost)
         {
             SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
@@ -93,7 +96,7 @@ public class RaceController : MonoBehaviour
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
                     if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
-                    countdownText.gameObject.SetActive(false);
+                    if (countdownText) countdownText.gameObject.SetActive(false);
                 }
             }
         }
@@ -113,6 +116,8 @@ public class RaceController : MonoBehaviour
             }
         }
         if (racers.Count == 0 || trackSpline == null) return;
+
+        if (!trackSpline) return;
 
         for (int i = 0; i < racers.Count; i++)
         {

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fbb909fffc5a3a439810b898d70be89, type: 3}
-  m_Name: ProbabilitiySO
+  m_Name: FullTanksProbabilitySO
   m_EditorClassIdentifier: 
   probability:
   - powerups:
@@ -19,7 +19,7 @@ MonoBehaviour:
     - type: 2
       weight: 0
     - type: 3
-      weight: 30
+      weight: 15
     - type: 4
       weight: 25
     - type: 5
@@ -32,7 +32,7 @@ MonoBehaviour:
     - type: 2
       weight: 10
     - type: 3
-      weight: 30
+      weight: 15
     - type: 4
       weight: 30
     - type: 5
@@ -45,7 +45,7 @@ MonoBehaviour:
     - type: 2
       weight: 30
     - type: 3
-      weight: 30
+      weight: 15
     - type: 4
       weight: 30
     - type: 5
@@ -58,7 +58,7 @@ MonoBehaviour:
     - type: 2
       weight: 50
     - type: 3
-      weight: 10
+      weight: 5
     - type: 4
       weight: 0
     - type: 5

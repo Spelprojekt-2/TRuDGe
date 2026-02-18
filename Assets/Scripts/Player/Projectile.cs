@@ -28,8 +28,6 @@ public class Projectile : MonoBehaviour
         this.shooter = shooter;
         this.target = target;
         homing = false;
-        
-        Debug.Log("Shoot");
     }
 
     private void FixedUpdate()
@@ -66,9 +64,8 @@ public class Projectile : MonoBehaviour
         currentSpeed = projectileSpeed;
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnCollisionEnter(Collision col)
     {
-        Debug.Log(col.gameObject.name);
         if (col.transform.IsChildOf(shooter.transform))
         {
             return;
@@ -77,9 +74,9 @@ public class Projectile : MonoBehaviour
         {
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
             force.y = 0;
-            col.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-            col.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
-            col.GetComponentInParent<PlayerPowerups>().DropGasTanks();
+            col.gameObject.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            col.gameObject.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
+            col.gameObject.GetComponentInParent<PlayerPowerups>().DropGasTanks();
         }
         Destroy(gameObject);
     }
