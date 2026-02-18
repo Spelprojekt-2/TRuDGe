@@ -43,7 +43,7 @@ public class WallChildListener : MonoBehaviour
         myIndex = index;
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         mainScript.OnChildHit(myIndex);
     }
