@@ -122,7 +122,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.deployWall:
-                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(Vector3.right));
+                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
                 break;
 
             case PowerUpType.eMP:
