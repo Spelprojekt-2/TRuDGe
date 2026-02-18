@@ -206,14 +206,16 @@ public class PlayerPowerups : MonoBehaviour
         if(gasTankAmount == 0) return;
 
         //Debug.Log("GastanksAmount: " + gasTankAmount);
-        float gasTanksToDrop = gasTankAmount / 2f;
-        //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
-        gasTanksToDrop = Mathf.CeilToInt(gasTanksToDrop); //Avrundar gastanks uppåt till närmsta heltal
+        int gasTanksToDrop = Mathf.CeilToInt(gasTankAmount / 2f);
+
+        gasTankAmount -= gasTanksToDrop;
+        gasTankCounter.text = "Gastanks: " + gasTankAmount;
+
         if (gasTanksToDrop <= 2)
         {
             gasTanksToDrop = 2;
         }
-
+        //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
         for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
         {
             float positionOffset = 10f;
@@ -222,9 +224,6 @@ public class PlayerPowerups : MonoBehaviour
 
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
-
-        gasTankAmount = (int)gasTanksToDrop;
-        gasTankCounter.text = "Gastanks: " + gasTanksToDrop;
 
         //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
 
