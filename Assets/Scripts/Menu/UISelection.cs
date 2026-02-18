@@ -64,9 +64,10 @@ public class UISelection : MonoBehaviour
         if (!selection) return;
         if (context.performed)
         {
-            selectionHighlight.parent = transform.root.GetComponentInChildren<Canvas>().transform;
+            selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
+            selection = null;
         }
     }
 
@@ -76,8 +77,7 @@ public class UISelection : MonoBehaviour
     if (!newButton || selection == newButton)
         return;
 
-    if (selection)
-        selection.SetHighlight(false, playerIndex);
+    if (selection) selection.SetHighlight(false, playerIndex);
 
     selection = newButton;
 
