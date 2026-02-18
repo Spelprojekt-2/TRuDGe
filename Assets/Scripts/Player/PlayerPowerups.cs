@@ -94,7 +94,7 @@ public class PlayerPowerups : MonoBehaviour
         switch (type)
         {
             case PowerUpType.homingMissle:
-                GetComponent<PlayerShooting>().ShootHomingMissile(homingMissile);
+                HomingMissile();
                 break;
 
             case PowerUpType.turbo:
@@ -135,11 +135,6 @@ public class PlayerPowerups : MonoBehaviour
 
     private void Update()
     {
-        if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
-        {
-            gasTankAmount = 0;
-            gasTankCounter.text = "Gastanks: 0";
-        }
 
         if (usedPowerUp)
         {
@@ -203,6 +198,11 @@ public class PlayerPowerups : MonoBehaviour
         }
     }
 
+    public void ResetGasTanks()
+    {
+        gasTankAmount = 0;
+        gasTankCounter.text = "Gastanks: 0";
+    }
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
@@ -258,6 +258,14 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
+    }
+
+    void HomingMissile()
+    {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+        GameObject homingMissileSpawned = Instantiate(homingMissile, transform.position, Quaternion.identity);
+        homingMissileSpawned.GetComponent<HomingMissile>().Initialize(raceController.trackSpline, raceController.GetSplineProgress(transform.position), gameObject);
     }
 
     void Smokescreen()

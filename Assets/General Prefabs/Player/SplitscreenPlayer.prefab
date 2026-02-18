@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 5493757530413151856}
   - component: {fileID: 4028980751891896900}
   - component: {fileID: 576007681794308752}
+  - component: {fileID: 4398857652433233913}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -1049,6 +1050,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6581021729640459954}
+        m_TargetAssemblyTypeName: PlayerPowerups, Assembly-CSharp
+        m_MethodName: ResetGasTanks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRaceStart:
     m_PersistentCalls:
       m_Calls:
@@ -1200,6 +1213,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capture: 0
+--- !u!114 &4398857652433233913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3563dc9cb162b8848ae1bee726d1c558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minBumpForce: 30
+  maxBumpForce: 80
+  speedDivisor: 2
 --- !u!1 &5516304864388716943
 GameObject:
   m_ObjectHideFlags: 0
