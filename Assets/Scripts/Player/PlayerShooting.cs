@@ -66,22 +66,6 @@ public class PlayerShooting : MonoBehaviour
         playerAudio.ShootStart();
     }
 
-    public void ShootHomingMissile(GameObject prefab)
-    {
-        Vector3 targetPoint = GetTargetPoint();
-
-        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
-        targetPoint.y = barrelPosition.position.y;
-        GameObject bullet = Instantiate(
-            prefab,
-            barrelPosition.position,
-            Quaternion.LookRotation(bulletDir)
-        );
-
-        
-        bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, GetClosestPlayer());
-    }
-
     private Vector3 GetTargetPoint()
     {
         // Call the new stable ray function from your Camera script
@@ -96,29 +80,5 @@ public class PlayerShooting : MonoBehaviour
         }
 
         return ray.GetPoint(1000f);
-    }
-
-    public Transform GetClosestPlayer()
-    {
-        PlayerMovement[] players = FindObjectsOfType<PlayerMovement>();
-
-        Transform closestTarget = null;
-        float closestDistance = Mathf.Infinity;
-        Vector3 currentPosition = transform.position;
-
-        foreach (PlayerMovement p in players)
-        {
-            if (p.transform == this.transform) continue;
-
-            float distance = Vector3.Distance(currentPosition, p.transform.position);
-
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestTarget = p.transform;
-            }
-        }
-
-        return closestTarget;
     }
 }
