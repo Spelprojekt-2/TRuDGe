@@ -566,7 +566,7 @@ MonoBehaviour:
   video4: {fileID: 2071327987}
   video5: {fileID: 492727346}
   video6: {fileID: 1803736450}
-  announcment: {fileID: 646005976}
+  voiceAudio: {fileID: 11400000, guid: dba7e2798148246b3aa756aae25cb010, type: 2}
   subtitlesText: {fileID: 1985852378}
   SwitchScene: Level1_sloped
 --- !u!4 &781972072
@@ -1061,8 +1061,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1892066637}
   - component: {fileID: 1892066636}
-  - component: {fileID: 1892066635}
   - component: {fileID: 1892066638}
+  - component: {fileID: 1892066639}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1070,14 +1070,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1892066635
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892066634}
-  m_Enabled: 1
 --- !u!20 &1892066636
 Camera:
   m_ObjectHideFlags: 0
@@ -1188,6 +1180,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1892066639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892066634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &1985852376
 GameObject:
   m_ObjectHideFlags: 0
