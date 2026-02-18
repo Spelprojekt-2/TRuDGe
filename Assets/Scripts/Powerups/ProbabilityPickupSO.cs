@@ -4,7 +4,6 @@ using UnityEngine;
 public class ProbabilityPickupSO : ScriptableObject
 {
     public PowerUpProbabilityPosition[] probability;
-
     public PlayerPowerups.PowerUpType RandomizePowerUp(int position)
     {
         if (position == 0) return probability[0].GetPowerUp();
