@@ -210,13 +210,12 @@ public class PlayerPowerups : MonoBehaviour
         //Debug.Log("GastanksAmount: " + gasTankAmount);
         int gasTanksToDrop = Mathf.CeilToInt(gasTankAmount / 2f);
 
+        if (gasTankAmount <= 2)
+        {
+            gasTanksToDrop = gasTankAmount;
+        }
         gasTankAmount -= gasTanksToDrop;
         gasTankCounter.text = "Gastanks: " + gasTankAmount;
-
-        if (gasTanksToDrop <= 2)
-        {
-            gasTanksToDrop = 2;
-        }
         //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
         for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
         {
