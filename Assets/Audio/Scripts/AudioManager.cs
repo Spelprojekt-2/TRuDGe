@@ -8,21 +8,18 @@ using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class AudioManager : MonoBehaviour
 {
+    #region Configuration
     public static AudioManager Instance { get; private set; }
 
-    #region Configuration
     [Tooltip("List of bus paths to pause, e.g., 'bus:/SFX', 'bus:/Music'")]
     [SerializeField] private List<string> busesToMute;
 
+    // Music config
+    [Header("Music Configuration")]
     [SerializeField] private EventReference Music_MainMenuRef;
     [SerializeField] private EventReference Music_SelectionScreenRef;
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
-
-    // Ambience stuff
-    [SerializeField] private EventReference AmbienceManagerRef;
-    private EventInstance ambienceInstance;
-
     private EventInstance musicInstance;
 
     public enum MusicID
@@ -32,7 +29,15 @@ public class AudioManager : MonoBehaviour
         TimeTrail = 2,
         Level1sloped = 3
     }
-    #endregion
+
+    // SFX config
+    [Header("SFX Configuration")]
+    [SerializeField] private FeedbackAudio feedbackAudio;
+    private EventInstance countDownInst;
+
+    // Ambience config
+    [SerializeField] private EventReference AmbienceManagerRef;
+    private EventInstance ambienceInstance;
 
     private void Awake()
     {
@@ -59,38 +64,9 @@ public class AudioManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-
-    #region Pause / Resume
-
-    public void PauseAudio()
-    {
-        TogglePause(true);
-        Debug.Log("Audio paused");
-    }
-
-    public void ResumeAudio()
-    {
-        TogglePause(false);
-        Debug.Log("Audio resumed");
-    }
-
-    private void TogglePause(bool pause)
-    {
-        foreach (string busPath in busesToMute)
-        {
-            Bus bus = RuntimeManager.GetBus(busPath);
-
-            if (bus.isValid())
-                bus.setPaused(pause);
-            else
-                Debug.LogWarning($"Bus not found: {busPath}");
-        }
-    }
-
     #endregion
 
     #region Music
-
     public void ChangeMusic(MusicID musicID)
     {
         if (musicInstance.isValid())
@@ -120,7 +96,18 @@ public class AudioManager : MonoBehaviour
 
         musicInstance.start();
     }
+    #endregion
 
+    #region SFX
+    public void PlayCountdownAudio(bool endCountdown = false)
+    {
+        if (feedbackAudio == null)
+        {
+            Debug.LogWarning("AudioManager: FeedbackAudio is missing!");
+            return;
+        }
+        feedbackAudio.CountdownAudio(endCountdown);
+    }
     #endregion
 
     #region Ambience
@@ -135,8 +122,34 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region Scene Handling
+    #region Pause / Resume
+    public void PauseAudio()
+    {
+        TogglePause(true);
+        Debug.Log("Audio paused");
+    }
 
+    public void ResumeAudio()
+    {
+        TogglePause(false);
+        Debug.Log("Audio resumed");
+    }
+
+    private void TogglePause(bool pause)
+    {
+        foreach (string busPath in busesToMute)
+        {
+            Bus bus = RuntimeManager.GetBus(busPath);
+
+            if (bus.isValid())
+                bus.setPaused(pause);
+            else
+                Debug.LogWarning($"Bus not found: {busPath}");
+        }
+    }
+    #endregion
+
+    #region Scene Handling
     private void OnSceneLoaded(Scene next, LoadSceneMode mode)
     {
         switch (next.name)
@@ -159,6 +172,13 @@ public class AudioManager : MonoBehaviour
                 StartAmbience();
                 break;
         }
+    }
+    #endregion
+
+    #region Player Handling
+    public void UpdatePlayerCount(int count)
+    {
+        RuntimeManager.StudioSystem.setParameterByName("PlayerCount", count);
     }
     #endregion
 }
