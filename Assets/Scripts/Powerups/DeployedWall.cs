@@ -9,7 +9,7 @@ public class DeployedWall : MonoBehaviour
     {
         for (int i = 0; i < walls.Length; i++)
         {
-            wallHealth[i] = 3;
+            wallHealth[i] = 2;
             if (walls[i] != null)
             {
                 WallChildListener listener = walls[i].AddComponent<WallChildListener>();

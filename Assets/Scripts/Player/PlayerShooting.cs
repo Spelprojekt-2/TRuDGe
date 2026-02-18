@@ -31,9 +31,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if(timer >= fireRate)
+        if (timer >= fireRate)
         {
-            if(isShooting)
+            if (isShooting)
             {
                 timer = 0;
                 Shoot(projectilePrefab);
@@ -48,12 +48,10 @@ public class PlayerShooting : MonoBehaviour
     {
         Vector3 targetPoint = GetTargetPoint();
 
-        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        //Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        Vector3 bulletDir = targetPoint;
         targetPoint.y = barrelPosition.position.y;
-        if(bulletDir.y < 0)
-        {
-            bulletDir.y = 0;
-        }
+        bulletDir.y = 0;
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,
@@ -68,17 +66,6 @@ public class PlayerShooting : MonoBehaviour
 
     private Vector3 GetTargetPoint()
     {
-        // Call the new stable ray function from your Camera script
-        Ray ray = playerCam.GetStableCrosshairRay();
-
-        RaycastHit hit;
-
-        // Use the LayerMask we set up earlier to ignore the player/vehicle
-        if (Physics.Raycast(ray, out hit, 1000f, ~excludeLayers))
-        {
-            return hit.point;
-        }
-
-        return ray.GetPoint(1000f);
+        return playerCam.GetStableCrosshairRay().direction;
     }
 }
