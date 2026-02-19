@@ -19,13 +19,14 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject landMine;
     [SerializeField] private GameObject airstrike;
     [SerializeField] private float airstrikeForwardOffset;
+    [SerializeField] private GameObject deployedWall;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
-    private int gasTankAmount = 0;
+    public int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
-    private float normalTopSpeedModifier;
+    private float normalTopSpeedModifier = 1;
     private bool usingTurbo = false;
     private bool usingMagnet = false;
 
@@ -94,7 +95,7 @@ public class PlayerPowerups : MonoBehaviour
         switch (type)
         {
             case PowerUpType.homingMissle:
-                GetComponent<PlayerShooting>().ShootHomingMissile(homingMissile);
+                HomingMissile();
                 break;
 
             case PowerUpType.turbo:
@@ -121,6 +122,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.deployWall:
+                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
                 break;
 
             case PowerUpType.eMP:
@@ -136,11 +138,6 @@ public class PlayerPowerups : MonoBehaviour
 
     private void Update()
     {
-        if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
-        {
-            gasTankAmount = 0;
-            gasTankCounter.text = "Gastanks: 0";
-        }
 
         if (usedPowerUp)
         {
@@ -204,18 +201,40 @@ public class PlayerPowerups : MonoBehaviour
         }
     }
 
+    public void ResetGasTanks()
+    {
+        gasTankAmount = 0;
+        gasTankCounter.text = "Gastanks: 0";
+    }
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
-        for (int i = 0; i < gasTankAmount / 2; i++)
+
+        //Debug.Log("GastanksAmount: " + gasTankAmount);
+        int gasTanksToDrop = Mathf.CeilToInt(gasTankAmount / 2f);
+
+        if (gasTankAmount <= 2)
+        {
+            gasTanksToDrop = gasTankAmount;
+        }
+        gasTankAmount -= gasTanksToDrop;
+        gasTankCounter.text = "Gastanks: " + gasTankAmount;
+        //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
+        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
         {
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
+
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
-        gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+
+        //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
+
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f + (0.1f * gasTankAmount); //Halverar topspeed
+        normalTopSpeedModifier = 1f + +(0.1f * gasTankAmount);
+
+        //Debug.Log("ExternalTopSpeed after changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
     }
 
     IEnumerator Turbo()
@@ -243,6 +262,14 @@ public class PlayerPowerups : MonoBehaviour
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
         playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
+    }
+
+    void HomingMissile()
+    {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+        GameObject homingMissileSpawned = Instantiate(homingMissile, transform.position, Quaternion.identity);
+        homingMissileSpawned.GetComponent<HomingMissile>().Initialize(raceController.trackSpline, raceController.GetSplineProgress(transform.position), gameObject);
     }
 
     void Smokescreen()
