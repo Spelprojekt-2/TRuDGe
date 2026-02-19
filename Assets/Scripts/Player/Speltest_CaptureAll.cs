@@ -2,12 +2,31 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Speltest_CaptureAll : MonoBehaviour
 {
     public bool capture;
 
     private List<InputFrame> recordedFrames = new();
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!capture) return;
+        capture = false;
+        SaveToFile();
+    }
+
 
     private void FixedUpdate()
     {
@@ -39,7 +58,7 @@ public class Speltest_CaptureAll : MonoBehaviour
     }
     private void SaveToFile()
     {
-        string fileName = Guid.NewGuid().ToString() + ".json";
+        string fileName = Guid.NewGuid().ToString() + ".ghost";
         string directory = Path.Combine(Application.persistentDataPath, "Saved");
         if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
 
