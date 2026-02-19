@@ -324,7 +324,7 @@ public class PlayerTrackerManager : MonoBehaviour
         if (UISelection.playerSelections.Count > index) UISelection.playerSelections[index].SwapSelection(button);
     }
 
-    private IEnumerator SwapMap(PlayerInput input, string map)
+    public IEnumerator SwapMap(PlayerInput input, string map)
     {
         if (!input)
             yield break;
