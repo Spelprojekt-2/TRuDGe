@@ -27,6 +27,7 @@ public class VideoManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            voiceAudio.StopAnnouncment();
             SwitchScenes();
         }
         timer += Time.deltaTime;
