@@ -5,6 +5,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
     [SerializeField] private ProbabilityPickupSO probability;
+    [SerializeField] private ProbabilityPickupSO fullProbability;
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -35,7 +36,14 @@ public class Pickup : MonoBehaviour
             }
             else
             {
-                player.GainedPowerUp(probability.RandomizePowerUp(racePosition));
+                if(player.gasTankAmount == 10)
+                {
+                    player.GainedPowerUp(fullProbability.RandomizePowerUp(racePosition));
+                }
+                else
+                {
+                    player.GainedPowerUp(probability.RandomizePowerUp(racePosition));
+                }
             }
 
             if (canRespawn)
@@ -76,9 +84,9 @@ public class Pickup : MonoBehaviour
             foreach (var mesh in meshes)
             {
                 mesh.enabled = visible;
-                visible = !visible;
             }
             yield return new WaitForSeconds(0.3f);
+            visible = !visible;
         }
         col.enabled = true;
     }
