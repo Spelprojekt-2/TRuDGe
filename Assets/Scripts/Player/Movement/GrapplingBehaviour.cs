@@ -25,17 +25,28 @@ public class GrapplingBehaviour : MonoBehaviour
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
 
+    // Audio refs
+    [SerializeField] private PlayerAudio playerAudio;
+
     public void GrappleInput(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             if (!isInGrappleRange) return;
             isGrappling = true;
+
+            // Start grapple audio
+            playerAudio.GrappleStart();
+
             if (grappleHook) grappleHook.SetActive(false);
         }
         else if (context.canceled)
         {
             isGrappling = false;
+
+            // Change audio behaviour
+            playerAudio.GrappleEnd();
+
             if (grappleHook) grappleHook.SetActive(true);
         }
 
@@ -43,19 +54,6 @@ public class GrapplingBehaviour : MonoBehaviour
         if (isGrappling)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
     }
-    /*public void Toggle()
-    {
-        if (isGrappling) isGrappling = false;
-        else
-        {
-            if (!isInGrappleRange) return;
-            isGrappling = true;
-        }
-
-        lineRenderer.enabled = isGrappling;
-        if (isGrappling)
-            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
-    }*/
 
     void Start()
     {
@@ -70,8 +68,7 @@ public class GrapplingBehaviour : MonoBehaviour
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, grapplePoint);
             
-            // float azimuth = Vector3.Angle((grapplePoint - grappleAzimuthObject.position).normalized, grappleAzimuthObject.forward);
-            // grappleAzimuthObject.localEulerAngles = new Vector3(0, azimuth, 0);
+            // I know it's ugly but it works
             grappleAzimuthObject.LookAt(grapplePoint, grappleAzimuthObject.parent.up);
             grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
             grappleElevationObject.LookAt(grapplePoint, grappleAzimuthObject.up);
@@ -81,9 +78,26 @@ public class GrapplingBehaviour : MonoBehaviour
         if (isInGrappleRange)
         {
             Vector3 diff = grapplePoint - playerCamera.transform.position;
+
             grappleUIIndicator.gameObject.SetActive(Vector3.Dot(playerCamera.transform.forward, diff.normalized) > 0f);
-            Vector2 pointOnScreen = playerCamera.WorldToScreenPoint(grapplePoint);
-            grappleUIIndicator.anchoredPosition = pointOnScreen - new Vector2(Screen.width, Screen.height) / 2f;
+
+            Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(grapplePoint);
+            viewPortpoint.x = Mathf.Clamp(viewPortpoint.x, 0, 1);
+            viewPortpoint.y = Mathf.Clamp(viewPortpoint.y, 0, 1);
+
+            if (playerCamera.rect.width == 1 && playerCamera.rect.height == 0.5)
+            {
+                viewPortpoint.x = (viewPortpoint.x * 2) - 0.5f;
+                grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
+                    playerCamera.scaledPixelWidth / playerCamera.rect.width,
+                    playerCamera.scaledPixelHeight / playerCamera.rect.height);
+            }
+            else
+            {
+                grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
+                    playerCamera.scaledPixelWidth / playerCamera.rect.width,
+                    playerCamera.scaledPixelHeight / playerCamera.rect.height);
+            }
         }
     }
     public void EnteredGrappleRange(Grappleable grappleable)

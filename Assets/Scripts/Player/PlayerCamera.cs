@@ -34,6 +34,8 @@ public class PlayerCamera : MonoBehaviour
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
+    [Header("Debug")]
+    [SerializeField] private bool showAimRay = false;
 
 
     public Camera cam;
@@ -93,7 +95,7 @@ public class PlayerCamera : MonoBehaviour
         cursorPos += mouseDelta * currentSens;
 
         cursorPos.x = Mathf.Clamp(cursorPos.x, -viewWidth / 2f, viewWidth / 2f);
-        cursorPos.y = Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
+        cursorPos.y = 200; // Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
 
         crosshair.anchoredPosition = cursorPos;
 
@@ -170,7 +172,7 @@ public class PlayerCamera : MonoBehaviour
                 {
                     isOverEnemy = false;
                     currentTarget = null;
-                    continue; //Fortsätter ifall man träffar sig själv
+                    continue; //Fortsï¿½tter ifall man trï¿½ffar sig sjï¿½lv
                 }
 
                 currentHitCol = hit.collider;
@@ -194,7 +196,8 @@ public class PlayerCamera : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+            if (showAimRay)
+                Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
         }
     }
 
@@ -215,7 +218,7 @@ public class PlayerCamera : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("En kamera är null");
+            Debug.LogWarning("En kamera ï¿½r null");
         }
     }
 }

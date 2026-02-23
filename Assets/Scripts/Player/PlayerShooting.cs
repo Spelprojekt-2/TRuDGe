@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
@@ -12,9 +13,16 @@ public class PlayerShooting : MonoBehaviour
     private bool isShooting = false;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private PlayerCamera playerCam;
+
+    // Audio refs
+    PlayerAudio playerAudio;
+
     private void Start()
     {
         timer = fireRate;
+
+        // Get PlayerAudio.
+        playerAudio = GetComponent<PlayerAudio>();
     }
     public void ShootInput(InputAction.CallbackContext context)
     {
@@ -23,9 +31,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if(timer >= fireRate)
+        if (timer >= fireRate)
         {
-            if(isShooting)
+            if (isShooting)
             {
                 timer = 0;
                 Shoot(projectilePrefab);
@@ -40,12 +48,10 @@ public class PlayerShooting : MonoBehaviour
     {
         Vector3 targetPoint = GetTargetPoint();
 
-        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        //Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        Vector3 bulletDir = targetPoint;
         targetPoint.y = barrelPosition.position.y;
-        if(bulletDir.y < 0)
-        {
-            bulletDir.y = 0;
-        }
+        bulletDir.y = 0;
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,
@@ -53,61 +59,13 @@ public class PlayerShooting : MonoBehaviour
         );
 
         bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null);
-    }
 
-    public void ShootHomingMissile(GameObject prefab)
-    {
-        Vector3 targetPoint = GetTargetPoint();
-
-        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
-        targetPoint.y = barrelPosition.position.y;
-        GameObject bullet = Instantiate(
-            prefab,
-            barrelPosition.position,
-            Quaternion.LookRotation(bulletDir)
-        );
-
-        
-        bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, GetClosestPlayer());
+        // Play shoot audio
+        playerAudio.ShootStart();
     }
 
     private Vector3 GetTargetPoint()
     {
-        // Call the new stable ray function from your Camera script
-        Ray ray = playerCam.GetStableCrosshairRay();
-
-        RaycastHit hit;
-
-        // Use the LayerMask we set up earlier to ignore the player/vehicle
-        if (Physics.Raycast(ray, out hit, 1000f, ~excludeLayers))
-        {
-            return hit.point;
-        }
-
-        return ray.GetPoint(1000f);
-    }
-
-    public Transform GetClosestPlayer()
-    {
-        PlayerMovement[] players = FindObjectsOfType<PlayerMovement>();
-
-        Transform closestTarget = null;
-        float closestDistance = Mathf.Infinity;
-        Vector3 currentPosition = transform.position;
-
-        foreach (PlayerMovement p in players)
-        {
-            if (p.transform == this.transform) continue;
-
-            float distance = Vector3.Distance(currentPosition, p.transform.position);
-
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestTarget = p.transform;
-            }
-        }
-
-        return closestTarget;
+        return playerCam.GetStableCrosshairRay().direction;
     }
 }

@@ -9,6 +9,12 @@ public class UISelection : MonoBehaviour
     public Color selectionColor;
     public RectTransform selectionHighlight;
 
+    private RacerData racerData;
+    private bool stickHeld = false;
+    void Awake()
+    {
+        racerData = GetComponent<RacerData>();
+    }
     public void Start()
     {
         playerSelections.Add(this);
@@ -23,19 +29,33 @@ public class UISelection : MonoBehaviour
     public void LookInput(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-        int playerIndex = GetComponent<RacerData>().index;
-        if (input == Vector2.zero || !selection || !selectionHighlight.gameObject.activeSelf)
+
+        if (!selection || !selectionHighlight.gameObject.activeSelf)
             return;
+
+        if (input.magnitude < 0.5f)
+        {
+            stickHeld = false;
+            return;
+        }
+        if (stickHeld)
+            return;
+
+        stickHeld = true;
 
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
         {
-            if (input.x > 0) SwapSelection(selection.SwapRightSelection());
-            else SwapSelection(selection.SwapLeftSelection());
+            if (input.x > 0)
+                SwapSelection(selection.SwapRightSelection());
+            else
+                SwapSelection(selection.SwapLeftSelection());
         }
         else
         {
-            if (input.y > 0) SwapSelection(selection.SwapUpSelection());
-            else SwapSelection(selection.SwapDownSelection());
+            if (input.y > 0)
+                SwapSelection(selection.SwapUpSelection());
+            else
+                SwapSelection(selection.SwapDownSelection());
         }
     }
 
@@ -44,17 +64,26 @@ public class UISelection : MonoBehaviour
         if (!selection) return;
         if (context.performed)
         {
-            selectionHighlight.parent = transform.root.GetComponentInChildren<Canvas>().transform;
+            selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
+            selection = null;
         }
     }
 
     public void SwapSelection(UIButton newButton)
     {
-        if (!newButton) return;
-        selection = newButton;
-        SelectUIUpdate(newButton);
+         int playerIndex = GetComponent<RacerData>().index;
+    if (!newButton || selection == newButton)
+        return;
+
+    if (selection) selection.SetHighlight(false, playerIndex);
+
+    selection = newButton;
+
+    selection.SetHighlight(true, playerIndex);
+
+    SelectUIUpdate(newButton);
     }
 
     public void SwapPlayers(int p1index, int p2index)
@@ -75,7 +104,7 @@ public class UISelection : MonoBehaviour
     private void SelectUIUpdate(UIButton button)
     {
         selectionHighlight.gameObject.SetActive(true);
-        selectionHighlight.transform.parent = button.transform.parent;
+        selectionHighlight.transform.SetParent(button.transform.parent);
         selectionHighlight.SetSiblingIndex(0);
         selectionHighlight.position = button.GetComponent<RectTransform>().position;
         selectionHighlight.localScale = Vector3.one;

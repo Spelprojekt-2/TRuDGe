@@ -3,6 +3,12 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using UnityEngine.Splines;
+using System.Linq;
+using Unity.Mathematics;
+
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
     [SerializeField] private GameObject gasTank;
@@ -11,18 +17,29 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject smokeScreen;
     [SerializeField] private float smokeDuration = 7f;
     [SerializeField] private GameObject landMine;
+    [SerializeField] private GameObject airstrike;
+    [SerializeField] private float airstrikeForwardOffset;
+    [SerializeField] private GameObject deployedWall;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
-    private int gasTankAmount = 0;
+    public int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
-    private float normalTopSpeedModifier;
+    private float normalTopSpeedModifier = 1;
     private bool usingTurbo = false;
     private bool usingMagnet = false;
 
+    private RaceController raceController;
+
+    // Audio
+    private PlayerAudio playerAudio;
+
     private void Start()
     {
+        // Get player audio
+        playerAudio = GetComponent<PlayerAudio>();
+
         currPowerUpText.text = "";
         gasTankAmount = 0;
         gasTankCounter.text = "Gastanks: 0";
@@ -38,10 +55,16 @@ public class PlayerPowerups : MonoBehaviour
         turbo,
         magnet,
         smoke,
-        landMine
+        landMine,
+        airstrike,
+        deployWall,
+        eMP
     };
     public void GainedPowerUp(PowerUpType type)
     {
+        // Play audio
+        playerAudio.PickupAudio(type);
+        
         if (type == PowerUpType.gasolineTank)
         {
             if (gasTankAmount < 10)
@@ -72,7 +95,7 @@ public class PlayerPowerups : MonoBehaviour
         switch (type)
         {
             case PowerUpType.homingMissle:
-                GetComponent<PlayerShooting>().ShootHomingMissile(homingMissile);
+                HomingMissile();
                 break;
 
             case PowerUpType.turbo:
@@ -81,6 +104,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.magnet:
+                playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
                 StartCoroutine(Magnet());
                 break;
 
@@ -89,8 +113,21 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.landMine:
-                Instantiate(landMine, transform.position, Quaternion.identity);
+                GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
+                playerAudio.PlayLandminePlaceAudio(landmine); // Play landmine audio
                 break;
+
+            case PowerUpType.airstrike:
+                Airstrike();
+                break;
+
+            case PowerUpType.deployWall:
+                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                break;
+
+            case PowerUpType.eMP:
+                break;
+
             default:
                 return;
         }
@@ -101,10 +138,6 @@ public class PlayerPowerups : MonoBehaviour
 
     private void Update()
     {
-        if (gasTankAmount > 0 && SceneManager.GetActiveScene().name == "SelectionScreen")
-        {
-            gasTankAmount = 0;
-        }
 
         if (usedPowerUp)
         {
@@ -150,24 +183,58 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Landmine";
         }
+        else if (type == PowerUpType.airstrike)
+        {
+            currPowerUpText.text = "Airstrike";
+        }
+        else if (type == PowerUpType.deployWall)
+        {
+            currPowerUpText.text = "Deploy Wall";
+        }
+        else if (type == PowerUpType.eMP)
+        {
+            currPowerUpText.text = "EMP";
+        }
         else
         {
             currPowerUpText.text = "";
         }
     }
 
+    public void ResetGasTanks()
+    {
+        gasTankAmount = 0;
+        gasTankCounter.text = "Gastanks: 0";
+    }
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
-        for (int i = 0; i < gasTankAmount; i++)
+
+        //Debug.Log("GastanksAmount: " + gasTankAmount);
+        int gasTanksToDrop = Mathf.CeilToInt(gasTankAmount / 2f);
+
+        if (gasTankAmount <= 2)
+        {
+            gasTanksToDrop = gasTankAmount;
+        }
+        gasTankAmount -= gasTanksToDrop;
+        gasTankCounter.text = "Gastanks: " + gasTankAmount;
+        //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
+        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
         {
             float positionOffset = 10f;
-            Vector3 rndPos = new Vector3(Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
+            Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
+
             StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
         }
-        gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+
+        //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
+
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f + (0.1f * gasTankAmount); //Halverar topspeed
+        normalTopSpeedModifier = 1f + +(0.1f * gasTankAmount);
+
+        //Debug.Log("ExternalTopSpeed after changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
     }
 
     IEnumerator Turbo()
@@ -194,6 +261,15 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
+        playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
+    }
+
+    void HomingMissile()
+    {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+        GameObject homingMissileSpawned = Instantiate(homingMissile, transform.position, Quaternion.identity);
+        homingMissileSpawned.GetComponent<HomingMissile>().Initialize(raceController.trackSpline, raceController.GetSplineProgress(transform.position), gameObject);
     }
 
     void Smokescreen()
@@ -202,5 +278,28 @@ public class PlayerPowerups : MonoBehaviour
         Destroy(spawnedSmoke, smokeDuration);
     }
 
-    
+    void Airstrike()
+    {
+        raceController = FindFirstObjectByType<RaceController>();
+        if (raceController == null || raceController.trackSpline == null) return;
+
+        RacerData leader = raceController.racers.OrderByDescending(x => x.raceProgress).FirstOrDefault();
+
+        if (leader != null)
+        {
+            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
+
+            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
+            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
+
+            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
+            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
+            worldDirection.y = 0;
+            worldDirection.Normalize();
+
+            float distanceAhead = 100f;
+            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
+            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
+        }
+    }
 }
