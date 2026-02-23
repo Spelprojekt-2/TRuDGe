@@ -82,9 +82,22 @@ public class GrapplingBehaviour : MonoBehaviour
             grappleUIIndicator.gameObject.SetActive(Vector3.Dot(playerCamera.transform.forward, diff.normalized) > 0f);
 
             Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(grapplePoint);
-            grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
-                playerCamera.scaledPixelWidth / playerCamera.rect.width,
-                playerCamera.scaledPixelHeight / playerCamera.rect.height);
+            viewPortpoint.x = Mathf.Clamp(viewPortpoint.x, 0, 1);
+            viewPortpoint.y = Mathf.Clamp(viewPortpoint.y, 0, 1);
+
+            if (playerCamera.rect.width == 1 && playerCamera.rect.height == 0.5)
+            {
+                viewPortpoint.x = (viewPortpoint.x * 2) - 0.5f;
+                grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
+                    playerCamera.scaledPixelWidth / playerCamera.rect.width,
+                    playerCamera.scaledPixelHeight / playerCamera.rect.height);
+            }
+            else
+            {
+                grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
+                    playerCamera.scaledPixelWidth / playerCamera.rect.width,
+                    playerCamera.scaledPixelHeight / playerCamera.rect.height);
+            }
         }
     }
     public void EnteredGrappleRange(Grappleable grappleable)
