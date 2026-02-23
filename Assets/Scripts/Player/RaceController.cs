@@ -187,18 +187,19 @@ public class RaceController : MonoBehaviour
                 spline,
                 localPos,
                 out float3 pointOnSpline,
-                out float t
+                out float splineProgress
             );
 
             float dist = math.lengthsq(pointOnSpline - localPos);
+
             if (dist < bestDistance)
             {
                 bestDistance = dist;
-                bestProgress = (j + t) / trackSpline.Splines.Count;
+                bestProgress = splineProgress;
             }
         }
 
-        return bestProgress; // 0–1 across entire container
+        return bestProgress;
     }
 
     private IEnumerator WaitToAfterRace()
