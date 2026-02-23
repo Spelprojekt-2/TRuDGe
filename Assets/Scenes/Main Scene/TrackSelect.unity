@@ -1148,6 +1148,7 @@ GameObject:
   - component: {fileID: 829595204}
   - component: {fileID: 829595203}
   - component: {fileID: 829595205}
+  - component: {fileID: 829595206}
   m_Layer: 0
   m_Name: PlayerTrackerManager
   m_TagString: Untagged
@@ -1168,9 +1169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  isTimeTrial: 0
-  isTimeTrialWithGhost: 0
-  pathToGhost: 
 --- !u!4 &829595204
 Transform:
   m_ObjectHideFlags: 0
@@ -1199,6 +1197,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ff3902fde4e504a96caac5dd87adac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &829595206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829595202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce437329aee51a408b932d37a05e676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackToPlay: 
+  isTimeTrial: 0
+  isTimeTrialWithGhost: 0
+  pathToGhost: 
 --- !u!1 &872893108
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,7 +2462,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: TrainingGround
+          m_StringArgument: Level1_sloped
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1290734561
@@ -3017,7 +3031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Training Ground
+  m_text: Schlammrennstrecke
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

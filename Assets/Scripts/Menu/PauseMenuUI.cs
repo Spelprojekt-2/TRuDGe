@@ -27,7 +27,6 @@ public class PauseMenuUI : MonoBehaviour
         currentPlayerID = playerID;
         CoroutineRunner.Run(SwapMap(currentPlayerInput, "UI"));
         UISelection.playerSelections[currentPlayerID].SwapSelection(selectOnPause);
-        Debug.Log(UISelection.playerSelections[currentPlayerID].selection);
         Time.timeScale = 0f;
         isPaused = true;
     }

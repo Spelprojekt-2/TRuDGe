@@ -18,13 +18,18 @@ public class SelectionScreenController : MonoBehaviour
 
     public void Unready()
     {
-        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TimeTrialMenu");
+        if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene("TimeTrialMenu");
         else SceneManager.LoadScene("SelectionScreen");
     }
 
     public void LoadTrack(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene(sceneName);
+        else
+        {
+            RacingInformation.instance.trackToPlay = sceneName;
+            SceneManager.LoadScene("TrainingGround");
+        }
     }
 
     public UIButton GetStartButton(int index)
