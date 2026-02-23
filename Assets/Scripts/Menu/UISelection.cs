@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using System.Linq;
 
 public class UISelection : MonoBehaviour
 {
@@ -73,7 +75,7 @@ public class UISelection : MonoBehaviour
 
     public void SwapSelection(UIButton newButton)
     {
-         int playerIndex = GetComponent<RacerData>().index;
+    int playerIndex = GetComponent<RacerData>().index;
     if (!newButton || selection == newButton)
         return;
 
@@ -103,12 +105,66 @@ public class UISelection : MonoBehaviour
 
     private void SelectUIUpdate(UIButton button)
     {
+        int playerIndex = GetComponent<RacerData>().index;
+        if (playerIndex == 0)
+        {
+            selectionColor = Color.red;
+        }
+        else if (playerIndex == 1)
+        {
+            selectionColor = new Color32(0,255,0,154);
+        }
+        else if (playerIndex == 2)
+        {
+            selectionColor = new Color32(0,0,255,154);//new Color32(128,135,27,154);
+        }
+        else if (playerIndex == 3)
+        {
+            selectionColor = Color.black;
+        }
+        Image highlightImage = selectionHighlight.GetComponent<Image>();
+        highlightImage.color = selectionColor;
+
         selectionHighlight.gameObject.SetActive(true);
         selectionHighlight.transform.SetParent(button.transform.parent);
-        selectionHighlight.SetSiblingIndex(0);
-        selectionHighlight.position = button.GetComponent<RectTransform>().position;
-        selectionHighlight.localScale = Vector3.one;
-        selectionHighlight.rotation = Quaternion.identity;
-        selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
+        UpdateAllHighlights();
     }
+
+    private void UpdateAllHighlights()
+{
+    int maxPlayers = playerSelections.Count;
+
+    var grouped = playerSelections
+        .GroupBy(p => p.selection);
+
+    foreach (var group in grouped)
+    {
+        var sorted = group
+            .OrderByDescending(p => p.GetComponent<RacerData>().index)
+            .ToList();
+
+        for (int i = 0; i < sorted.Count; i++)
+        {
+            UISelection ui = sorted[i];
+
+            RectTransform highlight = ui.selectionHighlight;
+            RectTransform buttonRect =
+            ui.selection.GetComponent<RectTransform>();
+
+            int clampedIndex = Mathf.Clamp(i, 0, maxPlayers - 1);
+
+            float basePadding = 25f;
+            float paddingStep = 15f;
+
+            highlight.sizeDelta = buttonRect.sizeDelta +
+                                  Vector2.one * (basePadding + paddingStep * clampedIndex);
+
+            highlight.localScale = Vector3.one;
+            highlight.position = buttonRect.position;
+            highlight.rotation = Quaternion.identity;
+
+            highlight.SetSiblingIndex(sorted.Count - 1 - i);
+        }
+    }
+}
 }
