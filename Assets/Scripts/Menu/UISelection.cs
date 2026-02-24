@@ -66,9 +66,13 @@ public class UISelection : MonoBehaviour
         if (!selection) return;
         if (context.performed)
         {
+             if (selection.isLocked)
+            return;
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
+            selection.SetLocked(true);
+            enabled = false;
             selection = null;
         }
     }
@@ -105,6 +109,12 @@ public class UISelection : MonoBehaviour
 
     private void SelectUIUpdate(UIButton button)
     {
+        if (button == null)
+            return;
+        
+        if (selectionHighlight == null)
+            return;
+
         int playerIndex = GetComponent<RacerData>().index;
         if (playerIndex == 0)
         {
@@ -112,29 +122,34 @@ public class UISelection : MonoBehaviour
         }
         else if (playerIndex == 1)
         {
-            selectionColor = new Color32(0,255,0,154);
+            selectionColor = new Color32(0,255,0,255);
         }
         else if (playerIndex == 2)
         {
-            selectionColor = new Color32(0,0,255,154);//new Color32(128,135,27,154);
+            selectionColor = new Color32(0,0,255,255);
         }
         else if (playerIndex == 3)
         {
             selectionColor = Color.black;
         }
         Image highlightImage = selectionHighlight.GetComponent<Image>();
+        if (highlightImage == null)
+            return;
         highlightImage.color = selectionColor;
 
         selectionHighlight.gameObject.SetActive(true);
+        if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
+
         UpdateAllHighlights();
     }
 
     private void UpdateAllHighlights()
-{
+    {
     int maxPlayers = playerSelections.Count;
 
     var grouped = playerSelections
+        .Where(p => p.selection != null) 
         .GroupBy(p => p.selection);
 
     foreach (var group in grouped)
@@ -147,9 +162,15 @@ public class UISelection : MonoBehaviour
         {
             UISelection ui = sorted[i];
 
+            if (ui.selection == null || ui.selectionHighlight == null)
+                continue; 
+
             RectTransform highlight = ui.selectionHighlight;
             RectTransform buttonRect =
-            ui.selection.GetComponent<RectTransform>();
+                ui.selection.GetComponent<RectTransform>();
+
+            if (buttonRect == null)
+                continue; 
 
             int clampedIndex = Mathf.Clamp(i, 0, maxPlayers - 1);
 
@@ -157,7 +178,7 @@ public class UISelection : MonoBehaviour
             float paddingStep = 15f;
 
             highlight.sizeDelta = buttonRect.sizeDelta +
-                                  Vector2.one * (basePadding + paddingStep * clampedIndex);
+            Vector2.one * (basePadding + paddingStep * clampedIndex);
 
             highlight.localScale = Vector3.one;
             highlight.position = buttonRect.position;

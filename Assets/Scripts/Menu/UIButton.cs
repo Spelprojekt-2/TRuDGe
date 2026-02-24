@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class UIButton : MonoBehaviour
 {
+    private Button button;
     public UIButton SwapUp;
     public UIButton SwapDown;
     public UIButton SwapLeft;
@@ -33,8 +34,15 @@ public class UIButton : MonoBehaviour
     public GameObject characterText3;
     public GameObject characterStats3;
 
+    void Awake()
+    {
+        button = GetComponent<Button>();
+    }
+
     public void Click()
     {
+        if (isLocked)
+            return;
         GetComponent<Button>().onClick?.Invoke();
     }
 
@@ -75,5 +83,10 @@ public class UIButton : MonoBehaviour
                 characterStats3?.SetActive(state);
             }
         }
+    }
+    public bool isLocked = false;
+    public void SetLocked(bool value)
+    {
+        isLocked = value;
     }
 }
