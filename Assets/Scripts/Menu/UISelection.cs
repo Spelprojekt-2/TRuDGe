@@ -72,7 +72,7 @@ public class UISelection : MonoBehaviour
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
             selection.SetLocked(true);
-            enabled = false;
+            //enabled = false;
             selection = null;
         }
     }
