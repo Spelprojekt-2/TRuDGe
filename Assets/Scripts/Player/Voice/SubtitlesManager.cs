@@ -5,14 +5,31 @@ using TMPro;
 public class SubtitlesManager : MonoBehaviour
 {
     public TextMeshProUGUI subtitleBox;
-    private float timer;
-    private int subtitleIndex = 0;
+    public float timer = 0f;
+    private bool isShowing = false;
+    void Update()
+    {
+        if (isShowing)
+        {
+            timer += Time.deltaTime;
+            if (timer >= 5f)
+            {
+                subtitleBox.gameObject.SetActive(false);
+                isShowing = false;
+                timer = 0f;
+            }
+        }
+    }
 
     //Voice line subtitles
     //Lars-Göran
     public void Lars_Start()
     {
+        subtitleBox.gameObject.SetActive(true);
         subtitleBox.text = "I hope no one decides to cheat today!";
+        
+        timer = 0f;
+        isShowing = true;
     }
 
     //Napoleon
@@ -52,6 +69,6 @@ public class SubtitlesManager : MonoBehaviour
 
     void Awake()
     {
-        Napoleon_Carla_Crash();
+        Lars_Start();
     }
 }
