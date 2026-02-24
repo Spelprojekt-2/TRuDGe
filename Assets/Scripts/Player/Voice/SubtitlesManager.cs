@@ -6,24 +6,41 @@ public class SubtitlesManager : MonoBehaviour
 {
     public TextMeshProUGUI subtitleBox;
 
-    public void ChangeSubtitle()
-    {
-        subtitleBox.text = Lars_Start;
-    }
-
     //Voice line subtitles
     //Lars-Göran
-    private string Lars_Start = "I hope no one decides to cheat today!";
+    public void Lars_Start()
+    {
+        subtitleBox.text = "I hope no one decides to cheat today!";
+    }
 
     //Napoleon
-    private string Napoleon_DriveBy = "Napoleon drive-by";
-    private string Napoleon_DrivenBy = "Napoleon driven by";
+    public void Napoleon_DriveBy()
+    {
+        subtitleBox.text = "Napoleon drive-by";
+    }
+    public void Napoleon_DrivenBy()
+    {
+        subtitleBox.text = "Napoleon driven by";
+    }
+    public void Napoleon_Carla_Crash()
+    {
+        subtitleBox.text = "Go away!";
+    }
 
     //Nina
-    private string Nina_hit = "Nina_hit";
+    public void Nina_Hit()
+    {
+        subtitleBox.text = "Nina_hit";
+    }
+
+    //Carla
+    public void Carla_Win()
+    {
+        subtitleBox.text = "Carla win";
+    }
 
     void Awake()
     {
-        ChangeSubtitle();
+        Lars_Start();
     }
 }
