@@ -5,6 +5,8 @@ using TMPro;
 public class SubtitlesManager : MonoBehaviour
 {
     public TextMeshProUGUI subtitleBox;
+    private float timer;
+    private int subtitleIndex = 0;
 
     //Voice line subtitles
     //Lars-Göran
@@ -24,7 +26,16 @@ public class SubtitlesManager : MonoBehaviour
     }
     public void Napoleon_Carla_Crash()
     {
-        subtitleBox.text = "Go away!";
+        timer += Time.deltaTime;
+        if (timer <= 5f)
+        {
+            subtitleBox.text = "<color=grey>[</color><color=blue>Carla</color><color=grey>]</color> Go away!";
+        }
+        if (timer >= 5f)
+        {
+            subtitleBox.text = "No u.";
+        }
+
     }
 
     //Nina
@@ -41,6 +52,6 @@ public class SubtitlesManager : MonoBehaviour
 
     void Awake()
     {
-        Lars_Start();
+        Napoleon_Carla_Crash();
     }
 }
