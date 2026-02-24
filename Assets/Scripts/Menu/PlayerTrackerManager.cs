@@ -132,7 +132,7 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             case "SelectionScreen":
                 isTimeTrial = false;
-                foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+                foreach (var input in playerInputs.Values)
                 {
                     RacerData rd = input.GetComponent<RacerData>();
                     playerInputs[rd.index] = input;
@@ -203,12 +203,11 @@ public class PlayerTrackerManager : MonoBehaviour
             }
             if (isTimeTrial)
             {
-                Pickup[] pickups = FindObjectsByType<Pickup>(FindObjectsSortMode.None);
-                for (int i = pickups.Length - 1; i >= 0; i--)
+                for (int i = Pickup.AllPickups.Count - 1; i >= 0; i--)
                 {
-                    if (pickups[i].powerUpType != PlayerPowerups.PowerUpType.gasolineTank)
+                    if (Pickup.AllPickups[i].powerUpType != PlayerPowerups.PowerUpType.gasolineTank)
                     {
-                        Destroy(pickups[i].gameObject);
+                        Destroy(Pickup.AllPickups[i].gameObject);
                     }
                 }
             }

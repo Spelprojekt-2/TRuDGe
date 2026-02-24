@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public class Pickup : MonoBehaviour
 {
     [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
     [SerializeField] private ProbabilityPickupSO probability;
     [SerializeField] private ProbabilityPickupSO fullProbability;
+
+    public static List<Pickup> AllPickups {  get; private set; }
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -106,5 +109,15 @@ public class Pickup : MonoBehaviour
             transform.position += direction * flySpeed;
             transform.Rotate(Vector3.up * 300f * Time.deltaTime);
         }
+    }
+
+    private void OnEnable()
+    {
+        AllPickups.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        AllPickups.Remove(this);
     }
 }
