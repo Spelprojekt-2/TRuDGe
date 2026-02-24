@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider col)
+    private void OnCollisionEnter(Collision col)
     {
         if (col.transform.IsChildOf(shooter.transform))
         {
