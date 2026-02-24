@@ -41,8 +41,6 @@ public class UIButton : MonoBehaviour
 
     public void Click()
     {
-        if (isLocked)
-            return;
         GetComponent<Button>().onClick?.Invoke();
     }
 
@@ -83,10 +81,5 @@ public class UIButton : MonoBehaviour
                 characterStats3?.SetActive(state);
             }
         }
-    }
-    public bool isLocked = false;
-    public void SetLocked(bool value)
-    {
-        isLocked = value;
     }
 }

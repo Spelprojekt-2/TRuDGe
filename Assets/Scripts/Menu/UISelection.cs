@@ -66,13 +66,9 @@ public class UISelection : MonoBehaviour
         if (!selection) return;
         if (context.performed)
         {
-             if (selection.isLocked)
-            return;
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
-            selection.SetLocked(true);
-            //enabled = false;
             selection = null;
         }
     }
