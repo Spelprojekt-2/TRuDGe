@@ -149,7 +149,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subtitlePrefab: {fileID: 7139602578633858528}
   subtitleParent: {fileID: 6419870254176528223}
-  subtitleDuration: 5
+  verticalSpacing: 10
+  bottomOffset: 50
 --- !u!1001 &8245642441793186311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +162,10 @@ PrefabInstance:
     - target: {fileID: 1259493502528042983, guid: 262b4d00376dc9c45a13d2e29b88149e, type: 3}
       propertyPath: m_Name
       value: Subtitle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259493502528042983, guid: 262b4d00376dc9c45a13d2e29b88149e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3574686728489192469, guid: 262b4d00376dc9c45a13d2e29b88149e, type: 3}
       propertyPath: m_Pivot.x
