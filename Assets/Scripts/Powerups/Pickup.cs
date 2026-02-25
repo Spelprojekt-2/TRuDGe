@@ -86,6 +86,7 @@ public class Pickup : MonoBehaviour
     public IEnumerator DroppedTanks()
     {
         canRespawn = false;
+        if (col == null) yield break;
         col.enabled = false;
         for (int i = 0; i < 3; i++)
         {
