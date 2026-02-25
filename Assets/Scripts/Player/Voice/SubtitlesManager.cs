@@ -5,33 +5,25 @@ using TMPro;
 public class SubtitlesManager : MonoBehaviour
 {
     public GameObject subtitlePrefab;
-    private TextMeshProUGUI subtext;
+    public Transform subtitleParent;
     public float subtitleDuration = 5f;
-    private bool isShowing = false;
     void Awake()
     {
-        Lars_Start();
-    }
-    void Update()
-    {
-        /*if (isShowing)
-        {
-            subtitleDuration += Time.deltaTime;
-            if (subtitleDuration >= 5f)
-            {
-                subtitles.gameObject.SetActive(false);
-                isShowing = false;
-                subtitleDuration = 0f;
-            }
-        }*/
+        //Image image = subtitlePrefab.GetComponentInChildren<Image>();
+
+        Napoleon_Carla_Crash();
     }
     void SpawnSubtitle(string subtext)
     {
-        GameObject newSubtitle = Instantiate(subtitlePrefab);
+        GameObject newSubtitle = Instantiate(subtitlePrefab, subtitleParent);
+        RectTransform rect = newSubtitle.GetComponent<RectTransform>();
+        rect.localScale = Vector3.one;
+        rect.anchoredPosition = Vector2.zero;
+
         TextMeshProUGUI text = newSubtitle.GetComponentInChildren<TextMeshProUGUI>();
         text.text = subtext;
 
-        //Destroy(newSubtitle, subtitleDuration);
+        Destroy(newSubtitle, subtitleDuration);
     }
 
     // ======== Voice line subtitles =========
@@ -44,18 +36,18 @@ public class SubtitlesManager : MonoBehaviour
     //Napoleon
     public void Napoleon_DriveBy()
     {
-        subtext.text = "Napoleon drive-by";
+        SpawnSubtitle("Napoleon drive-by");
     }
     public void Napoleon_DrivenBy()
     {
-        subtext.text = "Napoleon driven by";
+        SpawnSubtitle("Napoleon driven by");
     }
     public void Napoleon_Carla_Crash()
     {
         SpawnSubtitle("<color=grey>[</color><color=blue>Carla</color><color=grey>]</color> Go away!");
-        Napoleon_Carla_Crash2();
+        Invoke(nameof(NapoleonReply_Carla_Crash), 5f);
     }
-    void Napoleon_Carla_Crash2()
+    void NapoleonReply_Carla_Crash()
     {
         SpawnSubtitle("<color=grey>[</color><color=blue>Napoleon</color><color=grey>]</color> No u.");
     }
@@ -63,12 +55,12 @@ public class SubtitlesManager : MonoBehaviour
     //Nina
     public void Nina_Hit()
     {
-        subtext.text = "Nina_hit";
+        SpawnSubtitle("Nina_hit");
     }
 
     //Carla
     public void Carla_Win()
     {
-        subtext.text = "Carla win";
+        SpawnSubtitle("Carla win");
     }
 }

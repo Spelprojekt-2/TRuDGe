@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class UISelection : MonoBehaviour
 {
@@ -69,7 +70,9 @@ public class UISelection : MonoBehaviour
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
-            //Destroy(selection);
+
+            if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+                Destroy(selection);
             selection = null;
         }
     }
