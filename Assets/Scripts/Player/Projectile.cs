@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision col)
+    private void OnTriggerEnter(Collider col)
     {
         if (col.transform.IsChildOf(shooter.transform))
         {
@@ -56,6 +56,16 @@ public class Projectile : MonoBehaviour
             col.gameObject.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
             col.gameObject.GetComponentInParent<PlayerPowerups>().DropGasTanks();
         }
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.IsChildOf(shooter.transform))
+        {
+            return;
+        }
+        Debug.Log(col.gameObject.name);
         Destroy(gameObject);
     }
 }
