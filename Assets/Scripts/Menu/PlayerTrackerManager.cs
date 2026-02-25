@@ -116,7 +116,19 @@ public class PlayerTrackerManager : MonoBehaviour
     {
         EventSystem es = FindAnyObjectByType<EventSystem>();
         if (es) Destroy(es.gameObject);
+        
         UIList = FindFirstObjectByType<MenuController>();
+
+        //Remove bad player inputs
+        var invalidKeys = playerInputs
+    .Where(kvp => kvp.Value == null)
+    .Select(kvp => kvp.Key)
+    .ToList();
+
+        foreach (var key in invalidKeys)
+        {
+            playerInputs.Remove(key);
+        }
 
         switch (SceneController.instance.currentSceneType)
         {
