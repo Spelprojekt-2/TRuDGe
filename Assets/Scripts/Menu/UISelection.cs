@@ -69,7 +69,7 @@ public class UISelection : MonoBehaviour
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
-            Destroy(selection);
+            //Destroy(selection);
             selection = null;
         }
     }
