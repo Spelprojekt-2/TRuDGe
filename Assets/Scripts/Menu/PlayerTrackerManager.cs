@@ -18,7 +18,7 @@ public class PlayerTrackerManager : MonoBehaviour
     private Dictionary<int, bool> readyStates = new();
     private bool allPlayersSpawned = false;
 
-    private SelectionScreenController UIList;
+    private MenuController UIList;
 
     private void Start()
     {
@@ -57,12 +57,12 @@ public class PlayerTrackerManager : MonoBehaviour
 
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu)
         {
-            FindAnyObjectByType<MainMenuUIController>().ShowJoinPopup(false);
+            FindAnyObjectByType<MenuController>().ShowJoinPopup(false);
             PlayerInputManager.instance.DisableJoining();
         }
         else if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace)
         {
-            CoroutineRunner.Run(SelectObject(rd.index, FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index)));
+            CoroutineRunner.Run(SelectObject(rd.index, UIList.GetStartButton(rd.index)));
         }
     }
 
@@ -116,6 +116,7 @@ public class PlayerTrackerManager : MonoBehaviour
     {
         EventSystem es = FindAnyObjectByType<EventSystem>();
         if (es) Destroy(es.gameObject);
+        UIList = FindFirstObjectByType<MenuController>();
 
         switch (SceneController.instance.currentSceneType)
         {
@@ -128,15 +129,13 @@ public class PlayerTrackerManager : MonoBehaviour
                     RacerData rd = input.GetComponent<RacerData>();
                     if (rd.index < UISelection.playerSelections.Count)
                     {
-                        UISelection.playerSelections[rd.index].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index));
+                        UISelection.playerSelections[rd.index].SwapSelection(UIList.GetStartButton(rd.index));
                     }
                 }
                 PlayerInputManager.instance.EnableJoining();
                 readyStates.Clear();
                 foreach (int index in playerInputs.Keys)
                     readyStates[index] = false;
-
-                UIList = FindFirstObjectByType<SelectionScreenController>();
                 break;
             case SceneController.SceneType.PlayerSelectTimeTrial:
                 RacingInformation.instance.isTimeTrial = true;
@@ -145,8 +144,7 @@ public class PlayerTrackerManager : MonoBehaviour
                     HandlePlayerLeft(playerInputs[i]);
                 }
                 PlayerInputManager.instance.DisableJoining();
-                UIList = FindFirstObjectByType<SelectionScreenController>();
-                UISelection.playerSelections[0].SwapSelection(FindAnyObjectByType<SelectionScreenController>().GetStartButton(0));
+                UISelection.playerSelections[0].SwapSelection(FindAnyObjectByType<MenuController>().GetStartButton(0));
                 break;
             case SceneController.SceneType.MainMenu:
                 if (playerInputs.Count < 1)
@@ -161,7 +159,7 @@ public class PlayerTrackerManager : MonoBehaviour
             case SceneController.SceneType.TrackSelectRace:
             case SceneController.SceneType.TrackSelectTimeTrial:
                 RacingInformation.instance.isTimeTrialWithGhost = false;
-                CoroutineRunner.Run(SelectObject(0, FindFirstObjectByType<SelectionScreenController>().transform.GetChild(1).GetComponentInChildren<UIButton>()));
+                CoroutineRunner.Run(SelectObject(0, UIList.transform.GetChild(1).GetComponentInChildren<UIButton>()));
                 break;
         }
 
@@ -250,11 +248,11 @@ public class PlayerTrackerManager : MonoBehaviour
 
     public void SetReady(PlayerInput input)
     {
-        if (SceneManager.GetActiveScene().name == "TimeTrialMenu")
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
             SceneManager.LoadScene("TrackSelectTimeTrial");
         }
-        if (SceneManager.GetActiveScene().name != "SelectionScreen") return;
+        if (SceneController.instance.currentSceneType != SceneController.SceneType.PlayerSelectRace) return;
 
         int player = input.GetComponent<RacerData>().index;
 
@@ -282,7 +280,7 @@ public class PlayerTrackerManager : MonoBehaviour
 
     public void SetUnready(PlayerInput input)
     {
-        if (SceneManager.GetActiveScene().name != "SelectionScreen")
+        if (SceneController.instance.currentSceneType != SceneController.SceneType.PlayerSelectRace)
             return;
 
         int player = input.GetComponent<RacerData>().index;

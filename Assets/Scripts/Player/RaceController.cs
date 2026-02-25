@@ -42,11 +42,6 @@ public class RaceController : MonoBehaviour
 
         for (int i = 0; i < racers.Count; i++)
         {
-            racers[i].currentValidLap = 0;
-            racers[i].lap = 0;
-            racers[i].raceProgress = 0;
-            racers[i].lapProgress = 0;
-            racers[i].racePosition = 0;
             racers[i].TrackLoaded(lapsOnThisTrack);
             racers[i].UpdateLapCount();
             if (trackSpline) UpdateRaceProgress(racers[i]);

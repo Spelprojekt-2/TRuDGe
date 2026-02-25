@@ -15,7 +15,6 @@ public class RacerData : MonoBehaviour
     public int lap;
     public float raceProgress;
     public int racePosition;
-    private int trackLaps;
     public string racername;
     public bool isReplayGhost;
     private RaceController raceController;
@@ -42,9 +41,14 @@ public class RacerData : MonoBehaviour
 
     public void TrackLoaded(int lapsOnTrack)
     {
+        currentValidLap = 0;
+        lap = 0;
+        raceProgress = 0;
+        lapProgress = 0;
+        racePosition = 0;
+
         lapEndTimes.Clear();
         raceController = FindFirstObjectByType<RaceController>();
-        trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
         if (isReplayGhost) return;
         TimeTrialUI.SetActive(RacingInformation.instance.isTimeTrial);
@@ -79,6 +83,12 @@ public class RacerData : MonoBehaviour
 
     public void OnRaceStarted()
     {
+        currentValidLap = 0;
+        lap = 0;
+        raceProgress = 0;
+        lapProgress = 0;
+        racePosition = 0;
+
         isRacing = true;
         OnRaceStart?.Invoke();
         if(RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();

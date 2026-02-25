@@ -2039,8 +2039,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1837843779}
-        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+      - m_Target: {fileID: 1548941959}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -3627,6 +3627,12 @@ MonoBehaviour:
   singlePlayerButtons: {fileID: 408129226}
   multiplayerButtons: {fileID: 1533434060}
   settingsMenu: {fileID: 911865547}
+  ReadyTextP1: {fileID: 0}
+  ReadyTextP2: {fileID: 0}
+  ReadyTextP3: {fileID: 0}
+  ReadyTextP4: {fileID: 0}
+  preselectPlayer: []
+  initialSelection: {fileID: 0}
 --- !u!1 &1678465487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3974,17 +3980,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769618143}
   m_CullTransparentMesh: 1
---- !u!114 &1837843779 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1224897858351470157, guid: bc0dac151144a4049adc9e3acf773384, type: 3}
-  m_PrefabInstance: {fileID: 2036791793724598531}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56029287c5438dc4b9148357fd3e7148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1905923380
 GameObject:
   m_ObjectHideFlags: 0

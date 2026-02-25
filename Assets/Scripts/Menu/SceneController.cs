@@ -23,7 +23,7 @@ public class SceneController : MonoBehaviour
         OnSceneLoad(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
-    public void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         switch (scene.name)
         {
@@ -68,15 +68,6 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    public void QuitGame()
-    {
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #else
-        Application.Quit();
-        #endif
-    }
-
     public enum SceneType
     {
         MainMenu,
@@ -89,8 +80,4 @@ public class SceneController : MonoBehaviour
         TrainingGround,
     }
 
-    private void Update()
-    {
-        Debug.Log(currentSceneType);
-    }
 }
