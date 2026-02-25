@@ -26,9 +26,9 @@ public class TreadSuspAnimator : MonoBehaviour
     [SerializeField] private List<Wheel> wheels = new List<Wheel>();
     private Vector3[] hitPositions = new Vector3[3];
 
-    [SerializeField][Range(0,0.5f)] private float minSuspensionDistance = 0.3f;
+    [SerializeField] private float minSuspensionDistance = 0.3f;
     [SerializeField][Range(-100,0)] private float minBlendShapeValue = -100f;
-    [SerializeField][Range(0,0.5f)] private float maxSuspensionDistance = 0.3f;
+    [SerializeField] private float maxSuspensionDistance = 0.3f;
     [SerializeField][Range(0,100)] private float maxBlendShapeValue = 100f;
     [Header("Gizmos")]
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Never;
