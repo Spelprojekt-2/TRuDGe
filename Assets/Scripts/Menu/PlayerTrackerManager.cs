@@ -55,12 +55,12 @@ public class PlayerTrackerManager : MonoBehaviour
         MovePlayersToSpawnPoints();
         UpdateAllPlayerCameras();
 
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu)
         {
-            FindAnyObjectByType<MainMenuUIController>()?.ShowJoinPopup(false);
+            FindAnyObjectByType<MainMenuUIController>().ShowJoinPopup(false);
             PlayerInputManager.instance.DisableJoining();
         }
-        else if (SceneManager.GetActiveScene().name == "SelectionScreen")
+        else if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace)
         {
             CoroutineRunner.Run(SelectObject(rd.index, FindAnyObjectByType<SelectionScreenController>().GetStartButton(rd.index)));
         }
@@ -165,37 +165,46 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
         }
 
-        foreach (var kvp in playerInputs)
+
+        if (SceneController.instance.IsMenu)
         {
-            if (kvp.Value.camera) kvp.Value.camera.enabled = !SceneController.instance.IsMenu;
-            int index = kvp.Key;
-            PlayerInput input = kvp.Value;
-
-            if (index == 0)
+            foreach (var kvp in playerInputs)
             {
-                CoroutineRunner.Run(SwapMap(input, SceneController.instance.IsMenu ? "UI" : "Player"));
-            }
-            else
-            {
-                CoroutineRunner.Run(SwapMap(input,
-                    (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace)
-                        ? "UI"
-                        : (SceneController.instance.IsMenu ? "Disabled" : "Player")
-                ));
-            }
-        }
+                if (kvp.Value.camera) kvp.Value.camera.enabled = false;
+                int index = kvp.Key;
+                PlayerInput input = kvp.Value;
 
-        Cursor.lockState = SceneController.instance.IsMenu ? CursorLockMode.Confined : CursorLockMode.Locked;
-
-        if (!SceneController.instance.IsMenu)
-        {
+                if (index == 0)
+                {
+                    CoroutineRunner.Run(SwapMap(input, "UI"));
+                }
+                else
+                {
+                    if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace)
+                        CoroutineRunner.Run(SwapMap(input, "UI"));
+                    else CoroutineRunner.Run(SwapMap(input, "Disabled"));
+                }
+            }
             if (!allPlayersSpawned)
             {
                 allPlayersSpawned = true;
-                PlayerInputManager.instance?.DisableJoining();
+                PlayerInputManager.instance.DisableJoining();
+            }
+
+        }
+        else
+        {
+            foreach (var kvp in playerInputs)
+            {
+                if (kvp.Value.camera) kvp.Value.camera.enabled = true;
+                PlayerInput input = kvp.Value;
+
+                CoroutineRunner.Run(SwapMap(input, "Player"));
+
             }
         }
 
+        Cursor.lockState = SceneController.instance.IsMenu ? CursorLockMode.None : CursorLockMode.Locked;
         MovePlayersToSpawnPoints();
     }
 
@@ -225,7 +234,6 @@ public class PlayerTrackerManager : MonoBehaviour
             {
                 RacerData rd = input.GetComponent<RacerData>();
                 rd.SetName($"Player {rd.index + 1}");
-                rd.OnRacetrackScene();
             }
         }
     }
@@ -235,8 +243,8 @@ public class PlayerTrackerManager : MonoBehaviour
         int total = playerInputs.Count;
         foreach (var player in playerInputs.Values)
         {
-            var cam = player.GetComponentInChildren<SplitScreenCamera>();
-            cam?.SetupCamera(total);
+            SplitScreenCamera cam = player.GetComponentInChildren<SplitScreenCamera>();
+            if (cam != null) cam.SetupCamera(total);
         }
     }
 

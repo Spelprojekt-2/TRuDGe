@@ -32,7 +32,7 @@ public class RaceController : MonoBehaviour
     [SerializeField] private GameObject ghostPrefab;
     private TimeTrialReplay ghostReplay;
 
-    void Start()
+    void Awake()
     {
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
@@ -51,7 +51,6 @@ public class RaceController : MonoBehaviour
             racers[i].UpdateLapCount();
             if (trackSpline) UpdateRaceProgress(racers[i]);
         }
-
         if (!trackSpline) return;
 
         if (RacingInformation.instance.isTimeTrial && RacingInformation.instance.isTimeTrialWithGhost)
@@ -64,7 +63,6 @@ public class RaceController : MonoBehaviour
             GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
             ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
             ghostReplay.LoadGhostFile(RacingInformation.instance.pathToGhost);
-
         }
     }
 
@@ -93,7 +91,6 @@ public class RaceController : MonoBehaviour
                 raceStarted = true;
                 for (int i = 0; i < racers.Count; i++)
                 {
-                    Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
                     if (RacingInformation.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     if (countdownText) countdownText.gameObject.SetActive(false);

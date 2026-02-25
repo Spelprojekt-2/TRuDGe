@@ -28,28 +28,32 @@ public class SceneController : MonoBehaviour
         switch (scene.name)
         {
             case "MainMenu":
-                currentSceneType = SceneType.MainMenu; break;
+                currentSceneType = SceneType.MainMenu;
+                IsMenu = true; break;
             case "SelectionScreen":
-                currentSceneType = SceneType.PlayerSelectRace; break;
+                currentSceneType = SceneType.PlayerSelectRace;
+                IsMenu = true; break;
             case "TimeTrialMenu":
-                currentSceneType = SceneType.PlayerSelectTimeTrial; break;
+                currentSceneType = SceneType.PlayerSelectTimeTrial;
+                IsMenu = true; break;
             case "TrackSelect":
-                currentSceneType = SceneType.TrackSelectRace; break;
+                currentSceneType = SceneType.TrackSelectRace;
+                IsMenu = true; break;
             case "TrackSelectTimeTrial":
-                currentSceneType = SceneType.TrackSelectTimeTrial; break;
+                currentSceneType = SceneType.TrackSelectTimeTrial;
+                IsMenu = true; break;
             case "AfterRace":
+                currentSceneType = SceneType.PostRaceLeaderboard;
+                IsMenu = true; break;
+            case "TrainingGround":
+                currentSceneType = SceneType.TrainingGround;
+                IsMenu = false; break;
             default:
-                currentSceneType = SceneType.Racing; break;
+                currentSceneType = SceneType.Racing;
+                IsMenu = false; break;
         }
 
-        IsMenu = currentSceneType != SceneType.Racing;
         CoroutineRunner.Run(SceneChange());
-    }
-
-    private void Update()
-    {
-        Debug.Log(currentSceneType);
-        Debug.Log(IsMenu);
     }
 
     IEnumerator SceneChange()
@@ -82,5 +86,11 @@ public class SceneController : MonoBehaviour
         TrackSelectTimeTrial,
         PostRaceLeaderboard,
         Racing,
+        TrainingGround,
+    }
+
+    private void Update()
+    {
+        Debug.Log(currentSceneType);
     }
 }

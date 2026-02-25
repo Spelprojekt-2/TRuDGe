@@ -525,7 +525,6 @@ GameObject:
   - component: {fileID: 608346064}
   - component: {fileID: 608346063}
   - component: {fileID: 608346062}
-  - component: {fileID: 608346065}
   - component: {fileID: 608346066}
   m_Layer: 5
   m_Name: Button
@@ -597,19 +596,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 608346063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 608346065}
-        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: TrackSelect
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &608346063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,18 +635,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608346060}
   m_CullTransparentMesh: 1
---- !u!114 &608346065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608346060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56029287c5438dc4b9148357fd3e7148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &608346066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -803,7 +778,6 @@ GameObject:
   - component: {fileID: 847466549}
   - component: {fileID: 847466548}
   - component: {fileID: 847466547}
-  - component: {fileID: 847466546}
   - component: {fileID: 847466545}
   m_Layer: 5
   m_Name: Button (1)
@@ -861,18 +835,6 @@ MonoBehaviour:
   characterBackground3: {fileID: 0}
   characterText3: {fileID: 0}
   characterStats3: {fileID: 0}
---- !u!114 &847466546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 847466543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56029287c5438dc4b9148357fd3e7148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &847466547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +879,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 847466546}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5

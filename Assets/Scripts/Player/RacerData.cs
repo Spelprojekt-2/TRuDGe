@@ -52,6 +52,8 @@ public class RacerData : MonoBehaviour
         TimerText.text = "00:00.000";
         if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
         capture = GetComponent<TimeTrialCapture>();
+        positionImage.gameObject.SetActive(true);
+        OnRaceSceneStarted?.Invoke();
     }
     public void NextLap()
     {
@@ -75,11 +77,6 @@ public class RacerData : MonoBehaviour
         lapCountImage.sprite = lapCountSprites[lap];
     }
 
-    public void OnRacetrackScene()
-    {
-        OnRaceSceneStarted?.Invoke();
-        positionImage.gameObject.SetActive(true);
-    }
     public void OnRaceStarted()
     {
         isRacing = true;
