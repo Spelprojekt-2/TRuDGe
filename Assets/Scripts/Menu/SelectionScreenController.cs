@@ -24,7 +24,12 @@ public class SelectionScreenController : MonoBehaviour
 
     public void LoadTrack(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene(sceneName);
+        else
+        {
+            RacingInformation.instance.trackToPlay = sceneName;
+            SceneManager.LoadScene("TrainingGround");
+        }
     }
 
     public UIButton GetStartButton(int index)

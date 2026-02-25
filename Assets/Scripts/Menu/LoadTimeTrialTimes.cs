@@ -53,7 +53,6 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
         if (!System.IO.File.Exists(path))
         {
-            Debug.LogWarning("No official ghost found for scene " + sceneName);
             return null;
         }
 
@@ -68,7 +67,6 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
         if (!System.IO.File.Exists(path))
         {
-            Debug.Log("No personal ghost found for scene " + sceneName);
             return null;
         }
 
