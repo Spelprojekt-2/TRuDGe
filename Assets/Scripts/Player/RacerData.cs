@@ -36,7 +36,7 @@ public class RacerData : MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerTrackerManager.instance.isTimeTrial || !isRacing || isReplayGhost) return;
+        if (!RacingInformation.instance.isTimeTrial || !isRacing || isReplayGhost) return;
         TimerText.text = Leaderboard.FormatTime(raceController.GetRaceTime());
     }
 
@@ -47,8 +47,8 @@ public class RacerData : MonoBehaviour
         trackLaps = lapsOnTrack;
         if (lapProgress > 0.5f) lap = -1;
         if (isReplayGhost) return;
-        TimeTrialUI.SetActive(PlayerTrackerManager.instance.isTimeTrial);
-        RaceUI.SetActive(!PlayerTrackerManager.instance.isTimeTrial);
+        TimeTrialUI.SetActive(RacingInformation.instance.isTimeTrial);
+        RaceUI.SetActive(!RacingInformation.instance.isTimeTrial);
         TimerText.text = "00:00.000";
         if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
         capture = GetComponent<TimeTrialCapture>();
@@ -84,13 +84,13 @@ public class RacerData : MonoBehaviour
     {
         isRacing = true;
         OnRaceStart?.Invoke();
-        if(PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
+        if(RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
     }
     public void OnRaceFinished()
     {
         isRacing = false;
         OnRaceFinish?.Invoke();
-        if (PlayerTrackerManager.instance.isTimeTrial && !isReplayGhost) capture.StopCapture();
+        if (RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StopCapture();
     }
 
     public void BackwardsLap()
@@ -112,7 +112,7 @@ public class RacerData : MonoBehaviour
     public void UpdatePosition(int pos)
     {
         racePosition = pos;
-        if (!PlayerTrackerManager.instance.isTimeTrial) positionImage.sprite = positionSprites[pos - 1];
+        if (!RacingInformation.instance.isTimeTrial) positionImage.sprite = positionSprites[pos - 1];
     }
 
     public void SetName(string newName)

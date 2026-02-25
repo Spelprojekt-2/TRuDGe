@@ -8,7 +8,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] private ProbabilityPickupSO probability;
     [SerializeField] private ProbabilityPickupSO fullProbability;
 
-    public static List<Pickup> AllPickups {  get; private set; }
+    public static List<Pickup> AllPickups = new List<Pickup>();
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -19,11 +19,16 @@ public class Pickup : MonoBehaviour
     private MeshRenderer[] meshes;
     private bool visible = true;
     private bool canRespawn = true;
-    private void Awake()
+    private void Start()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
         meshes = GetComponentsInChildren<MeshRenderer>();
+
+        if (powerUpType != PlayerPowerups.PowerUpType.gasolineTank && RacingInformation.instance.isTimeTrial)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -54,7 +54,7 @@ public class RaceController : MonoBehaviour
 
         if (!trackSpline) return;
 
-        if (PlayerTrackerManager.instance.isTimeTrial && PlayerTrackerManager.instance.isTimeTrialWithGhost)
+        if (RacingInformation.instance.isTimeTrial && RacingInformation.instance.isTimeTrialWithGhost)
         {
             SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
     .OrderBy(s => s.name)
@@ -63,7 +63,7 @@ public class RaceController : MonoBehaviour
             spawn.transform.GetPositionAndRotation(out Vector3 spawnPos, out Quaternion spawnRot);
             GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
             ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
-            ghostReplay.LoadGhostFile(PlayerTrackerManager.instance.pathToGhost);
+            ghostReplay.LoadGhostFile(RacingInformation.instance.pathToGhost);
 
         }
     }
@@ -95,7 +95,7 @@ public class RaceController : MonoBehaviour
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
-                    if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
+                    if (RacingInformation.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     if (countdownText) countdownText.gameObject.SetActive(false);
                 }
             }
@@ -205,7 +205,7 @@ public class RaceController : MonoBehaviour
     private IEnumerator WaitToAfterRace()
     {
         yield return new WaitForSeconds(5);
-        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
         else SceneManager.LoadScene("AfterRace");
     }
 

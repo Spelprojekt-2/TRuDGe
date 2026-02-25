@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuUI : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class PauseMenuUI : MonoBehaviour
         Debug.Log(UISelection.playerSelections[currentPlayerID].selection);
         Time.timeScale = 0f;
         isPaused = true;
+    }
+
+    public void ExitRace()
+    {
+        if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        else SceneManager.LoadScene("TrackSelect");
     }
 
     public void UnpauseGame()
