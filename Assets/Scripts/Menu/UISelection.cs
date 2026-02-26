@@ -11,16 +11,20 @@ public class UISelection : MonoBehaviour
 
     private RacerData racerData;
     private bool stickHeld = false;
-    void Awake()
-    {
-        racerData = GetComponent<RacerData>();
-    }
+    private UIButton[] buttonsOnScene;
+
+    private bool isKBM;
     public void Start()
     {
         playerSelections.Add(this);
+        racerData = GetComponent<RacerData>();
+        isKBM = GetComponent<PlayerInput>().currentControlScheme == "Keyboard&Mouse";
+        SceneController.instance.SceneChangeEvent += UpdateButtons;
+        UpdateButtons();
     }
-    public void OnDestroy()
+    public void OnDisable()
     {
+        SceneController.instance.SceneChangeEvent -= UpdateButtons;
         if (playerSelections.Contains(this))
         {
             playerSelections.Remove(this);
@@ -68,22 +72,21 @@ public class UISelection : MonoBehaviour
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
             selection = null;
+            UpdateButtons();
         }
     }
 
     public void SwapSelection(UIButton newButton)
     {
-         int playerIndex = GetComponent<RacerData>().index;
-    if (!newButton || selection == newButton)
-        return;
+        int playerIndex = GetComponent<RacerData>().index;
+        if (!newButton || selection == newButton)
+            return;
 
-    if (selection) selection.SetHighlight(false, playerIndex);
-
-    selection = newButton;
-
-    selection.SetHighlight(true, playerIndex);
-
-    SelectUIUpdate(newButton);
+        if (selection) selection.SetHighlight(false, playerIndex);
+        selection = newButton;
+        selection.SetHighlight(true, playerIndex);
+        SelectUIUpdate(newButton);
+        UpdateButtons();
     }
 
     public void SwapPlayers(int p1index, int p2index)
@@ -110,5 +113,52 @@ public class UISelection : MonoBehaviour
         selectionHighlight.localScale = Vector3.one;
         selectionHighlight.rotation = Quaternion.identity;
         selectionHighlight.sizeDelta = button.GetComponent<RectTransform>().sizeDelta + new Vector2(30,30);
+    }
+
+
+
+    private void UpdateButtons()
+    {
+        if (!isKBM) return;
+        buttonsOnScene = FindObjectsByType<UIButton>(FindObjectsSortMode.None);
+    }
+    void Update()
+    {
+        if (!isKBM || Mouse.current == null || buttonsOnScene == null)
+            return;
+
+        if (selection == null)
+            return;
+
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Transform allowedParent = selectionHighlight.transform.parent;
+
+        for (int i = 0; i < buttonsOnScene.Length; i++)
+        {
+            UIButton button = buttonsOnScene[i];
+            if (button == null)
+                continue;
+
+            if (button.transform.parent != allowedParent)
+                continue;
+
+            RectTransform rect = button.GetComponent<RectTransform>();
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos))
+            {
+                SwapSelection(button);
+
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
+                    selectionHighlight.gameObject.SetActive(false);
+                    selection.Click();
+                    selection = null;
+                    UpdateButtons();
+                }
+
+                break;
+            }
+        }
     }
 }

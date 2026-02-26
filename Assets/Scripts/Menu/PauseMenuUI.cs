@@ -27,6 +27,7 @@ public class PauseMenuUI : MonoBehaviour
         currentPlayerInput = input;
         currentPlayerID = playerID;
         CoroutineRunner.Run(SwapMap(currentPlayerInput, "UI"));
+        Cursor.lockState = CursorLockMode.None;
         UISelection.playerSelections[currentPlayerID].SwapSelection(selectOnPause);
         Time.timeScale = 0f;
         isPaused = true;
@@ -45,7 +46,7 @@ public class PauseMenuUI : MonoBehaviour
         if (raceController) raceController.ResumeRace();
         pauseMenu.SetActive(false);
         CoroutineRunner.Run(SwapMap(currentPlayerInput, "Player"));
-        Debug.Log(UISelection.playerSelections[currentPlayerID].selection);
+        Cursor.lockState = CursorLockMode.Locked;
         currentPlayerInput = null;
         Time.timeScale = 1f;
         isPaused = false;
