@@ -9,6 +9,7 @@ public class UISelection : MonoBehaviour
 {
     public static List<UISelection> playerSelections = new List<UISelection>();
     public UIButton selection;
+    public UIButton lastSelection;
     public Color selectionColor;
     public RectTransform selectionHighlight;
 
@@ -37,7 +38,7 @@ public class UISelection : MonoBehaviour
     {
         Vector2 input = context.ReadValue<Vector2>();
 
-        if (!selection || !selectionHighlight.gameObject.activeSelf)
+        if (selection == null || selectionHighlight == null || !selectionHighlight.gameObject.activeSelf)
             return;
 
         if (input.magnitude < 0.5f)
@@ -66,20 +67,50 @@ public class UISelection : MonoBehaviour
         }
     }
 
-    public void Clicked(InputAction.CallbackContext context)
+
+     public void Deselect(InputAction.CallbackContext context)
     {
-        if (!selection) return;
+            if (!context.performed) return;
+            if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
+            SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+        {
+            if (lastSelection == null) return;
+            lastSelection.enabled = true;
+            selection = null;
+            SwapSelection(lastSelection);
+        }
+    }
+    public void Select(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        if (!selection || !selection.enabled) return;
         if (context.performed)
         {
+            
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
+            lastSelection = selection;
 
             if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
-                Destroy(selection);
-            selection = null;
+            {
+                selection.enabled = false;
+                GetComponent<SelectionScreenScript>().Ready();
+            }
+            else selection = null;
             UpdateButtons();
         }
+    }
+    public void MouseClicked(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        if (isKBM)
+        {
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            RectTransform rect = selection.GetComponent<RectTransform>();
+            if (!RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos)) return;
+        }
+        Select(context);
     }
 
     public void SwapSelection(UIButton newButton)
@@ -95,19 +126,18 @@ public class UISelection : MonoBehaviour
         UpdateButtons();
     }
 
-    public void SwapPlayers(int p1index, int p2index)
+    public static void SwapPlayers(int p1index, int p2index)
     {
+        if (p2index > playerSelections.Count) return;
         UISelection temp = playerSelections[p2index];
         playerSelections[p1index] = playerSelections[p2index];
         playerSelections[p1index] = temp;
     }
 
-    public static void RemovePlayer(UISelection selection)
+    public void RemovePlayer()
     {
-        if (playerSelections.Contains(selection))
-        {
-            playerSelections.Remove(selection);
-        }
+        Destroy(selectionHighlight.gameObject);
+        playerSelections.Remove(this);
     }
 
     private void SelectUIUpdate(UIButton button)
@@ -119,22 +149,14 @@ public class UISelection : MonoBehaviour
             return;
 
         int playerIndex = GetComponent<RacerData>().index;
-        if (playerIndex == 0)
+
+        selectionColor = playerIndex switch
         {
-            selectionColor = Color.red;
-        }
-        else if (playerIndex == 1)
-        {
-            selectionColor = new Color32(0,255,0,255);
-        }
-        else if (playerIndex == 2)
-        {
-            selectionColor = new Color32(0,0,255,255);
-        }
-        else if (playerIndex == 3)
-        {
-            selectionColor = Color.black;
-        }
+            0 => Color.red,
+            1 => new Color32(0,255,0,255),
+            2 => new Color32(0,0,255,255),
+            3 => Color.black,
+        };
         Image highlightImage = selectionHighlight.GetComponent<Image>();
         if (highlightImage == null)
             return;
@@ -190,21 +212,28 @@ public class UISelection : MonoBehaviour
     }
 }
 
+    public static void UpdateAllColors()
+    {
+        
+    }
+
 
 
     private void UpdateButtons()
     {
         if (!isKBM) return;
+        buttonsOnScene = FindObjectsByType<UIButton>(FindObjectsSortMode.None);
     }
     void Update()
     {
-        if (!isKBM || Mouse.current == null || buttonsOnScene == null)
+        if (!isKBM)
             return;
 
         if (selection == null)
             return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
+        if (selectionHighlight == null) return;
         Transform allowedParent = selectionHighlight.transform.parent;
 
         for (int i = 0; i < buttonsOnScene.Length; i++)
@@ -217,21 +246,9 @@ public class UISelection : MonoBehaviour
                 continue;
 
             RectTransform rect = button.GetComponent<RectTransform>();
-
             if (RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos))
             {
                 SwapSelection(button);
-
-                if (Mouse.current.leftButton.wasPressedThisFrame)
-                {
-                    selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
-                    selectionHighlight.gameObject.SetActive(false);
-                    selection.Click();
-                    selection = null;
-                    UpdateButtons();
-                }
-
-                break;
             }
         }
     }

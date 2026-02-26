@@ -21,11 +21,8 @@ public class SelectionScreenScript : MonoBehaviour
             && Time.realtimeSinceStartup - timeSinceJoined >= joinInputDelay;
     }
 
-    public void Ready(InputAction.CallbackContext context)
+    public void Ready()
     {
-        if (!context.started || !CanInteract())
-            return;
-
         PlayerTrackerManager.instance.SetReady(input);
     }
 

@@ -72,7 +72,7 @@ public class PlayerTrackerManager : MonoBehaviour
             return;
 
         RacerData leavingData = leavingInput.GetComponent<RacerData>();
-        UISelection.RemovePlayer(leavingData.GetComponent<UISelection>());
+        leavingData.GetComponent<UISelection>().RemovePlayer();
         int leavingIndex = leavingData.index;
 
         Destroy(leavingInput.transform.root.gameObject);
@@ -104,6 +104,7 @@ public class PlayerTrackerManager : MonoBehaviour
                 readyStates.Remove(oldIndex);
             }
             SetUnready(kvp.Value);
+            UISelection.SwapPlayers(oldIndex, oldIndex +1);
         }
 
         MovePlayersToSpawnPoints();
