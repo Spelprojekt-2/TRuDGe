@@ -9,17 +9,17 @@ public class TrainingGroundReady : MonoBehaviour
     private static int playersReady;
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneController.instance.SceneChangeEvent += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+    private void OnSceneLoaded()
     {
-        isOnTrainingGround = scene.name == "TrainingGround";
+        isOnTrainingGround = SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround;
         isReady = false;
         playersReady = 0;
     }

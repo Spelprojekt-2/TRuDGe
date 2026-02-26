@@ -11,8 +11,8 @@ public class RacingInformation : MonoBehaviour
     void Start()
     {
         instance = this;
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
+        SceneController.instance.SceneChangeEvent += OnSceneLoaded;
     }
 
     public void SetGhostFile(string fullPath, bool isTimeTrialGhost)
@@ -21,17 +21,17 @@ public class RacingInformation : MonoBehaviour
         isTimeTrialWithGhost = isTimeTrialGhost;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+    private void OnSceneLoaded()
     {
-        switch (scene.name)
+        switch (SceneController.instance.currentSceneType)
         {
-            case "TrackSelectTimeTrial":
+            case SceneController.SceneType.TrackSelectTimeTrial:
                 isTimeTrialWithGhost = false;
                 break;
-            case "SelectionScreen":
+            case SceneController.SceneType.PlayerSelectRace:
                 isTimeTrial = false;
                 break;
-            case "TimeTrialMenu":
+            case SceneController.SceneType.PlayerSelectTimeTrial:
                 isTimeTrial = true;
                 break;
         }

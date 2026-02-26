@@ -32,7 +32,7 @@ public class RaceController : MonoBehaviour
     [SerializeField] private GameObject ghostPrefab;
     private TimeTrialReplay ghostReplay;
 
-    void Start()
+    void Awake()
     {
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
@@ -42,16 +42,10 @@ public class RaceController : MonoBehaviour
 
         for (int i = 0; i < racers.Count; i++)
         {
-            racers[i].currentValidLap = 0;
-            racers[i].lap = 0;
-            racers[i].raceProgress = 0;
-            racers[i].lapProgress = 0;
-            racers[i].racePosition = 0;
             racers[i].TrackLoaded(lapsOnThisTrack);
             racers[i].UpdateLapCount();
             if (trackSpline) UpdateRaceProgress(racers[i]);
         }
-
         if (!trackSpline) return;
 
         if (RacingInformation.instance.isTimeTrial && RacingInformation.instance.isTimeTrialWithGhost)
@@ -64,7 +58,6 @@ public class RaceController : MonoBehaviour
             GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
             ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
             ghostReplay.LoadGhostFile(RacingInformation.instance.pathToGhost);
-
         }
     }
 
@@ -93,7 +86,6 @@ public class RaceController : MonoBehaviour
                 raceStarted = true;
                 for (int i = 0; i < racers.Count; i++)
                 {
-                    Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
                     if (RacingInformation.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     if (countdownText) countdownText.gameObject.SetActive(false);
@@ -187,18 +179,19 @@ public class RaceController : MonoBehaviour
                 spline,
                 localPos,
                 out float3 pointOnSpline,
-                out float t
+                out float splineProgress
             );
 
             float dist = math.lengthsq(pointOnSpline - localPos);
+
             if (dist < bestDistance)
             {
                 bestDistance = dist;
-                bestProgress = (j + t) / trackSpline.Splines.Count;
+                bestProgress = splineProgress;
             }
         }
 
-        return bestProgress; // 0–1 across entire container
+        return bestProgress;
     }
 
     private IEnumerator WaitToAfterRace()

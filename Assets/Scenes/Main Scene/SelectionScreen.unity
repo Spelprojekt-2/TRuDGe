@@ -6383,9 +6383,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  isTimeTrial: 0
-  isTimeTrialWithGhost: 0
-  pathToGhost: 
 --- !u!4 &829595204
 Transform:
   m_ObjectHideFlags: 0
@@ -9853,7 +9850,6 @@ GameObject:
   - component: {fileID: 1384180798}
   - component: {fileID: 1384180797}
   - component: {fileID: 1384180801}
-  - component: {fileID: 1384180802}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -9958,10 +9954,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1384180796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c4b600236793cc48bc0d8ccab9099ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b535296bcadee549a67bb381e1d7cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackSelection: {fileID: 0}
+  firstJoinPopup: {fileID: 0}
+  mainMenuButtons: []
+  singlePlayerButtons: {fileID: 0}
+  multiplayerButtons: {fileID: 0}
+  settingsMenu: {fileID: 0}
   ReadyTextP1: {fileID: 275389520}
   ReadyTextP2: {fileID: 897871995}
   ReadyTextP3: {fileID: 929362792}
@@ -9971,18 +9971,6 @@ MonoBehaviour:
   - {fileID: 2082147774}
   - {fileID: 1718559260}
   - {fileID: 69148140}
---- !u!114 &1384180802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384180796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56029287c5438dc4b9148357fd3e7148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1390390898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 857046901193993407, guid: f00f41a79433ed04280b944953b51b56, type: 3}
@@ -11959,18 +11947,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

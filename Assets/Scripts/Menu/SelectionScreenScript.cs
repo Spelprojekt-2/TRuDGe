@@ -16,7 +16,9 @@ public class SelectionScreenScript : MonoBehaviour
 
     private bool CanInteract()
     {
-        return Time.realtimeSinceStartup - timeSinceJoined >= joinInputDelay;
+        return (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
+            SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+            && Time.realtimeSinceStartup - timeSinceJoined >= joinInputDelay;
     }
 
     public void Ready(InputAction.CallbackContext context)

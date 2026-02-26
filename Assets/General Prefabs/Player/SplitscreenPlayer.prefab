@@ -458,7 +458,6 @@ GameObject:
   - component: {fileID: 6581021729640459954}
   - component: {fileID: 116223656148645366}
   - component: {fileID: 2094914520598921908}
-  - component: {fileID: 2677582172380317115}
   - component: {fileID: 5493757530413151856}
   - component: {fileID: 4028980751891896900}
   - component: {fileID: 576007681794308752}
@@ -713,9 +712,9 @@ MonoBehaviour:
     m_ActionName: 'Player/UsePowerUp[/Keyboard/space,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4523023332637477557}
+      - m_Target: {fileID: 5493757530413151856}
         m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Disconnect
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -728,7 +727,19 @@ MonoBehaviour:
     m_ActionId: fc74d9ef-be14-46e8-a3e2-77d88750f529
     m_ActionName: 'UI/Disconnect[/Keyboard/escape,/XInputControllerWindows/start]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5493757530413151856}
+        m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
+        m_MethodName: Ready
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7e2a3f69-fb36-47e6-9ed0-f676b94353ec
     m_ActionName: 'UI/Click[/Mouse/leftButton]'
   - m_PersistentCalls:
@@ -1178,35 +1189,6 @@ MonoBehaviour:
   selection: {fileID: 0}
   selectionColor: {r: 0.9245283, g: 0.5270771, b: 0.07268285, a: 1}
   selectionHighlight: {fileID: 3649745307078189623}
---- !u!114 &2677582172380317115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4523023332637477557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SwapUp: {fileID: 0}
-  SwapDown: {fileID: 0}
-  SwapLeft: {fileID: 0}
-  SwapRight: {fileID: 0}
-  characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
 --- !u!114 &5493757530413151856
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -58,4 +58,14 @@ public class Projectile : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.IsChildOf(shooter.transform))
+        {
+            return;
+        }
+        Debug.Log(col.gameObject.name);
+        Destroy(gameObject);
+    }
 }
