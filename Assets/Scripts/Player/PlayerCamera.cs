@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform rotationRoot;
-    [SerializeField] private AutoAimCone autoAim;
+    private AutoAimCone autoAim;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -24,13 +24,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] float controllerSensMultiplier;
     [SerializeField] float bottomCrosshairLimit;
 
-    [Header("---Aim Assist Settings---")]
-    [SerializeField] float aimAssistDistance;
-    [SerializeField] float assistStrength = 0.2f; // How hard the crosshair pulls
-    [SerializeField] float sensitivityReduction = 0.5f; // 0.5 = half speed when over enemy
-    [SerializeField] LayerMask enemyLayer;
-
-    [HideInInspector] public bool isOverEnemy = false;
+    [Header("---Auto Aim Settings---")]
+    public  Transform forOthersAimPoint;
     private Transform currentTarget = null;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
@@ -71,6 +66,7 @@ public class PlayerCamera : MonoBehaviour
     {
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
+        autoAim = GetComponentInChildren<AutoAimCone>();
     }
 
 
@@ -92,30 +88,35 @@ public class PlayerCamera : MonoBehaviour
         currentTarget = autoAim.GetTarget();
         if (currentTarget != null)
         {
-            Vector3 screenPoint = cam.WorldToScreenPoint(currentTarget.position);
+            Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
 
-            if (screenPoint.z > 0)
+            // Make sure the target is in front of the camera
+            if (screenPos.z > 0)
             {
-                // Use cam.pixelWidth/Height for better accuracy in split-screen/scaled UI
-                Vector2 centeredPos = new Vector2(
-                    screenPoint.x - (cam.pixelWidth / 2f),
-                    screenPoint.y - (cam.pixelHeight / 2f)
-                );
+                // 1. Convert screen position to a ratio between -0.5 and 0.5
+                // 0 is perfectly centered. -0.5 is far left/bottom. 0.5 is far right/top.
+                float ratioX = ((screenPos.x - cam.pixelRect.xMin) / cam.pixelWidth) - 0.5f;
+                float ratioY = ((screenPos.y - cam.pixelRect.yMin) / cam.pixelHeight) - 0.5f;
 
-                cursorPos = centeredPos;
+                // 2. Get the actual UI size of the container holding the crosshair
+                RectTransform parentRect = (RectTransform)crosshair.parent;
+
+                // 3. Multiply the ratio by the UI container's size
+                Vector2 localTarget;
+                localTarget.x = ratioX * parentRect.rect.width;
+                localTarget.y = ratioY * parentRect.rect.height;
+
+                cursorPos = localTarget;
             }
         }
         else
         {
-            // This SHOULD snap the crosshair slightly above center
-            cursorPos = new Vector2(0f, 80f);
+            cursorPos = new Vector2(0f, 200f);
         }
 
-        // APPLY POSITION
         if (crosshair != null)
         {
             crosshair.anchoredPosition = cursorPos;
-            Debug.Log($"Updating Crosshair to: {cursorPos}"); // Uncomment this to verify it's running
         }
     }
 

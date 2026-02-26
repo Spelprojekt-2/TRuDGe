@@ -5,7 +5,7 @@ public class AutoAimCone : MonoBehaviour
     public List<Transform> targetList = new List<Transform>();
     public Transform GetTarget()
     {
-        if(targetList == null)
+        if(targetList.Count < 1)
         {
             return null;
         }
@@ -16,7 +16,7 @@ public class AutoAimCone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            targetList.Add(other.transform.root.GetComponentInChildren<PlayerMovement>().transform);
+            targetList.Add(other.transform.root.GetComponentInChildren<PlayerCamera>().forOthersAimPoint);
             Debug.Log(targetList[0].gameObject.name + " Detected");
         }
     }
@@ -24,7 +24,7 @@ public class AutoAimCone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            targetList.Remove(other.transform.root.GetComponentInChildren<PlayerMovement>().transform);
+            targetList.Remove(other.transform.root.GetComponentInChildren<PlayerCamera>().forOthersAimPoint);
             Debug.Log("Left Detect");
         }
     }
