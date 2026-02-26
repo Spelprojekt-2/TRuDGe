@@ -26,14 +26,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ShowGizmoEnum showLocalAxes = ShowGizmoEnum.Never;
     [SerializeField] private ShowGizmoEnum showForces = ShowGizmoEnum.Always;
 
-    private Vector3[] rigPoints => new Vector3[3]
+    private const int RIG_POINT_COUNT = 4;
+    private Vector3[] rigPoints => new Vector3[]
     {
         // P0
         transform.position +
         // y
         transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)),
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
+        // x
+        transform.right * (rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f)),
         
         // P1
         transform.position +
@@ -51,10 +54,21 @@ public class PlayerMovement : MonoBehaviour
         // z
         transform.forward * (rayCastRigPosition.x - rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
         // x
+        transform.right * (-rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f)),
+
+        // P3
+        transform.position +
+        // y
+        transform.up * rayCastRigPosition.y +
+        // z
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
+        // x
         transform.right * (-rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f))
     };
 
-    private Vector3[] rayCastHPs = new Vector3[3];
+    private Vector3[] rayCastHPs = new Vector3[RIG_POINT_COUNT];
+    bool[] didHits = new bool[RIG_POINT_COUNT];
+
 
     #endregion
 
@@ -151,10 +165,9 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     private void ProcessRayCasts()
     {
-        bool[] didHits = new bool[3];
-        RaycastHit[] hitInfos = new RaycastHit[3];
+        RaycastHit[] hitInfos = new RaycastHit[RIG_POINT_COUNT];
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
         {
             didHits[i] = Physics.Raycast(
                 rigPoints[i],
@@ -165,21 +178,42 @@ public class PlayerMovement : MonoBehaviour
         }
 
         int hitCount = 0;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
         {
             if (!didHits[i]) continue;
-            
+
             hitCount++;
             rayCastHPs[i] = hitInfos[i].point;
         }
 
         isGrounded = hitCount >= 2;
 
-        if (hitCount == 3)
+        if (hitCount > 2)
         {
+            if (hitCount == RIG_POINT_COUNT)
+            {
+                int lowestIndex = 0;
+                for (int i = 1; i < RIG_POINT_COUNT; i++)
+                {
+                    if (rayCastHPs[lowestIndex].y > rayCastHPs[i].y)
+                        lowestIndex = i;
+                }
+                didHits[lowestIndex] = false;
+            }
+
+            Vector3[] points = new Vector3[3];
+            int pointI = 0;
+
+            for (int i = 0; i < RIG_POINT_COUNT; i++)
+            {
+                if(!didHits[i]) continue;
+
+                points[pointI++] = rayCastHPs[i];
+            }
+
             groundNormal = Vector3.Cross(
-                rayCastHPs[0] - rayCastHPs[1],
-                rayCastHPs[0] - rayCastHPs[2]
+                points[0] - points[1],
+                points[0] - points[2]
             ).normalized;
         }
         else
@@ -306,7 +340,10 @@ public class PlayerMovement : MonoBehaviour
                 rigPoints[1] + Vector3.down * rayCastLength,
 
                 rigPoints[2],
-                rigPoints[2] + Vector3.down * rayCastLength
+                rigPoints[2] + Vector3.down * rayCastLength,
+
+                rigPoints[3],
+                rigPoints[3] + Vector3.down * rayCastLength
             }
         );
     }
@@ -317,6 +354,13 @@ public class PlayerMovement : MonoBehaviour
 
         Gizmos.DrawLineStrip(rayCastHPs, true);
 
+        Vector3[] points = new Vector3[3];
+        int pointI = 0;
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
+        {
+            if (!didHits[i]) continue;
+            points[pointI] = rayCastHPs[i];
+        } 
         Gizmos.DrawLine(
             (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
             (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
