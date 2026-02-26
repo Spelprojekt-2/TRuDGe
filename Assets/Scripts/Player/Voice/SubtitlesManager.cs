@@ -12,14 +12,14 @@ public class SubtitlesManager : MonoBehaviour
 
     void Awake()
     {
-        Napoleon_Carla_Crash();
+        Announcement_Intro();
     }
 
     void SpawnSubtitle(string subtext, float duration)
     {
         GameObject newSubtitle =
             Instantiate(subtitlePrefab, subtitleParent, false);
-
+        newSubtitle.SetActive(true);
         TextMeshProUGUI text =
             newSubtitle.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -45,7 +45,7 @@ public class SubtitlesManager : MonoBehaviour
             yPos += r.sizeDelta.y + verticalSpacing;
         }
 
-        bgRect.anchoredPosition = new Vector2(0, yPos);
+        bgRect.anchoredPosition = new Vector2(0f, yPos);
 
         activeSubtitles.Add(newSubtitle);
 
@@ -70,47 +70,86 @@ public class SubtitlesManager : MonoBehaviour
             if (sub == null) continue;
 
             RectTransform r = sub.GetComponent<RectTransform>();
-            r.anchoredPosition = new Vector2(0, yPos);
+            r.anchoredPosition = new Vector2(0f, yPos);
 
             yPos += r.sizeDelta.y + verticalSpacing;
         }
     }
 
-    // ======= Subtitles =======
+    //======= Subtitles =======
+    //Announcer
+    public void Announcement_Intro()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Announcer</color><color=yellow>]</color> In the year 2060 another few races will take place all over Europe in the", 6f);
+        Invoke(nameof(Announcement_Intro1), 5f);
+    }
+    void Announcement_Intro1()
+    {                  
+        SpawnSubtitle("beautiful sport tank rally. Schlammrennstrecke and the Cliffs of Dover are just two", 7f);
+        Invoke(nameof(Announcement_Intro2), 6f);
+    }
+    void Announcement_Intro2()
+    {
+        SpawnSubtitle("of the exciting, revamped tracks we have this year. 2060 also marks an important", 7f);
+        Invoke(nameof(Announcement_Intro3), 6f);
+    }
+    void Announcement_Intro3()
+    {
+        SpawnSubtitle("milestone in our world's healing process, a decade has passed since the third world", 7f);
+        Invoke(nameof(Announcement_Intro4), 6f);
+    }
+    void Announcement_Intro4()
+    {
+        SpawnSubtitle("war ended. Together, we shall continue to work toward a happier world, a world with", 7f);
+        Invoke(nameof(Announcement_Intro5), 6f);
+    }
+    void Announcement_Intro5()
+    {
+        SpawnSubtitle("<color=red>T</color><color=orange>A</color><color=green>N</color><color=yellow>K</color> <color=red>R</color><color=orange>A</color><color=green>L</color><color=yellow>L</color><color=red>Y</color><color=orange>!</color>", 5f);
+    }
 
+    //Lars-Göran
     public void Lars_Start()
     {
-        SpawnSubtitle("I hope no one decides to cheat today!", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Lars-Göran</color><color=yellow>]</color> I hope no one decides to cheat today!", 5f);
     }
 
+    //Napoleon
     public void Napoleon_DriveBy()
     {
-        SpawnSubtitle("Napoleon drive-by", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Napoleon</color><color=yellow>]</color> Napoleon drive-by", 5f);
     }
-
     public void Napoleon_DrivenBy()
     {
-        SpawnSubtitle("Napoleon driven by", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Napoleon</color><color=yellow>]</color> Napoleon driven by", 5f);
     }
-
     public void Napoleon_Carla_Crash()
     {
-        SpawnSubtitle("<color=grey>[</color><color=blue>Carla</color><color=grey>]</color> Go away!", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Carla</color><color=yellow>]</color> Go away!", 5f);
         Invoke(nameof(NapoleonReply_Carla_Crash), 3f);
     }
-
     void NapoleonReply_Carla_Crash()
     {
-        SpawnSubtitle("<color=grey>[</color><color=blue>Napoleon</color><color=grey>]</color> No u.", 3f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Napoleon</color><color=yellow>]</color> No u.", 3f);
     }
 
+    //Nina, Brass beast
     public void Nina_Hit()
     {
-        SpawnSubtitle("Nina_hit", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Brass beast</color><color=yellow>]</color> Nina_hit", 5f);
     }
 
+    //Carla, Capôw
     public void Carla_Win()
     {
-        SpawnSubtitle("Carla win", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Capôw</color><color=yellow>]</color> Carla win", 5f);
     }
+
+    //Leonie, Schlammer
+
+    //André, Dragoș
+
+    //Ragana, Vilkmérgele demon
+
+    //Tristano, Harlequini Martinellini
 }
