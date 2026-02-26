@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(SkinnedMeshRenderer))]
-public class TreadSuspAnimator : MonoBehaviour
+public class TreadAnimator : MonoBehaviour
 {
     [System.Serializable]
     public struct Wheel
@@ -22,13 +22,19 @@ public class TreadSuspAnimator : MonoBehaviour
         }
     }
     private SkinnedMeshRenderer skinnedMeshRenderer;
+    [Header("Texture")]
+    [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] Rigidbody vehicleRigidBody;
+    [SerializeField] float xLocationOverride;
+    [SerializeField] bool reverseTextureDirection = false;
+    [SerializeField] bool YToXDirection = true;
+    [Header("Suspension")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private List<Wheel> wheels = new List<Wheel>();
     private Vector3[] hitPositions = new Vector3[3];
-
-    [SerializeField][Range(0,0.5f)] private float minSuspensionDistance = 0.3f;
+    [SerializeField] private float minSuspensionDistance = 0.3f;
     [SerializeField][Range(-100,0)] private float minBlendShapeValue = -100f;
-    [SerializeField][Range(0,0.5f)] private float maxSuspensionDistance = 0.3f;
+    [SerializeField] private float maxSuspensionDistance = 0.3f;
     [SerializeField][Range(0,100)] private float maxBlendShapeValue = 100f;
     [Header("Gizmos")]
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Never;
@@ -38,6 +44,21 @@ public class TreadSuspAnimator : MonoBehaviour
     }
     void Update()
     {
+        // Texture
+        float velocity = playerMovement.GetCurrentSpeed(false);
+        velocity += vehicleRigidBody.angularVelocity.y * xLocationOverride;
+        velocity *= Time.deltaTime;
+        if (reverseTextureDirection) velocity = - velocity;
+        Vector2 deltaOffset = new Vector2(0, velocity);
+        if (YToXDirection) deltaOffset = new Vector2(velocity, 0);
+
+        Vector2 offset = skinnedMeshRenderer.material.mainTextureOffset;
+        offset = new Vector2(
+            (offset.x + deltaOffset.x) % 1,
+            (offset.y + deltaOffset.y) % 1);
+        skinnedMeshRenderer.material.mainTextureOffset = offset;
+
+        // Suspension
         float lossyScale = transform.lossyScale.y;
         Vector3[] hits = new Vector3[wheels.Count];
         for (int i = 0; i < wheels.Count; i++)
