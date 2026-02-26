@@ -13,9 +13,6 @@ public class PlayerTrackerManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
 
     public static PlayerTrackerManager instance;
-    public bool isTimeTrial = false;
-    public bool isTimeTrialWithGhost = false;
-    public string pathToGhost;
 
     private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
@@ -131,7 +128,6 @@ public class PlayerTrackerManager : MonoBehaviour
         switch (scene.name)
         {
             case "SelectionScreen":
-                isTimeTrial = false;
                 foreach (var input in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
                 {
                     RacerData rd = input.GetComponent<RacerData>();
@@ -146,7 +142,6 @@ public class PlayerTrackerManager : MonoBehaviour
                 UIList = FindFirstObjectByType<SelectionScreenController>();
                 break;
             case "TimeTrialMenu":
-                isTimeTrial = true;
                 for (int i = playerInputs.Count - 1; i > 0; i--)
                 {
                     HandlePlayerLeft(playerInputs[i]);
@@ -167,7 +162,6 @@ public class PlayerTrackerManager : MonoBehaviour
                 break;
             case "TrackSelect":
             case "TrackSelectTimeTrial":
-                isTimeTrialWithGhost = false;
                 CoroutineRunner.Run(SelectObject(0, FindFirstObjectByType<SelectionScreenController>().transform.GetChild(1).GetComponentInChildren<UIButton>()));
                 break;
         }
@@ -201,7 +195,7 @@ public class PlayerTrackerManager : MonoBehaviour
                 allPlayersSpawned = true;
                 PlayerInputManager.instance?.DisableJoining();
             }
-            if (isTimeTrial)
+            if (RacingInformation.instance.isTimeTrial)
             {
                 Pickup[] pickups = FindObjectsByType<Pickup>(FindObjectsSortMode.None);
                 for (int i = pickups.Length - 1; i >= 0; i--)
@@ -343,12 +337,5 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             input.SwitchCurrentActionMap(map);
         }
-    }
-
-    public void SetGhostFile(string fullPath, bool isTimeTrialGhost)
-    {
-        pathToGhost = fullPath;
-        isTimeTrialWithGhost = isTimeTrialGhost;
-        Debug.Log($"Ghost set to: {fullPath} | TimeTrialGhost: {isTimeTrialGhost}");
     }
 }

@@ -146,7 +146,7 @@ public class PlayerPowerups : MonoBehaviour
 
         if (usingMagnet)
         {
-            Pickup[] gasolineTanks = FindObjectsOfType<Pickup>();
+            Pickup[] gasolineTanks = FindObjectsByType<Pickup>(FindObjectsSortMode.None);
 
             foreach (var gasTank in gasolineTanks)
             {
