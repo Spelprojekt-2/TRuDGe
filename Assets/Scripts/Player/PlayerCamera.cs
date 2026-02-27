@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEditor;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -42,7 +43,8 @@ public class PlayerCamera : MonoBehaviour
     private bool isPressingLookBack, isPressingResetCrosshair;
     private bool isController = false;
     private Quaternion camStartRotOffset;
-
+    private bool lookingAtTarget = false;
+    private Transform oldTarget;
 
     [SerializeField] private string uiCameraTag = "UICamera";
 
@@ -88,20 +90,19 @@ public class PlayerCamera : MonoBehaviour
         currentTarget = autoAim.GetTarget();
         if (currentTarget != null)
         {
-            Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
 
-            // Make sure the target is in front of the camera
+            if (!lookingAtTarget)
+            {
+                StartCoroutine(FocusOnTarget());
+                lookingAtTarget = true;
+            }
+            oldTarget = currentTarget;
+            Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
             if (screenPos.z > 0)
             {
-                // 1. Convert screen position to a ratio between -0.5 and 0.5
-                // 0 is perfectly centered. -0.5 is far left/bottom. 0.5 is far right/top.
                 float ratioX = ((screenPos.x - cam.pixelRect.xMin) / cam.pixelWidth) - 0.5f;
                 float ratioY = ((screenPos.y - cam.pixelRect.yMin) / cam.pixelHeight) - 0.5f;
-
-                // 2. Get the actual UI size of the container holding the crosshair
                 RectTransform parentRect = (RectTransform)crosshair.parent;
-
-                // 3. Multiply the ratio by the UI container's size
                 Vector2 localTarget;
                 localTarget.x = ratioX * parentRect.rect.width;
                 localTarget.y = ratioY * parentRect.rect.height;
@@ -111,6 +112,8 @@ public class PlayerCamera : MonoBehaviour
         }
         else
         {
+            StopCoroutine(FocusOnTarget());
+            lookingAtTarget = false;
             cursorPos = new Vector2(0f, 200f);
         }
 
@@ -120,9 +123,20 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    IEnumerator FocusOnTarget()
+    {
+        crosshair.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        for (int i = 0; i < 10; i++)
+        {
+            crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        //crosshair.localScale = Vector3.one;
+    }
+
     public Ray GetStableCrosshairRay()
     {
-        //pixelRect för denna player's kamera view
+        //Ray för denna player's kamera view
         Rect rect = cam.pixelRect;
         Vector2 center = new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f);
         Vector2 screenPoint = center + cursorPos;

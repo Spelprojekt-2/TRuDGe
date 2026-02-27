@@ -48,8 +48,7 @@ public class PlayerShooting : MonoBehaviour
     {
         Vector3 targetPoint = GetTargetPoint();
 
-        //Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
-        Vector3 bulletDir = targetPoint;
+        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
         targetPoint.y = barrelPosition.position.y;
         bulletDir.y = 0;
         GameObject bullet = Instantiate(
