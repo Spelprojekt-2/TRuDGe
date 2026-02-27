@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 29118914822687701}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.112999916, z: 0}
+  m_LocalPosition: {x: 0, y: 0.064, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 29118914822687701}
-  m_Mesh: {fileID: -3230470554650989690, guid: a246c574089ce5247b1000b78021f5e0, type: 3}
+  m_Mesh: {fileID: 2959467708922500008, guid: 3aaaf2d42ec2f3f4d94bbdf7e91ec2da, type: 3}
 --- !u!23 &5664280823835413462
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 1062731973836770642}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.256, z: 0}
+  m_LocalPosition: {x: 0.00000014039759, y: 0.594, z: 0.00065357785}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -126,7 +126,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062731973836770642}
-  m_Mesh: {fileID: 5964940218898284536, guid: a246c574089ce5247b1000b78021f5e0, type: 3}
+  m_Mesh: {fileID: -9189612823058448048, guid: 3aaaf2d42ec2f3f4d94bbdf7e91ec2da, type: 3}
 --- !u!23 &8173727273192742796
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 3008494271453006103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.517, z: 0.696}
+  m_LocalPosition: {x: -0.000000002082144, y: 0.948, z: 1.1190622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -245,7 +245,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3496090875918088407}
-  m_Mesh: {fileID: 3589084011307979999, guid: a246c574089ce5247b1000b78021f5e0, type: 3}
+  m_Mesh: {fileID: 2165579551946672802, guid: 3aaaf2d42ec2f3f4d94bbdf7e91ec2da, type: 3}
 --- !u!23 &7163429281134340681
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -318,7 +318,7 @@ Transform:
   m_GameObject: {fileID: 3768697726229419047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0208, y: -0.0605, z: 0.527}
+  m_LocalPosition: {x: 0.007, y: 0.029, z: 0.132}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -331,7 +331,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3768697726229419047}
-  m_Mesh: {fileID: 6369055353137147297, guid: a246c574089ce5247b1000b78021f5e0, type: 3}
+  m_Mesh: {fileID: 6369055353137147297, guid: 3aaaf2d42ec2f3f4d94bbdf7e91ec2da, type: 3}
 --- !u!23 &3269582575052452456
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -405,7 +405,7 @@ Transform:
   m_GameObject: {fileID: 8006152340013823523}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.414, z: -0.819}
+  m_LocalPosition: {x: 0, y: 2.828, z: -1.638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -430,9 +430,11 @@ MonoBehaviour:
   vehicleRigidbody: {fileID: 0}
   grappleAzimuthObject: {fileID: 5387242127863908767}
   grappleElevationObject: {fileID: 2370274047725445919}
-  grappleMuzzleOffset: {x: 0, y: -0.055, z: 0.49}
+  grappleMuzzleOffset: {x: 0, y: 0.28, z: 2.04}
   grappleHook: {fileID: 3768697726229419047}
+  idleRotationSpeed: 8
   grapplePoint: {x: 0, y: 0, z: 0}
+  playerAudio: {fileID: 0}
 --- !u!120 &832853339737233674
 LineRenderer:
   serializedVersion: 2
