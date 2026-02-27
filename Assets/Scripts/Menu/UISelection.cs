@@ -82,11 +82,13 @@ public class UISelection : MonoBehaviour
     }
     public void Select(InputAction.CallbackContext context)
     {
+        //Button butt = selection.GetComponent<Button>();
+        //butt.Interactable(false);
+
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
         if (context.performed)
         {
-            
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
@@ -138,6 +140,9 @@ public class UISelection : MonoBehaviour
     {
         Destroy(selectionHighlight.gameObject);
         playerSelections.Remove(this);
+        selection.RefreshUI();
+        //int playerIndex = GetComponent<RacerData>().index;
+        //selection.SetHighlight(false, playerIndex);
     }
 
     private void SelectUIUpdate(UIButton button)
