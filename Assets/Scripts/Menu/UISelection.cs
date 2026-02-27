@@ -122,8 +122,10 @@ public class UISelection : MonoBehaviour
             return;
 
         if (selection) selection.SetHighlight(false, playerIndex);
+        //if (selection) selection.RefreshUI();
         selection = newButton;
         selection.SetHighlight(true, playerIndex);
+        //selection.RefreshUI()
         SelectUIUpdate(newButton);
         UpdateButtons();
     }

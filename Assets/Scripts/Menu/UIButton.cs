@@ -56,12 +56,20 @@ public class UIButton : MonoBehaviour
     {
         int activePlayers = PlayerTrackerManager.instance.GetPlayerCount();
         for (int i = 0; i < characterBackgrounds.Length; i++)
-    {
-        bool shouldBeActive = i < activePlayers;
+        {   
+            bool shouldBeActive = i < activePlayers;
 
-        characterBackgrounds[i]?.SetActive(shouldBeActive);
-        characterText[i]?.SetActive(shouldBeActive);
-        characterStats[i]?.SetActive(shouldBeActive);
+            characterBackgrounds[i]?.SetActive(shouldBeActive);
+            characterText[i]?.SetActive(shouldBeActive);
+            characterStats[i]?.SetActive(shouldBeActive);
+        }
     }
+    private void OnEnable()
+    {
+        PlayerTrackerManager.OnPlayerStateChanged += RefreshUI;
+    }
+    private void OnDisable()
+    {
+        PlayerTrackerManager.OnPlayerStateChanged -= RefreshUI;
     }
 }
