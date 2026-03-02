@@ -51,8 +51,8 @@ public class RacerData : MonoBehaviour
         raceController = FindFirstObjectByType<RaceController>();
         if (lapProgress > 0.5f) lap = -1;
         if (isReplayGhost) return;
-        TimeTrialUI.SetActive(PlayerTrackerManager.instance.isTimeTrial);
-        RaceUI.SetActive(!PlayerTrackerManager.instance.isTimeTrial);
+        TimeTrialUI.SetActive(RacingInformation.instance.isTimeTrial);
+        RaceUI.SetActive(!RacingInformation.instance.isTimeTrial);
         TimerText.text = "00:00.000";
         if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
         capture = GetComponent<TimeTrialCapture>();
