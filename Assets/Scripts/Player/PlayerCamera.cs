@@ -88,6 +88,25 @@ public class PlayerCamera : MonoBehaviour
         }
 
         currentTarget = autoAim.GetTarget();
+        if (currentTarget != oldTarget)
+        {
+            if (currentTarget != null)
+            {
+                StartCoroutine(FocusOnTarget());
+                lookingAtTarget = true;
+            }
+            else
+            {
+                lookingAtTarget = false;
+                cursorPos = new Vector2(0f, 200f);
+
+                crosshair.localScale = Vector3.one;
+                if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
+            }
+            oldTarget = currentTarget;
+        }
+        
+        
         if (currentTarget != null)
         {
 
@@ -96,7 +115,6 @@ public class PlayerCamera : MonoBehaviour
                 StartCoroutine(FocusOnTarget());
                 lookingAtTarget = true;
             }
-            oldTarget = currentTarget;
             Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
             if (screenPos.z > 0)
             {
