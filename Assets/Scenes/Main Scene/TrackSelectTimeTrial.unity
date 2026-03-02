@@ -1509,6 +1509,7 @@ GameObject:
   - component: {fileID: 829595204}
   - component: {fileID: 829595203}
   - component: {fileID: 829595205}
+  - component: {fileID: 829595206}
   m_Layer: 0
   m_Name: PlayerTrackerManager
   m_TagString: Untagged
@@ -1529,9 +1530,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  isTimeTrial: 0
-  isTimeTrialWithGhost: 0
-  pathToGhost: 
 --- !u!4 &829595204
 Transform:
   m_ObjectHideFlags: 0
@@ -1560,6 +1558,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ff3902fde4e504a96caac5dd87adac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &829595206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829595202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce437329aee51a408b932d37a05e676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackToPlay: 
+  isTimeTrial: 0
+  isTimeTrialWithGhost: 0
+  pathToGhost: 
 --- !u!1 &908085152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,7 +2020,6 @@ GameObject:
   - component: {fileID: 1157956391}
   - component: {fileID: 1157956393}
   - component: {fileID: 1157956394}
-  - component: {fileID: 1157956395}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2138,25 +2151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
---- !u!114 &1157956395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157956389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1ccc94d9a433044b3e9dd2555e1e34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeTrial: {fileID: 2134669499}
-  track1MyTime: {fileID: 0}
-  track2MyTime: {fileID: 0}
-  track3MyTime: {fileID: 0}
-  track1GhostTime: {fileID: 1582581316}
-  track2GhostTime: {fileID: 735627958}
-  track3GhostTime: {fileID: 1743267467}
 --- !u!1 &1193884636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,18 +2235,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1384180802}
-        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: TimeTrialMenu
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: e65090a9f522a894ea88795bac0a960a, type: 2}
         m_TargetAssemblyTypeName: UIAudio, Assembly-CSharp
         m_MethodName: PlayUIBtnAudio
@@ -2263,6 +2245,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1384180801}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: TimeTrialMenu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1193884639
@@ -2770,7 +2764,6 @@ GameObject:
   - component: {fileID: 1384180798}
   - component: {fileID: 1384180797}
   - component: {fileID: 1384180801}
-  - component: {fileID: 1384180802}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2873,31 +2866,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1384180796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c4b600236793cc48bc0d8ccab9099ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b535296bcadee549a67bb381e1d7cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackSelection: {fileID: 0}
+  firstJoinPopup: {fileID: 0}
+  mainMenuButtons: []
+  singlePlayerButtons: {fileID: 0}
+  multiplayerButtons: {fileID: 0}
+  settingsMenu: {fileID: 0}
   ReadyTextP1: {fileID: 0}
   ReadyTextP2: {fileID: 0}
   ReadyTextP3: {fileID: 0}
   ReadyTextP4: {fileID: 0}
-  preselectPlayer:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &1384180802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384180796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56029287c5438dc4b9148357fd3e7148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  preselectPlayer: []
 --- !u!1 &1498006303
 GameObject:
   m_ObjectHideFlags: 0
@@ -4316,8 +4297,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1384180802}
-        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+      - m_Target: {fileID: 1384180801}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:

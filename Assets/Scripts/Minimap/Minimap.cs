@@ -22,7 +22,7 @@ public class Minimap : MonoBehaviour
         raceData = FindFirstObjectByType<RaceController>();
         DrawTrack();
 
-        PlayerMovement[] players = Object.FindObjectsOfType<PlayerMovement>();
+        PlayerMovement[] players = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
         if(players.Length < 3)
         {
             RectTransform rect = minimapContainer.GetComponent<RectTransform>();

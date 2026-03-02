@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class SelectionScreenScript : MonoBehaviour
 {
     private PlayerInput input;
+    private UIButton uibutton;
 
     private float timeSinceJoined;
     private const float joinInputDelay = 0.1f;
@@ -16,14 +17,13 @@ public class SelectionScreenScript : MonoBehaviour
 
     private bool CanInteract()
     {
-        return Time.realtimeSinceStartup - timeSinceJoined >= joinInputDelay;
+        return (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
+            SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+            && Time.realtimeSinceStartup - timeSinceJoined >= joinInputDelay;
     }
 
-    public void Ready(InputAction.CallbackContext context)
+    public void Ready()
     {
-        if (!context.started || !CanInteract())
-            return;
-
         PlayerTrackerManager.instance.SetReady(input);
     }
 
@@ -31,7 +31,7 @@ public class SelectionScreenScript : MonoBehaviour
     {
         if (!context.performed || !CanInteract())
             return;
-
+        
         PlayerTrackerManager.instance.SetUnready(input);
     }
 
