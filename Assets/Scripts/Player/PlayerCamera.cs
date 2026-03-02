@@ -129,9 +129,10 @@ public class PlayerCamera : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+            GetComponent<PlayerShooting>().speedMultiplier = crosshair.localScale.x;
+            Debug.Log(GetComponent<PlayerShooting>().speedMultiplier);
             yield return new WaitForSeconds(0.1f);
         }
-        //crosshair.localScale = Vector3.one;
     }
 
     public Ray GetStableCrosshairRay()
