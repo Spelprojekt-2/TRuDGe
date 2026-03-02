@@ -18,8 +18,10 @@ public class GrapplingBehaviour : MonoBehaviour
     [Tooltip("An aesthetic projectile on the end of the barrel when the vehicle isn't grappling")]
     [SerializeField] private GameObject grappleHook;
     #endregion
-
-    [HeaderAttribute("Debug")]
+    [Header("Animation")]
+    [Tooltip("The speed at which the grapple gun returns to facing forward")]
+    [SerializeField] private float idleRotationSpeed = 8f;
+    [Header("Debug")]
     [SerializeField] private Vector3 grapplePoint = Vector3.zero;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
@@ -67,16 +69,19 @@ public class GrapplingBehaviour : MonoBehaviour
         {
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, grapplePoint);
-            
+        }
+
+        if (isGrappling || isInGrappleRange)
+        {
             // I know it's ugly but it works
             grappleAzimuthObject.LookAt(grapplePoint, grappleAzimuthObject.parent.up);
             grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
             grappleElevationObject.LookAt(grapplePoint, grappleAzimuthObject.up);
         }
 
-
         if (isInGrappleRange)
         {
+
             Vector3 diff = grapplePoint - playerCamera.transform.position;
 
             grappleUIIndicator.gameObject.SetActive(Vector3.Dot(playerCamera.transform.forward, diff.normalized) > 0f);
@@ -97,6 +102,27 @@ public class GrapplingBehaviour : MonoBehaviour
                 grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
                     playerCamera.scaledPixelWidth / playerCamera.rect.width,
                     playerCamera.scaledPixelHeight / playerCamera.rect.height);
+            }
+        }
+        else
+        {
+            if (!isGrappling)
+            {
+                if (grappleAzimuthObject.localEulerAngles.y != 0)
+                {
+                    // I know it's ugly but it works
+                    grappleAzimuthObject.localEulerAngles = new Vector3(
+                        0, Mathf.LerpAngle(
+                            grappleAzimuthObject.localEulerAngles.y,
+                            0, idleRotationSpeed * Time.deltaTime), 0);
+                }
+                if (grappleElevationObject.localEulerAngles.x != 0)
+                {
+                    grappleElevationObject.localEulerAngles = new Vector3(
+                        Mathf.LerpAngle(
+                            grappleElevationObject.localEulerAngles.x,
+                            0, idleRotationSpeed * Time.deltaTime), 0, 0);
+                }
             }
         }
     }
