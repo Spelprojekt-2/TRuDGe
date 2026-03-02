@@ -1295,6 +1295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883d2f0d821b678479136633a6fff520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TrainingUI: {fileID: 0}
+  PrereadyText: {fileID: 0}
+  ReadyText: {fileID: 0}
 --- !u!1 &5516304864388716943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,6 +1963,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04c60d797790864c8cee71620f66356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  vehicleRigidBody: {fileID: 0}
+  xLocationOverride: 0
+  reverseTextureDirection: 0
+  YToXDirection: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2063,6 +2071,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04c60d797790864c8cee71620f66356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  vehicleRigidBody: {fileID: 0}
+  xLocationOverride: 0
+  reverseTextureDirection: 0
+  YToXDirection: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

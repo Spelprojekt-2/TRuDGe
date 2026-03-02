@@ -10,10 +10,7 @@ using System.Collections;
 
 public class PlayerTrackerManager : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
-
     public static PlayerTrackerManager instance;
-
     private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
     private bool allPlayersSpawned = false;
