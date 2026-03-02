@@ -23,6 +23,7 @@ public class PlayerPowerups : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
+
     public int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
@@ -122,7 +123,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.deployWall:
-                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
                 break;
 
             case PowerUpType.eMP:
