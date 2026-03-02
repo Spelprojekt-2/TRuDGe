@@ -203,6 +203,7 @@ public class RaceController : MonoBehaviour
 
     public double GetRaceTime()
     {
+        if (!raceStarted) return 0;
         if (isPaused) return pauseStartTime - raceStartTime - totalPausedTime;
         else return Time.realtimeSinceStartupAsDouble - raceStartTime - totalPausedTime;
     }
