@@ -4,7 +4,7 @@ public class Grappleable : MonoBehaviour
 {
     [SerializeField] protected Vector3 grapplePointOffset = Vector3.zero;
     [SerializeField] protected ShowGizmoEnum showGizmos = ShowGizmoEnum.Selected;
-    public virtual Vector3 GrapplePoint => transform.TransformPoint(grapplePointOffset);
+    public virtual Vector3 GetGrapplePoint(GrapplingBehaviour gb) => transform.TransformPoint(grapplePointOffset);
     public virtual void EnteredGrappleRange(GameObject grapplingObject)
     {
         if (grapplingObject.TryGetComponent<GrapplingBehaviour>(out GrapplingBehaviour grapple))
