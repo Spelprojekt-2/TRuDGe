@@ -10,9 +10,55 @@ public class ShudderChat : MonoBehaviour
     public float SpaceY = 3f;
     public float bottomOffs = 50f;
     private List<GameObject> activeChat = new List<GameObject>();
+
+    //Chatstuf
+    //Chatter name
+        private string[] chatterNames =
+        {
+            "Buddha",
+            "Juggler",
+            "K-nuckles",
+            "Nutslack2020",
+            "Tanker",
+            "T-lover",
+            "Corkscrew",
+            "Lars-Göran_II",
+            "GothNina",
+            "TheKingofFrance",
+            "SchlammQueen",
+            "Skadoosh",
+            "TCOINFUTURE",
+            "gOLDFISmEMORY",
+            "ClowningHard",
+            "memoryleak",
+            "RockManager",
+            "PoE6.967",
+            "OLOY",
+            "NoFansMngr",
+            "Helenanananan",
+            "MagganLöfv",
+            "CutinisRight",
+            "Trudgeinator",
+            "WhereHerbert"
+        };
+        //Chatter color
+        private string[] colors =
+        {
+            "red",
+            "green",
+            "blue",
+            "yellow",
+            "#00ffffff",
+            "#a52a2aff",
+            "#0000a0ff",
+            "#00ff00ff",
+            "#ffa500ff",
+            "#c0c0c0ff",
+            "#008080ff"
+        };
     void Update()
     {
-        int chatSpawn = Random.Range(1, 50);
+        int chatSpawn = Random.Range(1, 400);
         if (chatSpawn == 1)
         {
             CringeChat();
@@ -81,34 +127,35 @@ public class ShudderChat : MonoBehaviour
     //======= Chat =======
     public void CringeChat()
     {
-        //Chatter name
-        string[] chatterNames =
+        int randomChatter = Random.Range(0, chatterNames.Length * colors.Length);
+
+        int nameIndex = randomChatter / colors.Length;
+        int colorIndex = randomChatter % colors.Length;
+
+        string ChatterName = $"<color={colors[colorIndex]}>{chatterNames[nameIndex]}:</color> ";
+
+        //Chatter message
+        string[] ChatMessages =
         {
-            "Buddha",
-            "Juggler",
-            "K-nuckles",
-            "Nutslack2020",
-            "Tanker",
-            "T-lover",
-            "Corkscrew",
-            "Lars-Göran_II",
-            "GothNina",
-            "TheKingofFrance",
-            "SchlammQueen",
-            "Skadoosh",
-            "TCOINFUTURE",
-            "gOLDFISmEMORY",
-            "ClowningHard",
-            "memoryleak",
-            "RockManager",
-            "PoE6.967",
-            "OLOY",
-            "NoFansMngr",
-            "Helenanananan",
-            "MagganLöfv",
-            "CutinisRight"
+            "OWKDLDAFIK",
+            "Cringe",
+            "Sminge",
+            "Nawur",
+            "Go go go!",
+            "Bullen>Gabriel",
+            "Argh",
+            "TRUDGE!",
+            "yup"
         };
 
+        int randomMessage = Random.Range(0, ChatMessages.Length);
+        string ChatMessage = $"{ChatMessages[randomMessage]}";
+        SpawnChat(ChatterName + ChatMessage, 6f);
+    }
+
+    //Scripted chat
+    public void ChatDistract()
+    {
         string[] colors =
         {
             "red",
@@ -123,29 +170,12 @@ public class ShudderChat : MonoBehaviour
             "#c0c0c0ff",
             "#008080ff"
         };
-
-        int randomChatter = Random.Range(0, chatterNames.Length * colors.Length);
-
-        int nameIndex = randomChatter / colors.Length;
-        int colorIndex = randomChatter % colors.Length;
-
-        string ChatterName = $"<color={colors[colorIndex]}>{chatterNames[nameIndex]}:</color> ";
-
-        //Chatter message
-        string[] ChatMessages =
-        {
-            "OWKDLDAFIK",
-            "Cringe",
-            "CringeAlert",
-            "Sminge",
-            "Nawur",
-            "Go go go!",
-            "Bullen>Gabriel",
-            "Argh"
-        };
-
-        int randomMessage = Random.Range(0, ChatMessages.Length);
-        string ChatMessage = $"{ChatMessages[randomMessage]}";
-        SpawnChat(ChatterName + ChatMessage, 1f);
+        
+        SpawnChat("<color=green>Ghrash:</color> Imma go go distract them, hold on.", 10f);
+        //Invoke
+    }
+    void ChatDistract1()
+    {
+        
     }
 }
