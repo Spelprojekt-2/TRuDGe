@@ -43,7 +43,6 @@ public class GrapplingBehaviour : MonoBehaviour
             EndGrapple();
         }
 
-        lineRenderer.enabled = isGrappling;
         if (isGrappling)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
     }
@@ -57,6 +56,7 @@ public class GrapplingBehaviour : MonoBehaviour
         // Start grapple audio
         playerAudio.GrappleStart();
 
+        lineRenderer.enabled = true;
         if (grappleHook) grappleHook.SetActive(false);
     }
     public void EndGrapple()
@@ -66,6 +66,7 @@ public class GrapplingBehaviour : MonoBehaviour
         // Change audio behaviour
         playerAudio.GrappleEnd();
 
+        lineRenderer.enabled = false;
         if (grappleHook) grappleHook.SetActive(true);
     }
     void Start()
