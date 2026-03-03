@@ -15,7 +15,6 @@ public class SelectionScreenScript : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private bool CanInteract()
     {
@@ -43,32 +42,5 @@ public class SelectionScreenScript : MonoBehaviour
             return;
 
         PlayerTrackerManager.instance.HandlePlayerLeft(input);
-    }
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "Level1_sloped")
-        {
-        string charr = GetComponent<UISelection>().selectedCharacter;
-        switch (charr)
-        {
-            case "Carla": EnableShudderChat(); break;
-        }
-        }
-    }
-    public void EnableShudderChat()
-    {
-        GameObject chat = GameObject.Find("ShudderChatController");
-        if (chat != null)
-        chat.GetComponent<ShudderChat>().EnableChat(true);
     }
 }

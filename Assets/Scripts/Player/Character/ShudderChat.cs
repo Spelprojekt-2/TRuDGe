@@ -17,13 +17,8 @@ public class ShudderChat : MonoBehaviour
     //Chatstuf
     void Awake()
     {
-        GameObject charselect = GameObject.Find("SplitscreenPlayer");
-        UISelection defwrg = GetComponentInChildren<UISelection>();
-        string charss = charselect.GetComponentInChildren<UISelection>().selectedCharacter;
-        switch (charss)
-        {
-            case "Carla": EnableChat(true); break;
-        }
+        string charr = UISelection.Instance.selectedCharacter;
+        if (UISelection.Instance.selectedCharacter == "Carla") EnableChat(true);
         //ChatWin();
     }
 
@@ -55,7 +50,7 @@ public class ShudderChat : MonoBehaviour
             "CutinisRight",
             "Trudgeinator",
             "WhereHerbert",
-            "GruppSexBad",
+            "Group6Bad",
             "yourewelcome",
             "Death",
             "SKULLEMOJI",
@@ -97,7 +92,7 @@ public class ShudderChat : MonoBehaviour
         };
     void Update()
     {
-        if (chatEnabled)
+        if (chatEnabled && Time.timeScale == 1f)
         {
         int chatSpawn = Random.Range(1, 360);
         if (chatSpawn == 1)
@@ -205,7 +200,8 @@ public class ShudderChat : MonoBehaviour
             "Just won 50k @WinZone",
             "chug speedrunner =win",
             "GameStation 7 is so good",
-            "ILY CARLA"
+            "ILY CARLA",
+            "o7"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);

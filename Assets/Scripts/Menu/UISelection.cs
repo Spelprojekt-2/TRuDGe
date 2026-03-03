@@ -21,6 +21,11 @@ public class UISelection : MonoBehaviour
     private bool isKBM;
 
     public string selectedCharacter;
+    public static UISelection Instance;
+    void Awake()
+    {
+        Instance = this;
+    }
     public void Start()
     {
         playerSelections.Add(this);
@@ -110,6 +115,11 @@ public class UISelection : MonoBehaviour
                 case "Lars-Göran": selectedCharacter = "Lars"; break;
                 case "The Brass Beast": selectedCharacter = "Nina"; break;
                 case "Capôw": selectedCharacter = "Carla"; break;
+                case "Schlammer": selectedCharacter = "Leonie"; break;
+                case "King Napoleon III": selectedCharacter = "Napoleon"; break;
+                case "Dragoș": selectedCharacter = "André"; break;
+                case "Demon of Vilkmergéle": selectedCharacter = "Ragana"; break;
+                case "Harlequini Martinellini": selectedCharacter = "Tristano"; break;
             }
             }
             UpdateButtons();
@@ -268,21 +278,5 @@ public class UISelection : MonoBehaviour
                 SwapSelection(button);
             }
         }
-    }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "Level1_sloped")
-        {
-        switch (selectedCharacter)
-        {
-            case "Carla": EnableShudderChat(); break;
-        }
-        }
-    }
-    public void EnableShudderChat()
-    {
-        GameObject chat = GameObject.Find("ShudderChatController");
-        if (chat != null)
-        chat.GetComponent<ShudderChat>().EnableChat(true);
     }
 }
