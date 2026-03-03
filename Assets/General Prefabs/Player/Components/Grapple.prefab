@@ -112,13 +112,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062731973836770642}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.00000014039759, y: 0.594, z: 0.00065357785}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5387242127863908767}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &3697850294165961573
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 3008494271453006103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000000002082144, y: 0.948, z: 1.1190622}
+  m_LocalPosition: {x: -1.119062, y: 0.948, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -433,7 +433,7 @@ MonoBehaviour:
   grappleMuzzleOffset: {x: 0, y: 0.28, z: 2.04}
   grappleHook: {fileID: 3768697726229419047}
   idleRotationSpeed: 8
-  grapplePoint: {x: 0, y: 0, z: 0}
+  grappleable: {fileID: 0}
   playerAudio: {fileID: 0}
 --- !u!120 &832853339737233674
 LineRenderer:
