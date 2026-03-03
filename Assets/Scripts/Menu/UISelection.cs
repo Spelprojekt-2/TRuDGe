@@ -20,7 +20,7 @@ public class UISelection : MonoBehaviour
 
     private bool isKBM;
 
-    public string selectedCharacter;
+    public string[] selectedCharacter = new string[4];
     public static UISelection Instance;
     void Awake()
     {
@@ -106,22 +106,28 @@ public class UISelection : MonoBehaviour
             }
             else selection = null;
 
-            if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+            int playerIndex = GetComponent<RacerData>().index;
+            if (playerIndex < 0 || playerIndex >= selectedCharacter.Length) return;
+            
+                if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
             {
+            
             string charname = selection.GetComponentInChildren<TextMeshProUGUI>().text;
 
             switch (charname)
             {
-                case "Lars-Göran": selectedCharacter = "Lars"; break;
-                case "The Brass Beast": selectedCharacter = "Nina"; break;
-                case "Capôw": selectedCharacter = "Carla"; break;
-                case "Schlammer": selectedCharacter = "Leonie"; break;
-                case "King Napoleon III": selectedCharacter = "Napoleon"; break;
-                case "Dragoș": selectedCharacter = "André"; break;
-                case "Demon of Vilkmergéle": selectedCharacter = "Ragana"; break;
-                case "Harlequini Martinellini": selectedCharacter = "Tristano"; break;
+                case "Lars-Göran": selectedCharacter[playerIndex] = "Lars"; break;
+                case "The Brass Beast": selectedCharacter[playerIndex] = "Nina"; break;
+                case "Capôw": selectedCharacter[playerIndex] = "Carla"; break;
+                case "Schlammer": selectedCharacter[playerIndex] = "Leonie"; break;
+                case "King Napoleon III": selectedCharacter[playerIndex] = "Napoleon"; break;
+                case "Dragoș": selectedCharacter[playerIndex] = "André"; break;
+                case "Demon of Vilkmergéle": selectedCharacter[playerIndex] = "Ragana"; break;
+                case "Harlequini Martinellini": selectedCharacter[playerIndex] = "Tristano"; break;
             }
             }
+            
+            
             UpdateButtons();
         }
     }

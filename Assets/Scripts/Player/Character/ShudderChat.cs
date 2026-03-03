@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class ShudderChat : MonoBehaviour
@@ -15,13 +16,48 @@ public class ShudderChat : MonoBehaviour
     public bool chatEnabled = false;
 
     //Chatstuf
+    /*void Awake()
+    {
+        int playerIndex = GetComponentInParent<RacerData>().index;
+        UISelection ui = GetComponentInParent<UISelection>();
+
+        if (playerIndex < 0 || playerIndex >= ui.selectedCharacter.Length || ui.selectedCharacter[playerIndex] == null) 
+        {
+            return;
+        }
+        else if (ui.selectedCharacter[playerIndex] == "Carla")
+        {
+            EnableChat(true);
+        }
+    }
     void Awake()
     {
-        string charr = UISelection.Instance.selectedCharacter;
-        if (UISelection.Instance.selectedCharacter == "Carla") EnableChat(true);
-        //ChatWin();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    void OnEnable()
+{
+    SceneManager.sceneLoaded += OnSceneLoaded;
+}
 
+void OnDisable()
+{
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+}
+
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+    {
+        int playerIndex = GetComponentInParent<RacerData>().index;
+        UISelection ui = GetComponentInParent<UISelection>();
+
+        if (playerIndex >= 0 && playerIndex < ui.selectedCharacter.Length &&
+            ui.selectedCharacter[playerIndex] == "Carla")
+        {
+            EnableChat(true);
+        }
+    }
+}*/
     //Chatter name
         private string[] chatterNames =
         {
@@ -92,6 +128,17 @@ public class ShudderChat : MonoBehaviour
         };
     void Update()
     {
+        if (!chatEnabled && SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+    {
+        int playerIndex = GetComponentInParent<RacerData>().index;
+        UISelection ui = GetComponentInParent<UISelection>();
+
+        if (playerIndex >= 0 && playerIndex < ui.selectedCharacter.Length &&
+            ui.selectedCharacter[playerIndex] == "Carla")
+        {
+            EnableChat(true);
+        }
+    }
         if (chatEnabled && Time.timeScale == 1f)
         {
         int chatSpawn = Random.Range(1, 360);
