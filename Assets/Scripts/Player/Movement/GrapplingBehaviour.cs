@@ -22,7 +22,7 @@ public class GrapplingBehaviour : MonoBehaviour
     [Tooltip("The speed at which the grapple gun returns to facing forward")]
     [SerializeField] private float idleRotationSpeed = 8f;
     [Header("Debug")]
-    // [SerializeField] private Vector3 grapplePoint = Vector3.zero;
+    private Vector3 cachedGrapplePoint = Vector3.zero;
     [SerializeField] private Grappleable grappleable = null;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
@@ -78,32 +78,31 @@ public class GrapplingBehaviour : MonoBehaviour
 
     void Update()
     {
-        Vector3 vPoint = Vector3.zero;
-        if (grappleable != null) vPoint = grappleable.GetGrapplePoint(this);
+        if (grappleable != null) cachedGrapplePoint = grappleable.GetGrapplePoint(this);
 
         if (isGrappling)
         {
             TimeSinceGrapple += Time.deltaTime;
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
-            lineRenderer.SetPosition(1, vPoint);
+            lineRenderer.SetPosition(1, cachedGrapplePoint);
         }
 
         if (isGrappling || isInGrappleRange)
         {
             // I know it's ugly but it works
-            grappleAzimuthObject.LookAt(vPoint, grappleAzimuthObject.parent.up);
+            grappleAzimuthObject.LookAt(cachedGrapplePoint, grappleAzimuthObject.parent.up);
             grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
-            grappleElevationObject.LookAt(vPoint, grappleAzimuthObject.up);
+            grappleElevationObject.LookAt(cachedGrapplePoint, grappleAzimuthObject.up);
         }
 
         if (isInGrappleRange)
         {
 
-            Vector3 diff = vPoint - playerCamera.transform.position;
+            Vector3 diff = cachedGrapplePoint - playerCamera.transform.position;
 
             grappleUIIndicator.gameObject.SetActive(Vector3.Dot(playerCamera.transform.forward, diff.normalized) > 0f);
 
-            Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(vPoint);
+            Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(cachedGrapplePoint);
             viewPortpoint.x = Mathf.Clamp(viewPortpoint.x, 0, 1);
             viewPortpoint.y = Mathf.Clamp(viewPortpoint.y, 0, 1);
 
@@ -158,9 +157,9 @@ public class GrapplingBehaviour : MonoBehaviour
     {
         if (!isGrappling || grappleable == null) return;
 
-        Vector3 vPoint = grappleable.GetGrapplePoint(this);
+        cachedGrapplePoint = grappleable.GetGrapplePoint(this);
 
-        Vector3 grappleDir = (vPoint - vehicleRigidbody.transform.position).normalized;
+        Vector3 grappleDir = (cachedGrapplePoint - vehicleRigidbody.transform.position).normalized;
         float relativeVelocity = Vector3.Dot(vehicleRigidbody.linearVelocity, grappleDir);
 
         if (relativeVelocity < 0f)
@@ -168,10 +167,10 @@ public class GrapplingBehaviour : MonoBehaviour
             vehicleRigidbody.linearVelocity -= grappleDir * relativeVelocity;
         }
 
-        float dist = Vector3.Distance(vehicleRigidbody.transform.position, vPoint);
+        float dist = Vector3.Distance(vehicleRigidbody.transform.position, cachedGrapplePoint);
         if (dist > grappleDistance)
         {
-            Vector3 desiredPosition = vPoint - grappleDir * grappleDistance;
+            Vector3 desiredPosition = cachedGrapplePoint - grappleDir * grappleDistance;
             Vector3 correctionVelocity = (desiredPosition - vehicleRigidbody.transform.position) / Time.fixedDeltaTime;
             vehicleRigidbody.linearVelocity += correctionVelocity;
         }
