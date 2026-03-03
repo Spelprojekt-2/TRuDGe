@@ -15,6 +15,7 @@ public class SelectionScreenScript : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private bool CanInteract()
     {
@@ -43,9 +44,26 @@ public class SelectionScreenScript : MonoBehaviour
 
         PlayerTrackerManager.instance.HandlePlayerLeft(input);
     }
-    public void SelectCarla()
+    private void OnEnable()
     {
-        EnableShudderChat();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Level1_sloped")
+        {
+        string charr = GetComponent<UISelection>().selectedCharacter;
+        switch (charr)
+        {
+            case "Carla": EnableShudderChat(); break;
+        }
+        }
     }
     public void EnableShudderChat()
     {

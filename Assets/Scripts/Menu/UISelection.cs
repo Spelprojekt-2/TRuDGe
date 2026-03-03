@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UISelection : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class UISelection : MonoBehaviour
     private UIButton[] buttonsOnScene;
 
     private bool isKBM;
+
+    public string selectedCharacter;
     public void Start()
     {
         playerSelections.Add(this);
@@ -82,9 +85,6 @@ public class UISelection : MonoBehaviour
     }
     public void Select(InputAction.CallbackContext context)
     {
-        //Button butt = selection.GetComponent<Button>();
-        //butt.Interactable(false);
-
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
         if (context.performed)
@@ -100,6 +100,18 @@ public class UISelection : MonoBehaviour
                 GetComponent<SelectionScreenScript>().Ready();
             }
             else selection = null;
+
+            if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+            {
+            string charname = selection.GetComponentInChildren<TextMeshProUGUI>().text;
+
+            switch (charname)
+            {
+                case "Lars-Göran": selectedCharacter = "Lars"; break;
+                case "The Brass Beast": selectedCharacter = "Nina"; break;
+                case "Capôw": selectedCharacter = "Carla"; break;
+            }
+            }
             UpdateButtons();
         }
     }
@@ -256,5 +268,21 @@ public class UISelection : MonoBehaviour
                 SwapSelection(button);
             }
         }
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Level1_sloped")
+        {
+        switch (selectedCharacter)
+        {
+            case "Carla": EnableShudderChat(); break;
+        }
+        }
+    }
+    public void EnableShudderChat()
+    {
+        GameObject chat = GameObject.Find("ShudderChatController");
+        if (chat != null)
+        chat.GetComponent<ShudderChat>().EnableChat(true);
     }
 }

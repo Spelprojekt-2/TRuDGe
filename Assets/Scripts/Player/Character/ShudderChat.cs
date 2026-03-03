@@ -12,10 +12,18 @@ public class ShudderChat : MonoBehaviour
     public float bottomOffs = 50f;
     private List<GameObject> activeChat = new List<GameObject>();
     [SerializeField] private Image phoneImage;
+    public bool chatEnabled = false;
 
     //Chatstuf
     void Awake()
     {
+        GameObject charselect = GameObject.Find("SplitscreenPlayer");
+        UISelection defwrg = GetComponentInChildren<UISelection>();
+        string charss = charselect.GetComponentInChildren<UISelection>().selectedCharacter;
+        switch (charss)
+        {
+            case "Carla": EnableChat(true); break;
+        }
         //ChatWin();
     }
 
@@ -89,10 +97,13 @@ public class ShudderChat : MonoBehaviour
         };
     void Update()
     {
+        if (chatEnabled)
+        {
         int chatSpawn = Random.Range(1, 360);
         if (chatSpawn == 1)
         {
             CringeChat();
+        }
         }
     }
 
@@ -225,7 +236,7 @@ public class ShudderChat : MonoBehaviour
 
     public void EnableChat(bool state)
     {
-        GetComponent<ShudderChat>().enabled = state;
+        chatEnabled = state;
         phoneImage.enabled = state;
     }
 
