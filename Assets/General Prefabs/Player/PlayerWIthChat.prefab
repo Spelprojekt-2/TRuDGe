@@ -1,5 +1,71 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &766746477214231445
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3489764953836667663}
+    m_Modifications:
+    - target: {fileID: 678076504823603133, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: chatEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6506190167143356573, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+      propertyPath: m_Name
+      value: ShudderChatController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+--- !u!4 &2481420388736039313 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2939655840755814916, guid: c1c97703ba88b2548b912632691a552c, type: 3}
+  m_PrefabInstance: {fileID: 766746477214231445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1440356536348911291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +76,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_Name
-      value: SplitscreenPlayer
+      value: PlayerWIthChat
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54,6 +120,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2563408139579286964, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2481420388736039313}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+--- !u!4 &3489764953836667663 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2563408139579286964, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+  m_PrefabInstance: {fileID: 1440356536348911291}
+  m_PrefabAsset: {fileID: 0}
