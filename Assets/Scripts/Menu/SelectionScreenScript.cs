@@ -15,6 +15,7 @@ public class SelectionScreenScript : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
+        EnableShudderChat();
     }
     private bool CanInteract()
     {

@@ -52,7 +52,25 @@ public class ShudderChat : MonoBehaviour
             "Death",
             "SKULLEMOJI",
             "Mouski>Control",
-            "SandwichTable"
+            "SandwichTable",
+            "ILOVESCHLORSH",
+            "Microslop",
+            "UBIMAD",
+            //gruppens dc
+            "Massiv",
+            "arrerino",
+            "Bones",
+            "Honey",
+            "Kiosotto",
+            "trustworthy",
+            "spotunna",
+            "HUMLAN34",
+            "Rubin",
+            "Sage",
+            "scxeed",
+            "Steelwrecker",
+            "Herbert",
+            "Steve"
         };
         //Chatter color
         private string[] colors =
@@ -71,7 +89,7 @@ public class ShudderChat : MonoBehaviour
         };
     void Update()
     {
-        int chatSpawn = Random.Range(1, 400);
+        int chatSpawn = Random.Range(1, 360);
         if (chatSpawn == 1)
         {
             CringeChat();
@@ -150,18 +168,33 @@ public class ShudderChat : MonoBehaviour
         //Chatter message
         string[] ChatMessages =
         {
-            "Monster under my bed",
+            "CAPÔW",
             "Cringe",
             "Sminge",
-            "Nawur",
+            "TANKS ARE AWESOME",
             "Go go go!",
             "Bullen>Gabriel",
             "Lets go",
             "TRUDGE!",
-            "U",
+            "F",
             "Ultimatus",
             "sign my forehead pls",
-            "toiletman"
+            "2060 is the new 2020",
+            "Cars 8 > Cars 1",
+            "WHERE IS HERBERT",
+            "Napoleon for king!!",
+            "what are you doing",
+            "Speed up",
+            "go faster",
+            "#ILOVESCHLORSCH",
+            "Much better than cars",
+            "Beef nugget is life",
+            "Ghiniwhini is faster",
+            "BOSS engines my goat",
+            "Just won 50k @WinZone",
+            "chug speedrunner =win",
+            "GameStation 7 is so good",
+            "ILY CARLA"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
