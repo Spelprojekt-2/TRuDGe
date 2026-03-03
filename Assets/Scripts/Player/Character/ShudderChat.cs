@@ -134,7 +134,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         UISelection ui = GetComponentInParent<UISelection>();
 
         if (playerIndex >= 0 && playerIndex < ui.selectedCharacter.Length &&
-            ui.selectedCharacter[playerIndex] == "Carla")
+            UISelection.Instance.selectedCharacter[playerIndex] == "Carla")
         {
             EnableChat(true);
         }
