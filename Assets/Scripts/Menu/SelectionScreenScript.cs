@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class SelectionScreenScript : MonoBehaviour
 {
@@ -13,7 +16,6 @@ public class SelectionScreenScript : MonoBehaviour
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
     }
-
     private bool CanInteract()
     {
         return (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
@@ -40,5 +42,11 @@ public class SelectionScreenScript : MonoBehaviour
             return;
 
         PlayerTrackerManager.instance.HandlePlayerLeft(input);
+    }
+    public void EnableShudderChat()
+    {
+        GameObject chat = GameObject.Find("ShudderChatController");
+        if (chat != null)
+        chat.GetComponent<ShudderChat>().EnableChat(true);
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 
 public class ShudderChat : MonoBehaviour
@@ -10,8 +11,14 @@ public class ShudderChat : MonoBehaviour
     public float SpaceY = 3f;
     public float bottomOffs = 50f;
     private List<GameObject> activeChat = new List<GameObject>();
+    [SerializeField] private Image phoneImage;
 
     //Chatstuf
+    void Awake()
+    {
+        //ChatWin();
+    }
+
     //Chatter name
         private string[] chatterNames =
         {
@@ -39,7 +46,13 @@ public class ShudderChat : MonoBehaviour
             "MagganLöfv",
             "CutinisRight",
             "Trudgeinator",
-            "WhereHerbert"
+            "WhereHerbert",
+            "GruppSexBad",
+            "yourewelcome",
+            "Death",
+            "SKULLEMOJI",
+            "Mouski>Control",
+            "SandwichTable"
         };
         //Chatter color
         private string[] colors =
@@ -137,15 +150,18 @@ public class ShudderChat : MonoBehaviour
         //Chatter message
         string[] ChatMessages =
         {
-            "OWKDLDAFIK",
+            "Monster under my bed",
             "Cringe",
             "Sminge",
             "Nawur",
             "Go go go!",
             "Bullen>Gabriel",
-            "Argh",
+            "Lets go",
             "TRUDGE!",
-            "yup"
+            "U",
+            "Ultimatus",
+            "sign my forehead pls",
+            "toiletman"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
@@ -156,26 +172,29 @@ public class ShudderChat : MonoBehaviour
     //Scripted chat
     public void ChatDistract()
     {
-        string[] colors =
-        {
-            "red",
-            "green",
-            "blue",
-            "yellow",
-            "#00ffffff",
-            "#a52a2aff",
-            "#0000a0ff",
-            "#00ff00ff",
-            "#ffa500ff",
-            "#c0c0c0ff",
-            "#008080ff"
-        };
-        
-        SpawnChat("<color=green>Ghrash:</color> Imma go go distract them, hold on.", 10f);
-        //Invoke
+        SpawnChat("<color=green>Ghrash:</color> Imma go distract the other racers", 10f);
     }
-    void ChatDistract1()
+    public void ChatStreamerNo()
     {
-        
+        SpawnChat("<color=#c0c0c0ff>FreakBob:</color> MY STREAMER NOOOOOOO", 10f);
     }
+    public void ChatWin()
+    {
+        int randomChatter = Random.Range(0, chatterNames.Length * colors.Length);
+
+        int nameIndex = randomChatter / colors.Length;
+        int colorIndex = randomChatter % colors.Length;
+
+        string ChatterName = $"<color={colors[colorIndex]}>{chatterNames[nameIndex]}:</color> ";
+
+        SpawnChat(ChatterName + "CHICKEN DINNER!!!", 6f);
+    }
+
+    public void EnableChat(bool state)
+    {
+        GetComponent<ShudderChat>().enabled = state;
+        phoneImage.enabled = state;
+    }
+
+    //press Y to disable?
 }
