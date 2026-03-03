@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class SplitScreenCamera : MonoBehaviour
 {
     [SerializeField] PlayerInput input;
+    [SerializeField] RacerData data;
     private Camera cam;
     private int index;
     private int totalPlayers;
@@ -25,7 +26,8 @@ public class SplitScreenCamera : MonoBehaviour
 
     private void Start()
     {
-        index = input.playerIndex;
+        if (!data) return;
+        index = data.index;
         totalPlayers = PlayerInput.all.Count;
         cam = GetComponent<Camera>();
         cam.depth = index;
@@ -36,7 +38,7 @@ public class SplitScreenCamera : MonoBehaviour
     public void SetupCamera(int totalPlayers)
     {
         if (cam == null) cam = GetComponent<Camera>();
-        index = input.playerIndex;
+        index = data.index;
 
         switch (totalPlayers)
         {

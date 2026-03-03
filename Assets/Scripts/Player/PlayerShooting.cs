@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
@@ -12,9 +13,16 @@ public class PlayerShooting : MonoBehaviour
     private bool isShooting = false;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private PlayerCamera playerCam;
+
+    // Audio refs
+    PlayerAudio playerAudio;
+
     private void Start()
     {
         timer = fireRate;
+
+        // Get PlayerAudio.
+        playerAudio = GetComponent<PlayerAudio>();
     }
     public void ShootInput(InputAction.CallbackContext context)
     {
@@ -23,9 +31,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if(timer >= fireRate)
+        if (timer >= fireRate)
         {
-            if(isShooting)
+            if (isShooting)
             {
                 timer = 0;
                 Shoot(projectilePrefab);
@@ -40,43 +48,24 @@ public class PlayerShooting : MonoBehaviour
     {
         Vector3 targetPoint = GetTargetPoint();
 
-        Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        //Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        Vector3 bulletDir = targetPoint;
         targetPoint.y = barrelPosition.position.y;
-        if(bulletDir.y < 0)
-        {
-            bulletDir.y = 0;
-        }
+        bulletDir.y = 0;
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,
             Quaternion.LookRotation(bulletDir)
         );
 
-        PlayerCamera playerCam = GetComponent<PlayerCamera>();
-            if (playerCam.isOverEnemy && prefab != projectilePrefab)
-            {
-                Debug.Log("Homing missile");
-                bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, playerCam.currentTarget.transform);
-            }
-            else
-            {
-                bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null);
-            }
+        bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null);
+
+        // Play shoot audio
+        playerAudio.ShootStart();
     }
 
     private Vector3 GetTargetPoint()
     {
-        // Call the new stable ray function from your Camera script
-        Ray ray = playerCam.GetStableCrosshairRay();
-
-        RaycastHit hit;
-
-        // Use the LayerMask we set up earlier to ignore the player/vehicle
-        if (Physics.Raycast(ray, out hit, 1000f, ~excludeLayers))
-        {
-            return hit.point;
-        }
-
-        return ray.GetPoint(1000f);
+        return playerCam.GetStableCrosshairRay().direction;
     }
 }

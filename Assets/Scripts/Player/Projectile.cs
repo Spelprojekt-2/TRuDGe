@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] LayerMask groundLayer;
+    private float currentSpeed;
     private GameObject shooter;
     private Transform target = null;
     private bool isFalling = false;
@@ -14,31 +14,23 @@ public class Projectile : MonoBehaviour
     {
         if (target == null)
         {
+            currentSpeed = projectileSpeed;
             StartCoroutine(DeathTimer());
+        }
+        else
+        {
+            currentSpeed = shooter.GetComponent<PlayerMovement>().GetCurrentSpeed() + 10;
         }
         
         this.shooter = shooter;
-        this.target = target;
     }
 
     private void FixedUpdate()
     {
         if (isFalling) return;
 
-        rb.linearVelocity = transform.forward * projectileSpeed;
-
-        if (target != null)
-        {
-            Vector3 targetPos = target.position;
-            targetPos = new Vector3(target.position.x, transform.position.y, target.position.z);
-            transform.LookAt(targetPos);
-
-            Ray ray = new Ray(transform.position, transform.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, 10f, groundLayer))
-            {
-                transform.position += Vector3.up * 1f;
-            }
-        }
+        rb.linearVelocity = transform.forward * currentSpeed;
+        
     }
 
     IEnumerator DeathTimer()
@@ -48,17 +40,21 @@ public class Projectile : MonoBehaviour
         rb.useGravity = true;
     }
 
+
     private void OnTriggerEnter(Collider col)
     {
         if (col.transform.IsChildOf(shooter.transform))
         {
             return;
         }
+        Debug.Log(col.gameObject.name);
         if (col.transform.root.CompareTag("Player"))
         {
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
             force.y = 0;
-            col.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            col.gameObject.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            col.gameObject.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
+            col.gameObject.GetComponentInParent<PlayerPowerups>().DropGasTanks();
         }
         Destroy(gameObject);
     }

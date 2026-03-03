@@ -6,13 +6,13 @@ using System.Linq;
 using System;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
+using System.Collections;
 
 public class RaceController : MonoBehaviour
 {
     public SplineContainer trackSpline;
     [SerializeField, Range(1, 5)] int lapsOnThisTrack = 3;
-    private List<RacerData> racers;
+    [HideInInspector] public List<RacerData> racers;
 
     [SerializeField] private Transform startingLine;
     private float startLineOffset;
@@ -22,37 +22,81 @@ public class RaceController : MonoBehaviour
     private float timeToRaceStart;
     private bool raceStarted;
 
+    //Timer
+    private double raceStartTime;
+    private bool isPaused = false;
+    private double totalPausedTime = 0;
+    private double pauseStartTime = 0;
+    private int lastCountdownSecond = -1;
+
+    [SerializeField] private GameObject ghostPrefab;
+    private TimeTrialReplay ghostReplay;
+
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += SummaryScene;
         timeToRaceStart = timeBeforeStartCountdown;
         raceStarted = false;
 
         racers = FindObjectsByType<RacerData>(FindObjectsSortMode.None).ToList();
-        startLineOffset = GetSplineProgress(startingLine.position);
+        if (trackSpline) startLineOffset = GetSplineProgress(startingLine.position);
 
         for (int i = 0; i < racers.Count; i++)
         {
-            UpdateRaceProgress(racers[i]);
+            racers[i].currentValidLap = 0;
+            racers[i].lap = 0;
+            racers[i].raceProgress = 0;
+            racers[i].lapProgress = 0;
+            racers[i].racePosition = 0;
             racers[i].TrackLoaded(lapsOnThisTrack);
+            racers[i].UpdateLapCount();
+            if (trackSpline) UpdateRaceProgress(racers[i]);
+        }
+
+        if (!trackSpline) return;
+
+        if (PlayerTrackerManager.instance.isTimeTrial && PlayerTrackerManager.instance.isTimeTrialWithGhost)
+        {
+            SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
+    .OrderBy(s => s.name)
+    .ToArray()[0];
+
+            spawn.transform.GetPositionAndRotation(out Vector3 spawnPos, out Quaternion spawnRot);
+            GameObject ghostObj = Instantiate(ghostPrefab, spawnPos, spawnRot);
+            ghostReplay = ghostObj.GetComponentInChildren<TimeTrialReplay>();
+            ghostReplay.LoadGhostFile(PlayerTrackerManager.instance.pathToGhost);
+
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!raceStarted)
         {
-            timeToRaceStart -= Time.deltaTime;
-            if (timeToRaceStart < 3) countdownText.text = Mathf.FloorToInt(timeToRaceStart + 1).ToString();
-            if (timeToRaceStart < 0)
+            timeToRaceStart -= Time.fixedDeltaTime;
+            if (timeToRaceStart <= 3 && timeToRaceStart > 0)
             {
+                int currentSecond = Mathf.FloorToInt(timeToRaceStart + 1);
+
+                if (currentSecond != lastCountdownSecond)
+                {
+                    lastCountdownSecond = currentSecond;
+                    countdownText.text = currentSecond.ToString();
+                    AudioManager.Instance.PlayCountdownAudio(); // Play countdown audio
+                }
+            }
+            if (timeToRaceStart <= 0)
+            {
+                AudioManager.Instance.PlayCountdownAudio(true); // Play final countdown audio
+
+                totalPausedTime = 0;
+                raceStartTime = Time.realtimeSinceStartupAsDouble;
                 raceStarted = true;
                 for (int i = 0; i < racers.Count; i++)
                 {
                     Debug.Log("Race Started");
                     racers[i].OnRaceStarted();
-                    countdownText.gameObject.SetActive(false);
+                    if (PlayerTrackerManager.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
+                    if (countdownText) countdownText.gameObject.SetActive(false);
                 }
             }
         }
@@ -61,14 +105,19 @@ public class RaceController : MonoBehaviour
             bool allDone = true;
             for (int i = 0; i < racers.Count; i++)
             {
-                if (racers[i].bestLap < lapsOnThisTrack) allDone = false;
+                if (racers[i].currentValidLap < lapsOnThisTrack) allDone = false;
             }
             if (allDone)
             {
-                SceneManager.LoadScene("AfterRace");
+                RacerData[] inorder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
+                Leaderboard.SetLeaderboard(inorder);
+
+                StartCoroutine(WaitToAfterRace());
             }
         }
         if (racers.Count == 0 || trackSpline == null) return;
+
+        if (!trackSpline) return;
 
         for (int i = 0; i < racers.Count; i++)
         {
@@ -86,22 +135,6 @@ public class RaceController : MonoBehaviour
 
     }
 
-
-    public void SummaryScene(Scene scene, LoadSceneMode loadmode)
-    {
-        if (scene.name != "AfterRace") return;
-        string leaderboard = "";
-        RacerData[] racersInOrder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
-        for (int i = 0; i < racersInOrder.Length; ++i)
-        {
-            racersInOrder[i].DisablePosition();
-            leaderboard += $"{i+1}: Player{racersInOrder[i].GetComponent<PlayerInput>().playerIndex + 1}";
-        }
-
-        FindFirstObjectByType<TextMeshProUGUI>().text = leaderboard;
-        Debug.Log(scene.name);
-        Destroy(this);
-    }
     void UpdateRaceProgress(RacerData racer)
     {
         if (racer.lap >= lapsOnThisTrack)
@@ -139,7 +172,7 @@ public class RaceController : MonoBehaviour
     }
 
 
-    float GetSplineProgress(Vector3 worldPosition)
+    public float GetSplineProgress(Vector3 worldPosition)
     {
         float3 localPos = trackSpline.transform.InverseTransformPoint(worldPosition);
 
@@ -165,7 +198,33 @@ public class RaceController : MonoBehaviour
             }
         }
 
-        return bestProgress; // 0–1 across entire container
+        return bestProgress; // 0â€“1 across entire container
     }
 
+    private IEnumerator WaitToAfterRace()
+    {
+        yield return new WaitForSeconds(5);
+        if (PlayerTrackerManager.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        else SceneManager.LoadScene("AfterRace");
+    }
+
+    public double GetRaceTime()
+    {
+        if (isPaused) return pauseStartTime - raceStartTime - totalPausedTime;
+        else return Time.realtimeSinceStartupAsDouble - raceStartTime - totalPausedTime;
+    }
+
+    public void PauseRace()
+    {
+        if (isPaused) return;
+        pauseStartTime = Time.realtimeSinceStartupAsDouble;
+        isPaused = true;
+    }
+
+    public void ResumeRace()
+    {
+        if (!isPaused) return;
+        totalPausedTime += Time.realtimeSinceStartupAsDouble - pauseStartTime;
+        isPaused = false;
+    }
 }
