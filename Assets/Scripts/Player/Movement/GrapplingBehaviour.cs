@@ -40,7 +40,7 @@ public class GrapplingBehaviour : MonoBehaviour
         }
         else if (context.canceled)
         {
-            EndGrapple();
+            EndGrapple(true);
         }
 
         if (isGrappling)
@@ -59,8 +59,10 @@ public class GrapplingBehaviour : MonoBehaviour
         lineRenderer.enabled = true;
         if (grappleHook) grappleHook.SetActive(false);
     }
-    public void EndGrapple()
+    public void EndGrapple(bool respectLock)
     {
+        if (respectLock && grappleable != null && grappleable.IsLocking) return;
+
         isGrappling = false;
 
         // Change audio behaviour
