@@ -15,7 +15,6 @@ public class SelectionScreenScript : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
-        EnableShudderChat();
     }
     private bool CanInteract()
     {
@@ -43,6 +42,10 @@ public class SelectionScreenScript : MonoBehaviour
             return;
 
         PlayerTrackerManager.instance.HandlePlayerLeft(input);
+    }
+    public void SelectCarla()
+    {
+        EnableShudderChat();
     }
     public void EnableShudderChat()
     {
