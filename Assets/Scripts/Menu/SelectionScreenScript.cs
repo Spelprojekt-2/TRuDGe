@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class SelectionScreenScript : MonoBehaviour
 {
@@ -14,7 +17,6 @@ public class SelectionScreenScript : MonoBehaviour
         input = GetComponent<PlayerInput>();
         timeSinceJoined = Time.realtimeSinceStartup;
     }
-
     private bool CanInteract()
     {
         return (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||

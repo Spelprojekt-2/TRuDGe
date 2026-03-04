@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UISelection : MonoBehaviour
 {
@@ -18,6 +19,13 @@ public class UISelection : MonoBehaviour
     private UIButton[] buttonsOnScene;
 
     private bool isKBM;
+
+    public string selectedCharacter;
+    public static UISelection Instance;
+    void Awake()
+    {
+        Instance = this;
+    }
     public void Start()
     {
         playerSelections.Add(this);
@@ -82,24 +90,47 @@ public class UISelection : MonoBehaviour
     }
     public void Select(InputAction.CallbackContext context)
     {
-        //Button butt = selection.GetComponent<Button>();
-        //butt.Interactable(false);
-
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
         if (context.performed)
         {
+            TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
+            string charname = (textObj != null) ? textObj.text : null;
+
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
             lastSelection = selection;
 
-            if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+            if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
             {
                 selection.enabled = false;
                 GetComponent<SelectionScreenScript>().Ready();
             }
             else selection = null;
+
+            int playerIndex = GetComponent<RacerData>().index;
+            
+                if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+                {
+                    Debug.Log(charname);
+                    if (charname != null)
+                    {
+                        switch (charname)
+                        {
+                            case "Lars-Göran": selectedCharacter = "Lars"; break;
+                            case "The Brass Beast": selectedCharacter = "Nina"; break;
+                            case "Capôw": selectedCharacter = "Carla"; break;
+                            case "Schlammer": selectedCharacter = "Leonie"; break;
+                            case "King Napoleon III": selectedCharacter = "Napoleon"; break;
+                            case "Dragoș": selectedCharacter = "André"; break;
+                            case "Demon of Vilkmergéle": selectedCharacter = "Ragana"; break;
+                            case "Harlequini Martinellini": selectedCharacter = "Tristano"; break;
+                        }
+                    racerData.SetName(selectedCharacter);
+                    }
+                }
+    
             UpdateButtons();
         }
     }
