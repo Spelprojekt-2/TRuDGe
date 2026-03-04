@@ -146,15 +146,13 @@ public class PlayerPowerups : MonoBehaviour
 
         if (usingMagnet)
         {
-            Pickup[] gasolineTanks = FindObjectsOfType<Pickup>();
-
-            foreach (var gasTank in gasolineTanks)
+            foreach (var pickup in Pickup.AllPickups)
             {
-                if(gasTank.powerUpType == PowerUpType.gasolineTank)
+                if (pickup.powerUpType == PowerUpType.gasolineTank)
                 {
-                    if (Vector3.Distance(transform.position, gasTank.transform.position) <= magnetPickupRange)
+                    if (Vector3.Distance(transform.position, pickup.transform.position) <= magnetPickupRange)
                     {
-                        gasTank.SetMagnetTarget(transform);
+                        pickup.SetMagnetTarget(transform);
                     }
                 }
             }
