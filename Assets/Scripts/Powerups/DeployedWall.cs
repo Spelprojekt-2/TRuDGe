@@ -4,6 +4,7 @@ public class DeployedWall : MonoBehaviour
 {
     [SerializeField] private GameObject[] walls = new GameObject[3];
     private int[] wallHealth = new int[3];
+
     private void Start()
     {
         for (int i = 0; i < walls.Length; i++)
@@ -31,12 +32,11 @@ public class DeployedWall : MonoBehaviour
     }
 }
 
-
 public class WallChildListener : MonoBehaviour
 {
     private DeployedWall mainScript;
     private int myIndex;
-    private bool hitGround = false;
+
     public void Initialize(DeployedWall parent, int index)
     {
         mainScript = parent;
@@ -46,7 +46,6 @@ public class WallChildListener : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         mainScript.OnChildHit(myIndex);
-
     }
     private void OnCollisionEnter(Collision other)
     {

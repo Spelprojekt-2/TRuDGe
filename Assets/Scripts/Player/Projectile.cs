@@ -10,15 +10,11 @@ public class Projectile : MonoBehaviour
     private Transform target = null;
     private bool isFalling = false;
 
-    public void PrepareProjectile(GameObject shooter, Transform target, float speedMultiplier)
+    public void PrepareProjectile(GameObject shooter, Transform target)
     {
         if (target == null)
         {
-            if(speedMultiplier < 0.5f)
-            {
-                speedMultiplier = 0.5f;
-            }
-            currentSpeed = projectileSpeed * speedMultiplier;
+            currentSpeed = projectileSpeed;
             StartCoroutine(DeathTimer());
         }
         else

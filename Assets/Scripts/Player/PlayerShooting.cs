@@ -13,15 +13,13 @@ public class PlayerShooting : MonoBehaviour
     private bool isShooting = false;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private PlayerCamera playerCam;
+
     // Audio refs
     PlayerAudio playerAudio;
-    private AutoAimCone autoAim;
-    [HideInInspector] public float timeLockedOnTarget;
-    [HideInInspector] public float speedMultiplier;
+
     private void Start()
     {
         timer = fireRate;
-        autoAim = GetComponentInChildren<AutoAimCone>();
 
         // Get PlayerAudio.
         playerAudio = GetComponent<PlayerAudio>();
@@ -29,7 +27,6 @@ public class PlayerShooting : MonoBehaviour
     public void ShootInput(InputAction.CallbackContext context)
     {
         isShooting = context.performed;
-        Debug.Log("Clicked Shoot");
     }
 
     private void Update()
@@ -49,30 +46,25 @@ public class PlayerShooting : MonoBehaviour
     }
     public void Shoot(GameObject prefab)
     {
-        Vector3 targetRay = GetTargetDir();
-        Vector3 actualWorldTarget = playerCam.cam.transform.position + (targetRay * 100f);
+        Vector3 targetPoint = GetTargetPoint();
 
-        Vector3 bulletDir = (actualWorldTarget - barrelPosition.position).normalized;
-
-        if (autoAim.GetTarget() != null)
-        {
-            bulletDir = (autoAim.GetTarget().position - barrelPosition.position).normalized;
-        }
-
+        //Vector3 bulletDir = (targetPoint - barrelPosition.position).normalized;
+        Vector3 bulletDir = targetPoint;
+        targetPoint.y = barrelPosition.position.y;
         bulletDir.y = 0;
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,
             Quaternion.LookRotation(bulletDir)
         );
-        Debug.Log("Shot");
-        bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null, speedMultiplier);
+
+        bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null);
 
         // Play shoot audio
         playerAudio.ShootStart();
     }
 
-    private Vector3 GetTargetDir()
+    private Vector3 GetTargetPoint()
     {
         return playerCam.GetStableCrosshairRay().direction;
     }

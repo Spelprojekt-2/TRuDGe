@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEditor;
 using UnityEngine.Rendering.Universal;
-using System.Collections;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform rotationRoot;
-    private AutoAimCone autoAim;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -25,9 +23,14 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] float controllerSensMultiplier;
     [SerializeField] float bottomCrosshairLimit;
 
-    [Header("---Auto Aim Settings---")]
-    public  Transform forOthersAimPoint;
-    private Transform currentTarget = null;
+    [Header("---Aim Assist Settings---")]
+    [SerializeField] float aimAssistDistance;
+    [SerializeField] float assistStrength = 0.2f; // How hard the crosshair pulls
+    [SerializeField] float sensitivityReduction = 0.5f; // 0.5 = half speed when over enemy
+    [SerializeField] LayerMask enemyLayer;
+
+    [HideInInspector] public bool isOverEnemy = false;
+    [HideInInspector] public Collider currentTarget = null;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
@@ -43,8 +46,7 @@ public class PlayerCamera : MonoBehaviour
     private bool isPressingLookBack, isPressingResetCrosshair;
     private bool isController = false;
     private Quaternion camStartRotOffset;
-    private bool lookingAtTarget = false;
-    private Transform oldTarget;
+
 
     [SerializeField] private string uiCameraTag = "UICamera";
 
@@ -68,12 +70,63 @@ public class PlayerCamera : MonoBehaviour
     {
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
-        autoAim = GetComponentInChildren<AutoAimCone>();
     }
 
 
+    private void Update()
+    {
+        if (isPressingResetCrosshair)
+        {
+            cursorPos = new Vector2(0f, 80f);
+        }
+    }
+
     void LateUpdate()
     {
+        float viewWidth = cam.pixelWidth;
+        float viewHeight = cam.pixelHeight;
+
+        ApplyAimAssist();
+
+        Vector2 mouseDelta = lookInputVector;
+        if (isController) mouseDelta *= controllerSensMultiplier;
+
+        float currentSens = isOverEnemy ? sensitivity * sensitivityReduction : sensitivity;
+        cursorPos += mouseDelta * currentSens;
+
+        cursorPos.x = Mathf.Clamp(cursorPos.x, -viewWidth / 2f, viewWidth / 2f);
+        cursorPos.y = 200; // Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
+
+        crosshair.anchoredPosition = cursorPos;
+
+
+
+        if (cursorPos.x > viewWidth / 2 - distanceFromScreenEdge.x) // Right
+        {
+            panningDist.x = cursorPos.x - (viewWidth / 2 - distanceFromScreenEdge.x);
+        }
+        else if (cursorPos.x < -viewWidth / 2 + distanceFromScreenEdge.x) // Left
+        {
+            panningDist.x = cursorPos.x - (-viewWidth / 2 + distanceFromScreenEdge.x);
+        }
+        else
+        {
+            panningDist.x = 0;
+        }
+
+        if (cursorPos.y > viewHeight / 2 - distanceFromScreenEdge.y) // Up
+        {
+            panningDist.y = cursorPos.y - (viewHeight / 2 - distanceFromScreenEdge.y);
+        }
+        else if (cursorPos.y < -viewHeight / 2 + distanceFromScreenEdge.y) // Down
+        {
+            panningDist.y = cursorPos.y - (-viewHeight / 2 + distanceFromScreenEdge.y);
+        }
+        else
+        {
+            panningDist.y = 0;
+        }
+
         panningDist *= 0.01f * rotationIntensity;
 
         cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, rotationRoot.transform.position, 10f * Time.deltaTime);
@@ -86,80 +139,66 @@ public class PlayerCamera : MonoBehaviour
         {
             cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
         }
-
-        currentTarget = autoAim.GetTarget();
-        if (currentTarget != oldTarget)
-        {
-            if (currentTarget != null)
-            {
-                StartCoroutine(FocusOnTarget());
-                lookingAtTarget = true;
-            }
-            else
-            {
-                lookingAtTarget = false;
-                cursorPos = new Vector2(0f, 200f);
-
-                crosshair.localScale = Vector3.one;
-                if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
-            }
-            oldTarget = currentTarget;
-        }
         
-        
-        if (currentTarget != null)
-        {
-
-            if (!lookingAtTarget)
-            {
-                StartCoroutine(FocusOnTarget());
-                lookingAtTarget = true;
-            }
-            Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
-            if (screenPos.z > 0)
-            {
-                float ratioX = ((screenPos.x - cam.pixelRect.xMin) / cam.pixelWidth) - 0.5f;
-                float ratioY = ((screenPos.y - cam.pixelRect.yMin) / cam.pixelHeight) - 0.5f;
-                RectTransform parentRect = (RectTransform)crosshair.parent;
-                Vector2 localTarget;
-                localTarget.x = ratioX * parentRect.rect.width;
-                localTarget.y = ratioY * parentRect.rect.height;
-
-                cursorPos = localTarget;
-            }
-        }
-        else
-        {
-            StopCoroutine(FocusOnTarget());
-            lookingAtTarget = false;
-            cursorPos = new Vector2(0f, 200f);
-        }
-
-        if (crosshair != null)
-        {
-            crosshair.anchoredPosition = cursorPos;
-        }
-    }
-
-    IEnumerator FocusOnTarget()
-    {
-        crosshair.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        for (int i = 0; i < 10; i++)
-        {
-            crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
-            GetComponent<PlayerShooting>().speedMultiplier = crosshair.localScale.x;
-            Debug.Log(GetComponent<PlayerShooting>().speedMultiplier);
-            yield return new WaitForSeconds(0.1f);
-        }
     }
 
     public Ray GetStableCrosshairRay()
     {
-        //Ray för denna player's kamera view
+        // Use pixelRect to get the size of THIS player's specific window
         Rect rect = cam.pixelRect;
+
+        // Calculate the center of THIS camera's viewport
+        // rect.x and rect.y handle the offset (e.g. if the camera starts halfway down the screen)
         Vector2 center = new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f);
+
+        // Add your cursorPos (which is relative to the center of the player's UI)
         Vector2 screenPoint = center + cursorPos;
+
+        // Create the ray
         return cam.ScreenPointToRay(screenPoint);
+    }
+
+    void ApplyAimAssist()
+    {
+        Ray ray = GetStableCrosshairRay();
+        isOverEnemy = false;
+        RaycastHit[] hits = Physics.RaycastAll(ray, 100f, enemyLayer);
+        Collider currentHitCol = null;
+        foreach (var hit in hits)
+        {
+            if (hit.collider.gameObject != player.gameObject)
+            {
+                if (hit.transform.root == player.root)
+                {
+                    isOverEnemy = false;
+                    currentTarget = null;
+                    continue; //Forts�tter ifall man tr�ffar sig sj�lv
+                }
+
+                currentHitCol = hit.collider;
+                currentTarget = currentHitCol;
+                isOverEnemy = true;
+                break;
+            }
+        }
+        if (isOverEnemy)
+        {
+            if (lookInputVector.magnitude >= 0f)
+            {
+                Vector3 screenPos = cam.WorldToScreenPoint(currentHitCol.transform.position);
+
+                Vector2 localTarget;
+                localTarget.x = (screenPos.x - cam.pixelRect.xMin) - (cam.pixelWidth / 2f);
+                localTarget.y = (screenPos.y - cam.pixelRect.yMin) - (cam.pixelHeight / 2f);
+
+                cursorPos = Vector2.Lerp(cursorPos, localTarget, assistStrength * Time.deltaTime * 5f);
+            }
+        }
+        else
+        {
+            if (showAimRay)
+                Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+        }
     }
 
     public void MinimapPrep()
