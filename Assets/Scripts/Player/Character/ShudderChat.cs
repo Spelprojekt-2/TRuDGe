@@ -51,9 +51,6 @@ public class ShudderChat : MonoBehaviour
             "ILOVESCHLORSH",
             "Microslop",
             "UBIMAD",
-            "Whambu",
-            "Mr.Osmium",
-            "gOFFMAN",
             //gruppens dc
             "Massiv",
             "arrerino",
@@ -89,7 +86,7 @@ public class ShudderChat : MonoBehaviour
     {
         if (chatEnabled && Time.timeScale == 1f)
         {
-        int chatSpawn = Random.Range(1, 160);
+        int chatSpawn = Random.Range(1, 360);
         if (chatSpawn == 1)
         {
             CringeChat();
@@ -129,13 +126,16 @@ public class ShudderChat : MonoBehaviour
         {
             activeChat.RemoveAt(0);
         }
-
+        UpdateChat();
+    }
+    void UpdateChat()
+    {
         string text = "";
         for (int i = 0; i < activeChat.Count; i++)
         {
             text += activeChat[i] + '\n';
         }
-        if (activeChat.Count > 0) text.Remove(text.Length-1, 1);
+        if (activeChat.Count > 0) text.Remove(text.Length - 1, 1);
         textObj.text = text;
     }
 
@@ -179,12 +179,7 @@ public class ShudderChat : MonoBehaviour
             "chug speedrunner =win",
             "GameStation 7 is so good",
             "ILY CARLA",
-            "o7",
-            "Why sex when have five",
-            "I wish group6 was good",
-            "Gotta go fats",
-            "Whambubalambu",
-            "CRAZY JUMPSCARES!!!!"
+            "o7"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
@@ -215,6 +210,8 @@ public class ShudderChat : MonoBehaviour
 
     public void EnableChat(bool state)
     {
+        activeChat.Clear();
+        UpdateChat();
         chatEnabled = state;
         phoneImage.enabled = state;
     }
