@@ -7,6 +7,7 @@ using System.Linq;
 public class SelectionScreenScript : MonoBehaviour
 {
     private PlayerInput input;
+    private UIButton uibutton;
 
     private float timeSinceJoined;
     private const float joinInputDelay = 0.1f;
@@ -32,7 +33,7 @@ public class SelectionScreenScript : MonoBehaviour
     {
         if (!context.performed || !CanInteract())
             return;
-
+        
         PlayerTrackerManager.instance.SetUnready(input);
     }
 

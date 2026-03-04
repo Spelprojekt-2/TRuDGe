@@ -10,16 +10,14 @@ using System.Collections;
 
 public class PlayerTrackerManager : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
-
     public static PlayerTrackerManager instance;
-
     private Dictionary<int, PlayerInput> playerInputs = new();
     private Dictionary<int, bool> readyStates = new();
     private bool allPlayersSpawned = false;
 
     private MenuController UIList;
 
+    public static event Action OnPlayerStateChanged;
     private void Start()
     {
         if (instance != null)
@@ -283,6 +281,7 @@ public class PlayerTrackerManager : MonoBehaviour
 
         PlayerInputManager.instance.DisableJoining();
         SceneManager.LoadScene("TrackSelect");
+        OnPlayerStateChanged?.Invoke();
     }
 
     public void SetUnready(PlayerInput input)
@@ -300,6 +299,7 @@ public class PlayerTrackerManager : MonoBehaviour
             case 2: UIList.ReadyTextP3.gameObject.SetActive(false); break;
             case 3: UIList.ReadyTextP4.gameObject.SetActive(false); break;
         }
+        OnPlayerStateChanged?.Invoke();
     }
 
     public void UnreadyAll()

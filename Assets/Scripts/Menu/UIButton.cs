@@ -61,9 +61,10 @@ public class UIButton : MonoBehaviour
     {
         bool shouldBeActive = i < activePlayers;
 
-        characterBackgrounds[i]?.SetActive(shouldBeActive);
-        characterText[i]?.SetActive(shouldBeActive);
-        characterStats[i]?.SetActive(shouldBeActive);
+            characterBackgrounds[i]?.SetActive(shouldBeActive);
+            characterText[i]?.SetActive(shouldBeActive);
+            characterStats[i]?.SetActive(shouldBeActive);
+        }
     }
         GameObject lastElement = activePlayers
         GameObject lastElement1 = characterText[characterText.Length - 1];
