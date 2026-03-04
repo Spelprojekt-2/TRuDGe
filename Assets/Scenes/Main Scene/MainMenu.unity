@@ -155,6 +155,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -340}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &228695591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4032147003260108891, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_Name
+      value: PlayerWIthChat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4032147003260108891, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329776987266492123, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3ad68e47fcdf28946963a1fd1aa2b7fc, type: 3}
 --- !u!1 &286667620
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,18 +518,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &320227852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,18 +720,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &343455804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,18 +1310,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &669852222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2106,18 +2146,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &915238902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2453,18 +2486,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &920074064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3275,18 +3301,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &1457625810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3797,18 +3816,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &1678465493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,18 +4195,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &1999517780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4449,18 +4454,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 585172349}
-  characterText: {fileID: 1213401613}
-  characterStats: {fileID: 1213401613}
-  characterBackground1: {fileID: 585172349}
-  characterText1: {fileID: 1213401613}
-  characterStats1: {fileID: 1213401613}
-  characterBackground2: {fileID: 585172349}
-  characterText2: {fileID: 1213401613}
-  characterStats2: {fileID: 1213401613}
-  characterBackground3: {fileID: 585172349}
-  characterText3: {fileID: 1213401613}
-  characterStats3: {fileID: 1213401613}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &2106053514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4685,6 +4683,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SystemManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5442672168543251835, guid: bc0dac151144a4049adc9e3acf773384, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4699,3 +4701,4 @@ SceneRoots:
   - {fileID: 1548941958}
   - {fileID: 2036791793724598531}
   - {fileID: 2059553704}
+  - {fileID: 228695591}
