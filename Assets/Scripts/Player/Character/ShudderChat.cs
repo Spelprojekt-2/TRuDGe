@@ -51,6 +51,9 @@ public class ShudderChat : MonoBehaviour
             "ILOVESCHLORSH",
             "Microslop",
             "UBIMAD",
+            "Whambu",
+            "Mr.Osmium",
+            "gOFFMAN",
             //gruppens dc
             "Massiv",
             "arrerino",
@@ -86,7 +89,7 @@ public class ShudderChat : MonoBehaviour
     {
         if (chatEnabled && Time.timeScale == 1f)
         {
-        int chatSpawn = Random.Range(1, 360);
+        int chatSpawn = Random.Range(1, 160);
         if (chatSpawn == 1)
         {
             CringeChat();
@@ -179,7 +182,12 @@ public class ShudderChat : MonoBehaviour
             "chug speedrunner =win",
             "GameStation 7 is so good",
             "ILY CARLA",
-            "o7"
+            "o7",
+            "Why sex when have five",
+            "I wish group6 was good",
+            "Gotta go fats",
+            "Whambubalambu",
+            "CRAZY JUMPSCARES!!!!"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
