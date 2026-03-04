@@ -212,13 +212,13 @@ public class ShudderChat : MonoBehaviour
             "Speed up",
             "go faster",
             "#ILOVESCHLORSCH",
-            "Much better than cars",
+            "Muh better than cars",
             "Beef nugget is life",
             "Ghiniwhini is faster",
             "BOSS engines my goat",
             "Just won 50k @WinZone",
             "chug speedrunner =win",
-            "GameStation 7 is so good",
+            "GameStation 7 good",
             "ILY CARLA",
             "o7"
         };
