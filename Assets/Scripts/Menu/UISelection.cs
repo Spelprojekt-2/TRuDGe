@@ -20,7 +20,7 @@ public class UISelection : MonoBehaviour
 
     private bool isKBM;
 
-    public string[] selectedCharacter = new string[4];
+    public string selectedCharacter;
     public static UISelection Instance;
     void Awake()
     {
@@ -94,12 +94,15 @@ public class UISelection : MonoBehaviour
         if (!selection || !selection.enabled) return;
         if (context.performed)
         {
+            TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
+            string charname = (textObj != null) ? textObj.text : null;
+
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
             lastSelection = selection;
 
-            if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
+            if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
             {
                 selection.enabled = false;
                 GetComponent<SelectionScreenScript>().Ready();
@@ -107,27 +110,27 @@ public class UISelection : MonoBehaviour
             else selection = null;
 
             int playerIndex = GetComponent<RacerData>().index;
-            if (playerIndex < 0 || playerIndex >= selectedCharacter.Length) return;
             
-                if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
-            {
-            
-            string charname = selection.GetComponentInChildren<TextMeshProUGUI>().text;
-
-            switch (charname)
-            {
-                case "Lars-Göran": selectedCharacter[playerIndex] = "Lars"; break;
-                case "The Brass Beast": selectedCharacter[playerIndex] = "Nina"; break;
-                case "Capôw": selectedCharacter[playerIndex] = "Carla"; break;
-                case "Schlammer": selectedCharacter[playerIndex] = "Leonie"; break;
-                case "King Napoleon III": selectedCharacter[playerIndex] = "Napoleon"; break;
-                case "Dragoș": selectedCharacter[playerIndex] = "André"; break;
-                case "Demon of Vilkmergéle": selectedCharacter[playerIndex] = "Ragana"; break;
-                case "Harlequini Martinellini": selectedCharacter[playerIndex] = "Tristano"; break;
-            }
-            }
-            
-            
+                if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+                {
+                    Debug.Log(charname);
+                    if (charname != null)
+                    {
+                        switch (charname)
+                        {
+                            case "Lars-Göran": selectedCharacter = "Lars"; break;
+                            case "The Brass Beast": selectedCharacter = "Nina"; break;
+                            case "Capôw": selectedCharacter = "Carla"; break;
+                            case "Schlammer": selectedCharacter = "Leonie"; break;
+                            case "King Napoleon III": selectedCharacter = "Napoleon"; break;
+                            case "Dragoș": selectedCharacter = "André"; break;
+                            case "Demon of Vilkmergéle": selectedCharacter = "Ragana"; break;
+                            case "Harlequini Martinellini": selectedCharacter = "Tristano"; break;
+                        }
+                    racerData.SetName(selectedCharacter);
+                    }
+                }
+    
             UpdateButtons();
         }
     }

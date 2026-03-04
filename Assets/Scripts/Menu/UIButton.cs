@@ -37,8 +37,6 @@ public class UIButton : MonoBehaviour
 
     public void SetHighlight(bool state, int playerIndex)
     {
-        Debug.Log("SetHighlight called for index: " + playerIndex);
-        //|| SceneManager.GetActiveScene().name == "MainMenu"
         if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
         {
             Stats = GetComponent<CharacterStats>();

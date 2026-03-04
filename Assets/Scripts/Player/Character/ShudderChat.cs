@@ -17,48 +17,6 @@ public class ShudderChat : MonoBehaviour
     public bool chatEnabled = false;
 
     //Chatstuf
-    /*void Awake()
-    {
-        int data.index = GetComponentInParent<RacerData>().index;
-        UISelection ui = GetComponentInParent<UISelection>();
-
-        if (data.index < 0 || data.index >= ui.selectedCharacter.Length || ui.selectedCharacter[data.index] == null) 
-        {
-            return;
-        }
-        else if (ui.selectedCharacter[data.index] == "Carla")
-        {
-            EnableChat(true);
-        }
-    }
-    void Awake()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    void OnEnable()
-{
-    SceneManager.sceneLoaded += OnSceneLoaded;
-}
-
-void OnDisable()
-{
-    SceneManager.sceneLoaded -= OnSceneLoaded;
-}
-
-private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-{
-    if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
-    {
-        int data.index = GetComponentInParent<RacerData>().index;
-        UISelection ui = GetComponentInParent<UISelection>();
-
-        if (data.index >= 0 && data.index < ui.selectedCharacter.Length &&
-            ui.selectedCharacter[data.index] == "Carla")
-        {
-            EnableChat(true);
-        }
-    }
-}*/
     //Chatter name
         private string[] chatterNames =
         {
@@ -138,32 +96,29 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         }
         }
     }
-    void Awake()
+    void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneController.instance.SceneChangeEvent += OnSceneLoaded;
     }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded()
     {
-        if (!chatEnabled && (scene.name.Equals("TrainingGround") || scene.name.Equals("Level1_sloped")))
+        if (!chatEnabled && !SceneController.instance.IsMenu)
         {
-            Transform myParent = transform.parent;
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
-            UISelection ui = data.transform.GetComponent<UISelection>();
-            if (data.index >= 0 && ui.selectedCharacter[data.index] == "Carla")
+            Debug.Log(data);
+            if (data.racername == "Carla")
             {
                 EnableChat(true);
             }
         }
-        if (chatEnabled && (!scene.name.Equals("TrainingGround") && !scene.name.Equals("Level1_sloped")))
+        if (chatEnabled && SceneController.instance.IsMenu)
         {
             EnableChat(false);
         }
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
     }
     void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
     }
 
     void SpawnChat(string chattext, float duration)

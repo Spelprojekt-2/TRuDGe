@@ -240,12 +240,6 @@ public class PlayerTrackerManager : MonoBehaviour
                 spawns[index].transform.position,
                 spawns[index].transform.rotation
             );
-
-            if (!SceneController.instance.IsMenu)
-            {
-                RacerData rd = input.GetComponent<RacerData>();
-                rd.SetName($"Player {rd.index + 1}");
-            }
         }
     }
 
