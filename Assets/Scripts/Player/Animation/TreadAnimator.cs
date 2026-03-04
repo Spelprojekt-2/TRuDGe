@@ -59,15 +59,15 @@ public class TreadAnimator : MonoBehaviour
         skinnedMeshRenderer.material.mainTextureOffset = offset;
 
         // Suspension
-        float lossyScale = transform.lossyScale.y;
+        // float lossyScale = transform.lossyScale.y;
         Vector3[] hits = new Vector3[wheels.Count];
         for (int i = 0; i < wheels.Count; i++)
         {
             Vector3 worldPos = transform.TransformPoint(wheels[i].rayCastPosition);
-            Ray ray = new Ray(worldPos + transform.up * 0.5f * lossyScale, -transform.up);
+            Ray ray = new Ray(worldPos + transform.up * minSuspensionDistance, -transform.up);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, maxSuspensionDistance + minSuspensionDistance, groundLayer))
             {
-                float distance = hitInfo.distance - 0.5f * lossyScale;
+                float distance = hitInfo.distance - minSuspensionDistance;
 
                 wheels[i].SetSuspensionHeight(distance);
 
