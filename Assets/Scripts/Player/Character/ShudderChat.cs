@@ -8,17 +8,14 @@ using System.Collections;
 
 public class ShudderChat : MonoBehaviour
 {
-    public GameObject chatPref;
-    public Transform chatPar;
-    public float SpaceY = 3f;
-    public float bottomOffs = 50f;
-    private List<GameObject> activeChat = new List<GameObject>();
+    [SerializeField] private int maxChatMessgages;
+    private List<string> activeChat = new List<string>();
     [SerializeField] private Image phoneImage;
     public bool chatEnabled = false;
-
+    TextMeshProUGUI textObj;
     //Chatstuf
     //Chatter name
-        private string[] chatterNames =
+    private string[] chatterNames =
         {
             "Buddha",
             "Juggler",
@@ -98,6 +95,7 @@ public class ShudderChat : MonoBehaviour
     }
     void Start()
     {
+        textObj = GetComponentInChildren<TextMeshProUGUI>();
         SceneController.instance.SceneChangeEvent += OnSceneLoaded;
     }
     void OnSceneLoaded()
@@ -121,63 +119,21 @@ public class ShudderChat : MonoBehaviour
         SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
     }
 
-    void SpawnChat(string chattext, float duration)
+    void SpawnChat(string chattext)
     {
-        GameObject newChat = Instantiate(chatPref, chatPar, false);
-        newChat.SetActive(true);
-
-        TextMeshProUGUI text = newChat.GetComponentInChildren<TextMeshProUGUI>();
-        text.text = chattext;
-
-        text.ForceMeshUpdate();
-
-        RectTransform textRect = text.GetComponent<RectTransform>();
-        RectTransform bgRect = newChat.GetComponent<RectTransform>();
-
-        float paddingX = 0f;
-        float paddingY = 0f;
-
-        bgRect.sizeDelta = new Vector2(
-            text.preferredWidth + paddingX,
-            text.preferredHeight + paddingY);
-
-        float yPos = bottomOffs;
-
-        foreach (GameObject chat in activeChat)
+        activeChat.Add(chattext);
+        if (activeChat.Count >= maxChatMessgages)
         {
-            RectTransform r = chat.GetComponent<RectTransform>();
-            yPos += r.sizeDelta.y + SpaceY;
+            activeChat.RemoveAt(0);
         }
 
-        bgRect.anchoredPosition = new Vector2(100f, yPos + -150f);
-
-        activeChat.Add(newChat);
-
-        Destroy(newChat, duration);
-        StartCoroutine(RemoveAfter(newChat, duration));
-    }
-
-    System.Collections.IEnumerator RemoveAfter(GameObject obj, float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        activeChat.Remove(obj);
-        RearrangeChat();
-    }
-
-    void RearrangeChat()
-    {
-        float yPos = bottomOffs;
-
-        foreach (GameObject chat in activeChat)
+        string text = "";
+        for (int i = 0; i < activeChat.Count; i++)
         {
-            if (chat == null) continue;
-
-            RectTransform r = chat.GetComponent<RectTransform>();
-            r.anchoredPosition = new Vector2(100f, yPos - 150f);
-
-            yPos += r.sizeDelta.y + SpaceY;
+            text += activeChat[i] + '\n';
         }
+        if (activeChat.Count > 0) text.Remove(text.Length-1, 1);
+        textObj.text = text;
     }
 
     //======= Chat =======
@@ -225,17 +181,17 @@ public class ShudderChat : MonoBehaviour
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
         string ChatMessage = $"{ChatMessages[randomMessage]}";
-        SpawnChat(ChatterName + ChatMessage, 6f);
+        SpawnChat(ChatterName + ChatMessage);
     }
 
     //Scripted chat
     public void ChatDistract()
     {
-        SpawnChat("<color=green>Ghrash:</color> Imma go distract the other racers", 10f);
+        SpawnChat("<color=green>Ghrash:</color> Imma go distract the other racers");
     }
     public void ChatStreamerNo()
     {
-        SpawnChat("<color=#c0c0c0ff>FreakBob:</color> MY STREAMER NOOOOOOO", 10f);
+        SpawnChat("<color=#c0c0c0ff>FreakBob:</color> MY STREAMER NOOOOOOO");
     }
     public void ChatWin()
     {
@@ -246,7 +202,7 @@ public class ShudderChat : MonoBehaviour
 
         string ChatterName = $"<color={colors[colorIndex]}>{chatterNames[nameIndex]}:</color> ";
 
-        SpawnChat(ChatterName + "CHICKEN DINNER!!!", 6f);
+        SpawnChat(ChatterName + "CHICKEN DINNER!!!");
     }
 
     public void EnableChat(bool state)
