@@ -2471,6 +2471,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+      propertyPath: m_lineSpacing
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_VerticalAlignment
       value: 1024
       objectReference: {fileID: 0}
@@ -2536,15 +2552,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 340
       objectReference: {fileID: 0}
     - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 300
+      value: 280
       objectReference: {fileID: 0}
     - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13
+      value: -14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7766106724382558709, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2560,7 +2584,7 @@ PrefabInstance:
       objectReference: {fileID: 9189338741132390125}
     - target: {fileID: 7836747393004625502, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: maxChatMessgages
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
