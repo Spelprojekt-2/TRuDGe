@@ -126,13 +126,16 @@ public class ShudderChat : MonoBehaviour
         {
             activeChat.RemoveAt(0);
         }
-
+        UpdateChat();
+    }
+    void UpdateChat()
+    {
         string text = "";
         for (int i = 0; i < activeChat.Count; i++)
         {
             text += activeChat[i] + '\n';
         }
-        if (activeChat.Count > 0) text.Remove(text.Length-1, 1);
+        if (activeChat.Count > 0) text.Remove(text.Length - 1, 1);
         textObj.text = text;
     }
 
@@ -208,6 +211,7 @@ public class ShudderChat : MonoBehaviour
     public void EnableChat(bool state)
     {
         activeChat.Clear();
+        UpdateChat();
         chatEnabled = state;
         phoneImage.enabled = state;
     }
