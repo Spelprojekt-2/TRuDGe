@@ -26,7 +26,7 @@ public class Airstrike : MonoBehaviour
         for (int i = 0; i < strikeCount; i++)
         {
             GameObject proj = Instantiate(projectiles, transform.position + new Vector3(Random.Range(-10, 10), 25, Random.Range(-10, 10)), Quaternion.LookRotation(Vector3.down));
-            proj.GetComponent<Projectile>().PrepareProjectile(gameObject, transform);
+            proj.GetComponent<Projectile>().PrepareProjectile(gameObject, transform, 0);
             yield return new WaitForSeconds(1f);
         }
     }

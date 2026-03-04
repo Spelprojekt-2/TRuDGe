@@ -51,7 +51,7 @@ public class CharacterStats : MonoBehaviour
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Nina Hagen")
+else if (selectedCharacter == "The Brass Beast")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -59,7 +59,7 @@ else if (selectedCharacter == "Nina Hagen")
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Carla Capô")
+else if (selectedCharacter == "Capôw")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -67,7 +67,7 @@ else if (selectedCharacter == "Carla Capô")
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Leonie Arenberg")
+else if (selectedCharacter == "Schlammer")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -75,7 +75,7 @@ else if (selectedCharacter == "Leonie Arenberg")
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "King Napoleon VIII")
+else if (selectedCharacter == "King Napoleon III")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -83,7 +83,7 @@ else if (selectedCharacter == "King Napoleon VIII")
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "André Nuskea")
+else if (selectedCharacter == "Dragoș")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -91,7 +91,7 @@ else if (selectedCharacter == "André Nuskea")
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Ragana Vilkaite")
+else if (selectedCharacter == "Demon of Vilkmergéle")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -99,7 +99,7 @@ else if (selectedCharacter == "Ragana Vilkaite")
     maxGasSlider.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Tristano Martinelli")
+else if (selectedCharacter == "Harlequini Martinellini")
 {
     charismaSlider.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider.GetComponent<Slider>().value = 0.5f;
@@ -118,7 +118,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Nina Hagen")
+    else if (selectedCharacter == "The Brass Beast")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -126,7 +126,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Carla Capô")
+    else if (selectedCharacter == "Capôw")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -134,7 +134,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Leonie Arenberg")
+    else if (selectedCharacter == "Schlammer")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -142,7 +142,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "King Napoleon VIII")
+    else if (selectedCharacter == "King Napoleon III")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -150,7 +150,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "André Nuskea")
+    else if (selectedCharacter == "Dragoș")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -158,7 +158,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Ragana Vilkaite")
+    else if (selectedCharacter == "Demon of Vilkmergéle")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -166,7 +166,7 @@ else if (playerIndex == 1)
         maxGasSlider1.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider1.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Tristano Martinelli")
+    else if (selectedCharacter == "Harlequini Martinellini")
     {
         charismaSlider1.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider1.GetComponent<Slider>().value = 0.5f;
@@ -185,7 +185,7 @@ else if (playerIndex == 1)
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Nina Hagen")
+else if (selectedCharacter == "The Brass Beast")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -193,7 +193,7 @@ else if (selectedCharacter == "Nina Hagen")
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Carla Capô")
+else if (selectedCharacter == "Capôw")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -201,7 +201,7 @@ else if (selectedCharacter == "Carla Capô")
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Leonie Arenberg")
+else if (selectedCharacter == "Schlammer")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -209,7 +209,7 @@ else if (selectedCharacter == "Leonie Arenberg")
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "King Napoleon VIII")
+else if (selectedCharacter == "King Napoleon III")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -217,7 +217,7 @@ else if (selectedCharacter == "King Napoleon VIII")
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "André Nuskea")
+else if (selectedCharacter == "Dragoș")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -225,7 +225,7 @@ else if (selectedCharacter == "André Nuskea")
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Ragana Vilkaite")
+else if (selectedCharacter == "Demon of Vilkmergéle")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -233,7 +233,7 @@ else if (selectedCharacter == "Ragana Vilkaite")
     maxGasSlider2.GetComponent<Slider>().value = 0.5f;
     shotCooldownSlider2.GetComponent<Slider>().value = 0.5f;
 }
-else if (selectedCharacter == "Tristano Martinelli")
+else if (selectedCharacter == "Harlequini Martinellini")
 {
     charismaSlider2.GetComponent<Slider>().value = 0.5f;
     topSpeedSlider2.GetComponent<Slider>().value = 0.5f;
@@ -252,7 +252,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Nina Hagen")
+    else if (selectedCharacter == "The Brass Beast")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
@@ -260,7 +260,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Carla Capô")
+    else if (selectedCharacter == "Capôw")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
@@ -268,7 +268,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Leonie Arenberg")
+    else if (selectedCharacter == "Schlammer")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
@@ -276,7 +276,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "King Napoleon VIII")
+    else if (selectedCharacter == "King Napoleon III")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
@@ -284,7 +284,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "André Nuskea")
+    else if (selectedCharacter == "Dragoș")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
@@ -292,7 +292,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Ragana Vilkaite")
+    else if (selectedCharacter == "Demon of Vilkmergéle")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
@@ -300,7 +300,7 @@ else if (playerIndex == 3)
         maxGasSlider3.GetComponent<Slider>().value = 0.5f;
         shotCooldownSlider3.GetComponent<Slider>().value = 0.5f;
     }
-    else if (selectedCharacter == "Tristano Martinelli")
+    else if (selectedCharacter == "Harlequini Martinellini")
     {
         charismaSlider3.GetComponent<Slider>().value = 0.5f;
         topSpeedSlider3.GetComponent<Slider>().value = 0.5f;
