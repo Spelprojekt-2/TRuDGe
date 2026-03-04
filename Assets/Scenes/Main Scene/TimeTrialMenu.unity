@@ -1506,19 +1506,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: PlayerTrackerManager, Assembly-CSharp
-        m_MethodName: SetReady
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.InputSystem.PlayerInput,
-            Unity.InputSystem
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: e65090a9f522a894ea88795bac0a960a, type: 2}
         m_TargetAssemblyTypeName: UIAudio, Assembly-CSharp
         m_MethodName: PlayUIBtnAudio
@@ -1586,18 +1573,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1938963617}
   SwapRight: {fileID: 1390322589}
   characterDescription: {fileID: 1838906036}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906036}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993750}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848576}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286488}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &231588372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,18 +2151,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1035820625}
   SwapRight: {fileID: 851714730}
   characterDescription: {fileID: 1838906033}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906033}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993747}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848573}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286485}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!224 &362936723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2287,18 +2260,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2995,51 +2956,6 @@ PrefabInstance:
 --- !u!224 &411286484 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3144206202189371698, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286485 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 857046901193993407, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286486 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8239691013804413853, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286487 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3379296185267970313, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286488 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1407750134590058833, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286489 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8253676296214494490, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286490 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1798586012749847036, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286491 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4593808385116552617, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286492 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8180816751454175232, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 411286483}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &411286493 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
   m_PrefabInstance: {fileID: 411286483}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &470060555
@@ -4058,18 +3974,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1390322589}
   SwapRight: {fileID: 1938963617}
   characterDescription: {fileID: 1838906038}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906038}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993752}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848578}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286490}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &652590204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4154,18 +4063,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5055,18 +4952,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 362936722}
   SwapRight: {fileID: 1823235533}
   characterDescription: {fileID: 1838906041}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906041}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993754}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848580}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286492}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!224 &851714731
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5171,18 +5061,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6354,18 +6232,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1823235533}
   SwapRight: {fileID: 362936722}
   characterDescription: {fileID: 1838906034}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906034}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993748}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848574}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286486}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!224 &1035820626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6470,18 +6341,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8007,7 +7866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20060d216ce82c545a147869593a0446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
 --- !u!4 &1291767796
 Transform:
   m_ObjectHideFlags: 0
@@ -8834,18 +8692,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: e65090a9f522a894ea88795bac0a960a, type: 2}
         m_TargetAssemblyTypeName: UIAudio, Assembly-CSharp
         m_MethodName: PlayUIBtnAudio
@@ -8913,18 +8759,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 202986211}
   SwapRight: {fileID: 652590203}
   characterDescription: {fileID: 1838906039}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906039}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993753}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848579}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286491}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &1416793384
 GameObject:
   m_ObjectHideFlags: 0
@@ -9477,51 +9316,6 @@ PrefabInstance:
 --- !u!224 &1466848572 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3144206202189371698, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848573 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 857046901193993407, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848574 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8239691013804413853, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848575 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3379296185267970313, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848576 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1407750134590058833, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848577 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8253676296214494490, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848578 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1798586012749847036, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848579 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4593808385116552617, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848580 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8180816751454175232, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1466848571}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1466848581 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
   m_PrefabInstance: {fileID: 1466848571}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1469958420
@@ -10410,6 +10204,7 @@ MonoBehaviour:
   ReadyTextP4: {fileID: 0}
   preselectPlayer:
   - {fileID: 1390322589}
+  initialSelection: {fileID: 0}
 --- !u!1 &1634464277
 GameObject:
   m_ObjectHideFlags: 0
@@ -11637,51 +11432,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3144206202189371698, guid: f00f41a79433ed04280b944953b51b56, type: 3}
   m_PrefabInstance: {fileID: 1730993745}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993747 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 857046901193993407, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993748 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8239691013804413853, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993749 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3379296185267970313, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993750 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1407750134590058833, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8253676296214494490, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993752 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1798586012749847036, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4593808385116552617, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993754 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8180816751454175232, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1730993755 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1730993745}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1738807586
 GameObject:
   m_ObjectHideFlags: 0
@@ -11914,11 +11664,6 @@ PrefabInstance:
       addedObject: {fileID: 808502204}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
---- !u!1 &1749228013 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1560657918375908708, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
-  m_PrefabInstance: {fileID: 1749228012}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1749228014 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5862353376269548968, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
@@ -12296,18 +12041,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: e65090a9f522a894ea88795bac0a960a, type: 2}
         m_TargetAssemblyTypeName: UIAudio, Assembly-CSharp
         m_MethodName: PlayUIBtnAudio
@@ -12375,18 +12108,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 851714730}
   SwapRight: {fileID: 1035820625}
   characterDescription: {fileID: 1838906035}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906035}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993749}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848575}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286487}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &1824543405
 GameObject:
   m_ObjectHideFlags: 0
@@ -12700,11 +12426,6 @@ GameObject:
 --- !u!1 &1838906039 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4593808385116552617, guid: f00f41a79433ed04280b944953b51b56, type: 3}
-  m_PrefabInstance: {fileID: 1838906031}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1838906040 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
   m_PrefabInstance: {fileID: 1838906031}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1838906041 stripped
@@ -13209,18 +12930,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: 9a64943addb29ed43a21b897ab0897ca, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: e65090a9f522a894ea88795bac0a960a, type: 2}
         m_TargetAssemblyTypeName: UIAudio, Assembly-CSharp
         m_MethodName: PlayUIBtnAudio
@@ -13288,18 +12997,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 652590203}
   SwapRight: {fileID: 202986211}
   characterDescription: {fileID: 1838906037}
-  characterBackground: {fileID: 1838906040}
-  characterText: {fileID: 1838906037}
-  characterStats: {fileID: 1749228013}
-  characterBackground1: {fileID: 1730993755}
-  characterText1: {fileID: 1730993751}
-  characterStats1: {fileID: 1249132657}
-  characterBackground2: {fileID: 1466848581}
-  characterText2: {fileID: 1466848577}
-  characterStats2: {fileID: 1676151587}
-  characterBackground3: {fileID: 411286493}
-  characterText3: {fileID: 411286489}
-  characterStats3: {fileID: 1583251974}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &1952100810
 GameObject:
   m_ObjectHideFlags: 0

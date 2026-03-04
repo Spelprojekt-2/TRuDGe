@@ -825,18 +825,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1290734563}
   SwapRight: {fileID: 762764410}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &316155342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,18 +1440,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 257898820}
   SwapRight: {fileID: 1290734563}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &789476351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20060d216ce82c545a147869593a0446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
 --- !u!4 &829595204
 Transform:
   m_ObjectHideFlags: 0
@@ -1875,18 +1860,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &1085962563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2314,18 +2292,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1747320078}
   SwapRight: {fileID: 1747320078}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &1266734672
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,18 +2535,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1290734563}
   SwapRight: {fileID: 1290734563}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1 &1315194314
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,18 +2597,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &1315194317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2879,6 +2836,7 @@ MonoBehaviour:
   ReadyTextP3: {fileID: 0}
   ReadyTextP4: {fileID: 0}
   preselectPlayer: []
+  initialSelection: {fileID: 0}
 --- !u!1 &1498006303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3350,18 +3308,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!1001 &1576993092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3616,18 +3567,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 0}
   SwapRight: {fileID: 0}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &1599896467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4241,18 +4185,11 @@ MonoBehaviour:
   SwapLeft: {fileID: 1193884641}
   SwapRight: {fileID: 1193884641}
   characterDescription: {fileID: 0}
-  characterBackground: {fileID: 0}
-  characterText: {fileID: 0}
-  characterStats: {fileID: 0}
-  characterBackground1: {fileID: 0}
-  characterText1: {fileID: 0}
-  characterStats1: {fileID: 0}
-  characterBackground2: {fileID: 0}
-  characterText2: {fileID: 0}
-  characterStats2: {fileID: 0}
-  characterBackground3: {fileID: 0}
-  characterText3: {fileID: 0}
-  characterStats3: {fileID: 0}
+  characterBackgrounds: []
+  characterText:
+  - {fileID: 0}
+  characterStats:
+  - {fileID: 0}
 --- !u!114 &1747320079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4715,9 +4652,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level1SceneName: Level1_sloped
   level1Text: {fileID: 1582581316}
-  level2SceneName: Driving
+  level2SceneName: Level2
   level2Text: {fileID: 735627958}
-  level3SceneName: Level1
+  level3SceneName: Level3
   level3Text: {fileID: 1743267467}
   GhostSelectionMenu: {fileID: 1971230090}
   GhostSelectionMenuFirstSelection: {fileID: 1315194316}
