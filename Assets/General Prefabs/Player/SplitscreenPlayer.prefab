@@ -992,7 +992,31 @@ MonoBehaviour:
     m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
     m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5493757530413151856}
+        m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
+        m_MethodName: Unready
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2094914520598921908}
+        m_TargetAssemblyTypeName: UISelection, Assembly-CSharp
+        m_MethodName: Deselect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
     m_ActionName: 'UI/Submit[/Keyboard/enter]'
   - m_PersistentCalls:
@@ -1080,19 +1104,7 @@ MonoBehaviour:
     m_ActionId: 96167161-7b25-49d6-bbf7-423ef2a85d92
     m_ActionName: 'Player/UsePowerUp[/Keyboard/space,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5493757530413151856}
-        m_TargetAssemblyTypeName: SelectionScreenScript, Assembly-CSharp
-        m_MethodName: Disconnect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: fc74d9ef-be14-46e8-a3e2-77d88750f529
     m_ActionName: 'UI/Disconnect[/Keyboard/escape,/XInputControllerWindows/start]'
   - m_PersistentCalls:
@@ -2559,38 +2571,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9189338741132390125}
     m_Modifications:
-    - target: {fileID: 21482098045625134, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 21482098045625134, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_fontSize
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_lineSpacing
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1083839827441704188, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 1321233528704932729, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4603272258624346494, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_Name
       value: ShudderCarla
@@ -2642,46 +2622,6 @@ PrefabInstance:
     - target: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7537991311398208832, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 340
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 280
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -14
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763639581704734472, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766106724382558709, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766106724382558709, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7836747393004625502, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: chatPar
-      value: 
-      objectReference: {fileID: 9189338741132390125}
-    - target: {fileID: 7836747393004625502, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
-      propertyPath: maxChatMessgages
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

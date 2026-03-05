@@ -82,10 +82,11 @@ public class UISelection : MonoBehaviour
             if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
             SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
-            if (lastSelection == null) return;
+            if (lastSelection == null && lastSelection == selection) return;
             lastSelection.enabled = true;
             selection = null;
             SwapSelection(lastSelection);
+            lastSelection.GetComponent<Image>().color = Color.white;
         }
     }
     public void Select(InputAction.CallbackContext context)
@@ -113,19 +114,26 @@ public class UISelection : MonoBehaviour
             
                 if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
                 {
+                    selection.GetComponent<Image>().color = playerIndex switch
+                    {
+                        0 => new Color32(255,25,25,255),
+                        1 => new Color32(50,200,50,255),
+                        2 => new Color32(255,255,0,255),
+                        3 => new Color32(0,190,255,255),
+                    };
                     Debug.Log(charname);
                     if (charname != null)
                     {
                         switch (charname)
                         {
-                            case "Lars-Göran": selectedCharacter = "Lars"; break;
-                            case "The Brass Beast": selectedCharacter = "Nina"; break;
-                            case "Capôw": selectedCharacter = "Carla"; break;
-                            case "Schlammer": selectedCharacter = "Leonie"; break;
-                            case "King Napoleon III": selectedCharacter = "Napoleon"; break;
-                            case "Dragoș": selectedCharacter = "André"; break;
-                            case "Demon of Vilkmergéle": selectedCharacter = "Ragana"; break;
-                            case "Harlequini Martinellini": selectedCharacter = "Tristano"; break;
+                            case "Lars-Göran": selectedCharacter = "Lars-Göran"; break;
+                            case "The Brass Beast": selectedCharacter = "The Brass Beast"; break;
+                            case "Capôw": selectedCharacter = "Capôw"; break;
+                            case "Schlammer": selectedCharacter = "Schlammer"; break;
+                            case "King Napoleon III": selectedCharacter = "King Napoleon III"; break;
+                            case "Dragoș": selectedCharacter = "Dragoș"; break;
+                            case "Demon of Vilkmergéle": selectedCharacter = "Demon of Vilkmergéle"; break;
+                            case "Harlequini Martinellini": selectedCharacter = "Harlequini Martinellini"; break;
                         }
                     racerData.SetName(selectedCharacter);
                     }
@@ -139,6 +147,7 @@ public class UISelection : MonoBehaviour
         if (!context.performed) return;
         if (isKBM)
         {
+            if (selection == null) return;
             Vector2 mousePos = Mouse.current.position.ReadValue();
             RectTransform rect = selection.GetComponent<RectTransform>();
             if (!RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos)) return;
@@ -153,10 +162,8 @@ public class UISelection : MonoBehaviour
             return;
 
         if (selection) selection.SetHighlight(false, playerIndex);
-        //if (selection) selection.RefreshUI();
         selection = newButton;
         selection.SetHighlight(true, playerIndex);
-        //selection.RefreshUI()
         SelectUIUpdate(newButton);
         UpdateButtons();
     }
@@ -173,9 +180,6 @@ public class UISelection : MonoBehaviour
     {
         Destroy(selectionHighlight.gameObject);
         playerSelections.Remove(this);
-        selection.RefreshUI();
-        //int playerIndex = GetComponent<RacerData>().index;
-        //selection.SetHighlight(false, playerIndex);
     }
 
     private void SelectUIUpdate(UIButton button)
@@ -190,10 +194,10 @@ public class UISelection : MonoBehaviour
 
         selectionColor = playerIndex switch
         {
-            0 => Color.red,
-            1 => new Color32(0,255,0,255),
-            2 => new Color32(0,0,255,255),
-            3 => Color.black,
+            0 => new Color32(255,25,25,255),
+            1 => new Color32(50,200,50,255),
+            2 => new Color32(255,255,0,255),
+            3 => new Color32(0,190,255,255),
         };
         Image highlightImage = selectionHighlight.GetComponent<Image>();
         if (highlightImage == null)

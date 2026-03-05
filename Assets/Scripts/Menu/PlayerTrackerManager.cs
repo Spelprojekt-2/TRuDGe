@@ -69,6 +69,7 @@ public class PlayerTrackerManager : MonoBehaviour
         if (!leavingInput)
             return;
 
+        SetUnready(leavingInput);
         RacerData leavingData = leavingInput.GetComponent<RacerData>();
         leavingData.GetComponent<UISelection>().RemovePlayer();
         int leavingIndex = leavingData.index;
@@ -76,7 +77,6 @@ public class PlayerTrackerManager : MonoBehaviour
         Destroy(leavingInput.transform.root.gameObject);
 
         playerInputs.Remove(leavingIndex);
-        SetUnready(leavingInput);
         readyStates.Remove(leavingIndex);
 
         // Shift players above down
@@ -133,8 +133,12 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             case SceneController.SceneType.PlayerSelectRace:
                 RacingInformation.instance.isTimeTrial = false;
-
+                for (int i = playerInputs.Count - 1; i > 0; i--)
+                {
+                    HandlePlayerLeft(playerInputs[i]);
+                }
                 List<PlayerInput> playerInputList = playerInputs.Values.ToList();
+                PlayerInputManager.instance.EnableJoining();
                 foreach (var input in playerInputList)
                 {
                     RacerData rd = input.GetComponent<RacerData>();
