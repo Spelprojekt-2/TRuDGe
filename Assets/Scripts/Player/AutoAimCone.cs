@@ -14,7 +14,7 @@ public class AutoAimCone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !SceneController.instance.IsMenu)
         {
             targetList.Add(other.transform.root.GetComponentInChildren<PlayerCamera>().forOthersAimPoint);
             Debug.Log(targetList[0].gameObject.name + " Detected");
@@ -22,7 +22,7 @@ public class AutoAimCone : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !SceneController.instance.IsMenu)
         {
             targetList.Remove(other.transform.root.GetComponentInChildren<PlayerCamera>().forOthersAimPoint);
             Debug.Log("Left Detect");
