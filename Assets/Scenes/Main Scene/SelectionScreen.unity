@@ -330,11 +330,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18077437}
   m_CullTransparentMesh: 1
---- !u!1 &18671434 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3801732765109197301, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
-  m_PrefabInstance: {fileID: 3785753998509846943}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &47318888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,26 +1004,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 1525937938}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &71603119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,11 +1296,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &113923056 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8272789002657405714, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
-  m_PrefabInstance: {fileID: 3785753998509846943}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &133789556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,26 +1974,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 1105283856}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &163021791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,26 +2963,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 272563831}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &272563829
 GameObject:
   m_ObjectHideFlags: 0
@@ -4000,7 +4005,7 @@ GameObject:
   - component: {fileID: 402194911}
   - component: {fileID: 402194912}
   m_Layer: 5
-  m_Name: Acceleration slider p1
+  m_Name: Acceleration slider p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8654,26 +8659,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 1276947726}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &818018113
 GameObject:
   m_ObjectHideFlags: 0
@@ -9207,11 +9217,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897871993}
   m_CullTransparentMesh: 1
---- !u!1 &914656421 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7632837990801493057, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
-  m_PrefabInstance: {fileID: 3785753998509846943}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &924788909 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8239691013804413853, guid: f00f41a79433ed04280b944953b51b56, type: 3}
@@ -15511,26 +15516,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 2078467452}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &1721690817
 GameObject:
   m_ObjectHideFlags: 0
@@ -15822,26 +15832,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 402121095}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &1776032196
 GameObject:
   m_ObjectHideFlags: 0
@@ -16413,26 +16428,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 1418714434}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &1893084436
 GameObject:
   m_ObjectHideFlags: 0
@@ -18065,11 +18085,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067759677}
   m_CullTransparentMesh: 1
---- !u!1 &2073856718 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7928552954737884649, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
-  m_PrefabInstance: {fileID: 3785753998509846943}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2078467450
 GameObject:
   m_ObjectHideFlags: 0
@@ -18386,26 +18401,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 1337100061}
-  charismaSlider: {fileID: 914656421}
-  topSpeedSlider: {fileID: 18671434}
-  accelerationSlider: {fileID: 113923056}
-  maxGasSlider: {fileID: 2073856718}
-  shotCooldownSlider: {fileID: 1244278308}
-  charismaSlider1: {fileID: 1896256626}
-  topSpeedSlider1: {fileID: 1435648851}
-  accelerationSlider1: {fileID: 402194910}
-  maxGasSlider1: {fileID: 2060831315}
-  shotCooldownSlider1: {fileID: 656754849}
-  charismaSlider2: {fileID: 1323568760}
-  topSpeedSlider2: {fileID: 818018113}
-  accelerationSlider2: {fileID: 787218567}
-  maxGasSlider2: {fileID: 1016827977}
-  shotCooldownSlider2: {fileID: 238486799}
-  charismaSlider3: {fileID: 1295314446}
-  topSpeedSlider3: {fileID: 725364788}
-  accelerationSlider3: {fileID: 1909872696}
-  maxGasSlider3: {fileID: 592067315}
-  shotCooldownSlider3: {fileID: 1925056663}
+  charismaSlider:
+  - {fileID: 3785753998509846947}
+  - {fileID: 1896256626}
+  - {fileID: 1323568760}
+  - {fileID: 1295314446}
+  topSpeedSlider:
+  - {fileID: 3785753998509846946}
+  - {fileID: 1435648851}
+  - {fileID: 818018113}
+  - {fileID: 725364788}
+  accelerationSlider:
+  - {fileID: 3785753998509846945}
+  - {fileID: 402194910}
+  - {fileID: 787218567}
+  - {fileID: 1909872696}
+  maxGasSlider:
+  - {fileID: 3785753998509846944}
+  - {fileID: 2060831315}
+  - {fileID: 1016827977}
+  - {fileID: 592067315}
+  shotCooldownSlider:
+  - {fileID: 1244278308}
+  - {fileID: 656754849}
+  - {fileID: 238486799}
+  - {fileID: 1925056663}
 --- !u!1 &2082658090
 GameObject:
   m_ObjectHideFlags: 0
@@ -19266,6 +19286,26 @@ PrefabInstance:
       addedObject: {fileID: 799318044}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
+--- !u!1 &3785753998509846944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7928552954737884649, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
+  m_PrefabInstance: {fileID: 3785753998509846943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3785753998509846945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8272789002657405714, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
+  m_PrefabInstance: {fileID: 3785753998509846943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3785753998509846946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3801732765109197301, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
+  m_PrefabInstance: {fileID: 3785753998509846943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3785753998509846947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7632837990801493057, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
+  m_PrefabInstance: {fileID: 3785753998509846943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7517715570301529665
 PrefabInstance:
   m_ObjectHideFlags: 0
