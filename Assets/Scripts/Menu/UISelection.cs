@@ -118,14 +118,14 @@ public class UISelection : MonoBehaviour
                     {
                         switch (charname)
                         {
-                            case "Lars-Göran": selectedCharacter = "Lars"; break;
-                            case "The Brass Beast": selectedCharacter = "Nina"; break;
-                            case "Capôw": selectedCharacter = "Carla"; break;
-                            case "Schlammer": selectedCharacter = "Leonie"; break;
-                            case "King Napoleon III": selectedCharacter = "Napoleon"; break;
-                            case "Dragoș": selectedCharacter = "André"; break;
-                            case "Demon of Vilkmergéle": selectedCharacter = "Ragana"; break;
-                            case "Harlequini Martinellini": selectedCharacter = "Tristano"; break;
+                            case "Lars-Göran": selectedCharacter = "Lars-Göran"; break;
+                            case "The Brass Beast": selectedCharacter = "The Brass Beast"; break;
+                            case "Capôw": selectedCharacter = "Capôw"; break;
+                            case "Schlammer": selectedCharacter = "Schlammer"; break;
+                            case "King Napoleon III": selectedCharacter = "King Napoleon III"; break;
+                            case "Dragoș": selectedCharacter = "Dragoș"; break;
+                            case "Demon of Vilkmergéle": selectedCharacter = "Demon of Vilkmergéle"; break;
+                            case "Harlequini Martinellini": selectedCharacter = "Harlequini Martinellini"; break;
                         }
                     racerData.SetName(selectedCharacter);
                     }
@@ -139,6 +139,7 @@ public class UISelection : MonoBehaviour
         if (!context.performed) return;
         if (isKBM)
         {
+            if (selection == null) return;
             Vector2 mousePos = Mouse.current.position.ReadValue();
             RectTransform rect = selection.GetComponent<RectTransform>();
             if (!RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos)) return;
@@ -153,10 +154,8 @@ public class UISelection : MonoBehaviour
             return;
 
         if (selection) selection.SetHighlight(false, playerIndex);
-        //if (selection) selection.RefreshUI();
         selection = newButton;
         selection.SetHighlight(true, playerIndex);
-        //selection.RefreshUI()
         SelectUIUpdate(newButton);
         UpdateButtons();
     }
@@ -173,9 +172,6 @@ public class UISelection : MonoBehaviour
     {
         Destroy(selectionHighlight.gameObject);
         playerSelections.Remove(this);
-        selection.RefreshUI();
-        //int playerIndex = GetComponent<RacerData>().index;
-        //selection.SetHighlight(false, playerIndex);
     }
 
     private void SelectUIUpdate(UIButton button)
