@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 3f698c5d47507d54db2dcb930054532e, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 457817287}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -35256,6 +35256,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!108 &457817287 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7171414760937649461, guid: ba511b6209daa0c4eb8d9f79204a145c, type: 3}
+  m_PrefabInstance: {fileID: 2064519949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &458333082
 Mesh:
   m_ObjectHideFlags: 32
