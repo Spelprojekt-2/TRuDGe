@@ -82,10 +82,11 @@ public class UISelection : MonoBehaviour
             if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
             SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
-            if (lastSelection == null) return;
+            if (lastSelection == null && lastSelection == selection) return;
             lastSelection.enabled = true;
             selection = null;
             SwapSelection(lastSelection);
+            lastSelection.GetComponent<Image>().color = Color.white;
         }
     }
     public void Select(InputAction.CallbackContext context)
@@ -113,6 +114,13 @@ public class UISelection : MonoBehaviour
             
                 if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
                 {
+                    selection.GetComponent<Image>().color = playerIndex switch
+                    {
+                        0 => new Color32(255,25,25,255),
+                        1 => new Color32(50,200,50,255),
+                        2 => new Color32(255,255,0,255),
+                        3 => new Color32(0,190,255,255),
+                    };
                     Debug.Log(charname);
                     if (charname != null)
                     {
@@ -186,10 +194,10 @@ public class UISelection : MonoBehaviour
 
         selectionColor = playerIndex switch
         {
-            0 => Color.red,
-            1 => new Color32(0,255,0,255),
-            2 => new Color32(0,0,255,255),
-            3 => Color.black,
+            0 => new Color32(255,25,25,255),
+            1 => new Color32(50,200,50,255),
+            2 => new Color32(255,255,0,255),
+            3 => new Color32(0,190,255,255),
         };
         Image highlightImage = selectionHighlight.GetComponent<Image>();
         if (highlightImage == null)
