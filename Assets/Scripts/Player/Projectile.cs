@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
         PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
         if (hit != null)
         {
-            hit.Hit();
+            hit.Hit(false);
         }
         Destroy(gameObject);
     }

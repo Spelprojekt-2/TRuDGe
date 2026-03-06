@@ -6,9 +6,9 @@ public class PlayerHit : MonoBehaviour
     [SerializeField] private float invincibilityDuration;
     private float invincibilityTimer;
     private bool isInvincible;
-    public void Hit()
+    public void Hit(bool ignoreInvincibility)
     {
-        if (isInvincible) return;
+        if (isInvincible && !ignoreInvincibility) return;
         invincibilityTimer = 0;
         transform.root.GetComponentInChildren<Rigidbody>().linearVelocity = Vector3.up * hitStrength;
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
