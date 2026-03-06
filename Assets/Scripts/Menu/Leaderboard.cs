@@ -15,7 +15,7 @@ public static class Leaderboard
         for (int i = 0; i < leaderboard.Length; i++)
         {
             leaderboard[i].DisablePosition();
-            leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername}\n";
+            leaderboardtxt += $"{GetPosString(i + 1)} {GetPlayerColor(leaderboard[i].index)}{leaderboard[i].racername}</color>\n";
         }
         return leaderboardtxt;
     }
@@ -32,6 +32,18 @@ public static class Leaderboard
             default:
                 return pos + "th";
         }
+    }
+
+    private static string GetPlayerColor(int playerIndex)
+    {
+        return playerIndex switch
+        {
+            0 => "<color=#FF1919>",
+            1 => "<color=#32C832>",
+            2 => "<color=#FFFF00>",
+            3 => "<color=#00BEFF>",
+            _ => "<color=#FFFFFF>"
+        };
     }
 
     public static string FormatTime(double time)
