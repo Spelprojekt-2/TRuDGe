@@ -36,7 +36,7 @@ public class GrapplingBehaviour : MonoBehaviour
     {
         if (context.performed)
         {
-            if (isInGrappleRange) StartGrappple();
+            if (isInGrappleRange && !isGrappling) StartGrappple();
         }
         else if (context.canceled)
         {
@@ -168,7 +168,11 @@ public class GrapplingBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!isGrappling || grappleable == null) return;
+        if (!isGrappling || grappleable == null)
+        {
+            if (isGrappling) EndGrapple(false);
+            return;
+        }
 
         cachedGrapplePoint = grappleable.GetGrapplePoint(this);
 

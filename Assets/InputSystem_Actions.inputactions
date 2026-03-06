@@ -57,7 +57,7 @@
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -91,6 +91,15 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "8000f702-e67e-4f8a-8a02-ad013392822c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TGReady",
+                    "type": "Button",
+                    "id": "4fdca036-b5b2-47e7-b736-7227de47d234",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -403,6 +412,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64ccf6a4-d812-48a0-b42d-92fc138bb10b",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TGReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3efa5fa-d299-40c1-8f8e-17a0308d1c88",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "TGReady",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -735,7 +766,7 @@
                 {
                     "name": "",
                     "id": "9e92bb26-7e3b-4ec4-b06b-3c8f8e498ddc",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -804,7 +835,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Disconnect",
                     "isComposite": false,
                     "isPartOfComposite": false

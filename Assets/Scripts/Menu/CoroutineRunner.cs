@@ -6,7 +6,7 @@ public class CoroutineRunner : MonoBehaviour
 {
     private static CoroutineRunner instance;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (instance != null)
         {

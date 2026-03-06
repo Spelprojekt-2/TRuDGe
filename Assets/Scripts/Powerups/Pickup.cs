@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public class Pickup : MonoBehaviour
 {
     [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
     [SerializeField] private ProbabilityPickupSO probability;
     [SerializeField] private ProbabilityPickupSO fullProbability;
+
+    public static List<Pickup> AllPickups = new List<Pickup>();
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -16,11 +19,16 @@ public class Pickup : MonoBehaviour
     private MeshRenderer[] meshes;
     private bool visible = true;
     private bool canRespawn = true;
-    private void Awake()
+    private void Start()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
         meshes = GetComponentsInChildren<MeshRenderer>();
+
+        if (powerUpType != PlayerPowerups.PowerUpType.gasolineTank && RacingInformation.instance.isTimeTrial)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -78,6 +86,7 @@ public class Pickup : MonoBehaviour
     public IEnumerator DroppedTanks()
     {
         canRespawn = false;
+        if (col == null) yield break;
         col.enabled = false;
         for (int i = 0; i < 3; i++)
         {
@@ -106,5 +115,15 @@ public class Pickup : MonoBehaviour
             transform.position += direction * flySpeed;
             transform.Rotate(Vector3.up * 300f * Time.deltaTime);
         }
+    }
+
+    private void OnEnable()
+    {
+        AllPickups.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        AllPickups.Remove(this);
     }
 }

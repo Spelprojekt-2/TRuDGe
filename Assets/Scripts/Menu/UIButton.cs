@@ -2,9 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class UIButton : MonoBehaviour
 {
+    private Button button;
     public UIButton SwapUp;
     public UIButton SwapDown;
     public UIButton SwapLeft;
@@ -13,25 +15,15 @@ public class UIButton : MonoBehaviour
     public GameObject characterDescription;
     private CharacterStats Stats;
 
-    [Header("P1")]
-    public GameObject characterBackground;
-    public GameObject characterText;
-    public GameObject characterStats;
+    [Header ("Character Info")]
+    [SerializeField] private GameObject[] characterBackgrounds;
+    [SerializeField] private GameObject[] characterText;
+    [SerializeField] private GameObject[] characterStats;
 
-    [Header("P2")]
-    public GameObject characterBackground1;
-    public GameObject characterText1;
-    public GameObject characterStats1;
-
-    [Header("P3")]
-    public GameObject characterBackground2;
-    public GameObject characterText2;
-    public GameObject characterStats2;
-
-    [Header("P4")]
-    public GameObject characterBackground3;
-    public GameObject characterText3;
-    public GameObject characterStats3;
+    void Awake()
+    {
+        button = GetComponent<Button>();
+    }
 
     public void Click()
     {
@@ -45,35 +37,40 @@ public class UIButton : MonoBehaviour
 
     public void SetHighlight(bool state, int playerIndex)
     {
-        if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu" || SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name == "SelectionScreen" || SceneManager.GetActiveScene().name == "TimeTrialMenu")
         {
             Stats = GetComponent<CharacterStats>();
             if (!Stats) return; 
             Stats.SwapCharacterStats(playerIndex);
-            if (playerIndex == 0)
+            if (playerIndex >= 0 && playerIndex < characterBackgrounds.Length)
             {
-                characterBackground?.SetActive(state);
-                characterText?.SetActive(state);
-                characterStats?.SetActive(state);
-            }
-            else if (playerIndex == 1)
-            {
-                characterBackground1?.SetActive(state);
-                characterText1?.SetActive(state);
-                characterStats1?.SetActive(state);
-            }
-            else if (playerIndex == 2)
-            {
-                characterBackground2?.SetActive(state);
-                characterText2?.SetActive(state);
-                characterStats2?.SetActive(state);
-            }
-            else if (playerIndex == 3)
-            {
-                characterBackground3?.SetActive(state);
-                characterText3?.SetActive(state);
-                characterStats3?.SetActive(state);
+                characterBackgrounds[playerIndex]?.SetActive(state);
+                characterText[playerIndex]?.SetActive(state);
+                characterStats[playerIndex]?.SetActive(state);
             }
         }
+    }
+    //Disable highest in array??
+    public void RefreshUI()
+    {
+        int activePlayers = PlayerTrackerManager.instance.GetPlayerCount();
+        characterBackgrounds[activePlayers].SetActive(false);
+        characterText[activePlayers].SetActive(false);
+        characterStats[activePlayers].SetActive(false);
+        /*for (int i = 0; i < characterBackgrounds.Length; i++)
+    {
+        bool shouldBeActive = i < activePlayers;
+
+        characterBackgrounds[i]?.SetActive(shouldBeActive);
+        characterText[i]?.SetActive(shouldBeActive);
+        characterStats[i]?.SetActive(shouldBeActive);
+    }
+        GameObject lastElement = activePlayers
+        GameObject lastElement1 = characterText[characterText.Length - 1];
+        GameObject lastElement2 = characterStats[characterStats.Length - 1];
+        lastElement.SetActive(false);
+        lastElement1.SetActive(false);
+        lastElement2.SetActive(false);*/
+        
     }
 }
