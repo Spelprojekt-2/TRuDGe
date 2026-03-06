@@ -64,23 +64,36 @@ public class GrappleableZipline : MonoBehaviour, IGrappleable
     }
     private void RecalculateLength()
     {
+        // If 0 grappling points make 1
         if (grapplePoints.Count == 0) grapplePoints = new List<Vector3>(1);
+
+        // If 1 grappling point return
+        if (grapplePoints.Count == 1) return;
+
+        // If 2 or more grappling points prepare values for interpolation
         if (interpolationTime <= 0) interpolationTime = 1;
         pointTs = new List<float>(grapplePoints.Count);
-        List<float> segmentLengths = new List<float>(grapplePoints.Count-2);
-        float totalLength = 0;
-        for (int i = 1; i < grapplePoints.Count; i++)
-        {
-            float length = Vector3.Distance(grapplePoints[i-1], grapplePoints[i]);
-            segmentLengths[i-1] = length;
-            totalLength += length;
+
+        // If more than 2 grappling points also prepare values for the non-extreme positions
+        if (grapplePoints.Count > 2)
+        {    
+            List<float> segmentLengths = new List<float>(grapplePoints.Count-2);
+            float totalLength = 0;
+            for (int i = 1; i < grapplePoints.Count; i++)
+            {
+                float length = Vector3.Distance(grapplePoints[i-1], grapplePoints[i]);
+                segmentLengths[i-1] = length;
+                totalLength += length;
+            }
+            float traversal = 0;
+            for (int i = 1; i < segmentLengths.Count-1; i++)
+            {
+                traversal += segmentLengths[i-1];
+                pointTs[i] = traversal/totalLength;
+            }
         }
-        float traversal = 0;
-        for (int i = 1; i < segmentLengths.Count-1; i++)
-        {
-            traversal += segmentLengths[i-1];
-            pointTs[i] = traversal/totalLength;
-        }
+
+        // Assign values to the extreme positions
         pointTs[0] = 0;
         pointTs[^1] = 1;
     }
