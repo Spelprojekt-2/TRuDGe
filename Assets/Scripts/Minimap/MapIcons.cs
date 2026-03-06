@@ -11,7 +11,13 @@ public class MinimapIcons : MonoBehaviour
 
     [Header("---Icon Settings---")]
     [SerializeField] private float iconScale = 1f;
-    [SerializeField] private Color[] playerColors = { Color.blue, Color.red, Color.green, Color.yellow };
+    [SerializeField] private Color[] playerColors = 
+    {
+        new Color32(255,25,25,255),
+        new Color32(50,200,50,255),
+        new Color32(255,255,0,255),
+        new Color32(0,190,255,255),
+    };
 
     private Dictionary<RacerData, RectTransform> iconMap = new Dictionary<RacerData, RectTransform>();
 
@@ -30,7 +36,7 @@ public class MinimapIcons : MonoBehaviour
 
 
             float angle = racer.transform.eulerAngles.y;
-            iconMap[racer].localRotation = Quaternion.Euler(0, 0, -angle + 180); //Det måste vara -angle + 180 annars blir turningen inversed på kartan
+            iconMap[racer].localRotation = Quaternion.Euler(0, 0, -angle + 180); //Det mï¿½ste vara -angle + 180 annars blir turningen inversed pï¿½ kartan
         }
 
         var keysToRemove = iconMap.Keys.Where(r => r == null).ToList();

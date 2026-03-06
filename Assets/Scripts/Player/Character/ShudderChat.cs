@@ -13,7 +13,7 @@ public class ShudderChat : MonoBehaviour
     [SerializeField] private Image phoneImage;
     public bool chatEnabled = false;
     TextMeshProUGUI textObj;
-    //Chatstuf
+    // ========= Chatstuf ==========
     //Chatter name
     private string[] chatterNames =
         {
@@ -86,7 +86,7 @@ public class ShudderChat : MonoBehaviour
     {
         if (chatEnabled && Time.timeScale == 1f)
         {
-        int chatSpawn = Random.Range(1, 360);
+        int chatSpawn = Random.Range(1, 160);
         if (chatSpawn == 1)
         {
             CringeChat();
@@ -104,7 +104,7 @@ public class ShudderChat : MonoBehaviour
         {
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
             Debug.Log(data);
-            if (data.racername == "Carla")
+            if (data.racername == "Capôw")
             {
                 EnableChat(true);
             }
