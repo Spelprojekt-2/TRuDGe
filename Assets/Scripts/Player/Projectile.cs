@@ -51,14 +51,11 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        Debug.Log(col.gameObject.name);
-        if (col.transform.root.CompareTag("Player"))
+        
+        PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
+        if (hit != null)
         {
-            Vector3 force = (transform.position - col.transform.position).normalized * 30f;
-            force.y = 0;
-            col.gameObject.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-            col.gameObject.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
-            col.gameObject.GetComponentInParent<PlayerPowerups>().DropGasTanks();
+            hit.Hit();
         }
         Destroy(gameObject);
     }

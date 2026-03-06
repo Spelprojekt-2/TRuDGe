@@ -1,0 +1,28 @@
+using UnityEngine;
+
+public class PlayerHit : MonoBehaviour
+{
+    [SerializeField] private float hitStrength;
+    [SerializeField] private float invincibilityDuration;
+    private float invincibilityTimer;
+    private bool isInvincible;
+    public void Hit()
+    {
+        if (isInvincible) return;
+        invincibilityTimer = 0;
+        transform.root.GetComponentInChildren<Rigidbody>().linearVelocity = Vector3.up * hitStrength;
+        transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
+        transform.root.GetComponentInChildren<PlayerPowerups>().DropGasTanks();
+        isInvincible = true;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isInvincible) return;
+        invincibilityTimer += Time.fixedDeltaTime;
+        if (invincibilityTimer > invincibilityDuration)
+        {
+            isInvincible = false;
+        }
+    }
+}
