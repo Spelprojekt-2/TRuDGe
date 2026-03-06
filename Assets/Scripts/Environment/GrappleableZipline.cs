@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GrappleableZipline : MonoBehaviour, IGrappleable
 {
-    [SerializeField] private List<Vector3> grapplePoints = new List<Vector3>(2);
-    private List<float> pointTs = new List<float>(2);
+    [SerializeField] private List<Vector3> grapplePoints = new List<Vector3>( new Vector3[3]);
+    private List<float> pointTs = new List<float>( new float[3]);
     [Tooltip("The time it takes for the grapple point to move from the first point to the last point")]
     [SerializeField] private float interpolationTime = 1f;
     [Tooltip("Releases the grapple once the second point is reached")]
@@ -65,19 +65,20 @@ public class GrappleableZipline : MonoBehaviour, IGrappleable
     private void RecalculateLength()
     {
         // If 0 grappling points make 1
-        if (grapplePoints.Count == 0) grapplePoints = new List<Vector3>(1);
+        if (grapplePoints.Count == 0) grapplePoints = new List<Vector3>( new Vector3[1]);
 
-        // If 1 grappling point return
-        if (grapplePoints.Count == 1) return;
+        // If less than 2 grappling points return
+        if (grapplePoints.Count < 2) return;
 
         // If 2 or more grappling points prepare values for interpolation
         if (interpolationTime <= 0) interpolationTime = 1;
-        pointTs = new List<float>(grapplePoints.Count);
+
+        pointTs = new List<float>( new float[grapplePoints.Count]);
 
         // If more than 2 grappling points also prepare values for the non-extreme positions
         if (grapplePoints.Count > 2)
         {    
-            List<float> segmentLengths = new List<float>(grapplePoints.Count-2);
+            List<float> segmentLengths = new List<float>( new float[grapplePoints.Count-2]);
             float totalLength = 0;
             for (int i = 1; i < segmentLengths.Count; i++)
             {
