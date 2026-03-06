@@ -52,8 +52,6 @@ public class GrappleableZipline : MonoBehaviour, IGrappleable
         t = t / t1;
         Vector3 p = Vector3.Lerp(grapplePoints[l], grapplePoints[r], t);
 
-        Debug.Log("l: " + l + " r: " + r + " t: " + t);
-        // Debug.Log(p + "" + grapplePoints[l] + "" + grapplePoints[r] + "" + t + "" + t1);
         return transform.TransformPoint(p);
     }
     public void Start()
@@ -88,33 +86,17 @@ public class GrappleableZipline : MonoBehaviour, IGrappleable
                 segmentLengths[i] = length;
                 totalLength += length;
             }
-            // Debug.Log("segmentLengths -");
-            // foreach (var item in segmentLengths)
-            // {
-            //     Debug.Log(item);
-            // }
-            // Debug.Log(Vector3.Distance(grapplePoints[0], grapplePoints[1]));
-            // Debug.Log("total length - " + totalLength);
             float traversal = 0;
             for (int i = 1; i < segmentLengths.Count; i++)
             {
                 traversal += segmentLengths[i-1];
                 pointTs[i] = traversal/totalLength;
-                // Debug.Log("SegmentLength: " + segmentLengths[i-1]);
-                // Debug.Log("\nTraversal: " + traversal);
-                // Debug.Log("\npointT: " + pointTs[i]);
             }
         }
 
         // Assign values to the extreme positions
         pointTs[0] = 0;
         pointTs[^1] = 1;
-
-        // Debug.Log("t-");
-        // for (int i = 0; i < pointTs.Count; i++)
-        // {
-        //     Debug.Log(pointTs[i]);
-        // }
     }
     public void EnteredGrappleRange(GameObject grapplingObject)
     {
