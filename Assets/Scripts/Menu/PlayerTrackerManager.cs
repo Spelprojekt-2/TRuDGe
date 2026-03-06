@@ -294,7 +294,6 @@ public class PlayerTrackerManager : MonoBehaviour
             return;
 
         int player = input.GetComponent<RacerData>().index;
-        if (!readyStates.ContainsKey(player)) return;
         readyStates[player] = false;
 
         switch (player)
