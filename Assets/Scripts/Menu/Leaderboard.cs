@@ -1,7 +1,10 @@
 using System;
+using TMPro;
+using UnityEngine.UI;
 public static class Leaderboard
 {
     private static RacerData[] leaderboard;
+    //public Image[] character;
 
     public static void SetLeaderboard(RacerData[] newLeaderboard)
     {
