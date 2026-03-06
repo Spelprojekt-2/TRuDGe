@@ -79,7 +79,7 @@ public class GrappleableZipline : MonoBehaviour, IGrappleable
         {    
             List<float> segmentLengths = new List<float>(grapplePoints.Count-2);
             float totalLength = 0;
-            for (int i = 1; i < grapplePoints.Count; i++)
+            for (int i = 1; i < segmentLengths.Count; i++)
             {
                 float length = Vector3.Distance(grapplePoints[i-1], grapplePoints[i]);
                 segmentLengths[i-1] = length;
