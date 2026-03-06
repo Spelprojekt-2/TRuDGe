@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Grappleable : MonoBehaviour, IGrappleable
 {
-    [SerializeField] private Vector3 grapplePointOffset = Vector3.zero;
+    [SerializeField] private Vector3 grapplePoint = Vector3.zero;
     [SerializeField] private ShowGizmoEnum showGizmos = ShowGizmoEnum.Selected;
-    public Vector3 GetGrapplePoint(GrapplingBehaviour gb) => transform.TransformPoint(grapplePointOffset);
+    public Vector3 GetGrapplePoint(GrapplingBehaviour gb) => transform.TransformPoint(grapplePoint);
     public bool IsLocking => false;
     public void EnteredGrappleRange(GameObject grapplingObject)
     {
@@ -49,6 +49,6 @@ public class Grappleable : MonoBehaviour, IGrappleable
     private void DrawGrapplingPoint()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.TransformPoint(grapplePointOffset), 0.5f);
+        Gizmos.DrawSphere(transform.TransformPoint(grapplePoint), 0.5f);
     }
 }
