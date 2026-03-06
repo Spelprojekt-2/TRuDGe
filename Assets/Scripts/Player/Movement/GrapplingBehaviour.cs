@@ -27,7 +27,7 @@ public class GrapplingBehaviour : MonoBehaviour
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
-    public float TimeSinceGrapple { get; private set;}
+    public float TimeSinceGrapple { get; private set;} = 0f;
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
@@ -64,15 +64,23 @@ public class GrapplingBehaviour : MonoBehaviour
         if (respectLock && grappleable != null && grappleable.IsLocking) return;
 
         isGrappling = false;
+        TimeSinceGrapple = 0f;
 
         // Change audio behaviour
         playerAudio.GrappleEnd();
 
         lineRenderer.enabled = false;
         if (grappleHook) grappleHook.SetActive(true);
+
+        if (!isInGrappleRange)
+        {
+            grappleable = null;
+            grappleUIIndicator.gameObject.SetActive(false);
+        }
     }
     void Start()
     {
+        TimeSinceGrapple = 0f;
         lineRenderer = GetComponent<LineRenderer>();
         if (grappleable != null)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
@@ -151,8 +159,11 @@ public class GrapplingBehaviour : MonoBehaviour
     }
     public void ExitedGrappleRange(IGrappleable grappleable)
     {
-        this.grappleable = null;
-        grappleUIIndicator.gameObject.SetActive(false);
+        if (!isGrappling)
+        {
+            this.grappleable = null;
+            grappleUIIndicator.gameObject.SetActive(false);
+        }
         isInGrappleRange = false;
     }
     void FixedUpdate()
