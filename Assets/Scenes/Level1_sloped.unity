@@ -144423,6 +144423,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8627154523119654453, guid: c9b621c7eb4b9bf4a87de1f7db61a1af, type: 3}
   m_PrefabInstance: {fileID: 1328682190}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1728692840
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 658
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6100903
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 71.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9937664
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.1114822
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 12.802
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974580939144837523, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6458770003041477417, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
+      propertyPath: m_Name
+      value: Finish_Line_Schlammrennstrecke
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 21e1ba1a7902ea14fa8084c19dd63684, type: 3}
 --- !u!1001 &1730025399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180622,6 +180679,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6111025570076946481, guid: db3e677e0d4d64747bfbc44a7927ca30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111025570076946481, guid: db3e677e0d4d64747bfbc44a7927ca30, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -182263,3 +182324,4 @@ SceneRoots:
   - {fileID: 1285426913}
   - {fileID: 1549321271}
   - {fileID: 918451908}
+  - {fileID: 1728692840}
