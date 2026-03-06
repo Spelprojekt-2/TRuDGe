@@ -23,7 +23,7 @@ public class GrapplingBehaviour : MonoBehaviour
     [SerializeField] private float idleRotationSpeed = 8f;
     [Header("Debug")]
     private Vector3 cachedGrapplePoint = Vector3.zero;
-    [SerializeField] private Grappleable grappleable = null;
+    [SerializeField] private IGrappleable grappleable = null;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
@@ -144,12 +144,12 @@ public class GrapplingBehaviour : MonoBehaviour
             }
         }
     }
-    public void EnteredGrappleRange(Grappleable grappleable)
+    public void EnteredGrappleRange(IGrappleable grappleable)
     {
         this.grappleable = grappleable;
         isInGrappleRange = true;
     }
-    public void ExitedGrappleRange(Grappleable grappleable)
+    public void ExitedGrappleRange(IGrappleable grappleable)
     {
         this.grappleable = null;
         grappleUIIndicator.gameObject.SetActive(false);
