@@ -1924,6 +1924,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04c60d797790864c8cee71620f66356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 4029194333597442243}
+  vehicleRigidBody: {fileID: 8035972993285117548}
+  xLocationOverride: 4
+  reverseTextureDirection: 0
+  YToXDirection: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2027,6 +2032,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04c60d797790864c8cee71620f66356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 4029194333597442243}
+  vehicleRigidBody: {fileID: 8035972993285117548}
+  xLocationOverride: -4
+  reverseTextureDirection: 0
+  YToXDirection: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
