@@ -267,9 +267,7 @@ public class PlayerMovement : MonoBehaviour
         rotationRoot.localPosition = new Vector3(0,Mathf.Lerp(rotationRoot.localPosition.y,groundHeight,Time.deltaTime*5),0);
 
         // Turning
-        rb.angularVelocity = rb.rotation * new Vector3(
-            0f,
-            // Input
+        transform.Rotate(new Vector3( 0f,
             moveInputVector.x *
             // Base turning speed
             baseTurningSpeed *
@@ -280,10 +278,10 @@ public class PlayerMovement : MonoBehaviour
                     Vector3.Dot(rb.linearVelocity, rotationRoot.forward) / topSpeed
             ) *
             // Air modifier
-            (isGrounded ? 1f : inAirTurningModifier),
-            0f
-        );
-
+            (isGrounded ? 1f : inAirTurningModifier) * 
+            Mathf.Rad2Deg * Time.fixedDeltaTime,
+        0f ));
+        
         // Acceleration
         rb.AddForce(
             // Direction
