@@ -50,6 +50,7 @@ MonoBehaviour:
   walls:
   - {fileID: 4756115936916525076}
   - {fileID: 7234489221453218150}
+  wallHealth: 000000000000000000000000
 --- !u!95 &7690597125494423424
 Animator:
   serializedVersion: 7
@@ -58,7 +59,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279903332913073622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 818ec3aca35f68346bc8553d5c607b83, type: 2}
   m_CullingMode: 0
@@ -175,7 +176,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -284,7 +285,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
