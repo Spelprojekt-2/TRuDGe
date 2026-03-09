@@ -3,12 +3,6 @@ using UnityEngine;
 public class CharAfterRace : MonoBehaviour
 {
     public GameObject[] characters;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-                
-    }
 
     public void Display2DCharacter(string racen)
     {

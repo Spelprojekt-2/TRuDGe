@@ -21,7 +21,6 @@ public static class Leaderboard
             leaderboardtxt += $"{GetPosString(i + 1)} {GetPlayerColor(leaderboard[i].index)}{leaderboard[i].racername}</color>\n";
         }
         GameObject.FindWithTag("DisplayChar").GetComponent<CharAfterRace>().Display2DCharacter(leaderboard[0].racername);
-        //Displaychar();
         return leaderboardtxt;             
     }
     private static string GetPosString(int pos)

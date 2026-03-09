@@ -214,7 +214,7 @@ public class ShudderChat : MonoBehaviour
         activeChat.Clear();
         UpdateChat();
         chatEnabled = state;
-        phoneImage.enabled = state;
+        //phoneImage.enabled = state;
     }
 
     //press Y to disable?
