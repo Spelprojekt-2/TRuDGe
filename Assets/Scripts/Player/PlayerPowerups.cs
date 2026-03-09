@@ -20,6 +20,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject airstrike;
     [SerializeField] private float airstrikeForwardOffset;
     [SerializeField] private GameObject deployedWall;
+    [SerializeField] private GameObject scatterShot;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -58,7 +59,8 @@ public class PlayerPowerups : MonoBehaviour
         landMine,
         airstrike,
         deployWall,
-        eMP
+        eMP,
+        scatterShot
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -128,6 +130,14 @@ public class PlayerPowerups : MonoBehaviour
             case PowerUpType.eMP:
                 break;
 
+            case PowerUpType.scatterShot:
+                GameObject scatterShotSpawned = Instantiate(scatterShot, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.LookRotation(transform.forward));
+                foreach (var projectile in scatterShotSpawned.GetComponentsInChildren<Projectile>())
+                {
+                    projectile.PrepareProjectile(gameObject, null, 1);
+                }
+                break;
+
             default:
                 return;
         }
@@ -191,6 +201,10 @@ public class PlayerPowerups : MonoBehaviour
         else if (type == PowerUpType.eMP)
         {
             currPowerUpText.text = "EMP";
+        }
+        else if (type == PowerUpType.scatterShot)
+        {
+            currPowerUpText.text = "Scatter Shot";
         }
         else
         {
