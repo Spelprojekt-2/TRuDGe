@@ -25,6 +25,7 @@ public class TrainingGroundReady : MonoBehaviour
         isOnTrainingGround = SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround;
         isReady = false;
         playersReady = 0;
+        if (TrainingUI == null) return;
         TrainingUI.SetActive(isOnTrainingGround);
         PrereadyText.SetActive(isOnTrainingGround);
         ReadyText.SetActive(false);
