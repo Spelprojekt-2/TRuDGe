@@ -29,7 +29,6 @@ public class AutoAimCone : MonoBehaviour
     {
         if(other.CompareTag("DestroyableWall") && !SceneController.instance.IsMenu)
         {
-            Debug.Log("Wall");
             targetList.Add(other.transform);
         }
         else if (other.CompareTag("Player") && !SceneController.instance.IsMenu)

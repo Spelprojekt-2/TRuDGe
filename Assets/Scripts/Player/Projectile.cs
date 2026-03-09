@@ -9,6 +9,10 @@ public class Projectile : MonoBehaviour
     private GameObject shooter;
     private bool isFalling = false;
 
+    private void Start()
+    {
+        Destroy(gameObject, 4f);
+    }
     public void PrepareProjectile(GameObject shooter, Transform target, float speedMultiplier)
     {
         if (target == null)

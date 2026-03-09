@@ -88,6 +88,7 @@ public class PlayerCamera : MonoBehaviour
         currentTarget = autoAim.GetTarget();
         if (currentTarget != oldTarget)
         {
+            crosshair.GetComponent<Image>().enabled = true;
             if (currentTarget != null)
             {
                 StartCoroutine(FocusOnTarget());
@@ -96,9 +97,6 @@ public class PlayerCamera : MonoBehaviour
             else
             {
                 lookingAtTarget = false;
-                cursorPos = new Vector2(0f, 200f);
-
-                crosshair.localScale = Vector3.one;
                 if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
             }
             oldTarget = currentTarget;
@@ -107,7 +105,7 @@ public class PlayerCamera : MonoBehaviour
         
         if (currentTarget != null)
         {
-
+            crosshair.GetComponent<Image>().enabled = true;
             if (!lookingAtTarget)
             {
                 StartCoroutine(FocusOnTarget());
@@ -130,7 +128,7 @@ public class PlayerCamera : MonoBehaviour
         {
             StopCoroutine(FocusOnTarget());
             lookingAtTarget = false;
-            cursorPos = new Vector2(0f, 200f);
+            crosshair.GetComponent<Image>().enabled = false;
         }
 
         if (crosshair != null)
