@@ -22,7 +22,7 @@ public class Minimap : MonoBehaviour
         raceData = FindFirstObjectByType<RaceController>();
         DrawTrack();
 
-        PlayerMovement[] players = Object.FindObjectsOfType<PlayerMovement>();
+        PlayerMovement[] players = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
         if(players.Length < 3)
         {
             RectTransform rect = minimapContainer.GetComponent<RectTransform>();
@@ -32,6 +32,7 @@ public class Minimap : MonoBehaviour
     void DrawTrack()
     {
         SplineContainer container = raceData.trackSpline;
+        Debug.Log(container);
         if(container == null)
         {
             return;

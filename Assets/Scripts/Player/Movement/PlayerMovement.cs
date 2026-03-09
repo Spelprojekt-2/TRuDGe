@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,14 +27,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ShowGizmoEnum showLocalAxes = ShowGizmoEnum.Never;
     [SerializeField] private ShowGizmoEnum showForces = ShowGizmoEnum.Always;
 
-    private Vector3[] rigPoints => new Vector3[3]
+    private const int RIG_POINT_COUNT = 4;
+    private Vector3[] rigPoints => new Vector3[]
     {
         // P0
         transform.position +
         // y
         transform.up * rayCastRigPosition.y +
         // z
-        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)),
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
+        // x
+        transform.right * (rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f)),
         
         // P1
         transform.position +
@@ -51,10 +55,21 @@ public class PlayerMovement : MonoBehaviour
         // z
         transform.forward * (rayCastRigPosition.x - rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
         // x
+        transform.right * (-rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f)),
+
+        // P3
+        transform.position +
+        // y
+        transform.up * rayCastRigPosition.y +
+        // z
+        transform.forward * (rayCastRigPosition.x + rayCastRigSize.y / (flipRaycastRigZ ? -2f : 2f)) +
+        // x
         transform.right * (-rayCastRigSize.x / (flipRaycastRigZ ? -2f : 2f))
     };
 
-    private Vector3[] rayCastHPs = new Vector3[3];
+    private Vector3[] rayCastHPs = new Vector3[RIG_POINT_COUNT];
+    bool[] didHits = new bool[RIG_POINT_COUNT];
+
 
     #endregion
 
@@ -151,10 +166,9 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     private void ProcessRayCasts()
     {
-        bool[] didHits = new bool[3];
-        RaycastHit[] hitInfos = new RaycastHit[3];
+        RaycastHit[] hitInfos = new RaycastHit[RIG_POINT_COUNT];
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
         {
             didHits[i] = Physics.Raycast(
                 rigPoints[i],
@@ -165,26 +179,68 @@ public class PlayerMovement : MonoBehaviour
         }
 
         int hitCount = 0;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
         {
             if (!didHits[i]) continue;
-            
+
             hitCount++;
             rayCastHPs[i] = hitInfos[i].point;
         }
 
         isGrounded = hitCount >= 2;
 
-        if (hitCount == 3)
+        switch (hitCount)
         {
-            groundNormal = Vector3.Cross(
+            case 4:
+            {
+                Vector3 normalCandidate0 = Vector3.Cross(
                 rayCastHPs[0] - rayCastHPs[1],
-                rayCastHPs[0] - rayCastHPs[2]
-            ).normalized;
-        }
-        else
-        {
-            groundNormal = Vector3.up;
+                rayCastHPs[0] - rayCastHPs[3]
+                ).normalized;
+
+                Vector3 normalCandidate1 = Vector3.Cross(
+                rayCastHPs[3] - rayCastHPs[0],
+                rayCastHPs[3] - rayCastHPs[2]
+                ).normalized;
+
+                if (Vector3.Dot(rayCastHPs[0] - rayCastHPs[2], normalCandidate0) >= 0)
+                {
+                    Vector3 mirrorNormal = Vector3.Cross(
+                        rayCastHPs[2] - rayCastHPs[3],
+                        rayCastHPs[2] - rayCastHPs[1]
+                    ).normalized;
+                    groundNormal = (normalCandidate0 + mirrorNormal).normalized;
+                }
+                else
+                {
+                    Vector3 mirrorNormal = Vector3.Cross(
+                        rayCastHPs[1] - rayCastHPs[2],
+                        rayCastHPs[1] - rayCastHPs[0]
+                    ).normalized;
+                    groundNormal = (normalCandidate1 + mirrorNormal).normalized;
+                }
+            } break;
+            case 3:
+            {
+                Vector3[] points = new Vector3[3];
+                int pointI = 0;
+
+                for (int i = 0; i < RIG_POINT_COUNT; i++)
+                {
+                    if(!didHits[i]) continue;
+
+                    points[pointI++] = rayCastHPs[i];
+                }
+
+                groundNormal = Vector3.Cross(
+                    points[0] - points[1],
+                    points[0] - points[2]
+                ).normalized;
+            } break;
+            default:
+            {
+                groundNormal = Vector3.up;
+            } break;
         }
     }
     private void ProcessMovement()
@@ -196,10 +252,22 @@ public class PlayerMovement : MonoBehaviour
             Time.fixedDeltaTime * (isGrounded ? onGroundUprightingSpeed : inAirUprightingSpeed)
         );
 
+        // Move vehicle up if too low (avoid clipping)
+        int groPoiCount = 0;
+        float groundHeight = 0;
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
+        {
+            if (!didHits[i]) continue;
+
+            groPoiCount++;
+            groundHeight += rayCastHPs[i].y;
+        }
+        groundHeight = groundHeight/groPoiCount - transform.position.y;
+        if (groundHeight >= 0)
+        rotationRoot.localPosition = new Vector3(0,Mathf.Lerp(rotationRoot.localPosition.y,groundHeight,Time.deltaTime*5),0);
+
         // Turning
-        rb.angularVelocity = rb.rotation * new Vector3(
-            0f,
-            // Input
+        transform.Rotate(new Vector3( 0f,
             moveInputVector.x *
             // Base turning speed
             baseTurningSpeed *
@@ -210,10 +278,10 @@ public class PlayerMovement : MonoBehaviour
                     Vector3.Dot(rb.linearVelocity, rotationRoot.forward) / topSpeed
             ) *
             // Air modifier
-            (isGrounded ? 1f : inAirTurningModifier),
-            0f
-        );
-
+            (isGrounded ? 1f : inAirTurningModifier) * 
+            Mathf.Rad2Deg * Time.fixedDeltaTime,
+        0f ));
+        
         // Acceleration
         rb.AddForce(
             // Direction
@@ -306,7 +374,10 @@ public class PlayerMovement : MonoBehaviour
                 rigPoints[1] + Vector3.down * rayCastLength,
 
                 rigPoints[2],
-                rigPoints[2] + Vector3.down * rayCastLength
+                rigPoints[2] + Vector3.down * rayCastLength,
+
+                rigPoints[3],
+                rigPoints[3] + Vector3.down * rayCastLength
             }
         );
     }
@@ -315,11 +386,23 @@ public class PlayerMovement : MonoBehaviour
         // Draw ground normal
         Gizmos.color = Color.magenta;
 
-        Gizmos.DrawLineStrip(rayCastHPs, true);
+        List<Vector3> points = new List<Vector3>();
+        Vector3 sum = Vector3.zero;
+        for (int i = 0; i < RIG_POINT_COUNT; i++)
+        {
+            if (!didHits[i]) continue;
+            points.Add(rayCastHPs[i]);
+            sum += rayCastHPs[i];
+        }
 
+        Gizmos.DrawLineStrip(points.ToArray(), true);
+        // Gizmos.DrawLine(
+        //     (points[0] + points[1] + points[2]) / 3f,
+        //     (points[0] + points[1] + points[2]) / 3f + groundNormal * 2f
+        // );
         Gizmos.DrawLine(
-            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f,
-            (rayCastHPs[0] + rayCastHPs[1] + rayCastHPs[2]) / 3f + groundNormal * 2f
+            sum / points.Count,
+            sum / points.Count + groundNormal * 2f
         );
     }
     private void DrawLocalAxesGizmos()

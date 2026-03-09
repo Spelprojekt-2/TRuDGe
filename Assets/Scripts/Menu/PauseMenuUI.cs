@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuUI : MonoBehaviour
 {
@@ -26,10 +27,16 @@ public class PauseMenuUI : MonoBehaviour
         currentPlayerInput = input;
         currentPlayerID = playerID;
         CoroutineRunner.Run(SwapMap(currentPlayerInput, "UI"));
+        Cursor.lockState = CursorLockMode.None;
         UISelection.playerSelections[currentPlayerID].SwapSelection(selectOnPause);
-        Debug.Log(UISelection.playerSelections[currentPlayerID].selection);
         Time.timeScale = 0f;
         isPaused = true;
+    }
+
+    public void ExitRace()
+    {
+        if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
+        else SceneManager.LoadScene("TrackSelect");
     }
 
     public void UnpauseGame()
@@ -39,7 +46,7 @@ public class PauseMenuUI : MonoBehaviour
         if (raceController) raceController.ResumeRace();
         pauseMenu.SetActive(false);
         CoroutineRunner.Run(SwapMap(currentPlayerInput, "Player"));
-        Debug.Log(UISelection.playerSelections[currentPlayerID].selection);
+        Cursor.lockState = CursorLockMode.Locked;
         currentPlayerInput = null;
         Time.timeScale = 1f;
         isPaused = false;
