@@ -82,11 +82,13 @@ public class UISelection : MonoBehaviour
             if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
             SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
-            if (lastSelection == null && lastSelection == selection) return;
+            if (lastSelection == null) return;
+            if (lastSelection != selection) lastSelection = null;
             lastSelection.enabled = true;
             selection = null;
             SwapSelection(lastSelection);
             lastSelection.GetComponent<Image>().color = Color.white;
+            lastSelection = null;
         }
     }
     public void Select(InputAction.CallbackContext context)
