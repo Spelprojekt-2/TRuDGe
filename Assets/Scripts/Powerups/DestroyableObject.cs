@@ -25,8 +25,7 @@ public class DestroyableObject : MonoBehaviour
 
         if (wallHealth[index] <= 0)
         {
-            walls[index].GetComponent<MeshRenderer>().enabled = false;
-            walls[index].GetComponent<Collider>().enabled = false;
+            Destroy(walls[index]);
         }
     }
 }
@@ -45,11 +44,16 @@ public class WallChildListener : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.root.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
+            Debug.Log(other.gameObject.name);
             var rb = other.transform.root.gameObject.GetComponentInChildren<Rigidbody>();
             rb.linearVelocity *= velocityChange;
+            mainScript.OnChildHit(myIndex);
         }
-        mainScript.OnChildHit(myIndex);
+        else if (other.CompareTag("Projectile"))
+        {
+            mainScript.OnChildHit(myIndex);
+        }
     }
 }

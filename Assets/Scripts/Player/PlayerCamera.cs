@@ -146,7 +146,6 @@ public class PlayerCamera : MonoBehaviour
         {
             crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
             GetComponent<PlayerShooting>().speedMultiplier = crosshair.localScale.x;
-            Debug.Log(GetComponent<PlayerShooting>().speedMultiplier);
             yield return new WaitForSeconds(0.1f);
         }
     }

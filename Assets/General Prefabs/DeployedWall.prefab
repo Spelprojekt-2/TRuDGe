@@ -51,6 +51,7 @@ MonoBehaviour:
   - {fileID: 4756115936916525076}
   - {fileID: 7234489221453218150}
   wallHealth: 000000000000000000000000
+  velocityChangeWhenHit: 0.6
 --- !u!95 &7690597125494423424
 Animator:
   serializedVersion: 7
@@ -87,7 +88,7 @@ GameObject:
   - component: {fileID: 6085892388763868880}
   m_Layer: 7
   m_Name: Wall1
-  m_TagString: Untagged
+  m_TagString: DestroyableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +181,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14.401275, y: 5.9436636, z: 4.20976}
+  m_Size: {x: 14.39, y: 6.6, z: 4.61}
   m_Center: {x: -0.07215549, y: -0.08328152, z: -0.07841208}
 --- !u!1 &7234489221453218150
 GameObject:
@@ -196,7 +197,7 @@ GameObject:
   - component: {fileID: 3236529515613433596}
   m_Layer: 7
   m_Name: Wall2
-  m_TagString: Untagged
+  m_TagString: DestroyableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,5 +290,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14.401275, y: 5.9436636, z: 4.20976}
+  m_Size: {x: 14.39, y: 6.6, z: 4.61}
   m_Center: {x: -0.07215549, y: -0.08328152, z: -0.07841208}
