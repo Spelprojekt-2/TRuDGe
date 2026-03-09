@@ -131,7 +131,6 @@ public class PlayerPowerups : MonoBehaviour
             default:
                 return;
         }
-        Debug.Log("Used " + type);
         type = null;
         PowerUpUIUpdate();
     }
