@@ -86,7 +86,7 @@ public class ShudderChat : MonoBehaviour
     {
         if (chatEnabled && Time.timeScale == 1f)
         {
-        int chatSpawn = Random.Range(1, 360);
+        int chatSpawn = Random.Range(1, 160);
         if (chatSpawn == 1)
         {
             CringeChat();
