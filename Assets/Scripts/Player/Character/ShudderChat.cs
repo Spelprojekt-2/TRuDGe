@@ -13,7 +13,7 @@ public class ShudderChat : MonoBehaviour
     [SerializeField] private Image phoneImage;
     public bool chatEnabled = false;
     TextMeshProUGUI textObj;
-    //Chatstuf
+    // ========= Chatstuf ==========
     //Chatter name
     private string[] chatterNames =
         {
@@ -51,9 +51,6 @@ public class ShudderChat : MonoBehaviour
             "ILOVESCHLORSH",
             "Microslop",
             "UBIMAD",
-            "Whambu",
-            "Mr.Osmium",
-            "gOFFMAN",
             //gruppens dc
             "Massiv",
             "arrerino",
@@ -107,7 +104,7 @@ public class ShudderChat : MonoBehaviour
         {
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
             Debug.Log(data);
-            if (data.racername == "Carla")
+            if (data.racername == "Capôw")
             {
                 EnableChat(true);
             }
@@ -182,12 +179,7 @@ public class ShudderChat : MonoBehaviour
             "chug speedrunner =win",
             "GameStation 7 is so good",
             "ILY CARLA",
-            "o7",
-            "Why sex when have five",
-            "I wish group6 was good",
-            "Gotta go fats",
-            "Whambubalambu",
-            "CRAZY JUMPSCARES!!!!"
+            "o7"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);

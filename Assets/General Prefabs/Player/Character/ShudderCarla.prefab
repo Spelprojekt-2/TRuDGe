@@ -50,10 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb97faec74243d2498b4a67031a1a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatPref: {fileID: 5415447582646612487}
-  chatPar: {fileID: 0}
-  SpaceY: 10
-  bottomOffs: 40
+  maxChatMessgages: 7
   phoneImage: {fileID: 1321233528704932729}
   chatEnabled: 0
 --- !u!1 &7443142701648458299
@@ -90,7 +87,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1663, y: 588}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8490053545088597110
@@ -142,10 +139,6 @@ PrefabInstance:
     - target: {fileID: 1696600436027716396, guid: 084e7c57936882e43bcfba645e190906, type: 3}
       propertyPath: m_Name
       value: ShudderChat
-      objectReference: {fileID: 0}
-    - target: {fileID: 1696600436027716396, guid: 084e7c57936882e43bcfba645e190906, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3993216305066543326, guid: 084e7c57936882e43bcfba645e190906, type: 3}
       propertyPath: m_Pivot.x
@@ -209,11 +202,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3993216305066543326, guid: 084e7c57936882e43bcfba645e190906, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3993216305066543326, guid: 084e7c57936882e43bcfba645e190906, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20.820007
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3993216305066543326, guid: 084e7c57936882e43bcfba645e190906, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -232,11 +225,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084e7c57936882e43bcfba645e190906, type: 3}
---- !u!1 &5415447582646612487 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1696600436027716396, guid: 084e7c57936882e43bcfba645e190906, type: 3}
-  m_PrefabInstance: {fileID: 6677714520138465579}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7766106724382558709 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3993216305066543326, guid: 084e7c57936882e43bcfba645e190906, type: 3}
