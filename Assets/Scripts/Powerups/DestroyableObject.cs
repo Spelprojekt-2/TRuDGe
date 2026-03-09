@@ -25,7 +25,6 @@ public class DestroyableObject : MonoBehaviour
 
         if (wallHealth[index] <= 0)
         {
-            Debug.Log(walls[index].name + " destroyed");
             walls[index].GetComponent<MeshRenderer>().enabled = false;
             walls[index].GetComponent<Collider>().enabled = false;
         }
