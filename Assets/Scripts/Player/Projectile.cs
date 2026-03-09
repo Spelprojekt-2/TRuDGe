@@ -7,7 +7,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private float currentSpeed;
     private GameObject shooter;
-    private Transform target = null;
     private bool isFalling = false;
 
     public void PrepareProjectile(GameObject shooter, Transform target, float speedMultiplier)
@@ -51,7 +50,6 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        Debug.Log(col.gameObject.name);
         if (col.transform.root.CompareTag("Player"))
         {
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
@@ -69,7 +67,6 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        Debug.Log(col.gameObject.name);
         Destroy(gameObject);
     }
 }

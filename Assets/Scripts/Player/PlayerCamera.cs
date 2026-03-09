@@ -31,8 +31,6 @@ public class PlayerCamera : MonoBehaviour
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
-    [Header("Debug")]
-    [SerializeField] private bool showAimRay = false;
 
 
     public Camera cam;
