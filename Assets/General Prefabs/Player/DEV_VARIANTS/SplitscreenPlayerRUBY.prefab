@@ -8,10 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6310594621742397659}
     m_Modifications:
-    - target: {fileID: 753937488629679660, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1455e653184407d4998345ad59434253, type: 2}
     - target: {fileID: 1190294809971077608, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
       propertyPath: playerMovement
       value: 
@@ -28,18 +24,6 @@ PrefabInstance:
       propertyPath: vehicleRigidBody
       value: 
       objectReference: {fileID: 5116677694237454862}
-    - target: {fileID: 1244799035067336724, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: wheels.Array.data[0].wheelObject
-      value: 
-      objectReference: {fileID: 9068691683306303957}
-    - target: {fileID: 1244799035067336724, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: wheels.Array.data[1].wheelObject
-      value: 
-      objectReference: {fileID: 3996787628234744530}
-    - target: {fileID: 1244799035067336724, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: wheels.Array.data[2].wheelObject
-      value: 
-      objectReference: {fileID: 7898596650162630703}
     - target: {fileID: 1596951640107890928, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
       propertyPath: playerMovement
       value: 
@@ -64,10 +48,6 @@ PrefabInstance:
       propertyPath: vehicleRigidBody
       value: 
       objectReference: {fileID: 5116677694237454862}
-    - target: {fileID: 1939993295009546093, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1455e653184407d4998345ad59434253, type: 2}
     - target: {fileID: 3043658276525627758, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
       propertyPath: playerMovement
       value: 
@@ -76,18 +56,6 @@ PrefabInstance:
       propertyPath: vehicleRigidBody
       value: 
       objectReference: {fileID: 5116677694237454862}
-    - target: {fileID: 3043658276525627758, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: wheels.Array.data[0].wheelObject
-      value: 
-      objectReference: {fileID: 6524541921778091707}
-    - target: {fileID: 3043658276525627758, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: wheels.Array.data[1].wheelObject
-      value: 
-      objectReference: {fileID: 5627007865505167966}
-    - target: {fileID: 3043658276525627758, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
-      propertyPath: wheels.Array.data[2].wheelObject
-      value: 
-      objectReference: {fileID: 3106273706219735598}
     - target: {fileID: 3502056488544030435, guid: c172302a3c041f647886c9fd94b2d03e, type: 3}
       propertyPath: playerMovement
       value: 
@@ -349,44 +317,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e6c25cbeb1d654f8beb001ee89b7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3106273706219735598 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 260125651523694156, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  m_PrefabInstance: {fileID: 2920467382807061602}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3996787628234744530 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2301590856396687024, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  m_PrefabInstance: {fileID: 2920467382807061602}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &5116677694237454862 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 8035972993285117548, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
   m_PrefabInstance: {fileID: 2920467382807061602}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5627007865505167966 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7390600827529322044, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  m_PrefabInstance: {fileID: 2920467382807061602}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6310594621742397659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9156989860318698681, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  m_PrefabInstance: {fileID: 2920467382807061602}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6524541921778091707 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8218015797556945625, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  m_PrefabInstance: {fileID: 2920467382807061602}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7898596650162630703 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4979545580144219213, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
-  m_PrefabInstance: {fileID: 2920467382807061602}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &9068691683306303957 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6151321796631500215, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
   m_PrefabInstance: {fileID: 2920467382807061602}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3392744330384372059
