@@ -51,7 +51,11 @@ public class WallChildListener : MonoBehaviour
             rb.linearVelocity *= velocityChange;
             mainScript.OnChildHit(myIndex);
         }
-        else if (other.CompareTag("Projectile"))
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
         {
             mainScript.OnChildHit(myIndex);
         }
