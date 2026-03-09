@@ -20,7 +20,7 @@ public class VideoManager : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SwitchScenes();
+            //SwitchScenes();
         }
     }
     
