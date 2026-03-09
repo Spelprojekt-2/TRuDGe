@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public static class Leaderboard
 {
     private static RacerData[] leaderboard;
-    //public Image[] character;
 
     public static void SetLeaderboard(RacerData[] newLeaderboard)
     {
@@ -20,7 +19,9 @@ public static class Leaderboard
             leaderboard[i].DisablePosition();
             leaderboardtxt += $"{GetPosString(i + 1)} {GetPlayerColor(leaderboard[i].index)}{leaderboard[i].racername}</color>\n";
         }
-        return leaderboardtxt;
+        //GameObject.FindWithTag("DisplayChar").GetComponent<AfterRaceChar>.Display2DCharacter(leaderboard.Length.racername);
+        //AfterRaceChar.Display2DCharacter(leaderboard.racername);
+        return leaderboardtxt;             
     }
     private static string GetPosString(int pos)
     {
