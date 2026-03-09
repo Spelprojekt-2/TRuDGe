@@ -18,12 +18,16 @@ public class GrapplingBehaviour : MonoBehaviour
     [Tooltip("An aesthetic projectile on the end of the barrel when the vehicle isn't grappling")]
     [SerializeField] private GameObject grappleHook;
     #endregion
-
-    [HeaderAttribute("Debug")]
-    [SerializeField] private Vector3 grapplePoint = Vector3.zero;
+    [Header("Animation")]
+    [Tooltip("The speed at which the grapple gun returns to facing forward")]
+    [SerializeField] private float idleRotationSpeed = 8f;
+    [Header("Debug")]
+    private Vector3 cachedGrapplePoint = Vector3.zero;
+    [SerializeField] private Grappleable grappleable = null;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
+    public float TimeSinceGrapple { get; private set;}
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
@@ -32,56 +36,75 @@ public class GrapplingBehaviour : MonoBehaviour
     {
         if (context.performed)
         {
-            if (!isInGrappleRange) return;
-            isGrappling = true;
-
-            // Start grapple audio
-            playerAudio.GrappleStart();
-
-            if (grappleHook) grappleHook.SetActive(false);
+            if (isInGrappleRange && !isGrappling) StartGrappple();
         }
         else if (context.canceled)
         {
-            isGrappling = false;
-
-            // Change audio behaviour
-            playerAudio.GrappleEnd();
-
-            if (grappleHook) grappleHook.SetActive(true);
+            EndGrapple(true);
         }
 
-        lineRenderer.enabled = isGrappling;
         if (isGrappling)
-            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
     }
+    public void StartGrappple(Grappleable grappleable = null)
+    {
+        if (grappleable != null) this.grappleable = grappleable;
 
+        isGrappling = true;
+        TimeSinceGrapple = 0f;
+
+        // Start grapple audio
+        playerAudio.GrappleStart();
+
+        lineRenderer.enabled = true;
+        if (grappleHook) grappleHook.SetActive(false);
+    }
+    public void EndGrapple(bool respectLock)
+    {
+        if (respectLock && grappleable != null && grappleable.IsLocking) return;
+
+        isGrappling = false;
+
+        // Change audio behaviour
+        playerAudio.GrappleEnd();
+
+        lineRenderer.enabled = false;
+        if (grappleHook) grappleHook.SetActive(true);
+    }
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
+        if (grappleable != null)
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
     }
 
     void Update()
     {
+        if (grappleable != null) cachedGrapplePoint = grappleable.GetGrapplePoint(this);
+
         if (isGrappling)
         {
+            TimeSinceGrapple += Time.deltaTime;
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
-            lineRenderer.SetPosition(1, grapplePoint);
-            
-            // I know it's ugly but it works
-            grappleAzimuthObject.LookAt(grapplePoint, grappleAzimuthObject.parent.up);
-            grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
-            grappleElevationObject.LookAt(grapplePoint, grappleAzimuthObject.up);
+            lineRenderer.SetPosition(1, cachedGrapplePoint);
         }
 
+        if (isGrappling || isInGrappleRange)
+        {
+            // I know it's ugly but it works
+            grappleAzimuthObject.LookAt(cachedGrapplePoint, grappleAzimuthObject.parent.up);
+            grappleAzimuthObject.localEulerAngles = new Vector3(0, grappleAzimuthObject.localEulerAngles.y, 0);
+            grappleElevationObject.LookAt(cachedGrapplePoint, grappleAzimuthObject.up);
+        }
 
         if (isInGrappleRange)
         {
-            Vector3 diff = grapplePoint - playerCamera.transform.position;
+
+            Vector3 diff = cachedGrapplePoint - playerCamera.transform.position;
 
             grappleUIIndicator.gameObject.SetActive(Vector3.Dot(playerCamera.transform.forward, diff.normalized) > 0f);
 
-            Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(grapplePoint);
+            Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(cachedGrapplePoint);
             viewPortpoint.x = Mathf.Clamp(viewPortpoint.x, 0, 1);
             viewPortpoint.y = Mathf.Clamp(viewPortpoint.y, 0, 1);
 
@@ -99,22 +122,50 @@ public class GrapplingBehaviour : MonoBehaviour
                     playerCamera.scaledPixelHeight / playerCamera.rect.height);
             }
         }
+        else
+        {
+            if (!isGrappling)
+            {
+                if (grappleAzimuthObject.localEulerAngles.y != 0)
+                {
+                    // I know it's ugly but it works
+                    grappleAzimuthObject.localEulerAngles = new Vector3(
+                        0, Mathf.LerpAngle(
+                            grappleAzimuthObject.localEulerAngles.y,
+                            0, idleRotationSpeed * Time.deltaTime), 0);
+                }
+                if (grappleElevationObject.localEulerAngles.x != 0)
+                {
+                    grappleElevationObject.localEulerAngles = new Vector3(
+                        Mathf.LerpAngle(
+                            grappleElevationObject.localEulerAngles.x,
+                            0, idleRotationSpeed * Time.deltaTime), 0, 0);
+                }
+            }
+        }
     }
     public void EnteredGrappleRange(Grappleable grappleable)
     {
-        grapplePoint = grappleable.GrapplePoint;
+        this.grappleable = grappleable;
         isInGrappleRange = true;
     }
     public void ExitedGrappleRange(Grappleable grappleable)
     {
+        this.grappleable = null;
         grappleUIIndicator.gameObject.SetActive(false);
-        grapplePoint = grappleable.GrapplePoint;
         isInGrappleRange = false;
     }
     void FixedUpdate()
     {
-        if (!isGrappling) return;
-        Vector3 grappleDir = (grapplePoint - vehicleRigidbody.transform.position).normalized;
+        if (!isGrappling || grappleable == null)
+        {
+            if (isGrappling) EndGrapple(false);
+            return;
+        }
+
+        cachedGrapplePoint = grappleable.GetGrapplePoint(this);
+
+        Vector3 grappleDir = (cachedGrapplePoint - vehicleRigidbody.transform.position).normalized;
         float relativeVelocity = Vector3.Dot(vehicleRigidbody.linearVelocity, grappleDir);
 
         if (relativeVelocity < 0f)
@@ -122,10 +173,10 @@ public class GrapplingBehaviour : MonoBehaviour
             vehicleRigidbody.linearVelocity -= grappleDir * relativeVelocity;
         }
 
-        float dist = Vector3.Distance(vehicleRigidbody.transform.position, grapplePoint);
+        float dist = Vector3.Distance(vehicleRigidbody.transform.position, cachedGrapplePoint);
         if (dist > grappleDistance)
         {
-            Vector3 desiredPosition = grapplePoint - grappleDir * grappleDistance;
+            Vector3 desiredPosition = cachedGrapplePoint - grappleDir * grappleDistance;
             Vector3 correctionVelocity = (desiredPosition - vehicleRigidbody.transform.position) / Time.fixedDeltaTime;
             vehicleRigidbody.linearVelocity += correctionVelocity;
         }
