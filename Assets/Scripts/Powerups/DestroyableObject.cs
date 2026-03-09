@@ -1,9 +1,10 @@
 using UnityEngine;
-
-public class DeployedWall : MonoBehaviour
+using System.Collections;
+public class DestroyableObject : MonoBehaviour
 {
     [SerializeField] private GameObject[] walls = new GameObject[3];
-    private int[] wallHealth = new int[3];
+    [SerializeField] private int[] wallHealth = new int[3];
+    [SerializeField] private float velocityChangeWhenHit = 0.6f;
 
     private void Start()
     {
@@ -13,7 +14,7 @@ public class DeployedWall : MonoBehaviour
             if (walls[i] != null)
             {
                 WallChildListener listener = walls[i].AddComponent<WallChildListener>();
-                listener.Initialize(this, i);
+                listener.Initialize(this, i, velocityChangeWhenHit);
             }
         }
     }
@@ -21,7 +22,6 @@ public class DeployedWall : MonoBehaviour
     public void OnChildHit(int index)
     {
         wallHealth[index]--;
-        Debug.Log($"Wall piece {index} hit! Health left: {wallHealth[index]}");
 
         if (wallHealth[index] <= 0)
         {
@@ -34,21 +34,23 @@ public class DeployedWall : MonoBehaviour
 
 public class WallChildListener : MonoBehaviour
 {
-    private DeployedWall mainScript;
+    private DestroyableObject mainScript;
     private int myIndex;
-
-    public void Initialize(DeployedWall parent, int index)
+    private float velocityChange;
+    public void Initialize(DestroyableObject parent, int index, float velocityChange)
     {
         mainScript = parent;
         myIndex = index;
+        this.velocityChange = velocityChange;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        mainScript.OnChildHit(myIndex);
-    }
-    private void OnCollisionEnter(Collision other)
-    {
+        if (other.transform.root.CompareTag("Player"))
+        {
+            var rb = other.transform.root.gameObject.GetComponentInChildren<Rigidbody>();
+            rb.linearVelocity *= velocityChange;
+        }
         mainScript.OnChildHit(myIndex);
     }
 }
