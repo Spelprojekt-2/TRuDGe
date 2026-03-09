@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 public static class Leaderboard
 {
@@ -19,8 +20,8 @@ public static class Leaderboard
             leaderboard[i].DisablePosition();
             leaderboardtxt += $"{GetPosString(i + 1)} {GetPlayerColor(leaderboard[i].index)}{leaderboard[i].racername}</color>\n";
         }
-        //GameObject.FindWithTag("DisplayChar").GetComponent<AfterRaceChar>.Display2DCharacter(leaderboard.Length.racername);
-        //AfterRaceChar.Display2DCharacter(leaderboard.racername);
+        GameObject.FindWithTag("DisplayChar").GetComponent<CharAfterRace>().Display2DCharacter(leaderboard[0].racername);
+        //Displaychar();
         return leaderboardtxt;             
     }
     private static string GetPosString(int pos)
