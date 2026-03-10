@@ -10,7 +10,7 @@ public class VideoManager : MonoBehaviour
     public VideoPlayer video;
     [SerializeField] private VoiceAudio voiceAudio;
 
-    [Header("Subtitles")]
+    //[Header("Subtitles")]
     //public TextMeshProUGUI subtitlesText;
 
     [Header("Scene")]
@@ -18,14 +18,27 @@ public class VideoManager : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Gamepad.current.selectButton.wasPressedThisFrame)
         {
-            //SwitchScenes();
+            SwitchScenes();
         }
     }
     
     void Start()
     {
+        PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (PlayerCamera comp in cam)
+        {
+            comp.enabled = false;
+            Transform target = comp.transform.Find("CameraHolder");
+            if (target != null)
+            {
+                target.gameObject.SetActive(false);
+            }
+        }
+
         voiceAudio.PlayAnnouncement();
         video.Play();
         video.loopPointReached += SwapVideo;
@@ -39,6 +52,18 @@ public class VideoManager : MonoBehaviour
     }
     public void SwitchScenes()
     {
+        PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        
+        foreach (PlayerCamera comp in cam)
+        {
+            comp.enabled = true;
+            Transform target = comp.transform.Find("CameraHolder");
+            if (target != null)
+            {
+                target.gameObject.SetActive(true);
+            }
+        }
         SceneManager.LoadScene(SwitchScene);
     }
 
