@@ -298,17 +298,13 @@ public class UISelection : MonoBehaviour
     }
     public void Skip()
     {
-        if (SceneManager.GetActiveScene().name == "Level1 Ann.")
+        GameObject controller = GameObject.FindWithTag("Announcement controller");
+
+        switch (SceneManager.GetActiveScene().name)
         {
-            SceneManager.LoadScene("Level1_sloped");
-        }
-        else if (SceneManager.GetActiveScene().name == "Level2 Ann.")
-        {
-            SceneManager.LoadScene("Level2");
-        }
-        else if (SceneManager.GetActiveScene().name == "Level3 Ann.")
-        {
-            SceneManager.LoadScene("Level3");
+            case "Level1 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level1_sloped"); break;
+            case "Level2 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level2"); break;
+            case "Level3 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level3"); break;
         }
     }
 }

@@ -14,20 +14,7 @@ public class VideoManager : MonoBehaviour
     //public TextMeshProUGUI subtitlesText;
 
     [Header("Scene")]
-    public string SwitchScene = "Level1_sloped";
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SwitchScenes();
-        }
-        //bool controller = || Gamepad.current.selectButton.wasPressedThisFrame
-    }
-    private void OnSceneLoaded()
-    {
-        
-    }
+    [SerializeField] private string scenee = "Level1_sloped";
     
     void Start()
     {
@@ -54,9 +41,9 @@ public class VideoManager : MonoBehaviour
 
     public void SwapVideo(VideoPlayer vp)
     {
-        SwitchScenes();
+        SwitchScenes(scenee);
     }
-    public void SwitchScenes()
+    public void SwitchScenes(string scene)
     {
         PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
         //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -70,7 +57,7 @@ public class VideoManager : MonoBehaviour
                 player.gameObject.SetActive(true);
             }
         }
-        SceneManager.LoadScene(SwitchScene);
+        SceneManager.LoadScene(scene);
     }
 
 
