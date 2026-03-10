@@ -4,6 +4,7 @@ public class PlayerHit : MonoBehaviour
 {
     [SerializeField] private float hitStrength;
     [SerializeField] private float invincibilityDuration;
+    [SerializeField] private Animator anim;
     private float invincibilityTimer;
     private bool isInvincible;
     public void Hit(bool ignoreInvincibility)
@@ -14,7 +15,7 @@ public class PlayerHit : MonoBehaviour
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
         transform.root.GetComponentInChildren<PlayerPowerups>().DropGasTanks();
         isInvincible = true;
-        Debug.Log("hit");
+        anim.Play("Spin");
     }
 
     private void FixedUpdate()
