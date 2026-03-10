@@ -3,9 +3,9 @@ using System.Collections;
 public class Airstrike : MonoBehaviour
 {
     [SerializeField] private GameObject projectiles;
-    [SerializeField] private float scaleTimer = 3;
     [SerializeField] private float finalScale = 30;
     [SerializeField] private int strikeCount = 7;
+    //Kan lägga en animation för när airstriken blir större
 
     private void Start()
     {

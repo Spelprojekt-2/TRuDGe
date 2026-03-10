@@ -10,6 +10,8 @@ public class TrainingGroundReady : MonoBehaviour
     [SerializeField] private GameObject TrainingUI;
     [SerializeField] private GameObject PrereadyText;
     [SerializeField] private GameObject ReadyText;
+    [SerializeField] private GameObject KBMInputs;
+    [SerializeField] private GameObject ControllerInputs;
     private void Start()
     {
         SceneController.instance.SceneChangeEvent += OnSceneLoaded;
@@ -29,6 +31,25 @@ public class TrainingGroundReady : MonoBehaviour
         TrainingUI.SetActive(isOnTrainingGround);
         PrereadyText.SetActive(isOnTrainingGround);
         ReadyText.SetActive(false);
+        if (isOnTrainingGround)
+        {
+            bool isController = GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
+            if (isController)
+            {
+                KBMInputs.SetActive(false);
+                ControllerInputs.SetActive(true);
+            }
+            else
+            {
+                KBMInputs.SetActive(true);
+                ControllerInputs.SetActive(false);
+            }
+        }
+        else
+        {
+            KBMInputs.SetActive(false);
+            ControllerInputs.SetActive(false);
+        }
     }
 
     public void ReadyUp(InputAction.CallbackContext context)

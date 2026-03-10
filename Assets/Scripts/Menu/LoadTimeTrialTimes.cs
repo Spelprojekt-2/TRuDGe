@@ -74,11 +74,13 @@ public class LoadTimeTrialTimes : MonoBehaviour
         GhostRecording wrapper = JsonUtility.FromJson<GhostRecording>(json);
         return wrapper;
     }
-
-    public void OpenSelectionMenu(string level)
+    public void TrackToPlay(string sceneName)
     {
-        selectedScene = level;
-        ghostTrackName.text = level;
+        selectedScene = sceneName;
+    }
+    public void OpenSelectionMenu(string levelName)
+    {
+        ghostTrackName.text = levelName;
         lastSelection = UISelection.playerSelections[0].selection;
         GhostSelectionMenu.SetActive(true);
         CoroutineRunner.Run(SelectObject(GhostSelectionMenuFirstSelection));
