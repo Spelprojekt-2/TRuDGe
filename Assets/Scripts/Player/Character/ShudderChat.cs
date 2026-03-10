@@ -179,7 +179,8 @@ public class ShudderChat : MonoBehaviour
             "chug speedrunner =win",
             "GameStation 7 is so good",
             "ILY CARLA",
-            "o7"
+            "o7",
+            "CRAZY JUMPSCARE!!!!!!!"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
@@ -213,7 +214,7 @@ public class ShudderChat : MonoBehaviour
         activeChat.Clear();
         UpdateChat();
         chatEnabled = state;
-        phoneImage.enabled = state;
+        //phoneImage.enabled = state;
     }
 
     //press Y to disable?

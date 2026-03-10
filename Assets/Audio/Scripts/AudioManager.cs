@@ -170,7 +170,6 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case 2:
-            Debug.Log("Should change");
                 ChangeMusic(MusicID.SelectionScreen);
                 break;
 
