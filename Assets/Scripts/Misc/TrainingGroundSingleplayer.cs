@@ -4,7 +4,7 @@ public class TrainingGroundSinglelapimage : MonoBehaviour
 {
     void Start()
     {
-        TrainingGroundReady[] tr = FindObjectsOfType<TrainingGroundReady>();
+        /*TrainingGroundReady[] tr = FindObjectsOfType<TrainingGroundReady>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (TrainingGroundReady rdy in tr)
@@ -25,22 +25,21 @@ public class TrainingGroundSinglelapimage : MonoBehaviour
             {
                 tts.SetActive(false);
             }
-            //GameObject fef = players.Find("LapImage");
-            /*GameObject training = GameObject.Find("TrainingUI");
+            GameObject training = GameObject.Find("TrainingText");
             if (training != null)
             {
                 training.SetActive(true);
             }
-            GameObject ttext = GameObject.Find("TrainingText");
-            if (ttext != null)
+            GameObject tui = GameObject.Find("TrainingUI");
+            if (tui != null)
             {
-                ttext.SetActive(false);
-            }
+                tui.SetActive(false);
+            }/*
             GameObject rtext = GameObject.Find("RadyText");
             if (rtext != null)
             {
                 rtext.SetActive(false);
-            }*/
-        }
+            }
+        }*/
     }
 }
