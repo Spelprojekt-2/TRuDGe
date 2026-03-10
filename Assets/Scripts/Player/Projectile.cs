@@ -56,13 +56,20 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-                
-        PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
-        if (hit != null)
+
+        if (col.CompareTag("Shield"))
         {
-            hit.Hit(false);
+            Destroy(col.gameObject);
         }
-        Destroy(gameObject);
+        else
+        {
+            PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
+            if (hit != null)
+            {
+                hit.Hit(false);
+            }
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision col)
