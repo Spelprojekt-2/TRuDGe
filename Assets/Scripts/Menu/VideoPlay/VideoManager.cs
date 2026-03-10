@@ -18,10 +18,9 @@ public class VideoManager : MonoBehaviour
     
     void Start()
     {
-        PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
+        /*PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
         //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         //PlayerCamera[] cam = players.GetComponentInChildren<PlayerCamera>()
-
         foreach (PlayerCamera comp in cam)
         {
             //comp.enabled = false;
@@ -30,7 +29,7 @@ public class VideoManager : MonoBehaviour
             {
                 player.gameObject.SetActive(false);
             }
-        }
+        }*/
 
         voiceAudio.PlayAnnouncement();
         video.Play();
@@ -45,7 +44,7 @@ public class VideoManager : MonoBehaviour
     }
     public void SwitchScenes(string scene)
     {
-        PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
+        /*PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
         //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         
         foreach (PlayerCamera comp in cam)
@@ -56,7 +55,7 @@ public class VideoManager : MonoBehaviour
             {
                 player.gameObject.SetActive(true);
             }
-        }
+        }*/
         SceneManager.LoadScene(scene);
     }
 
