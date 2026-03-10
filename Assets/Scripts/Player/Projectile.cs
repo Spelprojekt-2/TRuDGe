@@ -26,7 +26,8 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            currentSpeed = shooter.GetComponent<PlayerMovement>().GetCurrentSpeed() + 10;
+            PlayerMovement shooterMove = shooter.GetComponent<PlayerMovement>();
+            if (shooterMove != null) currentSpeed = shooterMove.GetCurrentSpeed() + 10;
         }
         
         this.shooter = shooter;
@@ -50,6 +51,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        if (shooter == null) return;
         if (col.transform.IsChildOf(shooter.transform))
         {
             return;

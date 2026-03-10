@@ -298,19 +298,8 @@ public class PlayerPowerups : MonoBehaviour
 
         if (leader != null)
         {
-            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
-
-            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
-            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
-
-            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
-            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
-            worldDirection.y = 0;
-            worldDirection.Normalize();
-
-            float distanceAhead = 100f;
-            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
-            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
+            GameObject strike = Instantiate(airstrike, Vector3.down * 1000f, Quaternion.identity);
+            strike.GetComponent<Airstrike>().SetTarget(leader);
         }
     }
 }

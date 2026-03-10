@@ -14,6 +14,7 @@ public class PlayerHit : MonoBehaviour
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
         transform.root.GetComponentInChildren<PlayerPowerups>().DropGasTanks();
         isInvincible = true;
+        Debug.Log("hit");
     }
 
     private void FixedUpdate()
