@@ -21,6 +21,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private float airstrikeForwardOffset;
     [SerializeField] private GameObject deployedWall;
     [SerializeField] private GameObject scatterShot;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private float shieldTimer = 4f;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -60,7 +62,8 @@ public class PlayerPowerups : MonoBehaviour
         airstrike,
         deployWall,
         eMP,
-        scatterShot
+        scatterShot,
+        shield
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -139,6 +142,12 @@ public class PlayerPowerups : MonoBehaviour
                 }
                 break;
 
+            case PowerUpType.shield:
+                GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
+                shieldSpawned.transform.parent = gameObject.transform;
+                StartCoroutine(Shield(shieldSpawned));
+                break;
+
             default:
                 return;
         }
@@ -206,6 +215,10 @@ public class PlayerPowerups : MonoBehaviour
         else if (type == PowerUpType.scatterShot)
         {
             currPowerUpText.text = "Scatter Shot";
+        }
+        else if (type == PowerUpType.shield)
+        {
+            currPowerUpText.text = "Shield";
         }
         else
         {
@@ -287,6 +300,13 @@ public class PlayerPowerups : MonoBehaviour
     {
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
         Destroy(spawnedSmoke, smokeDuration);
+    }
+
+    IEnumerator Shield(GameObject shieldSpawned)
+    {
+
+        yield return new WaitForSeconds(shieldTimer);
+        Destroy(shieldSpawned);
     }
 
     void Airstrike()
