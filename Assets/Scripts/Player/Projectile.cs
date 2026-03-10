@@ -54,7 +54,11 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        if (col.transform.root.CompareTag("Player"))
+        if (col.CompareTag("Shield"))
+        {
+            Destroy(col.gameObject);
+        }
+        else if (col.transform.root.CompareTag("Player"))
         {
             Vector3 force = (transform.position - col.transform.position).normalized * 30f;
             force.y = 0;

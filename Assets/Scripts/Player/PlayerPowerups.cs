@@ -21,6 +21,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private float airstrikeForwardOffset;
     [SerializeField] private GameObject deployedWall;
     [SerializeField] private GameObject scatterShot;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private float shieldTimer = 4f;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -60,7 +62,8 @@ public class PlayerPowerups : MonoBehaviour
         airstrike,
         deployWall,
         eMP,
-        scatterShot
+        scatterShot,
+        shield
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -73,6 +76,7 @@ public class PlayerPowerups : MonoBehaviour
             {
                 gasTankAmount++;
                 gasTankCounter.text = "Gastanks: " + gasTankAmount;
+                Debug.Log(gasTankAmount);
                 if (usingTurbo)
                 {
                     normalTopSpeedModifier += 0.1f;
@@ -136,6 +140,12 @@ public class PlayerPowerups : MonoBehaviour
                 {
                     projectile.PrepareProjectile(gameObject, null, 1);
                 }
+                break;
+
+            case PowerUpType.shield:
+                GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
+                shieldSpawned.transform.parent = gameObject.transform;
+                StartCoroutine(Shield(shieldSpawned));
                 break;
 
             default:
@@ -206,6 +216,10 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Scatter Shot";
         }
+        else if (type == PowerUpType.shield)
+        {
+            currPowerUpText.text = "Shield";
+        }
         else
         {
             currPowerUpText.text = "";
@@ -236,8 +250,7 @@ public class PlayerPowerups : MonoBehaviour
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
-
-            StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
+            tanks.GetComponent<Pickup>().canRespawn = false;
         }
 
         //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
@@ -287,6 +300,13 @@ public class PlayerPowerups : MonoBehaviour
     {
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
         Destroy(spawnedSmoke, smokeDuration);
+    }
+
+    IEnumerator Shield(GameObject shieldSpawned)
+    {
+
+        yield return new WaitForSeconds(shieldTimer);
+        Destroy(shieldSpawned);
     }
 
     void Airstrike()
