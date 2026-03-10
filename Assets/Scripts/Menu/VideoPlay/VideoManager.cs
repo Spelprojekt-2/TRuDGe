@@ -9,6 +9,7 @@ public class VideoManager : MonoBehaviour
     [Header ("Video")]
     public VideoPlayer video;
     [SerializeField] private VoiceAudio voiceAudio;
+    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
     //[Header("Subtitles")]
     //public TextMeshProUGUI subtitlesText;
@@ -22,20 +23,26 @@ public class VideoManager : MonoBehaviour
         {
             SwitchScenes();
         }
+        //bool controller = 
+    }
+    private void OnSceneLoaded()
+    {
+        
     }
     
     void Start()
     {
         PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        //PlayerCamera[] cam = players.GetComponentInChildren<PlayerCamera>()
 
         foreach (PlayerCamera comp in cam)
         {
             comp.enabled = false;
-            Transform target = comp.transform.Find("CameraHolder");
-            if (target != null)
+            Transform player = comp.transform.Find("CameraHolder");
+            if (player != null)
             {
-                target.gameObject.SetActive(false);
+                player.gameObject.SetActive(false);
             }
         }
 
@@ -53,19 +60,20 @@ public class VideoManager : MonoBehaviour
     public void SwitchScenes()
     {
         PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         
         foreach (PlayerCamera comp in cam)
         {
             comp.enabled = true;
-            Transform target = comp.transform.Find("CameraHolder");
-            if (target != null)
+            Transform player = comp.transform.Find("CameraHolder");
+            if (player != null)
             {
-                target.gameObject.SetActive(true);
+                player.gameObject.SetActive(true);
             }
         }
         SceneManager.LoadScene(SwitchScene);
     }
+
 
     void OnDestroy()
     {
