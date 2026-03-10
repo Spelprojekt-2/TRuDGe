@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerHit : MonoBehaviour
 {
-    [SerializeField] private float hitStrength;
+    [SerializeField] private float hitSpeedMultiplier;
     [SerializeField] private float invincibilityDuration;
     [SerializeField] private Animator anim;
     private float invincibilityTimer;
@@ -11,7 +11,8 @@ public class PlayerHit : MonoBehaviour
     {
         if (isInvincible && !ignoreInvincibility) return;
         invincibilityTimer = 0;
-        transform.root.GetComponentInChildren<Rigidbody>().linearVelocity = Vector3.up * hitStrength;
+        Rigidbody rb = transform.root.GetComponentInChildren<Rigidbody>();
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x * hitSpeedMultiplier, rb.linearVelocity.y, rb.linearVelocity.z * hitSpeedMultiplier);
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
         transform.root.GetComponentInChildren<PlayerPowerups>().DropGasTanks();
         isInvincible = true;
