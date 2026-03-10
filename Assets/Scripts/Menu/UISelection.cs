@@ -296,4 +296,19 @@ public class UISelection : MonoBehaviour
             }
         }
     }
+    public void Skip()
+    {
+        if (SceneManager.GetActiveScene().name == "Level1 Ann.")
+        {
+            SceneManager.LoadScene("Level1_sloped");
+        }
+        else if (SceneManager.GetActiveScene().name == "Level2 Ann.")
+        {
+            SceneManager.LoadScene("Level2");
+        }
+        else if (SceneManager.GetActiveScene().name == "Level3 Ann.")
+        {
+            SceneManager.LoadScene("Level3");
+        }
+    }
 }

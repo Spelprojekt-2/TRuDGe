@@ -9,7 +9,6 @@ public class VideoManager : MonoBehaviour
     [Header ("Video")]
     public VideoPlayer video;
     [SerializeField] private VoiceAudio voiceAudio;
-    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
     //[Header("Subtitles")]
     //public TextMeshProUGUI subtitlesText;
@@ -19,11 +18,11 @@ public class VideoManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Gamepad.current.selectButton.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             SwitchScenes();
         }
-        //bool controller = 
+        //bool controller = || Gamepad.current.selectButton.wasPressedThisFrame
     }
     private void OnSceneLoaded()
     {
@@ -38,7 +37,7 @@ public class VideoManager : MonoBehaviour
 
         foreach (PlayerCamera comp in cam)
         {
-            comp.enabled = false;
+            //comp.enabled = false;
             Transform player = comp.transform.Find("CameraHolder");
             if (player != null)
             {
@@ -64,7 +63,7 @@ public class VideoManager : MonoBehaviour
         
         foreach (PlayerCamera comp in cam)
         {
-            comp.enabled = true;
+            //comp.enabled = true;
             Transform player = comp.transform.Find("CameraHolder");
             if (player != null)
             {

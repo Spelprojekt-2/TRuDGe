@@ -849,7 +849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &69148136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1663,7 +1663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &160596058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2670,7 +2670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: 70}
+  m_AnchoredPosition: {x: 70, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &266209793
@@ -2779,10 +2779,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 160596062}
-  SwapDown: {fileID: 160596062}
+  SwapUp: {fileID: 0}
+  SwapDown: {fileID: 0}
   SwapLeft: {fileID: 1885172914}
-  SwapRight: {fileID: 2082147774}
+  SwapRight: {fileID: 1718559260}
   characterDescription: {fileID: 748200693}
   characterBackgrounds:
   - {fileID: 1421905729}
@@ -8758,7 +8758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &806383950
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15496,7 +15496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: -70}
+  m_AnchoredPosition: {x: 210, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1718559257
@@ -15605,10 +15605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 1754891130}
-  SwapDown: {fileID: 1754891130}
-  SwapLeft: {fileID: 69148140}
-  SwapRight: {fileID: 806383954}
+  SwapUp: {fileID: 0}
+  SwapDown: {fileID: 0}
+  SwapLeft: {fileID: 266209796}
+  SwapRight: {fileID: 1754891130}
   characterDescription: {fileID: 1023663338}
   characterBackgrounds:
   - {fileID: 1421905729}
@@ -15812,7 +15812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: 70}
+  m_AnchoredPosition: {x: -210, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1754891127
@@ -15921,9 +15921,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 1718559260}
-  SwapDown: {fileID: 1718559260}
-  SwapLeft: {fileID: 2082147774}
+  SwapUp: {fileID: 0}
+  SwapDown: {fileID: 0}
+  SwapLeft: {fileID: 1718559260}
   SwapRight: {fileID: 1885172914}
   characterDescription: {fileID: 1920543474}
   characterBackgrounds:
@@ -16408,7 +16408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -70, y: 70}
+  m_AnchoredPosition: {x: -70, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1885172911
@@ -16517,8 +16517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 806383954}
-  SwapDown: {fileID: 806383954}
+  SwapUp: {fileID: 0}
+  SwapDown: {fileID: 0}
   SwapLeft: {fileID: 1754891130}
   SwapRight: {fileID: 266209796}
   characterDescription: {fileID: 1031655904}
@@ -18363,7 +18363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2082147770
 RectTransform:
   m_ObjectHideFlags: 0
