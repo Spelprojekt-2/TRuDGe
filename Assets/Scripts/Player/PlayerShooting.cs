@@ -57,8 +57,10 @@ public class PlayerShooting : MonoBehaviour
         {
             bulletDir = (autoAim.GetTarget().position - barrelPosition.position).normalized;
         }
-
-        bulletDir.y = 0;
+        else
+        {
+            bulletDir.y = 0;
+        }
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,

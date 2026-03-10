@@ -296,4 +296,16 @@ public class UISelection : MonoBehaviour
             }
         }
     }
+    public void Skip()
+    {
+        GameObject controller = GameObject.FindWithTag("Announcement controller");
+        string sce = SceneManager.GetActiveScene().name;
+
+        switch (sce)
+        {
+            case "Level1 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level1_sloped"); break;
+            case "Level2 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level2"); break;
+            case "Level3 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level3"); break;
+        }
+    }
 }
