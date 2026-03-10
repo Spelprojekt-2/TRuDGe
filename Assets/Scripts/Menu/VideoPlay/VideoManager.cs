@@ -35,6 +35,9 @@ public class VideoManager : MonoBehaviour
         video.Play();
         video.loopPointReached += SwapVideo;
 
+        /*SceneManager.LoadSceneAsync("Level1_sloped");
+        SceneManager.LoadSceneAsync("Level2");
+        SceneManager.LoadSceneAsync("Level3");*/
         //subtitlesText.text = "Schlammrennstrecke, a mud track located in a beautiful German beech forest. It features tight turns, a few tricky obstacles and ending off with another right turn toward the goal. Schlammrennstrecke was originally designed for drifting with cars but unfortunately most of it was destroyed during “The Battle of Schlamm” in the war. In 2055 it was repaired, forming the amazing track we see today!";
     }
 
@@ -56,6 +59,7 @@ public class VideoManager : MonoBehaviour
                 player.gameObject.SetActive(true);
             }
         }*/
+    
         SceneManager.LoadScene(scene);
     }
 
