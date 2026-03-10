@@ -7,12 +7,23 @@ using System.Collections.Generic;
 using UnityEngine.Splines;
 using System.Linq;
 using Unity.Mathematics;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
+    [Header("---Power Up Events---")]
+    [SerializeField] private UnityEvent onTurbo;
+    [SerializeField] private UnityEvent onMagnet;
+    [SerializeField] private UnityEvent onSmoke;
+    [SerializeField] private UnityEvent onLandmine;
+    [SerializeField] private UnityEvent onAirStrike;
+    [SerializeField] private UnityEvent onDeployWall;
+    [SerializeField] private UnityEvent onScatterShot;
+    [SerializeField] private UnityEvent onShield;
+
+    [Header("---Power Up Settings---")]
     [SerializeField] private GameObject gasTank;
-    [SerializeField] private GameObject homingMissile;
     [SerializeField] private int magnetPickupRange = 30;
     [SerializeField] private GameObject smokeScreen;
     [SerializeField] private float smokeDuration = 7f;
@@ -54,14 +65,12 @@ public class PlayerPowerups : MonoBehaviour
     public enum PowerUpType
     {
         gasolineTank,
-        homingMissle,
         turbo,
         magnet,
         smoke,
         landMine,
         airstrike,
         deployWall,
-        eMP,
         scatterShot,
         shield
     };
@@ -100,41 +109,41 @@ public class PlayerPowerups : MonoBehaviour
 
         switch (type)
         {
-            case PowerUpType.homingMissle:
-                HomingMissile();
-                break;
-
             case PowerUpType.turbo:
+                onTurbo.Invoke();
                 if (usingTurbo) return;
                 StartCoroutine(Turbo());
                 break;
 
             case PowerUpType.magnet:
+                onMagnet.Invoke();
                 playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
                 StartCoroutine(Magnet());
                 break;
 
             case PowerUpType.smoke:
+                onSmoke.Invoke();
                 Smokescreen();
                 break;
 
             case PowerUpType.landMine:
+                onLandmine.Invoke();
                 GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
                 playerAudio.PlayLandminePlaceAudio(landmine); // Play landmine audio
                 break;
 
             case PowerUpType.airstrike:
+                onAirStrike.Invoke();
                 Airstrike();
                 break;
 
             case PowerUpType.deployWall:
+                onDeployWall.Invoke();
                 Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
                 break;
 
-            case PowerUpType.eMP:
-                break;
-
             case PowerUpType.scatterShot:
+                onScatterShot.Invoke();
                 GameObject scatterShotSpawned = Instantiate(scatterShot, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.LookRotation(transform.forward));
                 foreach (var projectile in scatterShotSpawned.GetComponentsInChildren<Projectile>())
                 {
@@ -143,6 +152,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.shield:
+                onShield.Invoke();
                 GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
                 StartCoroutine(Shield(shieldSpawned));
@@ -180,11 +190,7 @@ public class PlayerPowerups : MonoBehaviour
 
     void PowerUpUIUpdate()
     {
-        if(type == PowerUpType.homingMissle)
-        {
-            currPowerUpText.text = "Homing Missile";
-        }
-        else if(type == PowerUpType.turbo)
+        if(type == PowerUpType.turbo)
         {
             currPowerUpText.text = "Turbo";
         }
@@ -207,10 +213,6 @@ public class PlayerPowerups : MonoBehaviour
         else if (type == PowerUpType.deployWall)
         {
             currPowerUpText.text = "Deploy Wall";
-        }
-        else if (type == PowerUpType.eMP)
-        {
-            currPowerUpText.text = "EMP";
         }
         else if (type == PowerUpType.scatterShot)
         {
@@ -288,14 +290,6 @@ public class PlayerPowerups : MonoBehaviour
         playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
     }
 
-    void HomingMissile()
-    {
-        raceController = FindFirstObjectByType<RaceController>();
-        if (raceController == null || raceController.trackSpline == null) return;
-        GameObject homingMissileSpawned = Instantiate(homingMissile, transform.position, Quaternion.identity);
-        homingMissileSpawned.GetComponent<HomingMissile>().Initialize(raceController.trackSpline, raceController.GetSplineProgress(transform.position), gameObject);
-    }
-
     void Smokescreen()
     {
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
@@ -318,19 +312,8 @@ public class PlayerPowerups : MonoBehaviour
 
         if (leader != null)
         {
-            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
-
-            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
-            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
-
-            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
-            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
-            worldDirection.y = 0;
-            worldDirection.Normalize();
-
-            float distanceAhead = 100f;
-            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
-            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
+            GameObject strike = Instantiate(airstrike, Vector3.down * 1000f, Quaternion.identity);
+            strike.GetComponent<Airstrike>().SetTarget(leader);
         }
     }
 }

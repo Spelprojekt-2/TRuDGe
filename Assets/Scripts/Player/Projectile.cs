@@ -26,7 +26,8 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            currentSpeed = shooter.GetComponent<PlayerMovement>().GetCurrentSpeed() + 10;
+            PlayerMovement shooterMove = shooter.GetComponent<PlayerMovement>();
+            if (shooterMove != null) currentSpeed = shooterMove.GetCurrentSpeed() + 10;
         }
         
         this.shooter = shooter;
@@ -50,23 +51,25 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        if (shooter == null) return;
         if (col.transform.IsChildOf(shooter.transform))
         {
             return;
         }
+
         if (col.CompareTag("Shield"))
         {
             Destroy(col.gameObject);
         }
-        else if (col.transform.root.CompareTag("Player"))
+        else
         {
-            Vector3 force = (transform.position - col.transform.position).normalized * 30f;
-            force.y = 0;
-            col.gameObject.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-            col.gameObject.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
-            col.gameObject.GetComponentInParent<PlayerPowerups>().DropGasTanks();
+            PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
+            if (hit != null)
+            {
+                hit.Hit(false);
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision col)
