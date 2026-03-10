@@ -73,6 +73,7 @@ public class PlayerPowerups : MonoBehaviour
             {
                 gasTankAmount++;
                 gasTankCounter.text = "Gastanks: " + gasTankAmount;
+                Debug.Log(gasTankAmount);
                 if (usingTurbo)
                 {
                     normalTopSpeedModifier += 0.1f;
@@ -236,8 +237,7 @@ public class PlayerPowerups : MonoBehaviour
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
-
-            StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
+            tanks.GetComponent<Pickup>().canRespawn = false;
         }
 
         //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
