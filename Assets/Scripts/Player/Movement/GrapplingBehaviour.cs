@@ -23,11 +23,11 @@ public class GrapplingBehaviour : MonoBehaviour
     [SerializeField] private float idleRotationSpeed = 8f;
     [Header("Debug")]
     private Vector3 cachedGrapplePoint = Vector3.zero;
-    [SerializeField] private Grappleable grappleable = null;
+    [SerializeField] private IGrappleable grappleable = null;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
-    public float TimeSinceGrapple { get; private set;}
+    public float TimeSinceGrapple { get; private set;} = 0f;
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
@@ -64,15 +64,23 @@ public class GrapplingBehaviour : MonoBehaviour
         if (respectLock && grappleable != null && grappleable.IsLocking) return;
 
         isGrappling = false;
+        TimeSinceGrapple = 0f;
 
         // Change audio behaviour
         playerAudio.GrappleEnd();
 
         lineRenderer.enabled = false;
         if (grappleHook) grappleHook.SetActive(true);
+
+        if (!isInGrappleRange)
+        {
+            grappleable = null;
+            grappleUIIndicator.gameObject.SetActive(false);
+        }
     }
     void Start()
     {
+        TimeSinceGrapple = 0f;
         lineRenderer = GetComponent<LineRenderer>();
         if (grappleable != null)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
@@ -144,15 +152,18 @@ public class GrapplingBehaviour : MonoBehaviour
             }
         }
     }
-    public void EnteredGrappleRange(Grappleable grappleable)
+    public void EnteredGrappleRange(IGrappleable grappleable)
     {
         this.grappleable = grappleable;
         isInGrappleRange = true;
     }
-    public void ExitedGrappleRange(Grappleable grappleable)
+    public void ExitedGrappleRange(IGrappleable grappleable)
     {
-        this.grappleable = null;
-        grappleUIIndicator.gameObject.SetActive(false);
+        if (!isGrappling)
+        {
+            this.grappleable = null;
+            grappleUIIndicator.gameObject.SetActive(false);
+        }
         isInGrappleRange = false;
     }
     void FixedUpdate()
