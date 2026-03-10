@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour
         {
             Destroy(col.gameObject);
         }
-        else
+        else if (col.transform.root.CompareTag("Player"))
         {
             PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
             if (hit != null)
