@@ -27,7 +27,7 @@ public class PlayerShooting : MonoBehaviour
     private void Start()
     {
         timer = fireRate;
-        shootCooldown.fillAmount = 1;
+        shootCooldown.fillAmount = 1f;
         autoAim = GetComponentInChildren<AutoAimCone>();
 
         // Get PlayerAudio.
@@ -53,7 +53,7 @@ public class PlayerShooting : MonoBehaviour
         else
         {
             timer += Time.deltaTime;
-            shootCooldown.fillAmount += 0.04f;
+            shootCooldown.fillAmount += Time.deltaTime / fireRate;
         }
     }
     public void Shoot(GameObject prefab)
