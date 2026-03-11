@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1722926693969476688
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 905128322383528578, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_Name
+      value: SplitscreenPlayerRUBY2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831016060456231938, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1604007545775419095, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5041186565519445004}
+  m_SourcePrefab: {fileID: 100100000, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+--- !u!1 &120335974653481607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1604007545775419095, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+  m_PrefabInstance: {fileID: 1722926693969476688}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5041186565519445004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120335974653481607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d6d227a2b38e47b6b59cb86b8ff70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  hitWall:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5728139968569251301}
+        m_TargetAssemblyTypeName: GrapplingBehaviour, Assembly-CSharp
+        m_MethodName: EndGrapple
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  hitPlayer:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5728139968569251301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6383676828881463733, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
+  m_PrefabInstance: {fileID: 1722926693969476688}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8676d4f3deb21e240b3a4cb0fabb3943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
