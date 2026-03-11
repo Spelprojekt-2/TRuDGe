@@ -681,11 +681,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
---- !u!4 &902015445 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8891854395154787567, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-  m_PrefabInstance: {fileID: 997528723}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &903718281
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,14 +818,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2927282047606757040, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927282047606757040, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2962098963171824020, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -851,10 +838,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5710550765482825874, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
     - target: {fileID: 5991988382423703519, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -863,18 +846,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6383676828881463733, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-      propertyPath: grappleHook
-      value: 
-      objectReference: {fileID: 1176273817}
-    - target: {fileID: 6383676828881463733, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-      propertyPath: grappleAzimuthObject
-      value: 
-      objectReference: {fileID: 1257221414}
-    - target: {fileID: 6383676828881463733, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-      propertyPath: grappleElevationObject
-      value: 
-      objectReference: {fileID: 902015445}
     - target: {fileID: 7258160759492006418, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1084,16 +1055,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10}
---- !u!1 &1176273817 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8105203839669830324, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-  m_PrefabInstance: {fileID: 997528723}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1257221414 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2832028035553567805, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
-  m_PrefabInstance: {fileID: 997528723}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1315780956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1604007545775419095, guid: bf55311f745dc2f47874b1352b08fffc, type: 3}
@@ -1319,3 +1280,4 @@ SceneRoots:
   - {fileID: 903718285}
   - {fileID: 4834385897573415154}
   - {fileID: 997528723}
+  - {fileID: 726720303}

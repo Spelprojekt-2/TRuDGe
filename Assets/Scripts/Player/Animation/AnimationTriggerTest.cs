@@ -6,7 +6,7 @@ public class AnimationTriggerTest : MonoBehaviour
     
     public void PlayAnimation()
     {
-        animator.SetTrigger("Turbo");
+        animator.SetTrigger("Airstrike");
         Debug.Log("playAnim");
     }
 
