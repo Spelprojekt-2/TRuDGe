@@ -29,7 +29,6 @@ public class PlayerShooting : MonoBehaviour
     public void ShootInput(InputAction.CallbackContext context)
     {
         isShooting = context.performed;
-        Debug.Log("Clicked Shoot");
     }
 
     private void Update()
@@ -65,7 +64,6 @@ public class PlayerShooting : MonoBehaviour
             barrelPosition.position,
             Quaternion.LookRotation(bulletDir)
         );
-        Debug.Log("Shot");
         bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null, speedMultiplier);
 
         // Play shoot audio
