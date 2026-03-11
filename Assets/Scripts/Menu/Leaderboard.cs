@@ -22,7 +22,7 @@ public static class Leaderboard
         }
         GameObject.FindWithTag("DisplayChar").GetComponent<CharAfterRace>().Display2DCharacter(leaderboard[0].racername);
         
-        //AudioManager.Instance.PlayCountdownAudio(leaderboard[0].racername);
+        AudioManager.Instance.PlayVictoryVoice(leaderboard[0].racername);
         /*switch (leaderboard[0].racername)
         {
             case "Lars-Göran": AudioManager.Instance.Play; break;
