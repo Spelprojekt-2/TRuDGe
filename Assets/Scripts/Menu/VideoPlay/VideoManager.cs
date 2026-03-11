@@ -8,7 +8,6 @@ public class VideoManager : MonoBehaviour
 {
     [Header ("Video")]
     public VideoPlayer video;
-    [SerializeField] private VoiceAudio voiceAudio;
 
     //[Header("Subtitles")]
     //public TextMeshProUGUI subtitlesText;
@@ -18,26 +17,19 @@ public class VideoManager : MonoBehaviour
     
     void Start()
     {
-        /*PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
-        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        //PlayerCamera[] cam = players.GetComponentInChildren<PlayerCamera>()
-        foreach (PlayerCamera comp in cam)
+        switch (SceneManager.GetActiveScene().name)
         {
-            //comp.enabled = false;
-            Transform player = comp.transform.Find("CameraHolder");
-            if (player != null)
-            {
-                player.gameObject.SetActive(false);
-            }
-        }*/
-
-        voiceAudio.PlayAnnouncement();
+            case "Level1 Ann.": AudioManager.Instance.PlaySchlammenstreckeIntro(); break;
+            case "Level2 Ann.": /*AudioManager.Instance.PlayDoverIntro();*/ break;
+            case "Level3 Ann.": /*AudioManager.Instance.PlayLuminenIntro();*/ break;
+        }
+        //voiceAudio.PlayAnnouncement();
         video.Play();
         video.loopPointReached += SwapVideo;
 
-        /*SceneManager.LoadSceneAsync("Level1_sloped");
-        SceneManager.LoadSceneAsync("Level2");
-        SceneManager.LoadSceneAsync("Level3");*/
+        
+       
+        
         //subtitlesText.text = "Schlammrennstrecke, a mud track located in a beautiful German beech forest. It features tight turns, a few tricky obstacles and ending off with another right turn toward the goal. Schlammrennstrecke was originally designed for drifting with cars but unfortunately most of it was destroyed during “The Battle of Schlamm” in the war. In 2055 it was repaired, forming the amazing track we see today!";
     }
 
@@ -47,23 +39,11 @@ public class VideoManager : MonoBehaviour
     }
     public void SwitchScenes(string scene)
     {
-        /*PlayerCamera[] cam = FindObjectsOfType<PlayerCamera>();
-        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        
-        foreach (PlayerCamera comp in cam)
-        {
-            //comp.enabled = true;
-            Transform player = comp.transform.Find("CameraHolder");
-            if (player != null)
-            {
-                player.gameObject.SetActive(true);
-            }
-        }*/
-    
+        AudioManager.Instance.StopSchlammenstreckeIntro();
+        //AudioManager.Instance.StopDoverIntro();
+        //AudioManager.Instance.StopLuminenIntro();
         SceneManager.LoadScene(scene);
     }
-
-
     void OnDestroy()
     {
         video.loopPointReached -= SwapVideo;
