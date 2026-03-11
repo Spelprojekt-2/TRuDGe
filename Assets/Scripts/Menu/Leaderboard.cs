@@ -21,9 +21,11 @@ public static class Leaderboard
             leaderboardtxt += $"{GetPosString(i + 1)} {GetPlayerColor(leaderboard[i].index)}{leaderboard[i].racername}</color>\n";
         }
         GameObject.FindWithTag("DisplayChar").GetComponent<CharAfterRace>().Display2DCharacter(leaderboard[0].racername);
-        /*switch (leaderboard[0])
+        
+        AudioManager.Instance.PlayVictoryVoice(leaderboard[0].racername);
+        /*switch (leaderboard[0].racername)
         {
-            case "Lars-Göran": A; break;
+            case "Lars-Göran": AudioManager.Instance.Play; break;
             case "The Brass Beast": ; break;
             case "Capôw": ; break;
             case "Schlammer": ; break;

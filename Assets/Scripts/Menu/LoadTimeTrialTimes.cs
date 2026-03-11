@@ -19,6 +19,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ghostTrackName;
     private UIButton lastSelection;
     private string selectedScene;
+    private string sceneToLoad;
     void Start()
     {
         DisplayLevelTimes(level1SceneName, level1Text);
@@ -78,6 +79,12 @@ public class LoadTimeTrialTimes : MonoBehaviour
     {
         selectedScene = sceneName;
     }
+
+    public void SceneToPlay(string sceneName)
+    {
+        sceneToLoad = sceneName;
+    }
+
     public void OpenSelectionMenu(string levelName)
     {
         ghostTrackName.text = levelName;
@@ -103,7 +110,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
         RacingInformation.instance.pathToGhost =
             System.IO.Path.Combine(Application.streamingAssetsPath, selectedScene + "_Ghost.ghost");
         RacingInformation.instance.isTimeTrialWithGhost = true;
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void SelectPersonalGhost()
@@ -111,13 +118,13 @@ public class LoadTimeTrialTimes : MonoBehaviour
         RacingInformation.instance.pathToGhost =
             System.IO.Path.Combine(Application.persistentDataPath, selectedScene + "_Ghost.ghost");
         RacingInformation.instance.isTimeTrialWithGhost = File.Exists(RacingInformation.instance.pathToGhost);
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void SelectSolo()
     {
         RacingInformation.instance.isTimeTrialWithGhost = false;
         RacingInformation.instance.pathToGhost = null;
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
