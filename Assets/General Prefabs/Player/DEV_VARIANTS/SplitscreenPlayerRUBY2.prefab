@@ -77,9 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462d6d227a2b38e47b6b59cb86b8ff70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  wallLayer: 7
   hitWall:
     m_PersistentCalls:
       m_Calls:
@@ -95,9 +93,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  playerLayer: 8
   hitPlayer:
     m_PersistentCalls:
       m_Calls: []
