@@ -7,6 +7,12 @@ public class PlayerHit : MonoBehaviour
     [SerializeField] private Animator anim;
     private float invincibilityTimer;
     private bool isInvincible;
+
+    public void HitShield()
+    {
+        invincibilityTimer = invincibilityDuration;
+        isInvincible = true;
+    }
     public void Hit(bool ignoreInvincibility)
     {
         if (isInvincible && !ignoreInvincibility) return;
@@ -15,6 +21,7 @@ public class PlayerHit : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x * hitSpeedMultiplier, rb.linearVelocity.y, rb.linearVelocity.z * hitSpeedMultiplier);
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
         transform.root.GetComponentInChildren<PlayerPowerups>().DropGasTanks();
+        transform.root.GetComponentInChildren<PlayerMovement>().enabled = false;
         isInvincible = true;
         anim.Play("Spin");
     }
@@ -23,9 +30,13 @@ public class PlayerHit : MonoBehaviour
     {
         if (!isInvincible) return;
         invincibilityTimer += Time.fixedDeltaTime;
-        if (invincibilityTimer > invincibilityDuration)
+        if (invincibilityTimer > invincibilityDuration - (invincibilityDuration - 1))
         {
-            isInvincible = false;
+            transform.root.GetComponentInChildren<PlayerMovement>().enabled = true;
+            if (invincibilityTimer > invincibilityDuration)
+            {
+                isInvincible = false;
+            }
         }
     }
 }

@@ -1,9 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrainingGroundSinglelapimage : MonoBehaviour
 {
     void Start()
     {
+        /*GameObject mapicon = GameObject.Find("MinimapContainer");
+        mapicon.GetComponent<MinimapIcons>().enabled = false;
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject p in players)
+        {
+            GameObject lapimage = GameObject.Find("LapImage");
+            lapimage.GetComponent<Image>().enabled = false;
+
+            GameObject posimage = GameObject.Find("PositionImage");
+            posimage.GetComponent<Image>().enabled = false;
+        }
+        
+
         /*TrainingGroundReady[] tr = FindObjectsOfType<TrainingGroundReady>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
