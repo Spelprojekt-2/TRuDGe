@@ -8,7 +8,6 @@ public class VideoManager : MonoBehaviour
 {
     [Header ("Video")]
     public VideoPlayer video;
-    [SerializeField] private VoiceAudio voiceAudio;
 
     //[Header("Subtitles")]
     //public TextMeshProUGUI subtitlesText;
@@ -18,13 +17,13 @@ public class VideoManager : MonoBehaviour
     
     void Start()
     {
-        /*switch (SceneManager.GetActiveScene().name)
+        switch (SceneManager.GetActiveScene().name)
         {
-            case "Level1 Ann.": AudioManager.instance.PlayIntroSchlammenstrecke; break;
-            case "Level2 Ann.": break;
-            case "Level3 Ann.": break;
-        }*/
-        voiceAudio.PlayAnnouncement();
+            case "Level1 Ann.": AudioManager.Instance.PlaySchlammenstreckeIntro(); break;
+            case "Level2 Ann.": /*AudioManager.Instance.PlayDoverIntro();*/ break;
+            case "Level3 Ann.": /*AudioManager.Instance.PlayLuminenIntro();*/ break;
+        }
+        //voiceAudio.PlayAnnouncement();
         video.Play();
         video.loopPointReached += SwapVideo;
 
@@ -40,6 +39,9 @@ public class VideoManager : MonoBehaviour
     }
     public void SwitchScenes(string scene)
     {
+        AudioManager.Instance.StopSchlammenstreckeIntro();
+        //AudioManager.Instance.StopDoverIntro();
+        //AudioManager.Instance.StopLuminenIntro();
         SceneManager.LoadScene(scene);
     }
     void OnDestroy()
