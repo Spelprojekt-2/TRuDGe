@@ -51311,6 +51311,7 @@ GameObject:
   - component: {fileID: 2050566923}
   - component: {fileID: 2050566922}
   - component: {fileID: 2050566921}
+  - component: {fileID: 2050566925}
   m_Layer: 6
   m_Name: Lake
   m_TagString: Untagged
@@ -51408,6 +51409,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050566925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050566920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da799b37504a3d04080a1e25d6701021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2051479879 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5474821850940785845, guid: 480e93a57875d764a8fa16e9e84fbcc3, type: 3}
