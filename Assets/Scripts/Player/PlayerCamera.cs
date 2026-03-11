@@ -97,6 +97,7 @@ public class PlayerCamera : MonoBehaviour
             else
             {
                 lookingAtTarget = false;
+                cursorPos = new Vector2(0, 200f);
                 if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
             }
             oldTarget = currentTarget;
@@ -128,6 +129,7 @@ public class PlayerCamera : MonoBehaviour
         {
             StopCoroutine(FocusOnTarget());
             lookingAtTarget = false;
+            cursorPos = new Vector2(0, 200f);
             crosshair.GetComponent<Image>().enabled = false;
         }
 

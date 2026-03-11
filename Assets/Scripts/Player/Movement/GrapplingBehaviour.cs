@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(LineRenderer))]
 public class GrapplingBehaviour : MonoBehaviour
@@ -78,12 +79,24 @@ public class GrapplingBehaviour : MonoBehaviour
             grappleUIIndicator.gameObject.SetActive(false);
         }
     }
+
+    void SceneChange(Scene scene, LoadSceneMode mode)
+    {
+        isInGrappleRange = false;
+        EndGrapple(false);
+    }
     void Start()
     {
         TimeSinceGrapple = 0f;
         lineRenderer = GetComponent<LineRenderer>();
         if (grappleable != null)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
+        SceneManager.sceneLoaded += SceneChange;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= SceneChange;
     }
 
     void Update()
