@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class TrainingGroundReady : MonoBehaviour
 {
@@ -63,6 +64,10 @@ public class TrainingGroundReady : MonoBehaviour
                 Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
                 if(posimage != null)
                 posimage.GetComponent<Image>().enabled = false;
+
+                Transform timer = p.transform.Find("Canvas/TimeTrialStuff/Timer");
+                if(timer != null)
+                timer.GetComponent<TextMeshProUGUI>().enabled = false;
             }
         }
         if (SceneController.instance.currentSceneType == SceneController.SceneType.Racing)

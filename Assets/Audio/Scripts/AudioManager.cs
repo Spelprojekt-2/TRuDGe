@@ -207,22 +207,22 @@ public class AudioManager : MonoBehaviour
         }
 
         // Select character
-        characterName.ToLower();
-        switch (characterName)
+        string lower = characterName.ToLower();
+        switch (lower)
         {
-            case "napoleon":
+            case "king napoleon iii":
                 if (!Music_Napoleon.IsNull)
                 musicInstance = RuntimeManager.CreateInstance(Music_Napoleon);
                 break;
-            case "lars":
+            case "lars-göran":
             if (!Music_Lars.IsNull)
                 musicInstance = RuntimeManager.CreateInstance(Music_Lars);
                 break;
-            case "carla":
+            case "capôw":
                 if (!Music_Carla.IsNull)
                 musicInstance = RuntimeManager.CreateInstance(Music_Carla);
                 break;
-            case "nina":
+            case "the brass beast":
                 if (!Music_Nina.IsNull)
                 musicInstance = RuntimeManager.CreateInstance(Music_Nina);
                 break;
