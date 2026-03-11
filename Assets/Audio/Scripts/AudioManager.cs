@@ -179,16 +179,20 @@ public class AudioManager : MonoBehaviour
         switch (characterName)
         {
             case "napoleon":
-                musicInstance = RuntimeManager.CreateInstance();
+                if (!Music_Napoleon.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Napoleon);
                 break;
             case "lars":
-                musicInstance = RuntimeManager.CreateInstance();
+            if (!Music_Lars.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Lars);
                 break;
             case "carla":
-                musicInstance = RuntimeManager.CreateInstance();
+                if (!Music_Carla.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Carla);
                 break;
             case "nina":
-                musicInstance = RuntimeManager.CreateInstance();
+                if (!Music_Nina.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Nina);
                 break;
         }
 
