@@ -10,7 +10,7 @@ public class PlayerHit : MonoBehaviour
 
     public void HitShield()
     {
-        invincibilityTimer = invincibilityDuration / 2f;
+        invincibilityTimer = invincibilityDuration;
         isInvincible = true;
     }
     public void Hit(bool ignoreInvincibility)
@@ -30,7 +30,7 @@ public class PlayerHit : MonoBehaviour
     {
         if (!isInvincible) return;
         invincibilityTimer += Time.fixedDeltaTime;
-        if (invincibilityTimer > invincibilityDuration / 4)
+        if (invincibilityTimer > invincibilityDuration - (invincibilityDuration - 1))
         {
             transform.root.GetComponentInChildren<PlayerMovement>().enabled = true;
             if (invincibilityTimer > invincibilityDuration)

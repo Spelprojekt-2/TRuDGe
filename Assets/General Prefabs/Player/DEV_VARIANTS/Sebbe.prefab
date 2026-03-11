@@ -184,7 +184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 264.99997, y: 423.00027}
+  m_AnchoredPosition: {x: 265, y: 423.00027}
   m_SizeDelta: {x: 450.7, y: 393}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3542366510602694059
@@ -285,6 +285,10 @@ PrefabInstance:
       propertyPath: shootCooldown
       value: 
       objectReference: {fileID: 3644288664590253978}
+    - target: {fileID: 6918455224111598944, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: invincibilityDuration
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6094359824218614925, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}

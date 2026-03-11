@@ -111,8 +111,15 @@ public class PlayerPowerups : MonoBehaviour
         }
         else
         {
-            this.type = type;
-            PowerUpUIUpdate();
+            if(this.type != null)
+            {
+                return;
+            }
+            else
+            {
+                this.type = type;
+                PowerUpUIUpdate();
+            }
         }
     }
 
