@@ -36,6 +36,9 @@ public class AudioManager : MonoBehaviour
     // SFX config
     [Header("SFX Configuration")]
     [SerializeField] private FeedbackAudio feedbackAudio;
+    [SerializeField] private VoiceAudio voiceAudio;
+    private EventInstance VOinst_Announcer;
+    private EventInstance VOinst_Character;
     private EventInstance countDownInst;
 
     public enum AmbienceID
@@ -124,6 +127,33 @@ public class AudioManager : MonoBehaviour
             return;
         }
         feedbackAudio.CountdownAudio(endCountdown);
+    }
+    #endregion
+
+    #region VO
+    public void PlaySchlammenstreckeIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.SchlammenstreckeIntroAudio(VOinst_Announcer);
+    }
+
+    public void StopSchlammenstreckeIntro()
+    {
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
     }
     #endregion
 
