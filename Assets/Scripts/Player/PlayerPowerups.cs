@@ -99,7 +99,6 @@ public class PlayerPowerups : MonoBehaviour
                 //UI Image
                 gasImage.fillAmount += 0.1f;
                 //gasTankCounter.text = "Gastanks: " + gasTankAmount;
-                Debug.Log(gasTankAmount);
                 if (usingTurbo)
                 {
                     normalTopSpeedModifier += 0.1f;
@@ -112,8 +111,15 @@ public class PlayerPowerups : MonoBehaviour
         }
         else
         {
-            this.type = type;
-            PowerUpUIUpdate();
+            if(this.type != null)
+            {
+                return;
+            }
+            else
+            {
+                this.type = type;
+                PowerUpUIUpdate();
+            }
         }
     }
 

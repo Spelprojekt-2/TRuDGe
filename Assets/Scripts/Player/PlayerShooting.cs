@@ -47,6 +47,7 @@ public class PlayerShooting : MonoBehaviour
                 timer = 0;
                 Shoot(projectilePrefab);
                 shootCooldown.fillAmount = 0;
+                isShooting = false;
             }
         }
         else
