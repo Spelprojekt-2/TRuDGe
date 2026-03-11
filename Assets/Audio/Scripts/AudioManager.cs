@@ -5,6 +5,7 @@ using FMOD.Studio;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
+using Unity.VisualScripting;
 
 public class AudioManager : MonoBehaviour
 {
@@ -37,6 +38,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private FeedbackAudio feedbackAudio;
     private EventInstance countDownInst;
 
+    public enum AmbienceID
+    {
+        None = 0,
+        TrainingGround = 1,
+        Schlammrennstrecke = 2,
+        CliffsOfDover = 3,
+        LuminenTRT = 4
+    }
+
     // Ambience config
     [SerializeField] private EventReference AmbienceManagerRef;
     private EventInstance ambienceInstance;
@@ -59,6 +69,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        StartAmbience();
         ChangeMusic(MusicID.MainMenu);
     }
 
@@ -126,6 +137,16 @@ public class AudioManager : MonoBehaviour
         ambienceInstance = RuntimeManager.CreateInstance(AmbienceManagerRef);
         ambienceInstance.start();
     }
+
+    private void ChangeAmbience(AmbienceID id)
+    {
+        if (!ambienceInstance.isValid())
+        {
+            Debug.LogWarning("AmbienceInstance is not valid!");
+            return;
+        }
+        ambienceInstance.setParameterByName("CurrentLocation", (float)id);
+    }
     #endregion
 
     #region Pause / Resume
@@ -158,42 +179,54 @@ public class AudioManager : MonoBehaviour
     #region Scene Handling
     private void OnSceneLoaded(Scene next, LoadSceneMode mode)
     {
-        Debug.Log(next.buildIndex);
         switch (next.buildIndex)
         {
             case 0:
                 ChangeMusic(MusicID.MainMenu);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 1:
                 ChangeMusic(MusicID.SelectionScreen);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 2:
                 ChangeMusic(MusicID.SelectionScreen);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 3:
                 ChangeMusic(MusicID.SelectionScreen);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 9:
                 ChangeMusic(MusicID.Level1sloped);
-                StartAmbience();
+                ChangeAmbience(AmbienceID.Schlammrennstrecke);
+                Debug.Log("Ambience set: Schlammrennstrecke");
                 break;
 
             case 10:
                 ChangeMusic(MusicID.TrainingGround);
-                StartAmbience();
+                ChangeAmbience(AmbienceID.TrainingGround);
+                Debug.Log("Ambience set: TrainingGround");
+                break;
+
+            case 12:
+                ChangeAmbience(AmbienceID.CliffsOfDover);
+                Debug.Log("Ambience set: CliffsOfDover");
+                break;
+
+            case 15:
+                ChangeAmbience(AmbienceID.LuminenTRT);
+                Debug.Log("Ambience set: LuminenTRT");
                 break;
         }
-    }
-    #endregion
-
-    #region Player Handling
-    public void UpdatePlayerCount(int count)
-    {
-        RuntimeManager.StudioSystem.setParameterByName("PlayerCount", count);
     }
     #endregion
 }

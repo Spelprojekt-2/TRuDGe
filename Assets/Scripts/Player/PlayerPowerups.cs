@@ -123,6 +123,7 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.smoke:
                 onSmoke.Invoke();
+                playerAudio.PlaySmokeAudio(transform.position); // Play smoke audio
                 Smokescreen();
                 break;
 
@@ -155,6 +156,7 @@ public class PlayerPowerups : MonoBehaviour
                 onShield.Invoke();
                 GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
+                playerAudio.PlayShieldAudio(); // Play shield audio
                 StartCoroutine(Shield(shieldSpawned));
                 break;
 
