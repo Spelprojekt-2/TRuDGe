@@ -1,13 +1,26 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AnimationTriggerTest : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    
-    public void PlayAnimation()
+    private string[] anims = new string[]
     {
-        animator.SetTrigger("Airstrike");
-        Debug.Log("playAnim");
+        "Turbo",
+        "ScatterShot",
+        "Airstrike",
+        "Mine"
+    };
+    private int indexer = 0;
+    
+    public void PlayAnimation(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            animator.SetTrigger(anims[indexer++]);
+            Debug.Log("playAnim");
+            indexer %= anims.Length;
+        }
     }
 
     public void Start()
