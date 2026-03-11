@@ -320,6 +320,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2094914520598921908, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: tankMaterializer
+      value: 
+      objectReference: {fileID: 4886084887817039522}
     - target: {fileID: 2449827225276985528, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -639,6 +643,14 @@ MonoBehaviour:
     Fenders: {fileID: 2100000, guid: b5a194b62a80db34b8ed48068890a32e, type: 2}
     Turret: {fileID: 2100000, guid: 1a277dfeff116b04e9aab734e4cfafdc, type: 2}
     Wheels: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
+  - Hull: {fileID: 2100000, guid: cc1f2ff0daf041446a6d332561ce2dc6, type: 2}
+    Fenders: {fileID: 2100000, guid: 0bb1174c5e8bee647b293c2020dee96e, type: 2}
+    Turret: {fileID: 2100000, guid: 524964d4269ee3d429e85036560ac134, type: 2}
+    Wheels: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
+  - Hull: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+    Fenders: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+    Turret: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+    Wheels: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
   - Hull: {fileID: 2100000, guid: a217a09fcd928fd48ad946ff4803fb10, type: 2}
     Fenders: {fileID: 2100000, guid: a7a4c90288db2ab4b806809df22d1781, type: 2}
     Turret: {fileID: 2100000, guid: e3aa5b27cbba49b448e6baf68918f6be, type: 2}
@@ -647,10 +659,6 @@ MonoBehaviour:
     Fenders: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
     Turret: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
     Wheels: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
-  - Hull: {fileID: 2100000, guid: cc1f2ff0daf041446a6d332561ce2dc6, type: 2}
-    Fenders: {fileID: 2100000, guid: 0bb1174c5e8bee647b293c2020dee96e, type: 2}
-    Turret: {fileID: 2100000, guid: 524964d4269ee3d429e85036560ac134, type: 2}
-    Wheels: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
   hullParts:
   - {fileID: 2679012438908127709}
   fenderParts:
@@ -769,10 +777,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+    - target: {fileID: -3703809332192926867, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
     - target: {fileID: -3436144781417916639, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+      objectReference: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
     - target: {fileID: -3360041991812980977, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -780,7 +792,7 @@ PrefabInstance:
     - target: {fileID: -2554956022954377818, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+      objectReference: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
     - target: {fileID: -2326941438770393190, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -788,7 +800,7 @@ PrefabInstance:
     - target: {fileID: -1902463223733969113, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+      objectReference: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
     - target: {fileID: -881128161616669756, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -864,7 +876,7 @@ PrefabInstance:
     - target: {fileID: 3797239129968323845, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dd886f6a7dd6b894c816a89a45a20389, type: 2}
+      objectReference: {fileID: 2100000, guid: c627c538d4d5da3408515cd32d00b49c, type: 2}
     - target: {fileID: 4088724057639737253, guid: b36d82c1d2921eb40a9a9d5c641b8911, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
