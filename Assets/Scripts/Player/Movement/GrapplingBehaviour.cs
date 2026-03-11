@@ -213,6 +213,6 @@ public class GrapplingBehaviour : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(grappleElevationObject.position + grappleMuzzleOffset, 0.1f);
+        Gizmos.DrawSphere(grappleElevationObject.TransformPoint(grappleMuzzleOffset), 0.1f);
     }
 }
