@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TrainingGroundReady : MonoBehaviour
 {
@@ -49,6 +50,34 @@ public class TrainingGroundReady : MonoBehaviour
         {
             KBMInputs.SetActive(false);
             ControllerInputs.SetActive(false);
+        }
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+                Transform lapimage = p.transform.Find("Canvas/LapImage");
+                if(lapimage != null)
+                lapimage.GetComponent<Image>().enabled = false;
+
+                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+                if(posimage != null)
+                posimage.GetComponent<Image>().enabled = false;
+            }
+        }
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.Racing)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+                Transform lapimage = p.transform.Find("Canvas/LapImage");
+                if(lapimage != null)
+                lapimage.GetComponent<Image>().enabled = true;
+
+                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+                if(posimage != null)
+                posimage.GetComponent<Image>().enabled = true;
+            }
         }
     }
 

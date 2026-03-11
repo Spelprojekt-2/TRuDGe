@@ -15,6 +15,10 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference LandminePlaceRef;
     [SerializeField] private EventReference LandmineTriggerRef;
     [SerializeField] private EventReference MagnetRef;
+    [SerializeField] private EventReference SmokeRef;
+    [SerializeField] private EventReference ShieldRef;
+    [SerializeField] private EventReference WallPlaceRef;
+    [SerializeField] private EventReference WallDestroyRef;
     #endregion
 
     public void PlayPickupAudio(PlayerPowerups.PowerUpType powerUpType)
@@ -75,5 +79,40 @@ public class InteractablesAudio : ScriptableObject
         instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         instance.release();
         return instance;
+    }
+
+    public void PlaySmokeAudio(Vector3 pos)
+    {
+        if (SmokeRef.IsNull)
+        {
+            Debug.LogError("InteractablesAudio: SmokeRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(SmokeRef, pos);
+    }
+
+    public void PlayShieldAudio()
+    {
+        if (ShieldRef.IsNull)
+        {
+            Debug.LogError("InteractablesAudio: ShieldRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(ShieldRef);
+    }
+
+    public void PlaceWallAudio()
+    {
+        // Add place audio here...
+    }
+
+    public void WallDestroyAudio(Vector3 pos)
+    {
+        if (WallDestroyRef.IsNull)
+        {
+            Debug.LogError("InteractablesAudio: WallDestroyRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(WallDestroyRef, pos);
     }
 }

@@ -141,10 +141,10 @@ public class PlayerCamera : MonoBehaviour
 
     IEnumerator FocusOnTarget()
     {
-        crosshair.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        crosshair.localScale = new Vector3(1f, 1f, 1f);
         for (int i = 0; i < 10; i++)
         {
-            crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+            crosshair.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
             GetComponent<PlayerShooting>().speedMultiplier = crosshair.localScale.x;
             yield return new WaitForSeconds(0.1f);
         }
