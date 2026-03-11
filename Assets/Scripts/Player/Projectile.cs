@@ -8,9 +8,10 @@ public class Projectile : MonoBehaviour
     private float currentSpeed;
     private GameObject shooter;
     private bool isFalling = false;
-
+    private bool isHit = false;
     private void Start()
     {
+        isHit = false;
         Destroy(gameObject, 4f);
     }
     public void PrepareProjectile(GameObject shooter, Transform target, float speedMultiplier)
@@ -52,17 +53,22 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         if (shooter == null) return;
-        if (col.transform.IsChildOf(shooter.transform))
+        if (col.transform.IsChildOf(shooter.transform) || isHit)
         {
             return;
         }
 
         if (col.CompareTag("Shield"))
         {
+            isHit = true;
+            PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
+            hit.HitShield();
             Destroy(col.gameObject);
+            Destroy(gameObject);
         }
-        else if (col.transform.root.CompareTag("Player"))
+        else if (col.CompareTag("Player"))
         {
+            isHit = true;
             PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
             if (hit != null)
             {
