@@ -20,10 +20,9 @@ public class VideoManager : MonoBehaviour
         switch (SceneManager.GetActiveScene().name)
         {
             case "Level1 Ann.": AudioManager.Instance.PlaySchlammenstreckeIntro(); break;
-            case "Level2 Ann.": /*AudioManager.Instance.PlayDoverIntro();*/ break;
-            case "Level3 Ann.": /*AudioManager.Instance.PlayLuminenIntro();*/ break;
+            case "Level2 Ann.": AudioManager.Instance.PlayCliffsOfDoverIntro(); break;
+            case "Level3 Ann.": AudioManager.Instance.PlayLuminenTRTIntro(); break;
         }
-        //voiceAudio.PlayAnnouncement();
         video.Play();
         video.loopPointReached += SwapVideo;
 
@@ -39,9 +38,7 @@ public class VideoManager : MonoBehaviour
     }
     public void SwitchScenes(string scene)
     {
-        AudioManager.Instance.StopSchlammenstreckeIntro();
-        //AudioManager.Instance.StopDoverIntro();
-        //AudioManager.Instance.StopLuminenIntro();
+        AudioManager.Instance.StopIntro();
         SceneManager.LoadScene(scene);
     }
     void OnDestroy()

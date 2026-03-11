@@ -140,6 +140,15 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region VO
+    public void StopIntro()
+    {
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+    }
+
     public void PlaySchlammenstreckeIntro()
     {
         if (voiceAudio == null)
@@ -156,13 +165,36 @@ public class AudioManager : MonoBehaviour
         VOinst_Announcer = voiceAudio.SchlammenstreckeIntroAudio(VOinst_Announcer);
     }
 
-    public void StopSchlammenstreckeIntro()
+    public void PlayCliffsOfDoverIntro()
     {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
         if (VOinst_Announcer.isValid())
         {
             VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
             VOinst_Announcer.release();
         }
+        
+        VOinst_Announcer = voiceAudio.CliffsOfDoverIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayLuminenTRTIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.LuminenTRTIntroAudio(VOinst_Announcer);
     }
 
     public void PlayVictoryVoice(string characterName)
