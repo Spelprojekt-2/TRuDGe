@@ -1,17 +1,24 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.Splines;
 using System.Linq;
+using System.Net.Mime;
 using Unity.Mathematics;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
+    //GastankUI
+    [SerializeField] private Image gasImage;
+    
+    
+    
     [Header("---Power Up Events---")]
     [SerializeField] private UnityEvent onTurbo;
     [SerializeField] private UnityEvent onMagnet;
@@ -36,7 +43,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private float shieldTimer = 4f;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
-    [SerializeField] private TextMeshProUGUI gasTankCounter;
+   // [SerializeField] private TextMeshProUGUI gasTankCounter;
     public int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
@@ -46,6 +53,9 @@ public class PlayerPowerups : MonoBehaviour
 
     private RaceController raceController;
 
+    
+    
+    
     // Audio
     private PlayerAudio playerAudio;
 
@@ -56,7 +66,8 @@ public class PlayerPowerups : MonoBehaviour
 
         currPowerUpText.text = "";
         gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+        
+        //gasTankCounter.text = "Gastanks: 0";
     }
     public void UsePowerUpInput(InputAction.CallbackContext context)
     {
@@ -84,7 +95,10 @@ public class PlayerPowerups : MonoBehaviour
             if (gasTankAmount < 10)
             {
                 gasTankAmount++;
-                gasTankCounter.text = "Gastanks: " + gasTankAmount;
+
+                //UI Image
+                gasImage.fillAmount += 0.1f;
+                //gasTankCounter.text = "Gastanks: " + gasTankAmount;
                 Debug.Log(gasTankAmount);
                 if (usingTurbo)
                 {
@@ -233,7 +247,8 @@ public class PlayerPowerups : MonoBehaviour
     public void ResetGasTanks()
     {
         gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+        gasImage.fillAmount = 0f;
+        //gasTankCounter.text = "Gastanks: 0";
     }
     public void DropGasTanks()
     {
@@ -247,9 +262,12 @@ public class PlayerPowerups : MonoBehaviour
             gasTanksToDrop = gasTankAmount;
         }
         gasTankAmount -= gasTanksToDrop;
-        gasTankCounter.text = "Gastanks: " + gasTankAmount;
+        
+        //UI Image
+        gasImage.fillAmount -= gasTanksToDrop / 10f;
+        //gasTankCounter.text = "Gastanks: " + gasTankAmount;
         //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
-        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
+        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar sï¿½ mï¿½nga gastanks som behï¿½vs, get dem en rand pos och sï¿½tter ui och topspeed vï¿½rdena till halverade vï¿½rden
         {
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
