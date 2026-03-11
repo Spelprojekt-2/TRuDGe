@@ -19,6 +19,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject[] characterBackgrounds;
     [SerializeField] private GameObject[] characterText;
     [SerializeField] private GameObject[] characterStats;
+    [SerializeField] private GameObject[] characterSprites;
 
     void Awake()
     {
@@ -47,14 +48,8 @@ public class UIButton : MonoBehaviour
                 characterBackgrounds[playerIndex]?.SetActive(state);
                 characterText[playerIndex]?.SetActive(state);
                 characterStats[playerIndex]?.SetActive(state);
+                characterSprites[playerIndex]?.SetActive(state);
             }
         }
     }
-    /*public void RefreshUI()
-    {
-        int activePlayers = PlayerTrackerManager.instance.GetPlayerCount();
-        characterBackgrounds[activePlayers].SetActive(false);
-        characterText[activePlayers].SetActive(false);
-        characterStats[activePlayers].SetActive(false);  
-    }*/
 }

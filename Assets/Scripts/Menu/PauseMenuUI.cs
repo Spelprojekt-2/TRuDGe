@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuUI : MonoBehaviour
 {
+
     public GameObject pauseMenu;
     public UIButton selectOnPause;
 
@@ -12,6 +13,7 @@ public class PauseMenuUI : MonoBehaviour
     private PlayerInput currentPlayerInput;
     private int currentPlayerID;
     private RaceController raceController;
+    public string scen;
 
     private void Start()
     {
@@ -68,5 +70,9 @@ public class PauseMenuUI : MonoBehaviour
         {
             input.SwitchCurrentActionMap(map);
         }
+    }
+    public void SwapScene()
+    {
+        SceneManager.LoadScene(scen);
     }
 }
