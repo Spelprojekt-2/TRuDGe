@@ -53,31 +53,29 @@ public class TrainingGroundReady : MonoBehaviour
         }
         if (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)
         {
-            //GameObject mapicon = GameObject.Find("MinimapContainer");
-            //mapicon.GetComponent<MinimapIcons>().enabled = false;
-
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject p in players)
             {
-                GameObject lapimage = GameObject.Find("LapImage");
+                Transform lapimage = p.transform.Find("Canvas/LapImage");
+                if(lapimage != null)
                 lapimage.GetComponent<Image>().enabled = false;
 
-                GameObject posimage = GameObject.Find("PositionImage");
+                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+                if(posimage != null)
                 posimage.GetComponent<Image>().enabled = false;
             }
         }
         if (SceneController.instance.currentSceneType == SceneController.SceneType.Racing)
         {
-            //GameObject mapicon = GameObject.Find("MinimapContainer");
-            //mapicon.GetComponent<MinimapIcons>().enabled = true;
-
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject p in players)
             {
-                GameObject lapimage = GameObject.Find("LapImage");
+                Transform lapimage = p.transform.Find("Canvas/LapImage");
+                if(lapimage != null)
                 lapimage.GetComponent<Image>().enabled = true;
 
-                GameObject posimage = GameObject.Find("PositionImage");
+                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+                if(posimage != null)
                 posimage.GetComponent<Image>().enabled = true;
             }
         }
