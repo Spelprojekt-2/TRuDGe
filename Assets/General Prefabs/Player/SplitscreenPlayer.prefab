@@ -1128,7 +1128,6 @@ GameObject:
   - component: {fileID: 6216046392631926700}
   - component: {fileID: 6918455224111598944}
   - component: {fileID: 7730791383982230208}
-  - component: {fileID: 8834762122287174718}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -2111,38 +2110,6 @@ MonoBehaviour:
   - {fileID: 9000973916552878361}
   - {fileID: 2800495966692986036}
   - {fileID: 3795667239301203354}
---- !u!114 &8834762122287174718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4523023332637477557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462d6d227a2b38e47b6b59cb86b8ff70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallLayer: 7
-  hitWall:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8075224458996698583}
-        m_TargetAssemblyTypeName: GrapplingBehaviour, Assembly-CSharp
-        m_MethodName: EndGrapple
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  playerLayer: 8
-  hitPlayer:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5516304864388716943
 GameObject:
   m_ObjectHideFlags: 0
