@@ -23,7 +23,7 @@ public class TankMaterializer2000 : MonoBehaviour
     [SerializeField] private List<SkinnedMeshRenderer> hullParts;
     [SerializeField] private List<SkinnedMeshRenderer> fenderParts;
     [SerializeField] private List<SkinnedMeshRenderer> turretParts;
-    [SerializeField] private List<SkinnedMeshRenderer> wheelParts;
+    [SerializeField] private List<MeshRenderer> wheelParts;
 
     public void SwitchMaterialScheme(int scheme)
     {
