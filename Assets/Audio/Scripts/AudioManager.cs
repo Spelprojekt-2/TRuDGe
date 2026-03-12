@@ -35,14 +35,17 @@ public class AudioManager : MonoBehaviour
 
     public enum MusicID
     {
-        MainMenu = 0,
-        SelectionScreen = 1,
-        TimeTrail = 2,
-        Level1sloped = 3,
-        TrainingGround = 4,
-        Dover = 5,
-        Luminen = 6
+        None = 0,
+        MainMenu = 1,
+        SelectionScreen = 2,
+        TimeTrail = 3,
+        Level1sloped = 4,
+        TrainingGround = 5,
+        Dover = 6,
+        Luminen = 7
     }
+
+    private MusicID currentMusic = MusicID.None;
 
     // SFX config
     [Header("SFX Configuration")]
@@ -98,6 +101,10 @@ public class AudioManager : MonoBehaviour
     #region Music
     public void ChangeMusic(MusicID musicID)
     {
+        if (musicID == currentMusic)
+        {
+            return;
+        }
         if (musicInstance.isValid())
         {
             musicInstance.stop(STOP_MODE.IMMEDIATE);
@@ -108,6 +115,7 @@ public class AudioManager : MonoBehaviour
         {
             case MusicID.MainMenu:
                 musicInstance = RuntimeManager.CreateInstance(Music_MainMenuRef);
+                Debug.Log("MAIN MENU MUSIC");
                 break;
 
             case MusicID.SelectionScreen:
@@ -133,7 +141,7 @@ public class AudioManager : MonoBehaviour
                 musicInstance = RuntimeManager.CreateInstance(Music_Level3);
                 break;
         }
-
+        currentMusic = musicID;
         musicInstance.start();
     }
     #endregion
@@ -308,19 +316,19 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case 1:
-                ChangeMusic(MusicID.SelectionScreen);
+                ChangeMusic(MusicID.MainMenu);
                 ChangeAmbience(AmbienceID.None);
                 Debug.Log("Ambience set: NONE");
                 break;
 
             case 2:
-                ChangeMusic(MusicID.SelectionScreen);
+                ChangeMusic(MusicID.MainMenu);
                 ChangeAmbience(AmbienceID.None);
                 Debug.Log("Ambience set: NONE");
                 break;
 
             case 3:
-                ChangeMusic(MusicID.SelectionScreen);
+                ChangeMusic(MusicID.MainMenu);
                 ChangeAmbience(AmbienceID.None);
                 Debug.Log("Ambience set: NONE");
                 break;
