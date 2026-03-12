@@ -11,7 +11,6 @@ using System.Collections;
 public class RaceController : MonoBehaviour
 {
     public SplineContainer trackSpline;
-    public NativeSpline currentSpline;
     [SerializeField, Range(1, 5)] int lapsOnThisTrack = 3;
     [HideInInspector] public List<RacerData> racers;
 
@@ -49,7 +48,6 @@ public class RaceController : MonoBehaviour
         }
         if (!trackSpline) return;
 
-        currentSpline = new NativeSpline(trackSpline.Spline, Unity.Collections.Allocator.Persistent);
         if (RacingInformation.instance.isTimeTrial && RacingInformation.instance.isTimeTrialWithGhost)
         {
             SpawnPointVisualizer spawn = FindObjectsByType<SpawnPointVisualizer>(FindObjectsSortMode.None)
@@ -174,17 +172,23 @@ public class RaceController : MonoBehaviour
         float bestDistance = float.MaxValue;
         float bestProgress = 0f;
 
-        int samples = 200;
-        for (int i = 0; i <= samples; i++)
+        for (int j = 0; j < trackSpline.Splines.Count; j++)
         {
-            float t = i / (float)samples;
-            float3 point = SplineUtility.EvaluatePosition(currentSpline, t);
-            float distSq = math.lengthsq(point - localPos);
+            Spline spline = trackSpline.Splines[j];
 
-            if (distSq < bestDistance)
+            SplineUtility.GetNearestPoint(
+                spline,
+                localPos,
+                out float3 pointOnSpline,
+                out float splineProgress
+            );
+
+            float dist = math.lengthsq(pointOnSpline - localPos);
+
+            if (dist < bestDistance)
             {
-                bestDistance = distSq;
-                bestProgress = t;
+                bestDistance = dist;
+                bestProgress = splineProgress;
             }
         }
 
