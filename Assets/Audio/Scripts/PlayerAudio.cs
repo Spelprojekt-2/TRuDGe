@@ -170,5 +170,15 @@ public class PlayerAudio : MonoBehaviour
         }
         interactablesAudio.PlayShieldAudio();
     }
+
+    public void PlayScatterShotAudio()
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.ScatterShotAudio();
+    }
     #endregion
 }

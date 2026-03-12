@@ -22,6 +22,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
     [SerializeField] private EventReference Music_TrainingGround;
+    [SerializeField] private EventReference Music_Level2; // Dover
+    [SerializeField] private EventReference Music_Level3; // Luminen
 
     [Header("Music_Victory")]
     [SerializeField] private EventReference Music_Napoleon;
@@ -37,7 +39,9 @@ public class AudioManager : MonoBehaviour
         SelectionScreen = 1,
         TimeTrail = 2,
         Level1sloped = 3,
-        TrainingGround = 4
+        TrainingGround = 4,
+        Dover = 5,
+        Luminen = 6
     }
 
     // SFX config
@@ -120,6 +124,13 @@ public class AudioManager : MonoBehaviour
             
             case MusicID.TrainingGround:
                 musicInstance = RuntimeManager.CreateInstance(Music_TrainingGround);
+                break;
+
+            case MusicID.Dover:
+                musicInstance = RuntimeManager.CreateInstance(Music_Level2);
+                break;
+            case MusicID.Luminen:
+                musicInstance = RuntimeManager.CreateInstance(Music_Level3);
                 break;
         }
 
@@ -327,11 +338,13 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case 12:
+                ChangeMusic(MusicID.Dover);
                 ChangeAmbience(AmbienceID.CliffsOfDover);
                 Debug.Log("Ambience set: CliffsOfDover");
                 break;
 
             case 15:
+                ChangeMusic(MusicID.Luminen);
                 ChangeAmbience(AmbienceID.LuminenTRT);
                 Debug.Log("Ambience set: LuminenTRT");
                 break;
