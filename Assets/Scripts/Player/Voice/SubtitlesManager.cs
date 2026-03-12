@@ -12,7 +12,7 @@ public class SubtitlesManager : MonoBehaviour
 
     void Awake()
     {
-        Announcement_Intro();
+
     }
 
     void SpawnSubtitle(string subtext, float duration)
@@ -107,7 +107,134 @@ public class SubtitlesManager : MonoBehaviour
     {
         SpawnSubtitle("<color=red>T</color><color=orange>A</color><color=green>N</color><color=yellow>K</color> <color=red>R</color><color=orange>A</color><color=green>L</color><color=yellow>L</color><color=red>Y</color><color=orange>!</color>", 5f);
     }
-
+    //Schlamm
+    public void SchlammenstreckeIntro()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Herbert</color><color=yellow>]</color> Schlammrennstrecke, a mud track located here in western Germany. It", 6f);
+        Invoke(nameof(SchlammenstreckeIntro1), 5f); 
+    }
+    void SchlammenstreckeIntro1()
+    {
+        SpawnSubtitle("features a lot of tight turns that are going to force the racers to be very precise", 6f);
+        Invoke(nameof(SchlammenstreckeIntro2), 4f); 
+    }
+    void SchlammenstreckeIntro2()
+    {
+        SpawnSubtitle("if they want to stay at top speed constantly.", 5f);
+        Invoke(nameof(SchlammenstreckeIntro3), 3f); 
+    }
+    void SchlammenstreckeIntro3()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Ozzie</color><color=yellow>]</color> Schlammrennstrecke is a track with a lot of history, as it was a famous", 6f);
+        Invoke(nameof(SchlammenstreckeIntro4), 5f); 
+    }
+    void SchlammenstreckeIntro4()
+    {
+        SpawnSubtitle(" dirt rally track before the war. In 2055 it was repaired and expanded to accomodate", 6f);
+        Invoke(nameof(SchlammenstreckeIntro5), 5f); 
+    }
+    void SchlammenstreckeIntro5()
+    {
+        SpawnSubtitle(" the new vehicles, forming the amazing track we see today!", 6f);
+    }
+    //Cliffs
+    public void CliffsOfDoverIntro()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Ozzie</color><color=yellow>]</color> Welcome everyone, to the Cliffs of Dover! These beautiful cliffs have", 6f);
+        Invoke(nameof(CliffsOfDoverIntro1), 4.5f);
+    }
+    public void CliffsOfDoverIntro1()
+    {
+        SpawnSubtitle(" existed long before humans set foot in Britain, and they will probably remain long", 8f);
+        Invoke(nameof(CliffsOfDoverIntro2), 5f);
+    }
+    public void CliffsOfDoverIntro2()
+    {
+        SpawnSubtitle(" after. As most of you know, the town of Dover saw some of the heaviest fighting", 8f);
+        Invoke(nameof(CliffsOfDoverIntro3), 5.5f);
+    }
+    public void CliffsOfDoverIntro3()
+    {
+        SpawnSubtitle(" during the war, and I can only assume that we are going to see some of that fighting", 6f);
+        Invoke(nameof(CliffsOfDoverIntro4), 4f);
+    }
+    public void CliffsOfDoverIntro4()
+    {
+        SpawnSubtitle(" spirit come through today!", 4f);
+        Invoke(nameof(CliffsOfDoverIntro5), 2.5f);
+    }
+    public void CliffsOfDoverIntro5()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Herbert</color><color=yellow>]</color> Nowadays the town has been mostly rebuilt, and the fields outside the", 6f);
+        Invoke(nameof(CliffsOfDoverIntro6), 3.5f);
+    }
+    public void CliffsOfDoverIntro6()
+    {
+        SpawnSubtitle(" town will be the battlegrounds for our competitors today. Starting on the fields", 7f);
+        Invoke(nameof(CliffsOfDoverIntro7), 5f);
+    }
+    public void CliffsOfDoverIntro7()
+    {
+        SpawnSubtitle(" above the cliffs, the drivers will race along the old road, until a spectacular", 7f);
+        Invoke(nameof(CliffsOfDoverIntro8), 5f);
+    }
+    public void CliffsOfDoverIntro8()
+    {
+        SpawnSubtitle(" drop down to the beach. There, they will drive along the beachhead, dodging", 7f);
+        Invoke(nameof(CliffsOfDoverIntro9), 5.5f);  
+    }
+    public void CliffsOfDoverIntro9()
+    {
+        SpawnSubtitle(" fortifications from the war before ascending to the fields once again!", 7f);
+    }
+    //Luminen
+    public void LuminenTRTIntro()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Ozzie</color><color=yellow>]</color> Ladies and gentlemen, welcome to Luminen TRT! Our racers are currently", 6f);
+        Invoke(nameof(LuminenTRTIntro1), 5.5f);
+    }
+    public void LuminenTRTIntro1()
+    {
+        SpawnSubtitle(" warming up their engines here, and they better, because it is currently -36 degrees", 6f);
+        Invoke(nameof(LuminenTRTIntro2), 5.5f);
+    }
+    public void LuminenTRTIntro2()
+    {
+        SpawnSubtitle(" celsius outside! Luckily for them, their vehicles were built to operate in almost", 6f);
+        Invoke(nameof(LuminenTRTIntro3), 5.5f);
+    }
+    public void LuminenTRTIntro3()
+    {
+        SpawnSubtitle(" all conditions. The Finnish forests are more hostile than most though, which you", 6f);
+        Invoke(nameof(LuminenTRTIntro4), 5f);
+    }
+    public void LuminenTRTIntro4()
+    {
+        SpawnSubtitle(" can see in the many destroyed vehicles around the track. Those aren’t former racers", 6f);
+        Invoke(nameof(LuminenTRTIntro5), 5.5f);
+    }
+    public void LuminenTRTIntro5()
+    {
+        SpawnSubtitle(" though as they were destroyed 14 years ago!", 6f);
+        Invoke(nameof(LuminenTRTIntro6), 3.7f);
+    }
+    public void LuminenTRTIntro6()
+    {
+        SpawnSubtitle("<color=yellow>[</color><color=blue>Herbert</color><color=yellow>]</color> This winter-only track is going to take our racers over frozen lakes", 6f);
+        Invoke(nameof(LuminenTRTIntro7), 4.5f);
+    }
+    public void LuminenTRTIntro7()
+    {
+        SpawnSubtitle(" and through dense forests. Let’s hope for their sake that they don’t end up falling", 6f);
+        Invoke(nameof(LuminenTRTIntro8), 4.5f);
+    }
+    public void LuminenTRTIntro8()
+    {
+        SpawnSubtitle(" through the ice!", 6f);
+    }
+    //[Announcer] In the year 2060 another few races will take place all over Europe in the
+    //features a lot of tight turns that are going to force the racers to be very precise
+    //
     //Lars-Göran
     public void Lars_Start()
     {
