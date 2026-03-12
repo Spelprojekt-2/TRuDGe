@@ -165,6 +165,7 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.scatterShot:
                 onScatterShot.Invoke();
+                playerAudio.PlayScatterShotAudio();
                 GameObject scatterShotSpawned = Instantiate(scatterShot, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.LookRotation(transform.forward));
                 foreach (var projectile in scatterShotSpawned.GetComponentsInChildren<Projectile>())
                 {
