@@ -1,9 +1,15 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerShooting : MonoBehaviour
 {
+
+    [SerializeField] private Image shootCooldown;
+    
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform barrelPosition;
     [SerializeField] private RectTransform crosshair;
@@ -21,6 +27,7 @@ public class PlayerShooting : MonoBehaviour
     private void Start()
     {
         timer = fireRate;
+        shootCooldown.fillAmount = 1f;
         autoAim = GetComponentInChildren<AutoAimCone>();
 
         // Get PlayerAudio.
@@ -39,11 +46,14 @@ public class PlayerShooting : MonoBehaviour
             {
                 timer = 0;
                 Shoot(projectilePrefab);
+                shootCooldown.fillAmount = 0;
+                isShooting = false;
             }
         }
         else
         {
             timer += Time.deltaTime;
+            shootCooldown.fillAmount += Time.deltaTime / fireRate;
         }
     }
     public void Shoot(GameObject prefab)
@@ -57,8 +67,10 @@ public class PlayerShooting : MonoBehaviour
         {
             bulletDir = (autoAim.GetTarget().position - barrelPosition.position).normalized;
         }
-
-        bulletDir.y = 0;
+        else
+        {
+            bulletDir.y = 0;
+        }
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,

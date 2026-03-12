@@ -8,6 +8,7 @@ using TMPro;
 
 public class UISelection : MonoBehaviour
 {
+    [SerializeField] private TankMaterializer2000 tankMaterializer;
     public static List<UISelection> playerSelections = new List<UISelection>();
     public UIButton selection;
     public UIButton lastSelection;
@@ -168,6 +169,37 @@ public class UISelection : MonoBehaviour
         selection.SetHighlight(true, playerIndex);
         SelectUIUpdate(newButton);
         UpdateButtons();
+
+        // Switch tank colours
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+        {
+            TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
+            string charname = (textObj != null) ? textObj.text : null;
+
+            switch (charname)
+            {
+                case "Lars-Göran":
+                {
+                    tankMaterializer.SwitchMaterialScheme(0);
+                } break;
+                case "The Brass Beast":
+                {
+                    tankMaterializer.SwitchMaterialScheme(1);
+                } break;
+                case "Capôw":
+                {
+                    tankMaterializer.SwitchMaterialScheme(2);
+                } break;
+                case "King Napoleon III":
+                {
+                    tankMaterializer.SwitchMaterialScheme(3);
+                } break;
+                default:
+                {
+                    tankMaterializer.SwitchMaterialScheme(4);
+                } break;
+            }
+        }
     }
 
     public static void SwapPlayers(int p1index, int p2index)
@@ -211,6 +243,10 @@ public class UISelection : MonoBehaviour
         selectionHighlight.transform.SetParent(button.transform.parent);
 
         UpdateAllHighlights();
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+        {
+            
+        }
     }
     private void UpdateAllHighlights()
     {
@@ -294,6 +330,18 @@ public class UISelection : MonoBehaviour
             {
                 SwapSelection(button);
             }
+        }
+    }
+    public void Skip()
+    {
+        GameObject controller = GameObject.FindWithTag("Announcement controller");
+        string sce = SceneManager.GetActiveScene().name;
+
+        switch (sce)
+        {
+            case "Level1 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level1_sloped"); break;
+            case "Level2 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level2"); break;
+            case "Level3 Ann.": controller.GetComponent<VideoManager>().SwitchScenes("Level3"); break;
         }
     }
 }

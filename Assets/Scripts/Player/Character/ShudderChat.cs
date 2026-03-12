@@ -180,7 +180,12 @@ public class ShudderChat : MonoBehaviour
             "GameStation 7 is so good",
             "ILY CARLA",
             "o7",
-            "CRAZY JUMPSCARE!!!!!!!"
+            "CRAZY JUMPSCARE!!!!!!!",
+            "Didnt know this: 'USA collapsed after 95-year-old president gambled away the entire budget thinking it was their own money'",
+            "Formula -1 has nothing on this",
+            "hope you win!",
+            "Bettwer than mario kart",
+            "RAWR"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
