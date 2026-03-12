@@ -155,8 +155,6 @@ public class PlayerMovement : MonoBehaviour
     public void Update()
     {
         moveInputVector.y = Mathf.Clamp((accelerationInput ? 1 : 0) - (reversingInput ? 1 : 0), -1f, 1f);
-
-    
     }
     
     public void FixedUpdate()
@@ -316,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
     private void ProcessFriction()
     {
         if (!isGrounded ) return;
-        if (rb.transform.position.y < -3f) return;
+        if (rb.transform.position.y < iceYLevel) return;
         // Sideways friction
         float rightVel = Vector3.Dot(rotationRoot.right, rb.linearVelocity);
         rb.AddForce(
