@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
@@ -22,6 +23,8 @@ public class RacerData : MonoBehaviour
     private bool isRacing;
     public int currentValidLap;
     [SerializeField] private Image lapCountImage;
+    [SerializeField] private Image lapCountPopup;
+    [SerializeField] private TextMeshProUGUI finishText;
     [SerializeField] private Image positionImage;
     [SerializeField] private TextMeshProUGUI TimerText;
     [SerializeField] private GameObject TimeTrialUI;
@@ -79,6 +82,8 @@ public class RacerData : MonoBehaviour
     {
         if (isReplayGhost || lap >= lapCountSprites.Length) return;
         lapCountImage.sprite = lapCountSprites[lap];
+        lapCountPopup.sprite = lapCountSprites[lap];
+        if (lap > 0) CoroutineRunner.Run(DisplayTemporary(lapCountPopup.gameObject));
     }
 
     public void OnRaceStarted()
@@ -91,13 +96,14 @@ public class RacerData : MonoBehaviour
 
         isRacing = true;
         OnRaceStart?.Invoke();
-        if(RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
+        if (RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
     }
     public void OnRaceFinished()
     {
         isRacing = false;
         OnRaceFinish?.Invoke();
         if (RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StopCapture();
+        CoroutineRunner.Run(DisplayTemporary(finishText.gameObject));
     }
 
     public void BackwardsLap()
@@ -140,5 +146,12 @@ public class RacerData : MonoBehaviour
     public double GetRaceTime()
     {
         return lapEndTimes[^1];
+    }
+
+    private IEnumerator DisplayTemporary(GameObject g)
+    {
+        g.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        g.SetActive(false);
     }
 }

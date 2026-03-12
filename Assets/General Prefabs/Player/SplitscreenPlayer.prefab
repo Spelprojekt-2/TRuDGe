@@ -995,6 +995,7 @@ GameObject:
   - component: {fileID: 1731851530065920188}
   - component: {fileID: 4546655318700020725}
   - component: {fileID: 6216046392631926700}
+  - component: {fileID: 6918455224111598944}
   m_Layer: 8
   m_Name: Physics Object
   m_TagString: Untagged
@@ -1279,6 +1280,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PlayerPause, Assembly-CSharp
         m_MethodName: OnPause
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2094914520598921908}
+        m_TargetAssemblyTypeName: UISelection, Assembly-CSharp
+        m_MethodName: Skip
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1687,8 +1700,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46cff4259db40b46bdfe07a58c6337c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTurbo:
+    m_PersistentCalls:
+      m_Calls: []
+  onMagnet:
+    m_PersistentCalls:
+      m_Calls: []
+  onSmoke:
+    m_PersistentCalls:
+      m_Calls: []
+  onLandmine:
+    m_PersistentCalls:
+      m_Calls: []
+  onAirStrike:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeployWall:
+    m_PersistentCalls:
+      m_Calls: []
+  onScatterShot:
+    m_PersistentCalls:
+      m_Calls: []
+  onShield:
+    m_PersistentCalls:
+      m_Calls: []
   gasTank: {fileID: 6217824498448878911, guid: c9b621c7eb4b9bf4a87de1f7db61a1af, type: 3}
-  homingMissile: {fileID: 3763159829829621810, guid: ebc5e9e33de814547aabb7d567504497, type: 3}
   magnetPickupRange: 30
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
   smokeDuration: 7
@@ -1697,6 +1733,8 @@ MonoBehaviour:
   airstrikeForwardOffset: 0
   deployedWall: {fileID: 279903332913073622, guid: 82ca83edc27c0e64a8577b82dfd349e1, type: 3}
   scatterShot: {fileID: 5795779443471007256, guid: f6c08e923e597cf4c89222766c9cc062, type: 3}
+  shield: {fileID: 6777400597544014808, guid: bfb127fe188bbe94a8ab6dd86c3c3228, type: 3}
+  shieldTimer: 10
   currPowerUpText: {fileID: 6527343299495456702}
   gasTankCounter: {fileID: 2749722371821799531}
   gasTankAmount: 0
@@ -1815,6 +1853,21 @@ MonoBehaviour:
   ReadyText: {fileID: 1209975054446510758}
   KBMInputs: {fileID: 192711059986742813}
   ControllerInputs: {fileID: 7668400800883754721}
+--- !u!114 &6918455224111598944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523023332637477557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b1d8e08537f29e49bc0168fac71b012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitSpeedMultiplier: 0.6
+  invincibilityDuration: 5
+  anim: {fileID: 2345830978701129069}
 --- !u!1 &5516304864388716943
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,11 +2198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.00000028312203
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2343,6 +2396,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2345830978701129069}
     - targetCorrespondingSourceObject: {fileID: 6767556572577573370, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
       insertIndex: 1
       addedObject: {fileID: 705627146918722018}
@@ -2390,6 +2446,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 415971332876245096, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
   m_PrefabInstance: {fileID: 457666628962547236}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &763532271223425909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
+  m_PrefabInstance: {fileID: 457666628962547236}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2345830978701129069
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763532271223425909}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f9f6bd316cf08d948a50083a6e855546, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &928401404945686287 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 773402489283029291, guid: bbb2496f9b62d4240ba7a866de18f533, type: 3}
