@@ -19,6 +19,7 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference ShieldRef;
     [SerializeField] private EventReference WallPlaceRef;
     [SerializeField] private EventReference WallDestroyRef;
+    [SerializeField] private EventReference ScatterShotRef;
     #endregion
 
     public void PlayPickupAudio(PlayerPowerups.PowerUpType powerUpType)
@@ -114,5 +115,15 @@ public class InteractablesAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(WallDestroyRef, pos);
+    }
+
+    public void ScatterShotAudio()
+    {
+        if (ScatterShotRef.IsNull)
+        {
+            Debug.LogError("ScatterShotRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(ScatterShotRef);
     }
 }

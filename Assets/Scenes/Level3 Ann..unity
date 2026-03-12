@@ -305,7 +305,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -725,7 +725,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   video: {fileID: 525599529}
-  voiceAudio: {fileID: 11400000, guid: dba7e2798148246b3aa756aae25cb010, type: 2}
   scenee: Level3
 --- !u!4 &2033622688
 Transform:

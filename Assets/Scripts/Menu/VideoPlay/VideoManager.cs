@@ -8,7 +8,6 @@ public class VideoManager : MonoBehaviour
 {
     [Header ("Video")]
     public VideoPlayer video;
-    [SerializeField] private VoiceAudio voiceAudio;
 
     //[Header("Subtitles")]
     //public TextMeshProUGUI subtitlesText;
@@ -18,18 +17,15 @@ public class VideoManager : MonoBehaviour
     
     void Start()
     {
-        /*switch (SceneManager.GetActiveScene().name)
+        string nam = SceneManager.GetActiveScene().name.ToLower();
+        switch (nam)
         {
-            case "Level1 Ann.": AudioManager.instance.PlayIntroSchlammenstrecke; break;
-            case "Level2 Ann.": break;
-            case "Level3 Ann.": break;
-        }*/
-        voiceAudio.PlayAnnouncement();
+            case "level1 ann.": AudioManager.Instance.PlaySchlammenstreckeIntro(); break;
+            case "level2 ann.": AudioManager.Instance.PlayCliffsOfDoverIntro(); break;
+            case "level3 ann.": AudioManager.Instance.PlayLuminenTRTIntro(); break;
+        }
         video.Play();
         video.loopPointReached += SwapVideo;
-
-        
-       
         
         //subtitlesText.text = "Schlammrennstrecke, a mud track located in a beautiful German beech forest. It features tight turns, a few tricky obstacles and ending off with another right turn toward the goal. Schlammrennstrecke was originally designed for drifting with cars but unfortunately most of it was destroyed during “The Battle of Schlamm” in the war. In 2055 it was repaired, forming the amazing track we see today!";
     }
@@ -40,6 +36,7 @@ public class VideoManager : MonoBehaviour
     }
     public void SwitchScenes(string scene)
     {
+        AudioManager.Instance.StopIntro();
         SceneManager.LoadScene(scene);
     }
     void OnDestroy()

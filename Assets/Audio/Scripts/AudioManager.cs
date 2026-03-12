@@ -22,6 +22,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
     [SerializeField] private EventReference Music_TrainingGround;
+
+    [Header("Music_Victory")]
+    [SerializeField] private EventReference Music_Napoleon;
+    [SerializeField] private EventReference Music_Lars;
+    [SerializeField] private EventReference Music_Carla;
+    [SerializeField] private EventReference Music_Nina;
+
     private EventInstance musicInstance;
 
     public enum MusicID
@@ -37,6 +44,11 @@ public class AudioManager : MonoBehaviour
     [Header("SFX Configuration")]
     [SerializeField] private FeedbackAudio feedbackAudio;
     private EventInstance countDownInst;
+
+    [Header("VO Configuration")]
+    [SerializeField] private VoiceAudio voiceAudio;
+    private EventInstance VOinst_Announcer;
+    private EventInstance VOinst_Character;
 
     public enum AmbienceID
     {
@@ -124,6 +136,103 @@ public class AudioManager : MonoBehaviour
             return;
         }
         feedbackAudio.CountdownAudio(endCountdown);
+    }
+    #endregion
+
+    #region VO
+    public void StopIntro()
+    {
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+    }
+
+    public void PlaySchlammenstreckeIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.SchlammenstreckeIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayCliffsOfDoverIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.CliffsOfDoverIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayLuminenTRTIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.LuminenTRTIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayVictoryVoice(string characterName)
+    {
+        // Audio instance setup
+        if (musicInstance.isValid())
+        {
+            musicInstance.stop(STOP_MODE.IMMEDIATE);
+            musicInstance.release();
+        }
+
+        // Select character
+        string lower = characterName.ToLower();
+        switch (lower)
+        {
+            case "king napoleon iii":
+                if (!Music_Napoleon.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Napoleon);
+                break;
+            case "lars-göran":
+            if (!Music_Lars.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Lars);
+                break;
+            case "capôw":
+                if (!Music_Carla.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Carla);
+                break;
+            case "the brass beast":
+                if (!Music_Nina.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Nina);
+                break;
+        }
+
+        // Did we create a valid audio inst?
+        if (musicInstance.isValid())
+        {
+            musicInstance.start();
+        }
     }
     #endregion
 
