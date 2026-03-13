@@ -7,19 +7,27 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private float currentSpeed;
     private GameObject shooter;
-    private Transform target = null;
     private bool isFalling = false;
 
-    public void PrepareProjectile(GameObject shooter, Transform target)
+    private void Start()
+    {
+        Destroy(gameObject, 4f);
+    }
+    public void PrepareProjectile(GameObject shooter, Transform target, float speedMultiplier)
     {
         if (target == null)
         {
-            currentSpeed = projectileSpeed;
+            if(speedMultiplier < 0.5f)
+            {
+                speedMultiplier = 0.5f;
+            }
+            currentSpeed = projectileSpeed * speedMultiplier;
             StartCoroutine(DeathTimer());
         }
         else
         {
-            currentSpeed = shooter.GetComponent<PlayerMovement>().GetCurrentSpeed() + 10;
+            PlayerMovement shooterMove = shooter.GetComponent<PlayerMovement>();
+            if (shooterMove != null) currentSpeed = shooterMove.GetCurrentSpeed() + 10;
         }
         
         this.shooter = shooter;
@@ -43,18 +51,32 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        if (shooter == null) return;
         if (col.transform.IsChildOf(shooter.transform))
         {
             return;
         }
-        Debug.Log(col.gameObject.name);
-        if (col.transform.root.CompareTag("Player"))
+
+        if (col.CompareTag("Shield"))
         {
-            Vector3 force = (transform.position - col.transform.position).normalized * 30f;
-            force.y = 0;
-            col.gameObject.GetComponentInParent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-            col.gameObject.GetComponentInParent<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
-            col.gameObject.GetComponentInParent<PlayerPowerups>().DropGasTanks();
+            Destroy(col.gameObject);
+        }
+        else if (col.transform.root.CompareTag("Player"))
+        {
+            PlayerHit hit = col.transform.root.GetComponentInChildren<PlayerHit>();
+            if (hit != null)
+            {
+                hit.Hit(false);
+            }
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.IsChildOf(shooter.transform))
+        {
+            return;
         }
         Destroy(gameObject);
     }

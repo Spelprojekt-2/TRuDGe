@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public class Pickup : MonoBehaviour
 {
     [SerializeField] public PlayerPowerups.PowerUpType powerUpType;
     [SerializeField] private float powerupRespawnTime = 30f;
     [SerializeField] private ProbabilityPickupSO probability;
     [SerializeField] private ProbabilityPickupSO fullProbability;
+
+    public static List<Pickup> AllPickups = new List<Pickup>();
 
     private Vector3 startPos;
     private Transform targetPlayer;
@@ -15,12 +18,24 @@ public class Pickup : MonoBehaviour
     private Collider col;
     private MeshRenderer[] meshes;
     private bool visible = true;
-    private bool canRespawn = true;
-    private void Awake()
+    public bool canRespawn = true;
+    private void Start()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
         meshes = GetComponentsInChildren<MeshRenderer>();
+        if (canRespawn)
+        {
+            col.enabled = true;
+        }
+        else if (!canRespawn)
+        {
+            StartCoroutine(DroppedTanks());
+        }
+        if (powerUpType != PlayerPowerups.PowerUpType.gasolineTank && RacingInformation.instance.isTimeTrial)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,16 +92,20 @@ public class Pickup : MonoBehaviour
 
     public IEnumerator DroppedTanks()
     {
-        canRespawn = false;
-        col.enabled = false;
-        for (int i = 0; i < 3; i++)
+        if (col == null) yield break;
+        for (int i = 0; i < 15; i++)
         {
+            yield return new WaitForSeconds(0.05f);
             foreach (var mesh in meshes)
             {
                 mesh.enabled = visible;
             }
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.05f);
             visible = !visible;
+        }
+        foreach (var mesh in meshes)
+        {
+            mesh.enabled = true;
         }
         col.enabled = true;
     }
@@ -106,5 +125,15 @@ public class Pickup : MonoBehaviour
             transform.position += direction * flySpeed;
             transform.Rotate(Vector3.up * 300f * Time.deltaTime);
         }
+    }
+
+    private void OnEnable()
+    {
+        AllPickups.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        AllPickups.Remove(this);
     }
 }

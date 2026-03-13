@@ -53,7 +53,6 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
         if (!System.IO.File.Exists(path))
         {
-            Debug.LogWarning("No official ghost found for scene " + sceneName);
             return null;
         }
 
@@ -68,7 +67,6 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
         if (!System.IO.File.Exists(path))
         {
-            Debug.Log("No personal ghost found for scene " + sceneName);
             return null;
         }
 
@@ -76,11 +74,13 @@ public class LoadTimeTrialTimes : MonoBehaviour
         GhostRecording wrapper = JsonUtility.FromJson<GhostRecording>(json);
         return wrapper;
     }
-
-    public void OpenSelectionMenu(string level)
+    public void TrackToPlay(string sceneName)
     {
-        selectedScene = level;
-        ghostTrackName.text = level;
+        selectedScene = sceneName;
+    }
+    public void OpenSelectionMenu(string levelName)
+    {
+        ghostTrackName.text = levelName;
         lastSelection = UISelection.playerSelections[0].selection;
         GhostSelectionMenu.SetActive(true);
         CoroutineRunner.Run(SelectObject(GhostSelectionMenuFirstSelection));
@@ -100,24 +100,24 @@ public class LoadTimeTrialTimes : MonoBehaviour
 
     public void SelectOfficialGhost()
     {
-        PlayerTrackerManager.instance.pathToGhost =
+        RacingInformation.instance.pathToGhost =
             System.IO.Path.Combine(Application.streamingAssetsPath, selectedScene + "_Ghost.ghost");
-        PlayerTrackerManager.instance.isTimeTrialWithGhost = true;
+        RacingInformation.instance.isTimeTrialWithGhost = true;
         SceneManager.LoadScene(selectedScene);
     }
 
     public void SelectPersonalGhost()
     {
-        PlayerTrackerManager.instance.pathToGhost =
+        RacingInformation.instance.pathToGhost =
             System.IO.Path.Combine(Application.persistentDataPath, selectedScene + "_Ghost.ghost");
-        PlayerTrackerManager.instance.isTimeTrialWithGhost = File.Exists(PlayerTrackerManager.instance.pathToGhost);
+        RacingInformation.instance.isTimeTrialWithGhost = File.Exists(RacingInformation.instance.pathToGhost);
         SceneManager.LoadScene(selectedScene);
     }
 
     public void SelectSolo()
     {
-        PlayerTrackerManager.instance.isTimeTrialWithGhost = false;
-        PlayerTrackerManager.instance.pathToGhost = null;
+        RacingInformation.instance.isTimeTrialWithGhost = false;
+        RacingInformation.instance.pathToGhost = null;
         SceneManager.LoadScene(selectedScene);
     }
 }

@@ -48,8 +48,6 @@ public class BounceWalls : MonoBehaviour
             }
 
             rb.linearVelocity *= 0.9f;
-
-            
         }
     }
 }

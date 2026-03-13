@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758222194185645248, guid: 254b54adb862fc648a50ae837ec33c9b, type: 3}
       propertyPath: m_Name
-      value: 2PointGrappleable
+      value: ZiplineGrappleable
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 490600908864204554, guid: 254b54adb862fc648a50ae837ec33c9b, type: 3}
@@ -118,8 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf84f7005fdd85b4fae28c5b726fe5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grapplePointOffset: {x: 0, y: 4, z: 0}
+  grapplePoints:
+  - {x: 0, y: 10, z: 0}
+  - {x: 0, y: 20, z: 30}
+  - {x: 0, y: 50, z: 40}
+  interpolationTime: 2
+  releaseAtLastPoint: 1
+  lockPlayerToGrapple: 1
   showGizmos: 1
-  secondGrapplePointOffset: {x: 0, y: 0, z: 0}
-  interpolationTime: 1
-  cutAtPoint2: 1

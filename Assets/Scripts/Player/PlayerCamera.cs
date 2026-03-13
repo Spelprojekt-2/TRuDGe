@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEditor;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform rotationRoot;
+    private AutoAimCone autoAim;
 
     [Header("---Camera Settings---")]
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
@@ -23,19 +25,12 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] float controllerSensMultiplier;
     [SerializeField] float bottomCrosshairLimit;
 
-    [Header("---Aim Assist Settings---")]
-    [SerializeField] float aimAssistDistance;
-    [SerializeField] float assistStrength = 0.2f; // How hard the crosshair pulls
-    [SerializeField] float sensitivityReduction = 0.5f; // 0.5 = half speed when over enemy
-    [SerializeField] LayerMask enemyLayer;
-
-    [HideInInspector] public bool isOverEnemy = false;
-    [HideInInspector] public Collider currentTarget = null;
+    [Header("---Auto Aim Settings---")]
+    public  Transform forOthersAimPoint;
+    private Transform currentTarget = null;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
-    [Header("Debug")]
-    [SerializeField] private bool showAimRay = false;
 
 
     public Camera cam;
@@ -46,7 +41,8 @@ public class PlayerCamera : MonoBehaviour
     private bool isPressingLookBack, isPressingResetCrosshair;
     private bool isController = false;
     private Quaternion camStartRotOffset;
-
+    private bool lookingAtTarget = false;
+    private Transform oldTarget;
 
     [SerializeField] private string uiCameraTag = "UICamera";
 
@@ -70,63 +66,12 @@ public class PlayerCamera : MonoBehaviour
     {
         camStartRotOffset = cam.transform.localRotation;
         isController = input.currentControlScheme == "Gamepad";
+        autoAim = GetComponentInChildren<AutoAimCone>();
     }
 
-
-    private void Update()
-    {
-        if (isPressingResetCrosshair)
-        {
-            cursorPos = new Vector2(0f, 80f);
-        }
-    }
 
     void LateUpdate()
     {
-        float viewWidth = cam.pixelWidth;
-        float viewHeight = cam.pixelHeight;
-
-        ApplyAimAssist();
-
-        Vector2 mouseDelta = lookInputVector;
-        if (isController) mouseDelta *= controllerSensMultiplier;
-
-        float currentSens = isOverEnemy ? sensitivity * sensitivityReduction : sensitivity;
-        cursorPos += mouseDelta * currentSens;
-
-        cursorPos.x = Mathf.Clamp(cursorPos.x, -viewWidth / 2f, viewWidth / 2f);
-        cursorPos.y = 200; // Mathf.Clamp(cursorPos.y, -bottomCrosshairLimit, viewHeight / 2f);
-
-        crosshair.anchoredPosition = cursorPos;
-
-
-
-        if (cursorPos.x > viewWidth / 2 - distanceFromScreenEdge.x) // Right
-        {
-            panningDist.x = cursorPos.x - (viewWidth / 2 - distanceFromScreenEdge.x);
-        }
-        else if (cursorPos.x < -viewWidth / 2 + distanceFromScreenEdge.x) // Left
-        {
-            panningDist.x = cursorPos.x - (-viewWidth / 2 + distanceFromScreenEdge.x);
-        }
-        else
-        {
-            panningDist.x = 0;
-        }
-
-        if (cursorPos.y > viewHeight / 2 - distanceFromScreenEdge.y) // Up
-        {
-            panningDist.y = cursorPos.y - (viewHeight / 2 - distanceFromScreenEdge.y);
-        }
-        else if (cursorPos.y < -viewHeight / 2 + distanceFromScreenEdge.y) // Down
-        {
-            panningDist.y = cursorPos.y - (-viewHeight / 2 + distanceFromScreenEdge.y);
-        }
-        else
-        {
-            panningDist.y = 0;
-        }
-
         panningDist *= 0.01f * rotationIntensity;
 
         cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, rotationRoot.transform.position, 10f * Time.deltaTime);
@@ -139,66 +84,79 @@ public class PlayerCamera : MonoBehaviour
         {
             cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
         }
-        
-    }
 
-    public Ray GetStableCrosshairRay()
-    {
-        // Use pixelRect to get the size of THIS player's specific window
-        Rect rect = cam.pixelRect;
-
-        // Calculate the center of THIS camera's viewport
-        // rect.x and rect.y handle the offset (e.g. if the camera starts halfway down the screen)
-        Vector2 center = new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f);
-
-        // Add your cursorPos (which is relative to the center of the player's UI)
-        Vector2 screenPoint = center + cursorPos;
-
-        // Create the ray
-        return cam.ScreenPointToRay(screenPoint);
-    }
-
-    void ApplyAimAssist()
-    {
-        Ray ray = GetStableCrosshairRay();
-        isOverEnemy = false;
-        RaycastHit[] hits = Physics.RaycastAll(ray, 100f, enemyLayer);
-        Collider currentHitCol = null;
-        foreach (var hit in hits)
+        currentTarget = autoAim.GetTarget();
+        if (currentTarget != oldTarget)
         {
-            if (hit.collider.gameObject != player.gameObject)
+            crosshair.GetComponent<Image>().enabled = true;
+            if (currentTarget != null)
             {
-                if (hit.transform.root == player.root)
-                {
-                    isOverEnemy = false;
-                    currentTarget = null;
-                    continue; //Forts�tter ifall man tr�ffar sig sj�lv
-                }
-
-                currentHitCol = hit.collider;
-                currentTarget = currentHitCol;
-                isOverEnemy = true;
-                break;
+                StartCoroutine(FocusOnTarget());
+                lookingAtTarget = true;
             }
-        }
-        if (isOverEnemy)
-        {
-            if (lookInputVector.magnitude >= 0f)
+            else
             {
-                Vector3 screenPos = cam.WorldToScreenPoint(currentHitCol.transform.position);
-
+                lookingAtTarget = false;
+                cursorPos = new Vector2(0, 200f);
+                if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
+            }
+            oldTarget = currentTarget;
+        }
+        
+        
+        if (currentTarget != null)
+        {
+            crosshair.GetComponent<Image>().enabled = true;
+            if (!lookingAtTarget)
+            {
+                StartCoroutine(FocusOnTarget());
+                lookingAtTarget = true;
+            }
+            Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
+            if (screenPos.z > 0)
+            {
+                float ratioX = ((screenPos.x - cam.pixelRect.xMin) / cam.pixelWidth) - 0.5f;
+                float ratioY = ((screenPos.y - cam.pixelRect.yMin) / cam.pixelHeight) - 0.5f;
+                RectTransform parentRect = (RectTransform)crosshair.parent;
                 Vector2 localTarget;
-                localTarget.x = (screenPos.x - cam.pixelRect.xMin) - (cam.pixelWidth / 2f);
-                localTarget.y = (screenPos.y - cam.pixelRect.yMin) - (cam.pixelHeight / 2f);
+                localTarget.x = ratioX * parentRect.rect.width;
+                localTarget.y = ratioY * parentRect.rect.height;
 
-                cursorPos = Vector2.Lerp(cursorPos, localTarget, assistStrength * Time.deltaTime * 5f);
+                cursorPos = localTarget;
             }
         }
         else
         {
-            if (showAimRay)
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
+            StopCoroutine(FocusOnTarget());
+            lookingAtTarget = false;
+            cursorPos = new Vector2(0, 200f);
+            crosshair.GetComponent<Image>().enabled = false;
         }
+
+        if (crosshair != null)
+        {
+            crosshair.anchoredPosition = cursorPos;
+        }
+    }
+
+    IEnumerator FocusOnTarget()
+    {
+        crosshair.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        for (int i = 0; i < 10; i++)
+        {
+            crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+            GetComponent<PlayerShooting>().speedMultiplier = crosshair.localScale.x;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    public Ray GetStableCrosshairRay()
+    {
+        //Ray för denna player's kamera view
+        Rect rect = cam.pixelRect;
+        Vector2 center = new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f);
+        Vector2 screenPoint = center + cursorPos;
+        return cam.ScreenPointToRay(screenPoint);
     }
 
     public void MinimapPrep()

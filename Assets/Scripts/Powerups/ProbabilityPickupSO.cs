@@ -24,7 +24,6 @@ public class PowerUpProbabilityPosition
             tot += powerup.weight;
         }
         int rnd = Random.Range(1, tot);
-        Debug.Log(rnd + ", " + tot);
         for (int i = 0; i < powerups.Length; i++)
         {
             if (rnd <= powerups[i].weight) return powerups[i].type;
