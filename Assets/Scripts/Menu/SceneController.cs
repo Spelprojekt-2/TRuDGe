@@ -9,7 +9,7 @@ public class SceneController : MonoBehaviour
     public SceneType currentSceneType;
     public bool IsMenu { get; private set; }
     public event Action SceneChangeEvent;
-    private void Start()
+    private void OnEnable()
     {
         if (instance != null && instance != this)
         {
@@ -20,6 +20,11 @@ public class SceneController : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private IEnumerator Start()
+    {
+        yield return null;
         OnSceneLoad(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
@@ -56,13 +61,11 @@ public class SceneController : MonoBehaviour
                 IsMenu = false; break;
         }
 
-        CoroutineRunner.Run(SceneChange());
+        SceneChange();
     }
 
-    IEnumerator SceneChange()
+    void SceneChange()
     {
-        yield return null;
-        yield return null;
         SceneChangeEvent?.Invoke();
     }
 

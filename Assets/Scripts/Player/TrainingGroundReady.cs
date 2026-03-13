@@ -26,12 +26,12 @@ public class TrainingGroundReady : MonoBehaviour
 
     private void OnSceneLoaded()
     {
-        isOnTrainingGround = SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround;
+        isOnTrainingGround = (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround || SceneController.instance.currentSceneType == SceneController.SceneType.STrainingGround);
         isReady = false;
         playersReady = 0;
         if (TrainingUI == null) return;
         TrainingUI.SetActive(isOnTrainingGround);
-        PrereadyText.SetActive(isOnTrainingGround);
+        PrereadyText.SetActive(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround);
         ReadyText.SetActive(false);
         if (isOnTrainingGround)
         {
@@ -88,7 +88,9 @@ public class TrainingGroundReady : MonoBehaviour
 
     public void ReadyUp(InputAction.CallbackContext context)
     {
-        if (!context.performed || !isOnTrainingGround) return;
+        if (!context.performed || 
+            !(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)) 
+            return;
         if (isReady)
         {
             isReady = false;
