@@ -6,6 +6,9 @@ public class DestroyableObject : MonoBehaviour
     [SerializeField] private int[] wallHealth = new int[3];
     [SerializeField] private float velocityChangeWhenHit = 0.6f;
 
+    [Header("Audio")] // Lungt att ta bort audio ref.
+    [SerializeField] private InteractablesAudio interactablesAudio;
+
     private void Start()
     {
         for (int i = 0; i < walls.Length; i++)
@@ -26,6 +29,12 @@ public class DestroyableObject : MonoBehaviour
         if (wallHealth[index] <= 0)
         {
             Destroy(walls[index]);
+
+            // PLAY AUDIO, safe att ta bort...
+            if (interactablesAudio != null)
+            {
+                interactablesAudio.WallDestroyAudio(transform.position);
+            }
         }
     }
 }
@@ -51,11 +60,8 @@ public class WallChildListener : MonoBehaviour
             rb.linearVelocity *= velocityChange;
             mainScript.OnChildHit(myIndex);
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Projectile"))
+        if (other.CompareTag("Projectile"))
         {
             mainScript.OnChildHit(myIndex);
         }

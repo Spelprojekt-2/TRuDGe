@@ -181,7 +181,11 @@ public class ShudderChat : MonoBehaviour
             "ILY CARLA",
             "o7",
             "CRAZY JUMPSCARE!!!!!!!",
-            "Didnt know this: 'USA collapsed after 95-year-old president gambled away the entire budget thinking it was their own money'"
+            "Didnt know this: 'USA collapsed after 95-year-old president gambled away the entire budget thinking it was their own money'",
+            "Formula -1 has nothing on this",
+            "hope you win!",
+            "Bettwer than mario kart",
+            "RAWR"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
