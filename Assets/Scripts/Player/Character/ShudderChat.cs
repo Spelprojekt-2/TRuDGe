@@ -104,7 +104,6 @@ public class ShudderChat : MonoBehaviour
         if (!chatEnabled && !SceneController.instance.IsMenu)
         {
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
-            Debug.Log(data);
             if (data.racername == "Capôw")
             {
                 EnableChat(true);
