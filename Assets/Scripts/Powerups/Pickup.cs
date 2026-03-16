@@ -95,12 +95,12 @@ public class Pickup : MonoBehaviour
         if (col == null) yield break;
         for (int i = 0; i < 15; i++)
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
             foreach (var mesh in meshes)
             {
                 mesh.enabled = visible;
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
             visible = !visible;
         }
         foreach (var mesh in meshes)
@@ -108,6 +108,8 @@ public class Pickup : MonoBehaviour
             mesh.enabled = true;
         }
         col.enabled = true;
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
     public void SetMagnetTarget(Transform player)
     {
