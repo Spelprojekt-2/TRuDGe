@@ -59,8 +59,8 @@ public class LarsMessage : MonoBehaviour
     {
         message.enableVertexGradient = false;
         int r = Random.Range(0, selfhelpMessages.Length);
-        message.text = $"<color=yellow>[</color><color=#5e9cff>Self-help</color><color=yellow>]</color> {selfhelpMessages[r]}";
-
+        message.text = $"<color=yellow>[</color><color=#5e9cff>Lars-Göran</color><color=yellow>]</color> {selfhelpMessages[r]}";
+        //
         Color32 clr = new Color32(255, 255, 255, 255);
         message.color = clr;
 

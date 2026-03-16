@@ -11,6 +11,7 @@ public class NinaMechanic : MonoBehaviour
     /*---- Ideas -----
     weld particles?
     guitar riff
+    when hit wrenches fly out of the tank
     */
     void Awake()
     {
@@ -75,6 +76,13 @@ public class NinaMechanic : MonoBehaviour
         {
             steam.Stop();
         }
+    }
+     
+    public IEnumerator LaunchWrenches()
+    {
+        steam.Play();
+        yield return new WaitForSeconds(0.5f);
+        steam.Stop();
     }
     void OnDisable()
     {

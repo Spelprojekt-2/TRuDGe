@@ -9,6 +9,7 @@ public class SpeedLines : MonoBehaviour
 
     private ParticleSystem ps;
     private Color col;
+    private bool check = false;
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
@@ -44,6 +45,11 @@ public class SpeedLines : MonoBehaviour
     void Update()
     {
         float speed = rb.linearVelocity.magnitude;
+        if ((speed > thresh) && !check)
+        {
+            ps.Play();
+            check = true;
+        }
         float alpha = (speed - thresh)*markiplier;
         if (alpha < 0) alpha = 0;
         col = new Color32(255,255,255,(byte)alpha);
