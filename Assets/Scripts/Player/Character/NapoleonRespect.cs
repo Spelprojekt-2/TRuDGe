@@ -29,6 +29,11 @@ public class NapoleonRespect : MonoBehaviour
                 respectEnabled = true;
             }
         }
+        if (respectEnabled && SceneController.instance.IsMenu)
+        {
+            Respect.SetActive(false);
+            respectEnabled = false;
+        }
     }
 
     void Update()

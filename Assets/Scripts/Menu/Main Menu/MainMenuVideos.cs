@@ -7,7 +7,7 @@ public class MainMenuVideos : MonoBehaviour
     int lastVideo = -1;
     void Start()
     {
-        InvokeRepeating(nameof(ChangeVideo),0f, 10f);
+        InvokeRepeating(nameof(ChangeVideo),0f, 7f);
     }
     void ChangeVideo()
     {
