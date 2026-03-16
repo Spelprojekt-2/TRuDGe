@@ -52,9 +52,6 @@ public class PlayerPowerups : MonoBehaviour
     private bool usingMagnet = false;
 
     private RaceController raceController;
-
-    
-    
     
     // Audio
     private PlayerAudio playerAudio;
