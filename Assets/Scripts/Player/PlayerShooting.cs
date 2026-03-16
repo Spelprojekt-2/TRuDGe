@@ -24,6 +24,7 @@ public class PlayerShooting : MonoBehaviour
     private AutoAimCone autoAim;
     [HideInInspector] public float timeLockedOnTarget;
     [HideInInspector] public float speedMultiplier;
+    [HideInInspector] public bool isShot = false; 
     private void Start()
     {
         timer = fireRate;
@@ -42,7 +43,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (timer >= fireRate)
         {
-            if (isShooting)
+            if (isShooting && !isShot)
             {
                 timer = 0;
                 Shoot(projectilePrefab);
@@ -63,7 +64,7 @@ public class PlayerShooting : MonoBehaviour
 
         Vector3 bulletDir = (actualWorldTarget - barrelPosition.position).normalized;
 
-        if (autoAim.GetTarget() != null)
+        if (autoAim.GetTarget() != null && !playerCam.IsTargetBlockedBySmoke(autoAim.GetTarget()))
         {
             bulletDir = (autoAim.GetTarget().position - barrelPosition.position).normalized;
         }

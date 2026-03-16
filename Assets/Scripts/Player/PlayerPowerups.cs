@@ -52,9 +52,6 @@ public class PlayerPowerups : MonoBehaviour
     private bool usingMagnet = false;
 
     private RaceController raceController;
-
-    
-    
     
     // Audio
     private PlayerAudio playerAudio;
@@ -118,6 +115,11 @@ public class PlayerPowerups : MonoBehaviour
             else
             {
                 this.type = type;
+                if(this.type == PowerUpType.airstrike)
+                {
+                    AirstrikeGlobalCooldown.canUseAirstrike = false;
+                    //Debug.Log("Cannot use airstrike");
+                }
                 PowerUpUIUpdate();
             }
         }
@@ -255,8 +257,12 @@ public class PlayerPowerups : MonoBehaviour
     {
         gasTankAmount = 0;
         gasImage.fillAmount = 0f;
+        type = null;
+        usedPowerUp = false;
+        PowerUpUIUpdate();
         //gasTankCounter.text = "Gastanks: 0";
     }
+    
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;

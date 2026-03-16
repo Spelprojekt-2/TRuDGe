@@ -7,7 +7,8 @@ public class Pickup : MonoBehaviour
     [SerializeField] private float powerupRespawnTime = 30f;
     [SerializeField] private ProbabilityPickupSO probability;
     [SerializeField] private ProbabilityPickupSO fullProbability;
-
+    [SerializeField] private ParticleSystem presentParticles;
+    [SerializeField] private ParticleSystem vacantParticles;
     public static List<Pickup> AllPickups = new List<Pickup>();
 
     private Vector3 startPos;
@@ -27,6 +28,11 @@ public class Pickup : MonoBehaviour
         if (canRespawn)
         {
             col.enabled = true;
+            if(powerUpType != PlayerPowerups.PowerUpType.gasolineTank)
+            {
+                presentParticles.enableEmission = true;
+                vacantParticles.enableEmission = false;
+            }
         }
         else if (!canRespawn)
         {
@@ -75,6 +81,11 @@ public class Pickup : MonoBehaviour
     private IEnumerator RespawnTimer()
     {
         col.enabled = false;
+        if (powerUpType != PlayerPowerups.PowerUpType.gasolineTank)
+        {
+            presentParticles.enableEmission = false;
+            vacantParticles.enableEmission = true;
+        }
         foreach (var mesh in meshes)
         {
             mesh.enabled = false;
@@ -88,6 +99,11 @@ public class Pickup : MonoBehaviour
         {
             mesh.enabled = true;
         }
+        if (powerUpType != PlayerPowerups.PowerUpType.gasolineTank)
+        {
+            presentParticles.enableEmission = true;
+            vacantParticles.enableEmission = false;
+        }
     }
 
     public IEnumerator DroppedTanks()
@@ -95,12 +111,12 @@ public class Pickup : MonoBehaviour
         if (col == null) yield break;
         for (int i = 0; i < 15; i++)
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
             foreach (var mesh in meshes)
             {
                 mesh.enabled = visible;
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
             visible = !visible;
         }
         foreach (var mesh in meshes)
@@ -108,6 +124,8 @@ public class Pickup : MonoBehaviour
             mesh.enabled = true;
         }
         col.enabled = true;
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
     public void SetMagnetTarget(Transform player)
     {
