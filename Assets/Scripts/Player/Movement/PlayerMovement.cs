@@ -116,6 +116,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float inAirUprightingSpeed = 1f;
     private Vector3 groundNormal;
     private bool isGrounded;
+    [Tooltip("Bellow this y level tank will slip around :)")]
+    [SerializeField] private float iceYLevel = -3f;
     #endregion
 
     #region Public methods
@@ -154,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInputVector.y = Mathf.Clamp((accelerationInput ? 1 : 0) - (reversingInput ? 1 : 0), -1f, 1f);
     }
-
+    
     public void FixedUpdate()
     {
         ProcessRayCasts();
@@ -311,8 +313,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ProcessFriction()
     {
-        if (!isGrounded) return;
-
+        if (!isGrounded ) return;
+        if (rb.transform.position.y < iceYLevel) return;
         // Sideways friction
         float rightVel = Vector3.Dot(rotationRoot.right, rb.linearVelocity);
         rb.AddForce(
