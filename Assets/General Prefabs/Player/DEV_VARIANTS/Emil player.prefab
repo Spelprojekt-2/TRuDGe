@@ -130,14 +130,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Speed lines
       objectReference: {fileID: 0}
-    - target: {fileID: 6271541803945941072, guid: 455d8c30002401141bf5859dec81834b, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 13.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6271541803945941072, guid: 455d8c30002401141bf5859dec81834b, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8406572146658016905, guid: 455d8c30002401141bf5859dec81834b, type: 3}
       propertyPath: rb
       value: 
@@ -291,11 +283,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2227583658322248293, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 17367
+      value: 541655
       objectReference: {fileID: 0}
     - target: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_Name
       value: Emil player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642452238475608656, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1066611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2642452238475608656, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 388
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586681433911336767, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: smokeLayer.m_Bits
+      value: 524288
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_LocalPosition.x
