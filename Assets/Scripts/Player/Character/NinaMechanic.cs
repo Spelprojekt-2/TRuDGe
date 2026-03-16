@@ -1,10 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 
 public class NinaMechanic : MonoBehaviour
 {
-    /*public Image[] activeBoost;
-
+    [SerializeField] private ParticleSystem steam;
+    [SerializeField] private bool specialEnabled;
+    
+    
+    /*---- Ideas -----
+    weld particles?
+    guitar riff
+    */
+    void Awake()
+    {
+        steam.Stop();
+    }
     void Start()
     {
         SceneController.instance.SceneChangeEvent += OnSceneLoaded;
@@ -16,16 +26,29 @@ public class NinaMechanic : MonoBehaviour
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
             if (data.racername == "The Brass Beast")
             {
-                EnableChat(true);
+                specialEnabled = true;
             }
         }
         if (SceneController.instance.IsMenu)
         {
-            EnableChat(false);
+            specialEnabled = false;
+        }
+    }
+    public void VentSteam()
+    {
+        if (steam.isPlaying == false && specialEnabled)
+        {
+            steam.Play();
+            /*yield return new WaitForSeconds(2f);
+            steam.Stop();*/
+        }
+        else
+        {
+            steam.Stop();
         }
     }
     void OnDisable()
     {
         SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
-    }*/
+    }
 }
