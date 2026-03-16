@@ -121,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Public methods
+    [HideInInspector]public bool canTurn = true;
     public float GetTopSpeed() => topSpeed;
     public bool IsGrounded() => isGrounded;
     public Vector3 GetGroundNormal() => groundNormal;
@@ -269,6 +270,7 @@ public class PlayerMovement : MonoBehaviour
         rotationRoot.localPosition = new Vector3(0,Mathf.Lerp(rotationRoot.localPosition.y,groundHeight,Time.deltaTime*5),0);
 
         // Turning
+        if (canTurn){
         transform.Rotate(new Vector3( 0f,
             moveInputVector.x *
             // Base turning speed
@@ -283,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
             (isGrounded ? 1f : inAirTurningModifier) * 
             Mathf.Rad2Deg * Time.fixedDeltaTime,
         0f ));
-        
+        }
         // Acceleration
         rb.AddForce(
             // Direction
