@@ -21,9 +21,9 @@ public class MenuController : MonoBehaviour
     public TextMeshProUGUI ReadyTextP4;
     [SerializeField] private UIButton[] preselectPlayer;
 
-    [Header("AfterRace")]
-    [SerializeField] private UIButton initialSelection;
-    private void Start()
+    [Header("TrackSelect/AfterRace")]
+    [SerializeField] public UIButton initialSelection;
+    private void Awake()
     {
         SceneController.instance.SceneChangeEvent += OnSceneChange;
     }
@@ -33,12 +33,17 @@ public class MenuController : MonoBehaviour
         switch (SceneController.instance.currentSceneType)
         {
             case SceneController.SceneType.MainMenu:
-                CoroutineRunner.Run(MainMenuWaitForUIPopulation());
+                MainMenuWaitForUIPopulation();
                 ShowJoinPopup(PlayerTrackerManager.instance.GetPlayerCount() < 1);
                 break;
             case SceneController.SceneType.PostRaceLeaderboard:
                 CoroutineRunner.Run(SelectObject(initialSelection));
                 break;
+            case SceneController.SceneType.TrackSelectRace:
+            case SceneController.SceneType.TrackSelectTimeTrial:
+                CoroutineRunner.Run(SelectObject(initialSelection));
+                break;
+
         }
     }
 

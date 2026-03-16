@@ -8,6 +8,7 @@ public class GrapplingBehaviour : MonoBehaviour
     #region Component refs
     [SerializeField] private RectTransform grappleUIIndicator;
     [SerializeField] private Camera playerCamera;
+    private CameraFovController fovController;
     private LineRenderer lineRenderer;
     [SerializeField] private Rigidbody vehicleRigidbody;
     [Tooltip("The object that will follow the grapple hook's azimuth/heading/yaw rotation (grapple turret)")]
@@ -32,6 +33,17 @@ public class GrapplingBehaviour : MonoBehaviour
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
+
+    void Start()
+    {
+        fovController = playerCamera.GetComponent<CameraFovController>();
+
+        TimeSinceGrapple = 0f;
+        lineRenderer = GetComponent<LineRenderer>();
+        if (grappleable != null)
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
+        SceneManager.sceneLoaded += SceneChange;
+    }
 
     public void GrappleInput(InputAction.CallbackContext context)
     {
@@ -85,14 +97,6 @@ public class GrapplingBehaviour : MonoBehaviour
         isInGrappleRange = false;
         EndGrapple(false);
     }
-    void Start()
-    {
-        TimeSinceGrapple = 0f;
-        lineRenderer = GetComponent<LineRenderer>();
-        if (grappleable != null)
-            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
-        SceneManager.sceneLoaded += SceneChange;
-    }
 
     void OnDisable()
     {
@@ -108,6 +112,9 @@ public class GrapplingBehaviour : MonoBehaviour
             TimeSinceGrapple += Time.deltaTime;
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, cachedGrapplePoint);
+
+            if (grappleable is Grappleable && ((Grappleable)grappleable).IsDesiredDirection(vehicleRigidbody.linearVelocity))
+                fovController.BoostFOV();
         }
 
         if (isGrappling || isInGrappleRange)
