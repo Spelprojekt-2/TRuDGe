@@ -257,8 +257,12 @@ public class PlayerPowerups : MonoBehaviour
     {
         gasTankAmount = 0;
         gasImage.fillAmount = 0f;
+        type = null;
+        usedPowerUp = false;
+        PowerUpUIUpdate();
         //gasTankCounter.text = "Gastanks: 0";
     }
+    
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
