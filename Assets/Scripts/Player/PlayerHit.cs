@@ -21,7 +21,8 @@ public class PlayerHit : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x * hitSpeedMultiplier, rb.linearVelocity.y, rb.linearVelocity.z * hitSpeedMultiplier);
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
         transform.root.GetComponentInChildren<PlayerPowerups>().DropGasTanks();
-        transform.root.GetComponentInChildren<PlayerMovement>().enabled = false;
+        transform.root.GetComponentInChildren<PlayerMovement>().canTurn = false;
+        transform.root.GetComponentInChildren<PlayerShooting>().isShot = true;
         isInvincible = true;
         anim.Play("Spin");
     }
@@ -32,7 +33,8 @@ public class PlayerHit : MonoBehaviour
         invincibilityTimer += Time.fixedDeltaTime;
         if (invincibilityTimer > invincibilityDuration - (invincibilityDuration - 1))
         {
-            transform.root.GetComponentInChildren<PlayerMovement>().enabled = true;
+            transform.root.GetComponentInChildren<PlayerMovement>().canTurn = true;
+            transform.root.GetComponentInChildren<PlayerShooting>().isShot = false;
             if (invincibilityTimer > invincibilityDuration)
             {
                 isInvincible = false;
