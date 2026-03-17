@@ -2207,10 +2207,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 0}
-  SwapDown: {fileID: 0}
-  SwapLeft: {fileID: 1906360598}
-  SwapRight: {fileID: 1967517173}
+  SwapUp: {fileID: 1906360598}
+  SwapDown: {fileID: 1967517173}
+  SwapLeft: {fileID: 0}
+  SwapRight: {fileID: 0}
   characterDescription: {fileID: 844124135}
   characterBackgrounds:
   - {fileID: 844124134}
@@ -2952,11 +2952,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5862353376269548968, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -275.00003
+      value: -554
       objectReference: {fileID: 0}
     - target: {fileID: 5862353376269548968, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -244.00003
+      value: 148
       objectReference: {fileID: 0}
     - target: {fileID: 5862353376269548968, guid: 860b6eb3958946545b043fd842b5fbbe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5158,7 +5158,7 @@ Transform:
   m_GameObject: {fileID: 596073752}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.15, z: 0}
+  m_LocalPosition: {x: 0, y: -6.82, z: 0}
   m_LocalScale: {x: 4, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6098,10 +6098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 0}
-  SwapDown: {fileID: 0}
-  SwapLeft: {fileID: 1967517173}
-  SwapRight: {fileID: 1906360598}
+  SwapUp: {fileID: 1967517173}
+  SwapDown: {fileID: 1906360598}
+  SwapLeft: {fileID: 0}
+  SwapRight: {fileID: 0}
   characterDescription: {fileID: 844124131}
   characterBackgrounds:
   - {fileID: 844124134}
@@ -8662,7 +8662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3144206202189371698, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 345
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3144206202189371698, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_SizeDelta.y
@@ -8763,12 +8763,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4579583393262106183, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_text
-      value: "The 30-year-old Lazare Grandetaille was born in Ajaccio, France. Since
-        he first began making friends, his pride and need to control situations became
-        apparent, which made him lose those friends. When Lazare turned 18, in the
-        middle of the war, he pronounced himself King Napoleon VIII in front of an
-        almost empty country in order to get the respect he thought he deserved. 
-        \r\n"
+      value: 'The 30-year-old Lazare Grandetaille was born in Soulac-sur-Mer, France.
+        When Lazare turned 21, he pronounced himself King Napoleon III in front of
+        an almost empty country.
+
+
+        Special effects:
+
+        Has a respect
+        meter.
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 4579583393262106183, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_fontColor.b
@@ -8781,6 +8786,10 @@ PrefabInstance:
     - target: {fileID: 4579583393262106183, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_fontColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579583393262106183, guid: f00f41a79433ed04280b944953b51b56, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 4593808385116552617, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive
@@ -8807,11 +8816,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6839170008172661114, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_text
-      value: "Lars-G\xF6ran is a very competitive 48-year-old from Dalarna, Sweden.
-        He was a soldier during the war, which he bears heavy scars from. Lars-G\xF6ran
-        frequently tries to distract his opponents by calling them names or telling
-        dark jokes during the race.\n\nSpecial effects:\nAccustomed soldier\nLars-G\xF6ran
-        is decent at everything."
+      value: "Lars-G\xF6ran is a 48-year-old veteran from Dalarna, Sweden. He was
+        a tank commander during the war, which he bears heavy scars from.\n\nSpecial
+        effects:\nRemembers self-help messages on low speed."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6839170008172661114, guid: f00f41a79433ed04280b944953b51b56, type: 3}
+      propertyPath: m_margin.z
+      value: 231.68057
       objectReference: {fileID: 0}
     - target: {fileID: 6839170008172661114, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_isRichText
@@ -8830,6 +8841,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6839170008172661114, guid: f00f41a79433ed04280b944953b51b56, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 6839170008172661114, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: checkPaddingRequired
       value: 0
       objectReference: {fileID: 0}
@@ -8844,6 +8859,14 @@ PrefabInstance:
     - target: {fileID: 7004382860810387237, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813588574253977025, guid: f00f41a79433ed04280b944953b51b56, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 855
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813588574253977025, guid: f00f41a79433ed04280b944953b51b56, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 8044037026975669814, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_text
@@ -8902,10 +8925,8 @@ PrefabInstance:
     - target: {fileID: 9103211324500983511, guid: f00f41a79433ed04280b944953b51b56, type: 3}
       propertyPath: m_text
       value: "Carla Cap\xF4 is a 28-year-old streamer from Faro, Portugal. She is
-        a charismatic individual and frequently tells jokes, one of the many reasons
-        why her fanbase stays loyal to her. Carla has a good connection with her
-        viewers and often threatens opponents with sending her army on them, sometimes
-        as a joke and sometimes as a serious warning. \r\n\r\nSpecial effects:\r\nHas
+        a charismatic individual with a bubbly personality. She usually brings her
+        streams with her into the tank while racing.\r\n\r\nSpecial effects:\r\nHas
         a Shudder chat. "
       objectReference: {fileID: 0}
     - target: {fileID: 9103211324500983511, guid: f00f41a79433ed04280b944953b51b56, type: 3}
@@ -10025,7 +10046,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -17209,15 +17230,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1530337142315675274, guid: 401594a6e04b0b54fb87522fbcaccf2f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.9
+      value: 12.06
       objectReference: {fileID: 0}
     - target: {fileID: 1530337142315675274, guid: 401594a6e04b0b54fb87522fbcaccf2f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.46
+      value: -6.34
       objectReference: {fileID: 0}
     - target: {fileID: 1530337142315675274, guid: 401594a6e04b0b54fb87522fbcaccf2f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.57
+      value: 13.44
       objectReference: {fileID: 0}
     - target: {fileID: 1530337142315675274, guid: 401594a6e04b0b54fb87522fbcaccf2f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19930,10 +19951,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 0}
-  SwapDown: {fileID: 0}
-  SwapLeft: {fileID: 688986369}
-  SwapRight: {fileID: 202520826}
+  SwapUp: {fileID: 688986369}
+  SwapDown: {fileID: 202520826}
+  SwapLeft: {fileID: 0}
+  SwapRight: {fileID: 0}
   characterDescription: {fileID: 844124129}
   characterBackgrounds:
   - {fileID: 844124134}
@@ -21014,10 +21035,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87478974472660c44b7bedb143cc535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwapUp: {fileID: 0}
-  SwapDown: {fileID: 0}
-  SwapLeft: {fileID: 202520826}
-  SwapRight: {fileID: 688986369}
+  SwapUp: {fileID: 202520826}
+  SwapDown: {fileID: 688986369}
+  SwapLeft: {fileID: 0}
+  SwapRight: {fileID: 0}
   characterDescription: {fileID: 844124133}
   characterBackgrounds:
   - {fileID: 844124134}
