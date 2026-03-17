@@ -38,11 +38,11 @@ public class RacerData : MonoBehaviour
 
     private void Update()
     {
-        if (!RacingInformation.instance.isTimeTrial || !isRacing || isReplayGhost) return;
+        if (!RacingInformation.instance.isTimeTrial || SceneController.instance.IsMenu || isReplayGhost || raceController == null || !isRacing) return;
         TimerText.text = Leaderboard.FormatTime(raceController.GetRaceTime());
     }
 
-    public void TrackLoaded(int lapsOnTrack)
+    public void TrackLoaded()
     {
         currentValidLap = 0;
         lap = 0;
@@ -54,12 +54,15 @@ public class RacerData : MonoBehaviour
         raceController = FindFirstObjectByType<RaceController>();
         if (lapProgress > 0.5f) lap = -1;
         if (isReplayGhost) return;
-        TimeTrialUI.SetActive(RacingInformation.instance.isTimeTrial);
-        RaceUI.SetActive(!RacingInformation.instance.isTimeTrial);
+        bool isOnTrainingGround = (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround || SceneController.instance.currentSceneType == SceneController.SceneType.STrainingGround);
+        
+        TimeTrialUI.SetActive(RacingInformation.instance.isTimeTrial && !isOnTrainingGround);
+        RaceUI.SetActive(!RacingInformation.instance.isTimeTrial && !isOnTrainingGround);
+        positionImage.gameObject.SetActive(!isOnTrainingGround);
         TimerText.text = "00:00.000";
+        
         if (index == 0) GetComponentInChildren<PlayerCamera>()?.MinimapPrep();
         capture = GetComponent<TimeTrialCapture>();
-        positionImage.gameObject.SetActive(true);
         OnRaceSceneStarted?.Invoke();
     }
     public void NextLap()

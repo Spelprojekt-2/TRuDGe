@@ -96,6 +96,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(0f, 1f)] private float inAirTurningModifier = 0.1f;
     [Tooltip("If true, current speed will be calculated from absolute velocity rather than forward velocity. (Does not affect top speed clamping)")]
     [SerializeField] private bool baseSpeedOnAbsoluteVelocity = false;
+    [Tooltip("Curve to modify tank roll based on sideways speed (x = speed/topSpeed, y = degrees)")]
+    [SerializeField] private AnimationCurve rollOverSidewaysSpeed = AnimationCurve.Linear(0f, 0f, 1f, 10f);
     [Header("Friction")]
     [Tooltip("The maximum friction acting sideways on the vehicle")]
     [SerializeField] private float maxSidewaysFriction = 10f;
@@ -121,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Public methods
+    [HideInInspector]public bool canTurn = true;
     public float GetTopSpeed() => topSpeed;
     public bool IsGrounded() => isGrounded;
     public Vector3 GetGroundNormal() => groundNormal;
@@ -160,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
     public void FixedUpdate()
     {
         ProcessRayCasts();
+        ProcessAnimation();
         ProcessMovement();
         ProcessFriction();
     }
@@ -245,8 +249,15 @@ public class PlayerMovement : MonoBehaviour
             } break;
         }
     }
-    private void ProcessMovement()
+    private void ProcessAnimation()
     {
+        // Add roll when drifting
+        float sidewaysSpeed = Vector3.Dot( rb.linearVelocity, rotationRoot.right);
+        float sign = Mathf.Sign(sidewaysSpeed);
+        float t = Mathf.Abs(sidewaysSpeed) / topSpeed;
+        float roll = rollOverSidewaysSpeed.Evaluate(t) * -sign;
+        groundNormal = Quaternion.AngleAxis(roll, Vector3.Cross(transform.right, groundNormal)) * groundNormal;
+
         // Align vehicle to ground normal
         rotationRoot.rotation = Quaternion.Slerp(
             rotationRoot.rotation,
@@ -267,8 +278,11 @@ public class PlayerMovement : MonoBehaviour
         groundHeight = groundHeight/groPoiCount - transform.position.y;
         if (groundHeight >= 0)
         rotationRoot.localPosition = new Vector3(0,Mathf.Lerp(rotationRoot.localPosition.y,groundHeight,Time.deltaTime*5),0);
-
+    }
+    private void ProcessMovement()
+    {
         // Turning
+        if (canTurn){
         transform.Rotate(new Vector3( 0f,
             moveInputVector.x *
             // Base turning speed
@@ -283,7 +297,8 @@ public class PlayerMovement : MonoBehaviour
             (isGrounded ? 1f : inAirTurningModifier) * 
             Mathf.Rad2Deg * Time.fixedDeltaTime,
         0f ));
-        
+        }
+
         // Acceleration
         rb.AddForce(
             // Direction
