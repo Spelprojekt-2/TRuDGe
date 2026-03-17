@@ -106,7 +106,7 @@ public class Grappleable : MonoBehaviour, IGrappleable
     {
         if (grapplingObject.TryGetComponent<GrapplingBehaviour>(out GrapplingBehaviour grapple))
         {
-            grapple.EndGrapple(false);
+            grapple.EndGrapple(true);
         }
         else
         {
