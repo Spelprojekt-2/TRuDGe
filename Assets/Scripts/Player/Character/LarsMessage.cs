@@ -73,6 +73,10 @@ public class LarsMessage : MonoBehaviour
 
         check = 0;
     }
+    public void toggleMessage(bool state)
+    {
+        messageEnabled = state;
+    }
     void OnDisable()
     {
         SceneController.instance.SceneChangeEvent -= OnSceneLoaded;

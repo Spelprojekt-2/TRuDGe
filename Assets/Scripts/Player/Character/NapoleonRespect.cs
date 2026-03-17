@@ -39,35 +39,43 @@ public class NapoleonRespect : MonoBehaviour
 
     void Update()
     {
-        float speed = rb.linearVelocity.magnitude;
-        bool idle = speed < speedThreshold;
+        if (respectEnabled)
+        {
+            float speed = rb.linearVelocity.magnitude;
+            bool idle = speed < speedThreshold;
 
-        if (idle)
-        {
-            crownfill.fillAmount -= Time.deltaTime * 0.5f; 
-        }
-        else
-        {
-            crownfill.fillAmount += Time.deltaTime * 0.1f;
-        }
-        crownfill.fillAmount = Mathf.Clamp01(crownfill.fillAmount);
+            if (idle)
+            {
+                crownfill.fillAmount -= Time.deltaTime * 0.5f; 
+            }
+            else
+            {
+                crownfill.fillAmount += Time.deltaTime * 0.1f;
+            }
+            crownfill.fillAmount = Mathf.Clamp01(crownfill.fillAmount);
 
-        if (!idle)
-        {
-            if (!flames.isPlaying)
-            flames.Play();
-        }
-        else
-        {
-            flames.Stop();
+            if (!idle)
+            {
+                if (!flames.isPlaying)
+                flames.Play();
+            }
+            else
+            {
+                flames.Stop();
+            }
         }
     }
     public IEnumerator LowerRespect()
     {
-        if (rd.racername == "King Napoleon III")
+        if (rd.racername == "King Napoleon III" && respectEnabled)
         crownfill.fillAmount -= 0.5f; 
         //return;
         yield return new WaitForSeconds(1f);
+    }
+    public void toggleRespect(bool state)
+    {
+        respectEnabled = state;
+        Respect.SetActive(state);
     }
     void OnDisable()
     {
