@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using TMPro;
 
 public class CharacterSpecials : MonoBehaviour
 {
@@ -7,7 +10,42 @@ public class CharacterSpecials : MonoBehaviour
     [SerializeField] private NapoleonRespect nr;
     [SerializeField] private ShudderChat sc;
     [SerializeField] private RacerData rd;
+    [SerializeField] private TextMeshProUGUI toggleText;
+    [SerializeField] private GameObject controller;
+    [SerializeField] private GameObject kbm;
     private bool specialsEnabled = true;
+
+    void Start()
+    {
+        SceneController.instance.SceneChangeEvent += OnSceneLoaded;
+    }
+    void OnSceneLoaded()
+    {
+        if (SceneController.instance.IsMenu)
+        {
+            toggleText.text = "";
+            bool isController = transform.root.GetComponentInChildren<PlayerInput>().currentControlScheme == "Gamepad";
+            if (isController)
+            {
+                kbm.SetActive(false);
+                controller.SetActive(true);
+            }
+            else
+            {
+                kbm.SetActive(true);
+                controller.SetActive(false);
+            }
+        }
+        else
+        {
+            toggleText.text = "Toggle special with:";
+            //kbm.SetActive(false);
+        }
+    }
+    void OnDisable()
+    {
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
+    }
     public void ToggleCharacterSpecials()
     {
         if (specialsEnabled)
