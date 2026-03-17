@@ -5,6 +5,10 @@ using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Numerics;
+using Vector2 = UnityEngine.Vector2;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class UISelection : MonoBehaviour
 {
@@ -241,8 +245,9 @@ public class UISelection : MonoBehaviour
         selectionHighlight.gameObject.SetActive(true);
         if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
-
+        
         UpdateAllHighlights();
+
         if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
             

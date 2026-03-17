@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3714217074924607487
 Transform:
   m_ObjectHideFlags: 0
@@ -4906,6 +4906,8 @@ MonoBehaviour:
   powerupRespawnTime: 5
   probability: {fileID: 11400000, guid: 313b658b84ae23f47ba50e99890f9990, type: 2}
   fullProbability: {fileID: 11400000, guid: 22e1420a04737dc4eb27b0d130ff269f, type: 2}
+  presentParticles: {fileID: 3450869157100934999}
+  vacantParticles: {fileID: 5258781235141501260}
   flySpeed: 0.5
   canRespawn: 1
 --- !u!95 &5983194799653724072
