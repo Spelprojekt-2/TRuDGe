@@ -55,7 +55,7 @@ MonoBehaviour:
   lm: {fileID: 554542304665856319}
   nm: {fileID: 4931724259020381652}
   nr: {fileID: 2188909042258887471}
-  sc: {fileID: 0}
+  sc: {fileID: 2811525828857564543}
   rd: {fileID: 0}
 --- !u!1001 &3019123335554805318
 PrefabInstance:
@@ -228,7 +228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_LocalRotation.w
@@ -248,11 +248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -276,6 +276,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5576436756173673447, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
   m_PrefabInstance: {fileID: 5459827176719668001}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2811525828857564543 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7836747393004625502, guid: 26e380794cdb58d4a8430f6cdad45794, type: 3}
+  m_PrefabInstance: {fileID: 5459827176719668001}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb97faec74243d2498b4a67031a1a2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7638615936542073744
 PrefabInstance:
   m_ObjectHideFlags: 0
