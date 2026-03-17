@@ -4,6 +4,7 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class NapoleonRespect : MonoBehaviour
 {
@@ -11,9 +12,9 @@ public class NapoleonRespect : MonoBehaviour
     [SerializeField] private GameObject Respect;
     [SerializeField] private Image crownfill;
     [SerializeField] private float topSpeed = 100f;
-    [SerializeField] private float speedThreshold = 70;
     [SerializeField] private ParticleSystem flames;
-    [SerializeField] private bool respectEnabled;        
+    [SerializeField] private bool respectEnabled;      
+    private float speedThreshold = 30f;  
     void Start()
     {
         SceneController.instance.SceneChangeEvent += OnSceneLoaded;
@@ -41,9 +42,10 @@ public class NapoleonRespect : MonoBehaviour
         if (respectEnabled)
         {
             float speed = rb.linearVelocity.magnitude;
-            float normalizedSpeed = speed/topSpeed;
-            crownfill.fillAmount = Mathf.Lerp(crownfill.fillAmount, normalizedSpeed, Time.deltaTime * 5f);
-            if (speed > speedThreshold)
+            float normalizedSpeed = Mathf.Clamp01(speed/topSpeed);
+            float inverted = 1f - normalizedSpeed;
+            crownfill.fillAmount = Mathf.Lerp(crownfill.fillAmount, inverted, Time.deltaTime * 5f);
+            if (speed < speedThreshold)
             {
                 if (!flames.isPlaying)
                 flames.Play();
@@ -52,9 +54,14 @@ public class NapoleonRespect : MonoBehaviour
             {
                 if (flames.isPlaying)
                 flames.Stop();
+                StartCoroutine(LowerRespect());
             }
+
         }
-        
+    }
+    IEnumerator LowerRespect()
+    {
+        yield return new WaitForSeconds(5f);
     }
     void OnDisable()
     {
