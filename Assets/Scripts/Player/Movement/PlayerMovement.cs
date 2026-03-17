@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Public methods
     [HideInInspector]public bool canTurn = true;
-    public float GetTopSpeed() => topSpeed;
+    public float GetTopSpeed(bool netTopSpeed) => netTopSpeed? topSpeed * externalTopSpeedModifier : topSpeed;
     public bool IsGrounded() => isGrounded;
     public Vector3 GetGroundNormal() => groundNormal;
     public float GetCurrentSpeed(bool absolute = false) =>
