@@ -75,6 +75,7 @@ public class LarsMessage : MonoBehaviour
     }
     public void toggleMessage(bool state)
     {
+        message.text = "";
         messageEnabled = state;
     }
     void OnDisable()
