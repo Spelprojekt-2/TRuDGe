@@ -18,12 +18,20 @@ public class PowerUpProbabilityPosition
     public PowerUpProbability[] powerups;
     public PlayerPowerups.PowerUpType GetPowerUp()
     {
+
         int tot = 0;
         foreach (var powerup in powerups)
         {
+            if (!AirstrikeGlobalCooldown.canUseAirstrike && powerup.type == PlayerPowerups.PowerUpType.airstrike)
+            {
+                //Debug.Log("Skipped airstrike weight");
+                continue;
+            }
             tot += powerup.weight;
         }
-        int rnd = Random.Range(1, tot);
+
+        int rnd = Random.Range(1, tot+1);
+
         for (int i = 0; i < powerups.Length; i++)
         {
             if (rnd <= powerups[i].weight) return powerups[i].type;

@@ -28,6 +28,7 @@ public class PlayerCamera : MonoBehaviour
     [Header("---Auto Aim Settings---")]
     public  Transform forOthersAimPoint;
     private Transform currentTarget = null;
+    public LayerMask smokeLayer;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
@@ -86,9 +87,15 @@ public class PlayerCamera : MonoBehaviour
         }
 
         currentTarget = autoAim.GetTarget();
+        if (currentTarget != null && IsTargetBlockedBySmoke(currentTarget))
+        {
+            currentTarget = null;
+        }
+
         if (currentTarget != oldTarget)
         {
             crosshair.GetComponent<Image>().enabled = true;
+
             if (currentTarget != null)
             {
                 StartCoroutine(FocusOnTarget());
@@ -100,24 +107,28 @@ public class PlayerCamera : MonoBehaviour
                 cursorPos = new Vector2(0, 200f);
                 if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
             }
+
             oldTarget = currentTarget;
         }
-        
-        
-        if (currentTarget != null)
+        else if (currentTarget != null)
         {
             crosshair.GetComponent<Image>().enabled = true;
+
             if (!lookingAtTarget)
             {
                 StartCoroutine(FocusOnTarget());
                 lookingAtTarget = true;
             }
+
             Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
+
             if (screenPos.z > 0)
             {
                 float ratioX = ((screenPos.x - cam.pixelRect.xMin) / cam.pixelWidth) - 0.5f;
                 float ratioY = ((screenPos.y - cam.pixelRect.yMin) / cam.pixelHeight) - 0.5f;
+
                 RectTransform parentRect = (RectTransform)crosshair.parent;
+
                 Vector2 localTarget;
                 localTarget.x = ratioX * parentRect.rect.width;
                 localTarget.y = ratioY * parentRect.rect.height;
@@ -157,6 +168,23 @@ public class PlayerCamera : MonoBehaviour
         Vector2 center = new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f);
         Vector2 screenPoint = center + cursorPos;
         return cam.ScreenPointToRay(screenPoint);
+    }
+    public bool IsTargetBlockedBySmoke(Transform target)
+    {
+        Vector3 origin = cam.transform.position;
+        Vector3 dir = (target.position - origin).normalized;
+        float distance = Vector3.Distance(origin, target.position);
+
+        RaycastHit[] hits = Physics.SphereCastAll(origin, 0.5f, dir, distance, ~0, QueryTriggerInteraction.Collide);
+
+        foreach (var hit in hits)
+        {
+            if (((1 << hit.collider.gameObject.layer) & smokeLayer) != 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void MinimapPrep()
