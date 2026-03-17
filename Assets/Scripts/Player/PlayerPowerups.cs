@@ -1,18 +1,36 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.Splines;
 using System.Linq;
+using System.Net.Mime;
 using Unity.Mathematics;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
+    //GastankUI
+    [SerializeField] private Image gasImage;
+    
+    
+    
+    [Header("---Power Up Events---")]
+    [SerializeField] private UnityEvent onTurbo;
+    [SerializeField] private UnityEvent onMagnet;
+    [SerializeField] private UnityEvent onSmoke;
+    [SerializeField] private UnityEvent onLandmine;
+    [SerializeField] private UnityEvent onAirStrike;
+    [SerializeField] private UnityEvent onDeployWall;
+    [SerializeField] private UnityEvent onScatterShot;
+    [SerializeField] private UnityEvent onShield;
+
+    [Header("---Power Up Settings---")]
     [SerializeField] private GameObject gasTank;
-    [SerializeField] private GameObject homingMissile;
     [SerializeField] private int magnetPickupRange = 30;
     [SerializeField] private GameObject smokeScreen;
     [SerializeField] private float smokeDuration = 7f;
@@ -20,9 +38,12 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject airstrike;
     [SerializeField] private float airstrikeForwardOffset;
     [SerializeField] private GameObject deployedWall;
+    [SerializeField] private GameObject scatterShot;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private float shieldTimer = 4f;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
-    [SerializeField] private TextMeshProUGUI gasTankCounter;
+   // [SerializeField] private TextMeshProUGUI gasTankCounter;
     public int gasTankAmount = 0;
     private PowerUpType? type = null;
     private bool usedPowerUp;
@@ -32,6 +53,9 @@ public class PlayerPowerups : MonoBehaviour
 
     private RaceController raceController;
 
+    
+    
+    
     // Audio
     private PlayerAudio playerAudio;
 
@@ -42,7 +66,8 @@ public class PlayerPowerups : MonoBehaviour
 
         currPowerUpText.text = "";
         gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+        
+        //gasTankCounter.text = "Gastanks: 0";
     }
     public void UsePowerUpInput(InputAction.CallbackContext context)
     {
@@ -51,14 +76,14 @@ public class PlayerPowerups : MonoBehaviour
     public enum PowerUpType
     {
         gasolineTank,
-        homingMissle,
         turbo,
         magnet,
         smoke,
         landMine,
         airstrike,
         deployWall,
-        eMP
+        scatterShot,
+        shield
     };
     public void GainedPowerUp(PowerUpType type)
     {
@@ -70,7 +95,10 @@ public class PlayerPowerups : MonoBehaviour
             if (gasTankAmount < 10)
             {
                 gasTankAmount++;
-                gasTankCounter.text = "Gastanks: " + gasTankAmount;
+
+                //UI Image
+                gasImage.fillAmount += 0.1f;
+                //gasTankCounter.text = "Gastanks: " + gasTankAmount;
                 if (usingTurbo)
                 {
                     normalTopSpeedModifier += 0.1f;
@@ -83,8 +111,15 @@ public class PlayerPowerups : MonoBehaviour
         }
         else
         {
-            this.type = type;
-            PowerUpUIUpdate();
+            if(this.type != null)
+            {
+                return;
+            }
+            else
+            {
+                this.type = type;
+                PowerUpUIUpdate();
+            }
         }
     }
 
@@ -94,44 +129,61 @@ public class PlayerPowerups : MonoBehaviour
 
         switch (type)
         {
-            case PowerUpType.homingMissle:
-                HomingMissile();
-                break;
-
             case PowerUpType.turbo:
+                onTurbo.Invoke();
                 if (usingTurbo) return;
                 StartCoroutine(Turbo());
                 break;
 
             case PowerUpType.magnet:
+                onMagnet.Invoke();
                 playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
                 StartCoroutine(Magnet());
                 break;
 
             case PowerUpType.smoke:
+                onSmoke.Invoke();
+                playerAudio.PlaySmokeAudio(transform.position); // Play smoke audio
                 Smokescreen();
                 break;
 
             case PowerUpType.landMine:
+                onLandmine.Invoke();
                 GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
                 playerAudio.PlayLandminePlaceAudio(landmine); // Play landmine audio
                 break;
 
             case PowerUpType.airstrike:
+                onAirStrike.Invoke();
                 Airstrike();
                 break;
 
             case PowerUpType.deployWall:
+                onDeployWall.Invoke();
                 Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
                 break;
 
-            case PowerUpType.eMP:
+            case PowerUpType.scatterShot:
+                onScatterShot.Invoke();
+                playerAudio.PlayScatterShotAudio();
+                GameObject scatterShotSpawned = Instantiate(scatterShot, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.LookRotation(transform.forward));
+                foreach (var projectile in scatterShotSpawned.GetComponentsInChildren<Projectile>())
+                {
+                    projectile.PrepareProjectile(gameObject, null, 1);
+                }
+                break;
+
+            case PowerUpType.shield:
+                onShield.Invoke();
+                GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
+                shieldSpawned.transform.parent = gameObject.transform;
+                playerAudio.PlayShieldAudio(); // Play shield audio
+                StartCoroutine(Shield(shieldSpawned));
                 break;
 
             default:
                 return;
         }
-        Debug.Log("Used " + type);
         type = null;
         PowerUpUIUpdate();
     }
@@ -161,11 +213,7 @@ public class PlayerPowerups : MonoBehaviour
 
     void PowerUpUIUpdate()
     {
-        if(type == PowerUpType.homingMissle)
-        {
-            currPowerUpText.text = "Homing Missile";
-        }
-        else if(type == PowerUpType.turbo)
+        if(type == PowerUpType.turbo)
         {
             currPowerUpText.text = "Turbo";
         }
@@ -189,9 +237,13 @@ public class PlayerPowerups : MonoBehaviour
         {
             currPowerUpText.text = "Deploy Wall";
         }
-        else if (type == PowerUpType.eMP)
+        else if (type == PowerUpType.scatterShot)
         {
-            currPowerUpText.text = "EMP";
+            currPowerUpText.text = "Scatter Shot";
+        }
+        else if (type == PowerUpType.shield)
+        {
+            currPowerUpText.text = "Shield";
         }
         else
         {
@@ -202,8 +254,13 @@ public class PlayerPowerups : MonoBehaviour
     public void ResetGasTanks()
     {
         gasTankAmount = 0;
-        gasTankCounter.text = "Gastanks: 0";
+        gasImage.fillAmount = 0f;
+        type = null;
+        usedPowerUp = false;
+        PowerUpUIUpdate();
+        //gasTankCounter.text = "Gastanks: 0";
     }
+    
     public void DropGasTanks()
     {
         if(gasTankAmount == 0) return;
@@ -216,15 +273,17 @@ public class PlayerPowerups : MonoBehaviour
             gasTanksToDrop = gasTankAmount;
         }
         gasTankAmount -= gasTanksToDrop;
-        gasTankCounter.text = "Gastanks: " + gasTankAmount;
+        
+        //UI Image
+        gasImage.fillAmount -= gasTanksToDrop / 10f;
+        //gasTankCounter.text = "Gastanks: " + gasTankAmount;
         //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
-        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar så många gastanks som behövs, get dem en rand pos och sätter ui och topspeed värdena till halverade värden
+        for (int i = 0; i < gasTanksToDrop; i++) //Spawnar sï¿½ mï¿½nga gastanks som behï¿½vs, get dem en rand pos och sï¿½tter ui och topspeed vï¿½rdena till halverade vï¿½rden
         {
             float positionOffset = 10f;
             Vector3 rndPos = new Vector3(UnityEngine.Random.Range(transform.position.x - positionOffset, transform.position.x + positionOffset), transform.position.y + 1, UnityEngine.Random.Range(transform.position.z - positionOffset, transform.position.z + positionOffset));
             GameObject tanks = Instantiate(gasTank, rndPos, Quaternion.identity);
-
-            StartCoroutine(tanks.GetComponent<Pickup>().DroppedTanks());
+            tanks.GetComponent<Pickup>().canRespawn = false;
         }
 
         //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
@@ -262,18 +321,17 @@ public class PlayerPowerups : MonoBehaviour
         playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
     }
 
-    void HomingMissile()
-    {
-        raceController = FindFirstObjectByType<RaceController>();
-        if (raceController == null || raceController.trackSpline == null) return;
-        GameObject homingMissileSpawned = Instantiate(homingMissile, transform.position, Quaternion.identity);
-        homingMissileSpawned.GetComponent<HomingMissile>().Initialize(raceController.trackSpline, raceController.GetSplineProgress(transform.position), gameObject);
-    }
-
     void Smokescreen()
     {
         GameObject spawnedSmoke = Instantiate(smokeScreen, transform.position, Quaternion.identity);
         Destroy(spawnedSmoke, smokeDuration);
+    }
+
+    IEnumerator Shield(GameObject shieldSpawned)
+    {
+
+        yield return new WaitForSeconds(shieldTimer);
+        Destroy(shieldSpawned);
     }
 
     void Airstrike()
@@ -285,19 +343,8 @@ public class PlayerPowerups : MonoBehaviour
 
         if (leader != null)
         {
-            float currentProgress = raceController.GetSplineProgress(leader.transform.position);
-
-            float3 localPos = raceController.trackSpline.EvaluatePosition(currentProgress);
-            Vector3 worldPos = raceController.trackSpline.transform.TransformPoint(localPos);
-
-            float3 localTangent = raceController.trackSpline.EvaluateTangent(currentProgress);
-            Vector3 worldDirection = raceController.trackSpline.transform.TransformDirection(localTangent);
-            worldDirection.y = 0;
-            worldDirection.Normalize();
-
-            float distanceAhead = 100f;
-            Vector3 spawnWorldPos = leader.transform.position + (worldDirection * distanceAhead);
-            GameObject strike = Instantiate(airstrike, spawnWorldPos, Quaternion.LookRotation(worldDirection));
+            GameObject strike = Instantiate(airstrike, Vector3.down * 1000f, Quaternion.identity);
+            strike.GetComponent<Airstrike>().SetTarget(leader);
         }
     }
 }

@@ -1,4 +1,7 @@
 using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 public static class Leaderboard
 {
     private static RacerData[] leaderboard;
@@ -15,9 +18,23 @@ public static class Leaderboard
         for (int i = 0; i < leaderboard.Length; i++)
         {
             leaderboard[i].DisablePosition();
-            leaderboardtxt += $"{GetPosString(i + 1)} {leaderboard[i].racername}\n";
+            leaderboardtxt += $"{GetPosString(i + 1)} {GetPlayerColor(leaderboard[i].index)}{leaderboard[i].racername}</color>\n";
         }
-        return leaderboardtxt;
+        GameObject.FindWithTag("DisplayChar").GetComponent<CharAfterRace>().Display2DCharacter(leaderboard[0].racername);
+        
+        AudioManager.Instance.PlayVictoryVoice(leaderboard[0].racername);
+        /*switch (leaderboard[0].racername)
+        {
+            case "Lars-Göran": AudioManager.Instance.Play; break;
+            case "The Brass Beast": ; break;
+            case "Capôw": ; break;
+            case "Schlammer": ; break;
+            case "King Napoleon III": ; break;
+            case "Dragoș": ; break;
+            case "Demon of Vilkmergéle": ; break;
+            case "Harlequini Martinellini": ; break;
+        }*/
+        return leaderboardtxt;             
     }
     private static string GetPosString(int pos)
     {
@@ -32,6 +49,18 @@ public static class Leaderboard
             default:
                 return pos + "th";
         }
+    }
+
+    private static string GetPlayerColor(int playerIndex)
+    {
+        return playerIndex switch
+        {
+            0 => "<color=#FF1919>",
+            1 => "<color=#32C832>",
+            2 => "<color=#FFFF00>",
+            3 => "<color=#00BEFF>",
+            _ => "<color=#FFFFFF>"
+        };
     }
 
     public static string FormatTime(double time)

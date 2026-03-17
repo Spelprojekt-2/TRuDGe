@@ -1,9 +1,15 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerShooting : MonoBehaviour
 {
+
+    [SerializeField] private Image shootCooldown;
+    
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform barrelPosition;
     [SerializeField] private RectTransform crosshair;
@@ -18,9 +24,11 @@ public class PlayerShooting : MonoBehaviour
     private AutoAimCone autoAim;
     [HideInInspector] public float timeLockedOnTarget;
     [HideInInspector] public float speedMultiplier;
+    [HideInInspector] public bool isShot = false; 
     private void Start()
     {
         timer = fireRate;
+        shootCooldown.fillAmount = 1f;
         autoAim = GetComponentInChildren<AutoAimCone>();
 
         // Get PlayerAudio.
@@ -29,22 +37,24 @@ public class PlayerShooting : MonoBehaviour
     public void ShootInput(InputAction.CallbackContext context)
     {
         isShooting = context.performed;
-        Debug.Log("Clicked Shoot");
     }
 
     private void Update()
     {
         if (timer >= fireRate)
         {
-            if (isShooting)
+            if (isShooting && !isShot)
             {
                 timer = 0;
                 Shoot(projectilePrefab);
+                shootCooldown.fillAmount = 0;
+                isShooting = false;
             }
         }
         else
         {
             timer += Time.deltaTime;
+            shootCooldown.fillAmount += Time.deltaTime / fireRate;
         }
     }
     public void Shoot(GameObject prefab)
@@ -58,14 +68,15 @@ public class PlayerShooting : MonoBehaviour
         {
             bulletDir = (autoAim.GetTarget().position - barrelPosition.position).normalized;
         }
-
-        bulletDir.y = 0;
+        else
+        {
+            bulletDir.y = 0;
+        }
         GameObject bullet = Instantiate(
             prefab,
             barrelPosition.position,
             Quaternion.LookRotation(bulletDir)
         );
-        Debug.Log("Shot");
         bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null, speedMultiplier);
 
         // Play shoot audio

@@ -18,13 +18,20 @@ public class Pickup : MonoBehaviour
     private Collider col;
     private MeshRenderer[] meshes;
     private bool visible = true;
-    private bool canRespawn = true;
+    public bool canRespawn = true;
     private void Start()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
         meshes = GetComponentsInChildren<MeshRenderer>();
-
+        if (canRespawn)
+        {
+            col.enabled = true;
+        }
+        else if (!canRespawn)
+        {
+            StartCoroutine(DroppedTanks());
+        }
         if (powerUpType != PlayerPowerups.PowerUpType.gasolineTank && RacingInformation.instance.isTimeTrial)
         {
             Destroy(gameObject);
@@ -85,19 +92,24 @@ public class Pickup : MonoBehaviour
 
     public IEnumerator DroppedTanks()
     {
-        canRespawn = false;
         if (col == null) yield break;
-        col.enabled = false;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 15; i++)
         {
+            yield return new WaitForSeconds(0.02f);
             foreach (var mesh in meshes)
             {
                 mesh.enabled = visible;
             }
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.02f);
             visible = !visible;
         }
+        foreach (var mesh in meshes)
+        {
+            mesh.enabled = true;
+        }
         col.enabled = true;
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
     public void SetMagnetTarget(Transform player)
     {

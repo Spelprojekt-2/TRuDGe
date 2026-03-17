@@ -31,8 +31,6 @@ public class PlayerCamera : MonoBehaviour
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
     [SerializeField] Vector2Int distanceFromScreenEdge;
-    [Header("Debug")]
-    [SerializeField] private bool showAimRay = false;
 
 
     public Camera cam;
@@ -90,6 +88,7 @@ public class PlayerCamera : MonoBehaviour
         currentTarget = autoAim.GetTarget();
         if (currentTarget != oldTarget)
         {
+            crosshair.GetComponent<Image>().enabled = true;
             if (currentTarget != null)
             {
                 StartCoroutine(FocusOnTarget());
@@ -98,9 +97,7 @@ public class PlayerCamera : MonoBehaviour
             else
             {
                 lookingAtTarget = false;
-                cursorPos = new Vector2(0f, 200f);
-
-                crosshair.localScale = Vector3.one;
+                cursorPos = new Vector2(0, 200f);
                 if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
             }
             oldTarget = currentTarget;
@@ -109,7 +106,7 @@ public class PlayerCamera : MonoBehaviour
         
         if (currentTarget != null)
         {
-
+            crosshair.GetComponent<Image>().enabled = true;
             if (!lookingAtTarget)
             {
                 StartCoroutine(FocusOnTarget());
@@ -132,7 +129,8 @@ public class PlayerCamera : MonoBehaviour
         {
             StopCoroutine(FocusOnTarget());
             lookingAtTarget = false;
-            cursorPos = new Vector2(0f, 200f);
+            cursorPos = new Vector2(0, 200f);
+            crosshair.GetComponent<Image>().enabled = false;
         }
 
         if (crosshair != null)
@@ -143,12 +141,11 @@ public class PlayerCamera : MonoBehaviour
 
     IEnumerator FocusOnTarget()
     {
-        crosshair.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        crosshair.localScale = new Vector3(1f, 1f, 1f);
         for (int i = 0; i < 10; i++)
         {
-            crosshair.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+            crosshair.localScale -= new Vector3(0.05f, 0.05f, 0.05f);
             GetComponent<PlayerShooting>().speedMultiplier = crosshair.localScale.x;
-            Debug.Log(GetComponent<PlayerShooting>().speedMultiplier);
             yield return new WaitForSeconds(0.1f);
         }
     }

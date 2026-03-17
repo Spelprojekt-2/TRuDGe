@@ -30,8 +30,6 @@ public class PlayerTrackerManager : MonoBehaviour
 
         SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
         SceneController.instance.SceneChangeEvent += OnSceneLoaded;
-
-        OnSceneLoaded();
     }
 
     public void HandlePlayerJoined(PlayerInput input)
@@ -69,6 +67,7 @@ public class PlayerTrackerManager : MonoBehaviour
         if (!leavingInput)
             return;
 
+        SetUnready(leavingInput);
         RacerData leavingData = leavingInput.GetComponent<RacerData>();
         leavingData.GetComponent<UISelection>().RemovePlayer();
         int leavingIndex = leavingData.index;
@@ -76,7 +75,6 @@ public class PlayerTrackerManager : MonoBehaviour
         Destroy(leavingInput.transform.root.gameObject);
 
         playerInputs.Remove(leavingIndex);
-        SetUnready(leavingInput);
         readyStates.Remove(leavingIndex);
 
         // Shift players above down
@@ -113,6 +111,11 @@ public class PlayerTrackerManager : MonoBehaviour
 
     private void OnSceneLoaded()
     {
+        CoroutineRunner.Run(SceneLoadStuff());
+    }
+    private IEnumerator SceneLoadStuff() 
+    {
+        yield return null;
         EventSystem es = FindAnyObjectByType<EventSystem>();
         if (es) Destroy(es.gameObject);
         
@@ -128,13 +131,16 @@ public class PlayerTrackerManager : MonoBehaviour
         {
             playerInputs.Remove(key);
         }
-
         switch (SceneController.instance.currentSceneType)
         {
             case SceneController.SceneType.PlayerSelectRace:
                 RacingInformation.instance.isTimeTrial = false;
-
+                for (int i = playerInputs.Count - 1; i > 0; i--)
+                {
+                    HandlePlayerLeft(playerInputs[i]);
+                }
                 List<PlayerInput> playerInputList = playerInputs.Values.ToList();
+                PlayerInputManager.instance.EnableJoining();
                 foreach (var input in playerInputList)
                 {
                     RacerData rd = input.GetComponent<RacerData>();
@@ -162,16 +168,29 @@ public class PlayerTrackerManager : MonoBehaviour
                 {
                     PlayerInputManager.instance.EnableJoining();
                 }
+                RacingInformation.instance.isTimeTrial = false;
                 break;
             case SceneController.SceneType.PostRaceLeaderboard:
                 GameObject.FindWithTag("Finish").GetComponent<TextMeshProUGUI>().text = Leaderboard.GetLeaderboardString();
                 CoroutineRunner.Run(SelectObject(0, FindAnyObjectByType<SceneController>().GetComponent<UIButton>()));
                 break;
             case SceneController.SceneType.TrackSelectRace:
-            case SceneController.SceneType.TrackSelectTimeTrial:
-                RacingInformation.instance.isTimeTrialWithGhost = false;
-                CoroutineRunner.Run(SelectObject(0, UIList.transform.GetChild(1).GetComponentInChildren<UIButton>()));
+                RacingInformation.instance.isTimeTrial = false;
+                UISelection.playerSelections[0].SwapSelection(FindAnyObjectByType<MenuController>().initialSelection);
                 break;
+            case SceneController.SceneType.TrackSelectTimeTrial:
+                RacingInformation.instance.isTimeTrial = true;
+                UISelection.playerSelections[0].SwapSelection(FindAnyObjectByType<MenuController>().initialSelection);
+                break;
+                /*
+            case SceneController.SceneType.TrainingGround:
+            case SceneController.SceneType.STrainingGround:
+                for (int i = 0; i < playerInputs.Values.Count; i++)
+                {
+                    playerInputs[i].GetComponent<RacerData>().TrackLoaded();
+                }
+                break;
+                */
         }
 
 
@@ -194,11 +213,11 @@ public class PlayerTrackerManager : MonoBehaviour
                     else CoroutineRunner.Run(SwapMap(input, "Disabled"));
                 }
             }
-            if (!allPlayersSpawned)
+            /*if (!allPlayersSpawned)
             {
                 allPlayersSpawned = true;
                 PlayerInputManager.instance.DisableJoining();
-            }
+            }*/
 
         }
         else

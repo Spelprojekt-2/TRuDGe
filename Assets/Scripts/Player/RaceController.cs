@@ -42,7 +42,7 @@ public class RaceController : MonoBehaviour
 
         for (int i = 0; i < racers.Count; i++)
         {
-            racers[i].TrackLoaded(lapsOnThisTrack);
+            racers[i].TrackLoaded();
             racers[i].UpdateLapCount();
             if (trackSpline) UpdateRaceProgress(racers[i]);
         }
@@ -158,6 +158,7 @@ public class RaceController : MonoBehaviour
         {
             racer.BackwardsLap();
         }
+        else if (Mathf.Abs(newLapProgress - racer.lapProgress) > 0.15f) return;
 
         racer.lapProgress = newLapProgress;
         racer.raceProgress = racer.lap + newLapProgress;

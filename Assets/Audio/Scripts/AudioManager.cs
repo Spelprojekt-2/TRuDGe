@@ -5,6 +5,7 @@ using FMOD.Studio;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
+using Unity.VisualScripting;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,6 +22,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
     [SerializeField] private EventReference Music_TrainingGround;
+    [SerializeField] private EventReference Music_Level2; // Dover
+    [SerializeField] private EventReference Music_Level3; // Luminen
+
+    [Header("Music_Victory")]
+    [SerializeField] private EventReference Music_Napoleon;
+    [SerializeField] private EventReference Music_Lars;
+    [SerializeField] private EventReference Music_Carla;
+    [SerializeField] private EventReference Music_Nina;
+
     private EventInstance musicInstance;
 
     public enum MusicID
@@ -29,13 +39,29 @@ public class AudioManager : MonoBehaviour
         SelectionScreen = 1,
         TimeTrail = 2,
         Level1sloped = 3,
-        TrainingGround = 4
+        TrainingGround = 4,
+        Dover = 5,
+        Luminen = 6
     }
 
     // SFX config
     [Header("SFX Configuration")]
     [SerializeField] private FeedbackAudio feedbackAudio;
     private EventInstance countDownInst;
+
+    [Header("VO Configuration")]
+    [SerializeField] private VoiceAudio voiceAudio;
+    private EventInstance VOinst_Announcer;
+    private EventInstance VOinst_Character;
+
+    public enum AmbienceID
+    {
+        None = 0,
+        TrainingGround = 1,
+        Schlammrennstrecke = 2,
+        CliffsOfDover = 3,
+        LuminenTRT = 4
+    }
 
     // Ambience config
     [SerializeField] private EventReference AmbienceManagerRef;
@@ -59,6 +85,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        StartAmbience();
         ChangeMusic(MusicID.MainMenu);
     }
 
@@ -98,6 +125,13 @@ public class AudioManager : MonoBehaviour
             case MusicID.TrainingGround:
                 musicInstance = RuntimeManager.CreateInstance(Music_TrainingGround);
                 break;
+
+            case MusicID.Dover:
+                musicInstance = RuntimeManager.CreateInstance(Music_Level2);
+                break;
+            case MusicID.Luminen:
+                musicInstance = RuntimeManager.CreateInstance(Music_Level3);
+                break;
         }
 
         musicInstance.start();
@@ -116,6 +150,103 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
+    #region VO
+    public void StopIntro()
+    {
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+    }
+
+    public void PlaySchlammenstreckeIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.SchlammenstreckeIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayCliffsOfDoverIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.CliffsOfDoverIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayLuminenTRTIntro()
+    {
+        if (voiceAudio == null)
+        {
+            Debug.LogError("VoiceAudio is missing!");
+            return;
+        }
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+        
+        VOinst_Announcer = voiceAudio.LuminenTRTIntroAudio(VOinst_Announcer);
+    }
+
+    public void PlayVictoryVoice(string characterName)
+    {
+        // Audio instance setup
+        if (musicInstance.isValid())
+        {
+            musicInstance.stop(STOP_MODE.IMMEDIATE);
+            musicInstance.release();
+        }
+
+        // Select character
+        string lower = characterName.ToLower();
+        switch (lower)
+        {
+            case "king napoleon iii":
+                if (!Music_Napoleon.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Napoleon);
+                break;
+            case "lars-göran":
+            if (!Music_Lars.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Lars);
+                break;
+            case "capôw":
+                if (!Music_Carla.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Carla);
+                break;
+            case "the brass beast":
+                if (!Music_Nina.IsNull)
+                musicInstance = RuntimeManager.CreateInstance(Music_Nina);
+                break;
+        }
+
+        // Did we create a valid audio inst?
+        if (musicInstance.isValid())
+        {
+            musicInstance.start();
+        }
+    }
+    #endregion
+
     #region Ambience
     private void StartAmbience()
     {
@@ -125,6 +256,16 @@ public class AudioManager : MonoBehaviour
         }
         ambienceInstance = RuntimeManager.CreateInstance(AmbienceManagerRef);
         ambienceInstance.start();
+    }
+
+    private void ChangeAmbience(AmbienceID id)
+    {
+        if (!ambienceInstance.isValid())
+        {
+            Debug.LogWarning("AmbienceInstance is not valid!");
+            return;
+        }
+        ambienceInstance.setParameterByName("CurrentLocation", (float)id);
     }
     #endregion
 
@@ -158,43 +299,56 @@ public class AudioManager : MonoBehaviour
     #region Scene Handling
     private void OnSceneLoaded(Scene next, LoadSceneMode mode)
     {
-        Debug.Log(next.buildIndex);
         switch (next.buildIndex)
         {
             case 0:
                 ChangeMusic(MusicID.MainMenu);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 1:
                 ChangeMusic(MusicID.SelectionScreen);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 2:
-            Debug.Log("Should change");
                 ChangeMusic(MusicID.SelectionScreen);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 3:
                 ChangeMusic(MusicID.SelectionScreen);
+                ChangeAmbience(AmbienceID.None);
+                Debug.Log("Ambience set: NONE");
                 break;
 
             case 9:
                 ChangeMusic(MusicID.Level1sloped);
-                StartAmbience();
+                ChangeAmbience(AmbienceID.Schlammrennstrecke);
+                Debug.Log("Ambience set: Schlammrennstrecke");
                 break;
 
             case 10:
                 ChangeMusic(MusicID.TrainingGround);
-                StartAmbience();
+                ChangeAmbience(AmbienceID.TrainingGround);
+                Debug.Log("Ambience set: TrainingGround");
+                break;
+
+            case 12:
+                ChangeMusic(MusicID.Dover);
+                ChangeAmbience(AmbienceID.CliffsOfDover);
+                Debug.Log("Ambience set: CliffsOfDover");
+                break;
+
+            case 15:
+                ChangeMusic(MusicID.Luminen);
+                ChangeAmbience(AmbienceID.LuminenTRT);
+                Debug.Log("Ambience set: LuminenTRT");
                 break;
         }
-    }
-    #endregion
-
-    #region Player Handling
-    public void UpdatePlayerCount(int count)
-    {
-        RuntimeManager.StudioSystem.setParameterByName("PlayerCount", count);
     }
     #endregion
 }

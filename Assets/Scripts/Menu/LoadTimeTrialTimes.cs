@@ -19,6 +19,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ghostTrackName;
     private UIButton lastSelection;
     private string selectedScene;
+    private string sceneToLoad;
     void Start()
     {
         DisplayLevelTimes(level1SceneName, level1Text);
@@ -74,11 +75,19 @@ public class LoadTimeTrialTimes : MonoBehaviour
         GhostRecording wrapper = JsonUtility.FromJson<GhostRecording>(json);
         return wrapper;
     }
-
-    public void OpenSelectionMenu(string level)
+    public void TrackToPlay(string sceneName)
     {
-        selectedScene = level;
-        ghostTrackName.text = level;
+        selectedScene = sceneName;
+    }
+
+    public void SceneToPlay(string sceneName)
+    {
+        sceneToLoad = sceneName;
+    }
+
+    public void OpenSelectionMenu(string levelName)
+    {
+        ghostTrackName.text = levelName;
         lastSelection = UISelection.playerSelections[0].selection;
         GhostSelectionMenu.SetActive(true);
         CoroutineRunner.Run(SelectObject(GhostSelectionMenuFirstSelection));
@@ -101,7 +110,7 @@ public class LoadTimeTrialTimes : MonoBehaviour
         RacingInformation.instance.pathToGhost =
             System.IO.Path.Combine(Application.streamingAssetsPath, selectedScene + "_Ghost.ghost");
         RacingInformation.instance.isTimeTrialWithGhost = true;
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void SelectPersonalGhost()
@@ -109,13 +118,13 @@ public class LoadTimeTrialTimes : MonoBehaviour
         RacingInformation.instance.pathToGhost =
             System.IO.Path.Combine(Application.persistentDataPath, selectedScene + "_Ghost.ghost");
         RacingInformation.instance.isTimeTrialWithGhost = File.Exists(RacingInformation.instance.pathToGhost);
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void SelectSolo()
     {
         RacingInformation.instance.isTimeTrialWithGhost = false;
         RacingInformation.instance.pathToGhost = null;
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

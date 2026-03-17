@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerAudio : MonoBehaviour
 {
@@ -148,6 +149,36 @@ public class PlayerAudio : MonoBehaviour
             // Stop magnet audio
             magnetInstance = interactablesAudio.StopMagnetAudio(magnetInstance);
         }
+    }
+
+    public void PlaySmokeAudio(Vector3 pos)
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.PlaySmokeAudio(pos);
+    }
+
+    public void PlayShieldAudio()
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.PlayShieldAudio();
+    }
+
+    public void PlayScatterShotAudio()
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        interactablesAudio.ScatterShotAudio();
     }
     #endregion
 }

@@ -13,7 +13,7 @@ public class ShudderChat : MonoBehaviour
     [SerializeField] private Image phoneImage;
     public bool chatEnabled = false;
     TextMeshProUGUI textObj;
-    //Chatstuf
+    // ========= Chatstuf ==========
     //Chatter name
     private string[] chatterNames =
         {
@@ -86,7 +86,7 @@ public class ShudderChat : MonoBehaviour
     {
         if (chatEnabled && Time.timeScale == 1f)
         {
-        int chatSpawn = Random.Range(1, 360);
+        int chatSpawn = Random.Range(1, 160);
         if (chatSpawn == 1)
         {
             CringeChat();
@@ -104,7 +104,7 @@ public class ShudderChat : MonoBehaviour
         {
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
             Debug.Log(data);
-            if (data.racername == "Carla")
+            if (data.racername == "Capôw")
             {
                 EnableChat(true);
             }
@@ -179,7 +179,13 @@ public class ShudderChat : MonoBehaviour
             "chug speedrunner =win",
             "GameStation 7 is so good",
             "ILY CARLA",
-            "o7"
+            "o7",
+            "CRAZY JUMPSCARE!!!!!!!",
+            "Didnt know this: 'USA collapsed after 95-year-old president gambled away the entire budget thinking it was their own money'",
+            "Formula -1 has nothing on this",
+            "hope you win!",
+            "Bettwer than mario kart",
+            "RAWR"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);
@@ -213,7 +219,7 @@ public class ShudderChat : MonoBehaviour
         activeChat.Clear();
         UpdateChat();
         chatEnabled = state;
-        phoneImage.enabled = state;
+        //phoneImage.enabled = state;
     }
 
     //press Y to disable?

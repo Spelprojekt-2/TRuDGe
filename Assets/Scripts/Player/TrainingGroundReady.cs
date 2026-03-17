@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class TrainingGroundReady : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class TrainingGroundReady : MonoBehaviour
     [SerializeField] private GameObject TrainingUI;
     [SerializeField] private GameObject PrereadyText;
     [SerializeField] private GameObject ReadyText;
+    [SerializeField] private GameObject KBMInputs;
+    [SerializeField] private GameObject ControllerInputs;
     private void Start()
     {
         SceneController.instance.SceneChangeEvent += OnSceneLoaded;
@@ -22,17 +26,71 @@ public class TrainingGroundReady : MonoBehaviour
 
     private void OnSceneLoaded()
     {
-        isOnTrainingGround = SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround;
+        isOnTrainingGround = (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround || SceneController.instance.currentSceneType == SceneController.SceneType.STrainingGround);
         isReady = false;
         playersReady = 0;
+        if (TrainingUI == null) return;
         TrainingUI.SetActive(isOnTrainingGround);
-        PrereadyText.SetActive(isOnTrainingGround);
+        PrereadyText.SetActive(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround);
         ReadyText.SetActive(false);
+        if (isOnTrainingGround)
+        {
+            bool isController = GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
+            if (isController)
+            {
+                KBMInputs.SetActive(false);
+                ControllerInputs.SetActive(true);
+            }
+            else
+            {
+                KBMInputs.SetActive(true);
+                ControllerInputs.SetActive(false);
+            }
+        }
+        else
+        {
+            KBMInputs.SetActive(false);
+            ControllerInputs.SetActive(false);
+        }
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+                Transform lapimage = p.transform.Find("Canvas/LapImage");
+                if(lapimage != null)
+                lapimage.GetComponent<Image>().enabled = false;
+
+                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+                if(posimage != null)
+                posimage.GetComponent<Image>().enabled = false;
+
+                Transform timer = p.transform.Find("Canvas/TimeTrialStuff/Timer");
+                if(timer != null)
+                timer.GetComponent<TextMeshProUGUI>().enabled = false;
+            }
+        }
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.Racing)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+                Transform lapimage = p.transform.Find("Canvas/LapImage");
+                if(lapimage != null)
+                lapimage.GetComponent<Image>().enabled = true;
+
+                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+                if(posimage != null)
+                posimage.GetComponent<Image>().enabled = true;
+            }
+        }
     }
 
     public void ReadyUp(InputAction.CallbackContext context)
     {
-        if (!context.performed || !isOnTrainingGround) return;
+        if (!context.performed || 
+            !(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)) 
+            return;
         if (isReady)
         {
             isReady = false;

@@ -32,6 +32,7 @@ public class Minimap : MonoBehaviour
     void DrawTrack()
     {
         SplineContainer container = raceData.trackSpline;
+        Debug.Log(container);
         if(container == null)
         {
             return;

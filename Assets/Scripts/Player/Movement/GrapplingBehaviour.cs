@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(LineRenderer))]
 public class GrapplingBehaviour : MonoBehaviour
@@ -7,6 +8,7 @@ public class GrapplingBehaviour : MonoBehaviour
     #region Component refs
     [SerializeField] private RectTransform grappleUIIndicator;
     [SerializeField] private Camera playerCamera;
+    private CameraFovController fovController;
     private LineRenderer lineRenderer;
     [SerializeField] private Rigidbody vehicleRigidbody;
     [Tooltip("The object that will follow the grapple hook's azimuth/heading/yaw rotation (grapple turret)")]
@@ -23,14 +25,25 @@ public class GrapplingBehaviour : MonoBehaviour
     [SerializeField] private float idleRotationSpeed = 8f;
     [Header("Debug")]
     private Vector3 cachedGrapplePoint = Vector3.zero;
-    [SerializeField] private Grappleable grappleable = null;
+    [SerializeField] private IGrappleable grappleable = null;
     private float grappleDistance = 0f;
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
-    public float TimeSinceGrapple { get; private set;}
+    public float TimeSinceGrapple { get; private set;} = 0f;
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
+
+    void Start()
+    {
+        fovController = playerCamera.GetComponent<CameraFovController>();
+
+        TimeSinceGrapple = 0f;
+        lineRenderer = GetComponent<LineRenderer>();
+        if (grappleable != null)
+            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
+        SceneManager.sceneLoaded += SceneChange;
+    }
 
     public void GrappleInput(InputAction.CallbackContext context)
     {
@@ -64,18 +77,30 @@ public class GrapplingBehaviour : MonoBehaviour
         if (respectLock && grappleable != null && grappleable.IsLocking) return;
 
         isGrappling = false;
+        TimeSinceGrapple = 0f;
 
         // Change audio behaviour
         playerAudio.GrappleEnd();
 
         lineRenderer.enabled = false;
         if (grappleHook) grappleHook.SetActive(true);
+
+        if (!isInGrappleRange)
+        {
+            grappleable = null;
+            grappleUIIndicator.gameObject.SetActive(false);
+        }
     }
-    void Start()
+
+    void SceneChange(Scene scene, LoadSceneMode mode)
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        if (grappleable != null)
-            grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
+        isInGrappleRange = false;
+        EndGrapple(false);
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= SceneChange;
     }
 
     void Update()
@@ -87,6 +112,9 @@ public class GrapplingBehaviour : MonoBehaviour
             TimeSinceGrapple += Time.deltaTime;
             lineRenderer.SetPosition(0, grappleElevationObject.TransformPoint(grappleMuzzleOffset));
             lineRenderer.SetPosition(1, cachedGrapplePoint);
+
+            if (grappleable is Grappleable && ((Grappleable)grappleable).IsDesiredDirection(vehicleRigidbody.linearVelocity))
+                fovController.BoostFOV();
         }
 
         if (isGrappling || isInGrappleRange)
@@ -144,15 +172,18 @@ public class GrapplingBehaviour : MonoBehaviour
             }
         }
     }
-    public void EnteredGrappleRange(Grappleable grappleable)
+    public void EnteredGrappleRange(IGrappleable grappleable)
     {
         this.grappleable = grappleable;
         isInGrappleRange = true;
     }
-    public void ExitedGrappleRange(Grappleable grappleable)
+    public void ExitedGrappleRange(IGrappleable grappleable)
     {
-        this.grappleable = null;
-        grappleUIIndicator.gameObject.SetActive(false);
+        if (!isGrappling)
+        {
+            this.grappleable = null;
+            grappleUIIndicator.gameObject.SetActive(false);
+        }
         isInGrappleRange = false;
     }
     void FixedUpdate()
@@ -189,6 +220,6 @@ public class GrapplingBehaviour : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(grappleElevationObject.position + grappleMuzzleOffset, 0.1f);
+        Gizmos.DrawSphere(grappleElevationObject.TransformPoint(grappleMuzzleOffset), 0.1f);
     }
 }

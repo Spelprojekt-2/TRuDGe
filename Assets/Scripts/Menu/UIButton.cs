@@ -19,6 +19,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject[] characterBackgrounds;
     [SerializeField] private GameObject[] characterText;
     [SerializeField] private GameObject[] characterStats;
+    [SerializeField] private GameObject[] characterSprites;
 
     void Awake()
     {
@@ -47,30 +48,8 @@ public class UIButton : MonoBehaviour
                 characterBackgrounds[playerIndex]?.SetActive(state);
                 characterText[playerIndex]?.SetActive(state);
                 characterStats[playerIndex]?.SetActive(state);
+                characterSprites[playerIndex]?.SetActive(state);
             }
         }
-    }
-    //Disable highest in array??
-    public void RefreshUI()
-    {
-        int activePlayers = PlayerTrackerManager.instance.GetPlayerCount();
-        characterBackgrounds[activePlayers].SetActive(false);
-        characterText[activePlayers].SetActive(false);
-        characterStats[activePlayers].SetActive(false);
-        /*for (int i = 0; i < characterBackgrounds.Length; i++)
-    {
-        bool shouldBeActive = i < activePlayers;
-
-        characterBackgrounds[i]?.SetActive(shouldBeActive);
-        characterText[i]?.SetActive(shouldBeActive);
-        characterStats[i]?.SetActive(shouldBeActive);
-    }
-        GameObject lastElement = activePlayers
-        GameObject lastElement1 = characterText[characterText.Length - 1];
-        GameObject lastElement2 = characterStats[characterStats.Length - 1];
-        lastElement.SetActive(false);
-        lastElement1.SetActive(false);
-        lastElement2.SetActive(false);*/
-        
     }
 }

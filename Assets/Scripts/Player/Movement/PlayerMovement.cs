@@ -116,9 +116,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float inAirUprightingSpeed = 1f;
     private Vector3 groundNormal;
     private bool isGrounded;
+    [Tooltip("Bellow this y level tank will slip around :)")]
+    [SerializeField] private float iceYLevel = -3f;
     #endregion
 
     #region Public methods
+    [HideInInspector]public bool canTurn = true;
     public float GetTopSpeed() => topSpeed;
     public bool IsGrounded() => isGrounded;
     public Vector3 GetGroundNormal() => groundNormal;
@@ -154,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInputVector.y = Mathf.Clamp((accelerationInput ? 1 : 0) - (reversingInput ? 1 : 0), -1f, 1f);
     }
-
+    
     public void FixedUpdate()
     {
         ProcessRayCasts();
@@ -267,9 +270,8 @@ public class PlayerMovement : MonoBehaviour
         rotationRoot.localPosition = new Vector3(0,Mathf.Lerp(rotationRoot.localPosition.y,groundHeight,Time.deltaTime*5),0);
 
         // Turning
-        rb.angularVelocity = rb.rotation * new Vector3(
-            0f,
-            // Input
+        if (canTurn){
+        transform.Rotate(new Vector3( 0f,
             moveInputVector.x *
             // Base turning speed
             baseTurningSpeed *
@@ -280,10 +282,10 @@ public class PlayerMovement : MonoBehaviour
                     Vector3.Dot(rb.linearVelocity, rotationRoot.forward) / topSpeed
             ) *
             // Air modifier
-            (isGrounded ? 1f : inAirTurningModifier),
-            0f
-        );
-
+            (isGrounded ? 1f : inAirTurningModifier) * 
+            Mathf.Rad2Deg * Time.fixedDeltaTime,
+        0f ));
+        }
         // Acceleration
         rb.AddForce(
             // Direction
@@ -313,8 +315,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ProcessFriction()
     {
-        if (!isGrounded) return;
-
+        if (!isGrounded ) return;
+        if (rb.transform.position.y < iceYLevel) return;
         // Sideways friction
         float rightVel = Vector3.Dot(rotationRoot.right, rb.linearVelocity);
         rb.AddForce(
