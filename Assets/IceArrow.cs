@@ -1,17 +1,23 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class IceArrow : MonoBehaviour
 {
 
     //[SerializeField] GameObject iceArrow;
     
-    [SerializeField] private MeshRenderer iceArrow;
+    private GameObject iceArrow;
+    //public GameObject iceArrows;
     [SerializeField] public GameObject target1;
     [SerializeField] public GameObject target2;
-    [SerializeField] private GameObject currentTarget;
+    [SerializeField] public GameObject currentTarget;
 
     public float speed = 10f;
+    
+    
+    
     //private bool passed = false;
     
     //[SerializeField] public RacerData racerData;
@@ -20,42 +26,53 @@ public class IceArrow : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-    }
+        iceArrow = GameObject.FindGameObjectWithTag("Arrow");
+
+    }   
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 targetDirection = currentTarget.transform.position - transform.position;
+        
+        Vector3 targetDirection = currentTarget.transform.position - iceArrow.transform.position;
         
         float singleStep = speed * Time.deltaTime;
         
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+        Vector3 newDirection = Vector3.RotateTowards(iceArrow.transform.forward, targetDirection, singleStep, 0.0f);
         
         Debug.DrawRay(transform.position, newDirection, Color.red);
         
-        transform.rotation = Quaternion.LookRotation(newDirection);
+        iceArrow.transform.rotation = Quaternion.LookRotation(newDirection);
         
         
         
     }
 
 
-    public void Activate(MeshRenderer iceArrow)
+    public void Activate(GameObject target)
     {
-        iceArrow.enabled = true;
-       
+        
+        
+        
+        iceArrow = GameObject.FindGameObjectWithTag("Arrow");
+        MeshRenderer iceArrowMesh = iceArrow.GetComponent<MeshRenderer>();
+        iceArrowMesh.enabled = true;
+
     }
 
-    public void Inactive(MeshRenderer iceArrow)
+    public void Inactive(GameObject target)
     {
-
-        float distanceToPoint = Vector3.Distance(transform.position, currentTarget.transform.position);
+        iceArrow = GameObject.FindGameObjectWithTag("Arrow");
+        MeshRenderer iceArrowMesh = iceArrow.GetComponent<MeshRenderer>();
         
-
-        if (distanceToPoint < 50)
+        
+        float distanceToPoint = Vector3.Distance(iceArrow.transform.position, currentTarget.transform.position);
+        
+        Debug.Log(distanceToPoint);
+        if (distanceToPoint < 120)
         {
-            iceArrow.enabled = false;
+            iceArrowMesh.enabled = false;
+            Debug.Log(currentTarget.name);
             if (currentTarget == target1)
             {
                 currentTarget = target2;
@@ -72,18 +89,6 @@ public class IceArrow : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        
-        Debug.Log("Funkar");
-        
-        if (other.tag == "IceCollider")
-        {
-            
-            
-            
-        } 
-        
-    }
+    
     
 }
