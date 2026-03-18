@@ -829,6 +829,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fovAdjustmentSpeed: 10
+  fovBoostAmount: 20
+  boostDepletionLength: 1
 --- !u!114 &5197298123250508751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1477,6 +1479,9 @@ MonoBehaviour:
   controllerSensMultiplier: 7.5
   bottomCrosshairLimit: 50
   forOthersAimPoint: {fileID: 4526375283499449876}
+  smokeLayer:
+    serializedVersion: 2
+    m_Bits: 0
   distanceFromScreenEdge: {x: 430, y: 100}
   cam: {fileID: 2227583658322248293}
   uiCameraTag: UICamera
@@ -1504,6 +1509,7 @@ MonoBehaviour:
   playerCam: {fileID: 4586681433911336767}
   timeLockedOnTarget: 0
   speedMultiplier: 0
+  isShot: 0
 --- !u!114 &4029194333597442243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,6 +1627,30 @@ MonoBehaviour:
     m_RotationOrder: 4
   inAirTurningModifier: 0.25
   baseSpeedOnAbsoluteVelocity: 0
+  rollOverSidewaysSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 10
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 10
+      inSlope: 10
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   maxSidewaysFriction: 60
   velocityForMaxSidewaysFriction: 50
   maxForwardFriction: 50
@@ -2054,6 +2084,7 @@ MonoBehaviour:
   hitSpeedMultiplier: 0.8
   invincibilityDuration: 2
   anim: {fileID: 3469740517386081268}
+  ninaWrenches: {fileID: 0}
 --- !u!114 &7730791383982230208
 MonoBehaviour:
   m_ObjectHideFlags: 0
