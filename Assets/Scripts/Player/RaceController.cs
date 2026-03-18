@@ -23,6 +23,8 @@ public class RaceController : MonoBehaviour
     private bool raceStarted;
     private Coroutine finishPlayersRoutine;
     private Coroutine allDoneRoutine;
+    [SerializeField] private float SwapSceneAfterRaceTime = 5;
+    [SerializeField] private float FinishLastRacerTimer = 30;
 
     //Timer
     private double raceStartTime;
@@ -108,7 +110,7 @@ public class RaceController : MonoBehaviour
             }
             if (racersDone == racers.Count - 1 && racers.Count > 1 && finishPlayersRoutine == null)
             {
-                finishPlayersRoutine = StartCoroutine(FinishPlayerAfterSec(30));
+                finishPlayersRoutine = StartCoroutine(FinishPlayerAfterSec(FinishLastRacerTimer));
             }
             else if (allDone && allDoneRoutine == null)
             {
@@ -120,7 +122,7 @@ public class RaceController : MonoBehaviour
                     StopCoroutine(finishPlayersRoutine);
                     finishPlayersRoutine = null;
                 }
-                allDoneRoutine = StartCoroutine(WaitToAfterRace(5));
+                allDoneRoutine = StartCoroutine(WaitToAfterRace(SwapSceneAfterRaceTime));
             }
         }
         if (racers.Count == 0 || trackSpline == null) return;
@@ -210,7 +212,7 @@ public class RaceController : MonoBehaviour
         return bestProgress;
     }
 
-    private IEnumerator FinishPlayerAfterSec(int sec)
+    private IEnumerator FinishPlayerAfterSec(float sec)
     {
         yield return new WaitForSeconds(sec);
         RacerData lastRacer = racers.FirstOrDefault(r => r.lap < lapsOnThisTrack);
@@ -223,7 +225,7 @@ public class RaceController : MonoBehaviour
         finishPlayersRoutine = null;
     }
 
-    private IEnumerator WaitToAfterRace(int sec)
+    private IEnumerator WaitToAfterRace(float sec)
     {
         yield return new WaitForSeconds(sec);
         allDoneRoutine = null;
