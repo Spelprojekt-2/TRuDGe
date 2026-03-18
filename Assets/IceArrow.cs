@@ -26,14 +26,13 @@ public class IceArrow : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        iceArrow = GameObject.FindGameObjectWithTag("Arrow");
-
+        // iceArrow = GameObject.FindGameObjectWithTag("Arrow");
     }   
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (iceArrow == null) return;
         Vector3 targetDirection = currentTarget.transform.position - iceArrow.transform.position;
         
         float singleStep = speed * Time.deltaTime;
@@ -43,26 +42,19 @@ public class IceArrow : MonoBehaviour
         Debug.DrawRay(transform.position, newDirection, Color.red);
         
         iceArrow.transform.rotation = Quaternion.LookRotation(newDirection);
-        
-        
-        
     }
 
 
     public void Activate(GameObject target)
     {
-        
-        
-        
-        iceArrow = GameObject.FindGameObjectWithTag("Arrow");
+        iceArrow = target;
         MeshRenderer iceArrowMesh = iceArrow.GetComponent<MeshRenderer>();
         iceArrowMesh.enabled = true;
-
     }
 
     public void Inactive(GameObject target)
     {
-        iceArrow = GameObject.FindGameObjectWithTag("Arrow");
+        iceArrow = target;
         MeshRenderer iceArrowMesh = iceArrow.GetComponent<MeshRenderer>();
         
         
@@ -82,13 +74,5 @@ public class IceArrow : MonoBehaviour
                 currentTarget = target1;
             }
         }
-        
-        
-
-        
-        
     }
-
-    
-    
 }
