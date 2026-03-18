@@ -11,7 +11,7 @@ public class NapoleonRespect : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject Respect;
     [SerializeField] private Image crownfill;
-    [SerializeField] private float topSpeed = 100f;
+    //[SerializeField] private float topSpeed = 100f;
     [SerializeField] private ParticleSystem flames;
     [SerializeField] private RacerData rd;
     [SerializeField] private bool respectEnabled;      

@@ -57,7 +57,7 @@ public class SceneController : MonoBehaviour
                 currentSceneType = SceneType.TrainingGround;
                 IsMenu = false; break;
              case "SingleplayerTG":
-                currentSceneType = SceneType.STrainingGround;
+                currentSceneType = SceneType.TrainingGround;
                 IsMenu = false; break;
             default:
                 currentSceneType = SceneType.Racing;

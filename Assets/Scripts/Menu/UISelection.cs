@@ -127,6 +127,7 @@ public class UISelection : MonoBehaviour
                         1 => new Color32(50,200,50,255),
                         2 => new Color32(255,255,0,255),
                         3 => new Color32(0,190,255,255),
+                        _ => new Color32(255,255,255,255)
                     };
                     Debug.Log(charname);
                     if (charname != null)
@@ -236,6 +237,7 @@ public class UISelection : MonoBehaviour
             1 => new Color32(50,200,50,255),
             2 => new Color32(255,255,0,255),
             3 => new Color32(0,190,255,255),
+            _ => new Color32(255,255,255,255)
         };
         Image highlightImage = selectionHighlight.GetComponent<Image>();
         if (highlightImage == null)

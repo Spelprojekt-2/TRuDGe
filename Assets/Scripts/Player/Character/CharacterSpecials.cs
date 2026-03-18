@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CharacterSpecials : MonoBehaviour
 {
@@ -21,9 +22,9 @@ public class CharacterSpecials : MonoBehaviour
     }
     void OnSceneLoaded()
     {
-        if (SceneController.instance.IsMenu)
+        if (!SceneController.instance.IsMenu && SceneManager.GetActiveScene().name != "SingleplayerTG")
         {
-            toggleText.text = "";
+            toggleText.text = "Toggle special with:";
             bool isController = transform.root.GetComponentInChildren<PlayerInput>().currentControlScheme == "Gamepad";
             if (isController)
             {
@@ -38,8 +39,7 @@ public class CharacterSpecials : MonoBehaviour
         }
         else
         {
-            toggleText.text = "Toggle special with:";
-            //kbm.SetActive(false);
+            toggleText.text = "";
         }
     }
     void OnDisable()
@@ -57,6 +57,10 @@ public class CharacterSpecials : MonoBehaviour
                 case "King Napoleon III": nr.toggleRespect(false); break;
                 case "Capôw": sc.EnableChat(false); break;
             }
+            Color32 transparent = new Color32(255,255,255,50);
+            toggleText.color = transparent;
+            controller.GetComponent<Image>().color = transparent;
+            kbm.GetComponent<Image>().color = transparent;
             specialsEnabled = false;
         }
         else
@@ -68,6 +72,10 @@ public class CharacterSpecials : MonoBehaviour
                 case "King Napoleon III": nr.toggleRespect(true); break;
                 case "Capôw": sc.EnableChat(true); break;
             }
+            Color32 white = new Color32(255,255,255,255);
+            toggleText.color = white;
+            controller.GetComponent<Image>().color = white;
+            kbm.GetComponent<Image>().color = white;
             specialsEnabled = true;
         }
     }
