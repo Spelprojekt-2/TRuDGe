@@ -40,6 +40,8 @@ public class CharacterSpecials : MonoBehaviour
         else
         {
             toggleText.text = "";
+            kbm.SetActive(false);
+            controller.SetActive(false);
         }
     }
     void OnDisable()
