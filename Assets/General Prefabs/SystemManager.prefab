@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1224897858351470157}
   - component: {fileID: 6646156006592411040}
   - component: {fileID: 4884640114038796461}
+  - component: {fileID: -5929617439799112390}
   m_Layer: 0
   m_Name: SystemManager
   m_TagString: Untagged
@@ -48,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20060d216ce82c545a147869593a0446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
 --- !u!114 &7718697134957162723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +154,16 @@ MonoBehaviour:
   isTimeTrial: 0
   isTimeTrialWithGhost: 0
   pathToGhost: 
+--- !u!114 &-5929617439799112390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893538996155070626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ae43daed3b2a24e95b46702fdcdc89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  airStrikeCooldownduration: 10

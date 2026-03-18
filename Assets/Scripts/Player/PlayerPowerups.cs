@@ -52,9 +52,6 @@ public class PlayerPowerups : MonoBehaviour
     private bool usingMagnet = false;
 
     private RaceController raceController;
-
-    
-    
     
     // Audio
     private PlayerAudio playerAudio;
@@ -118,6 +115,11 @@ public class PlayerPowerups : MonoBehaviour
             else
             {
                 this.type = type;
+                if(this.type == PowerUpType.airstrike)
+                {
+                    AirstrikeGlobalCooldown.canUseAirstrike = false;
+                    //Debug.Log("Cannot use airstrike");
+                }
                 PowerUpUIUpdate();
             }
         }

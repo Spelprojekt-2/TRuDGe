@@ -51,6 +51,7 @@ public class ShudderChat : MonoBehaviour
             "ILOVESCHLORSH",
             "Microslop",
             "UBIMAD",
+            "FREAKBOB",
             //gruppens dc
             "Massiv",
             "arrerino",
@@ -103,7 +104,6 @@ public class ShudderChat : MonoBehaviour
         if (!chatEnabled && !SceneController.instance.IsMenu)
         {
             RacerData data = transform.root.GetComponentInChildren<RacerData>();
-            Debug.Log(data);
             if (data.racername == "Capôw")
             {
                 EnableChat(true);
@@ -185,7 +185,28 @@ public class ShudderChat : MonoBehaviour
             "Formula -1 has nothing on this",
             "hope you win!",
             "Bettwer than mario kart",
-            "RAWR"
+            "RAWR",
+            "GOTY",
+            "Where scrummaster",
+            "Find Lars and... and... AND...",
+            "SSSSCCCHCCAPÔÔW",
+            "AAAAAAAAAAAAAAA",
+            "fmod better tan vvice",
+            "where toilet",
+            "I wish my house still existed",
+            "HELP ME",
+            "VIV LA FRANCE!!!!!",
+            "have you seen the new Rockbob episode?",
+            "YO ADULT WOLF DROPPED A NEW EPISODE!!!",
+            "when will nina notice me-...",
+            "have you played Magic: The Dispersion?",
+            "i hate the new hyperY headpone",
+            "+46*********",
+            "finally caught a stream",
+            "stream better than video",
+            "Côôpa, when do you intend to win?",
+            "trust the process guys",
+            "its windy out here"
         };
 
         int randomMessage = Random.Range(0, ChatMessages.Length);

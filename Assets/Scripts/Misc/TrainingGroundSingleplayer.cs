@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 
-public class TrainingGroundSinglelapimage : MonoBehaviour
+public class TrainingGroundSingle : MonoBehaviour
 {
     void Start()
     {
@@ -22,10 +22,11 @@ public class TrainingGroundSinglelapimage : MonoBehaviour
                 if(timer != null)
                 timer.GetComponent<TextMeshProUGUI>().enabled = false;
 
-                /*Transform KBMInputs = p.transform.Find("Canvas/TrainingUI/ControlsKBM");
+                Transform KBMInputs = p.transform.Find("Canvas/TrainingUI/ControlsKBM");
                 Transform ControllerInputs = p.transform.Find("Canvas/TrainingUI/ControlsController");
-                Transform pobject = p.transform.Find("Physics Object");
-                bool isController = pobject.GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
+                PlayerInput input = p.GetComponentInChildren<PlayerInput>();
+                bool isController = input.currentControlScheme == "Gamepad";
+                Debug.Log(isController);
                 if (isController)
                 {
                     KBMInputs.GetComponent<TextMeshProUGUI>().enabled = false;
@@ -35,7 +36,7 @@ public class TrainingGroundSinglelapimage : MonoBehaviour
                 {
                     KBMInputs.GetComponent<TextMeshProUGUI>().enabled = true;
                     ControllerInputs.GetComponent<TextMeshProUGUI>().enabled = false;
-                }*/
+                }
             }
            
         /*mapicon.GetComponent<MinimapIcons>().enabled = false;

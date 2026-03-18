@@ -64,7 +64,7 @@ public class PlayerShooting : MonoBehaviour
 
         Vector3 bulletDir = (actualWorldTarget - barrelPosition.position).normalized;
 
-        if (autoAim.GetTarget() != null)
+        if (autoAim.GetTarget() != null && !playerCam.IsTargetBlockedBySmoke(autoAim.GetTarget()))
         {
             bulletDir = (autoAim.GetTarget().position - barrelPosition.position).normalized;
         }
