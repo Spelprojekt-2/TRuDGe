@@ -486,8 +486,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 603227144528213282, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: fovAdjustmentSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 603227144528213282, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: boostDepletionLength
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 603227144528213282, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: fovOverSpeed.m_Curve.Array.size
