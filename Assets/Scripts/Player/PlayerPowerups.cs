@@ -38,6 +38,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private float shieldTimer = 4f;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
+    [SerializeField] private Image useKeyController;
+    [SerializeField] private Image useKeyKBM;
    // [SerializeField] private TextMeshProUGUI gasTankCounter;
     public int gasTankAmount = 0;
     private PowerUpType? type = null;
@@ -79,6 +81,22 @@ public class PlayerPowerups : MonoBehaviour
     };
     public void GainedPowerUp(PowerUpType type)
     {
+        //Change use key
+        if (type != PowerUpType.gasolineTank)
+        {
+            bool isController = GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
+            if (isController)
+            {
+                useKeyController.gameObject.SetActive(true);
+                useKeyKBM.gameObject.SetActive(false);
+            }
+            else
+            {
+                useKeyController.gameObject.SetActive(false);
+                useKeyKBM.gameObject.SetActive(true);
+            }
+        }
+        
         // Play audio
         playerAudio.PickupAudio(type);
         
@@ -240,6 +258,8 @@ public class PlayerPowerups : MonoBehaviour
         else
         {
             currPowerUpText.text = "";
+            useKeyController.gameObject.SetActive(false);
+            useKeyKBM.gameObject.SetActive(false);
         }
     }
 
