@@ -1,5 +1,77 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3743730755948578108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2859590515436937397}
+  - component: {fileID: 1136930783709707466}
+  - component: {fileID: 1395402978900805910}
+  m_Layer: 8
+  m_Name: ArrowPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2859590515436937397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743730755948578108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.02, y: 9.52, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8247620201562862766}
+  m_Father: {fileID: 2321895038265942187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1136930783709707466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743730755948578108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049d3fd9c1d941b4185265913549eb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceArrow: {fileID: 4350612328101652625}
+  target1: {fileID: 2156273649910118863, guid: 921d0452c2a2c7348afc2934b242eb36, type: 3}
+  target2: {fileID: 6962206938521227249, guid: e0b2d9da58ada9e488651fbf1fd1bdb1, type: 3}
+  currentTarget: {fileID: 2156273649910118863, guid: 921d0452c2a2c7348afc2934b242eb36, type: 3}
+  speed: 20
+--- !u!135 &1395402978900805910
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743730755948578108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4350612328101652625
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +84,6 @@ GameObject:
   - component: {fileID: 2548200514438497882}
   - component: {fileID: 4712432389137693398}
   - component: {fileID: 597207020368256359}
-  - component: {fileID: 3290464761354139030}
   m_Layer: 8
   m_Name: IceArrow
   m_TagString: Arrow
@@ -28,13 +99,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4350612328101652625}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalRotation: {x: -0.14133655, y: -0, z: -0, w: 0.9899616}
+  m_LocalPosition: {x: 0.08000612, y: 0.47999954, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2321895038265942187}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2859590515436937397}
+  m_LocalEulerAnglesHint: {x: -16.25, y: 0, z: 0}
 --- !u!33 &2548200514438497882
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -66,7 +137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9799b5358f3b3c840961243822323f08, type: 2}
+  - {fileID: 2100000, guid: d71c330452e217649aa24962206f7891, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,27 +176,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3290464761354139030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4350612328101652625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 049d3fd9c1d941b4185265913549eb2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iceArrow: {fileID: 4350612328101652625}
-  target1: {fileID: 2156273649910118863, guid: 921d0452c2a2c7348afc2934b242eb36, type: 3}
-  target2: {fileID: 6962206938521227249, guid: e0b2d9da58ada9e488651fbf1fd1bdb1, type: 3}
-  currentTarget: {fileID: 2156273649910118863, guid: 921d0452c2a2c7348afc2934b242eb36, type: 3}
-  speed: 10
 --- !u!1001 &264033575498843423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,7 +237,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2563408139579286964, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8247620201562862766}
+      addedObject: {fileID: 2859590515436937397}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
 --- !u!4 &2321895038265942187 stripped
