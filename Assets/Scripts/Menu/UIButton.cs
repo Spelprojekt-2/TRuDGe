@@ -38,7 +38,7 @@ public class UIButton : MonoBehaviour
 
     public void SetHighlight(bool state, int playerIndex)
     {
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace)
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
             Stats = GetComponent<CharacterStats>();
             if (!Stats) return; 
