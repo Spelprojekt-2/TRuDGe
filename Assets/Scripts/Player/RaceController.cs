@@ -21,6 +21,8 @@ public class RaceController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     private float timeToRaceStart;
     private bool raceStarted;
+    private Coroutine finishPlayersRoutine;
+    private Coroutine allDoneRoutine;
 
     //Timer
     private double raceStartTime;
@@ -95,21 +97,33 @@ public class RaceController : MonoBehaviour
         else
         {
             bool allDone = true;
+            int racersDone = racers.Count;
             for (int i = 0; i < racers.Count; i++)
             {
-                if (racers[i].currentValidLap < lapsOnThisTrack) allDone = false;
+                if (racers[i].currentValidLap < lapsOnThisTrack)
+                {
+                    allDone = false;
+                    racersDone--;
+                }
             }
-            if (allDone)
+            if (racersDone == racers.Count - 1 && racers.Count > 1 && finishPlayersRoutine == null)
+            {
+                finishPlayersRoutine = StartCoroutine(FinishPlayerAfterSec(30));
+            }
+            else if (allDone && allDoneRoutine == null)
             {
                 RacerData[] inorder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
                 Leaderboard.SetLeaderboard(inorder);
-
-                StartCoroutine(WaitToAfterRace());
+                
+                if (finishPlayersRoutine != null)
+                {
+                    StopCoroutine(finishPlayersRoutine);
+                    finishPlayersRoutine = null;
+                }
+                allDoneRoutine = StartCoroutine(WaitToAfterRace(5));
             }
         }
         if (racers.Count == 0 || trackSpline == null) return;
-
-        if (!trackSpline) return;
 
         for (int i = 0; i < racers.Count; i++)
         {
@@ -152,6 +166,7 @@ public class RaceController : MonoBehaviour
                 racer.lapProgress = 0.5f;
                 racer.raceProgress = 1000 - racer.racePosition;
                 return;
+
             }
         }
         else if (newLapProgress > 0.99f && racer.lapProgress < 0.01f)
@@ -195,9 +210,23 @@ public class RaceController : MonoBehaviour
         return bestProgress;
     }
 
-    private IEnumerator WaitToAfterRace()
+    private IEnumerator FinishPlayerAfterSec(int sec)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(sec);
+        RacerData lastRacer = racers.FirstOrDefault(r => r.lap < lapsOnThisTrack);
+        if (lastRacer != null)
+        {
+            lastRacer.OnRaceFinished();
+            lastRacer.lapProgress = 0.5f;
+            lastRacer.raceProgress = 1000 - lastRacer.racePosition;
+        }
+        finishPlayersRoutine = null;
+    }
+
+    private IEnumerator WaitToAfterRace(int sec)
+    {
+        yield return new WaitForSeconds(sec);
+        allDoneRoutine = null;
         if (RacingInformation.instance.isTimeTrial) SceneManager.LoadScene("TrackSelectTimeTrial");
         else SceneManager.LoadScene("AfterRace");
     }
