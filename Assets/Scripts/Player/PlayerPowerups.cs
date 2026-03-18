@@ -14,11 +14,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
-    //GastankUI
-    [SerializeField] private Image gasImage;
-    
-    
-    
     [Header("---Power Up Events---")]
     [SerializeField] private UnityEvent onTurbo;
     [SerializeField] private UnityEvent onMagnet;
@@ -43,6 +38,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private float shieldTimer = 4f;
 
     [SerializeField] private TextMeshProUGUI currPowerUpText;
+    [SerializeField] private Image useKeyController;
+    [SerializeField] private Image useKeyKBM;
    // [SerializeField] private TextMeshProUGUI gasTankCounter;
     public int gasTankAmount = 0;
     private PowerUpType? type = null;
@@ -84,6 +81,22 @@ public class PlayerPowerups : MonoBehaviour
     };
     public void GainedPowerUp(PowerUpType type)
     {
+        //Change use key
+        if (type != PowerUpType.gasolineTank)
+        {
+            bool isController = GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
+            if (isController)
+            {
+                useKeyController.gameObject.SetActive(true);
+                useKeyKBM.gameObject.SetActive(false);
+            }
+            else
+            {
+                useKeyController.gameObject.SetActive(false);
+                useKeyKBM.gameObject.SetActive(true);
+            }
+        }
+        
         // Play audio
         playerAudio.PickupAudio(type);
         
@@ -93,8 +106,6 @@ public class PlayerPowerups : MonoBehaviour
             {
                 gasTankAmount++;
 
-                //UI Image
-                gasImage.fillAmount += 0.1f;
                 //gasTankCounter.text = "Gastanks: " + gasTankAmount;
                 if (usingTurbo)
                 {
@@ -247,13 +258,14 @@ public class PlayerPowerups : MonoBehaviour
         else
         {
             currPowerUpText.text = "";
+            useKeyController.gameObject.SetActive(false);
+            useKeyKBM.gameObject.SetActive(false);
         }
     }
 
     public void ResetGasTanks()
     {
         gasTankAmount = 0;
-        gasImage.fillAmount = 0f;
         type = null;
         usedPowerUp = false;
         PowerUpUIUpdate();
@@ -273,8 +285,6 @@ public class PlayerPowerups : MonoBehaviour
         }
         gasTankAmount -= gasTanksToDrop;
         
-        //UI Image
-        gasImage.fillAmount -= gasTanksToDrop / 10f;
         //gasTankCounter.text = "Gastanks: " + gasTankAmount;
         //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
         for (int i = 0; i < gasTanksToDrop; i++) //Spawnar s� m�nga gastanks som beh�vs, get dem en rand pos och s�tter ui och topspeed v�rdena till halverade v�rden
