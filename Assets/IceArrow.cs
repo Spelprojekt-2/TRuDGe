@@ -32,6 +32,7 @@ public class IceArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (iceArrow == null) return;
         Vector3 targetDirection = currentTarget.transform.position - iceArrow.transform.position;
         
@@ -42,9 +43,10 @@ public class IceArrow : MonoBehaviour
         Debug.DrawRay(transform.position, newDirection, Color.red);
         
         iceArrow.transform.rotation = Quaternion.LookRotation(newDirection);
+        */
     }
 
-
+/*
     public void Activate(GameObject target)
     {
         iceArrow = target;
@@ -61,9 +63,11 @@ public class IceArrow : MonoBehaviour
         float distanceToPoint = Vector3.Distance(iceArrow.transform.position, currentTarget.transform.position);
         
         Debug.Log(distanceToPoint);
+        
         if (distanceToPoint < 120)
         {
             iceArrowMesh.enabled = false;
+            /*
             Debug.Log(currentTarget.name);
             if (currentTarget == target1)
             {
@@ -73,6 +77,8 @@ public class IceArrow : MonoBehaviour
             {
                 currentTarget = target1;
             }
+            
         }
     }
+    */
 }

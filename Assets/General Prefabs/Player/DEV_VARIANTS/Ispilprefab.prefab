@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2548200514438497882}
   - component: {fileID: 4712432389137693398}
   - component: {fileID: 597207020368256359}
+  - component: {fileID: 3290464761354139030}
   m_Layer: 8
   m_Name: IceArrow
   m_TagString: Arrow
@@ -108,6 +109,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3290464761354139030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4350612328101652625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049d3fd9c1d941b4185265913549eb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceArrow: {fileID: 4350612328101652625}
+  target1: {fileID: 2156273649910118863, guid: 921d0452c2a2c7348afc2934b242eb36, type: 3}
+  target2: {fileID: 6962206938521227249, guid: e0b2d9da58ada9e488651fbf1fd1bdb1, type: 3}
+  currentTarget: {fileID: 2156273649910118863, guid: 921d0452c2a2c7348afc2934b242eb36, type: 3}
+  speed: 10
 --- !u!1001 &264033575498843423
 PrefabInstance:
   m_ObjectHideFlags: 0
