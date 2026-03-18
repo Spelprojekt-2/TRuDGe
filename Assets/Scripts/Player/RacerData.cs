@@ -35,7 +35,6 @@ public class RacerData : MonoBehaviour
     [SerializeField] private UnityEvent OnNewLap;
     private List<double> lapEndTimes = new List<double>();
     [SerializeField] private TimeTrialCapture capture;
-
     private void Update()
     {
         if (!RacingInformation.instance.isTimeTrial || SceneController.instance.IsMenu || isReplayGhost || raceController == null || !isRacing) return;
@@ -96,10 +95,12 @@ public class RacerData : MonoBehaviour
         raceProgress = 0;
         lapProgress = 0;
         racePosition = 0;
-
+        transform.root.GetComponentInChildren<PlayerShooting>().timer = 0;
+        transform.root.GetComponentInChildren<PlayerShooting>().shootCooldown.fillAmount = 0;
         isRacing = true;
         OnRaceStart?.Invoke();
         if (RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
+
     }
     public void OnRaceFinished()
     {
