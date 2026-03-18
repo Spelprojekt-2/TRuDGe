@@ -14,11 +14,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
-    //GastankUI
-    [SerializeField] private Image gasImage;
-    
-    
-    
     [Header("---Power Up Events---")]
     [SerializeField] private UnityEvent onTurbo;
     [SerializeField] private UnityEvent onMagnet;
@@ -93,8 +88,6 @@ public class PlayerPowerups : MonoBehaviour
             {
                 gasTankAmount++;
 
-                //UI Image
-                gasImage.fillAmount += 0.1f;
                 //gasTankCounter.text = "Gastanks: " + gasTankAmount;
                 if (usingTurbo)
                 {
@@ -253,7 +246,6 @@ public class PlayerPowerups : MonoBehaviour
     public void ResetGasTanks()
     {
         gasTankAmount = 0;
-        gasImage.fillAmount = 0f;
         type = null;
         usedPowerUp = false;
         PowerUpUIUpdate();
@@ -273,8 +265,6 @@ public class PlayerPowerups : MonoBehaviour
         }
         gasTankAmount -= gasTanksToDrop;
         
-        //UI Image
-        gasImage.fillAmount -= gasTanksToDrop / 10f;
         //gasTankCounter.text = "Gastanks: " + gasTankAmount;
         //Debug.Log("GastanksToDrop: " + gasTanksToDrop);
         for (int i = 0; i < gasTanksToDrop; i++) //Spawnar s� m�nga gastanks som beh�vs, get dem en rand pos och s�tter ui och topspeed v�rdena till halverade v�rden
