@@ -1113,6 +1113,8 @@ Transform:
   - {fileID: 1269096404}
   - {fileID: 1375614003}
   - {fileID: 759191439}
+  - {fileID: 1727945761}
+  - {fileID: 1490935802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &72308090 stripped
@@ -1158,7 +1160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_Tangents.Array.data[0].x
@@ -2426,7 +2428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedEdges.Array.data[0].a
@@ -14026,7 +14028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedFaces.Array.size
@@ -14906,7 +14908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedEdges.Array.data[0].a
@@ -38926,6 +38928,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1490935802 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
+  m_PrefabInstance: {fileID: 1535943220}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1491165464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 357383603442372298, guid: 7eaa8d7f5f6230a498dea0b7e7fa386b, type: 3}
@@ -39177,7 +39184,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 71938376}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -39185,7 +39192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -410.3
+      value: -5.299988
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
       propertyPath: m_LocalPosition.z
@@ -39484,7 +39491,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 71938376}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -39492,7 +39499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -409.2
+      value: -4.200012
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
       propertyPath: m_LocalPosition.z
@@ -43679,6 +43686,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1727945761 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 25a2f7364cf8026449fa64246a84aeec, type: 3}
+  m_PrefabInstance: {fileID: 1504401697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1730537177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8263513533613058950, guid: 2c6f2c82570950044a8130ec028feaeb, type: 3}
@@ -50366,7 +50378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_Tangents.Array.data[0].x
@@ -51546,7 +51558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818266322900453277, guid: 4d85bdc008e57554582a6c6fb963a602, type: 3}
       propertyPath: m_SelectedEdges.Array.data[0].a
@@ -55144,5 +55156,3 @@ SceneRoots:
   - {fileID: 1045914513}
   - {fileID: 1300892903}
   - {fileID: 1410721323}
-  - {fileID: 1535943220}
-  - {fileID: 1504401697}
