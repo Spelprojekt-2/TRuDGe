@@ -100,7 +100,7 @@ public class UISelection : MonoBehaviour
     {
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
-        if (context.performed)
+        if (context.performed && SceneManager.GetActiveScene().name != "CharacterScreen")
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
             string charname = (textObj != null) ? textObj.text : null;
@@ -149,6 +149,8 @@ public class UISelection : MonoBehaviour
     
             UpdateButtons();
         }
+        else if (SceneManager.GetActiveScene().name == "CharacterScreen")
+        selection.Click();
     }
     public void MouseClicked(InputAction.CallbackContext context)
     {
