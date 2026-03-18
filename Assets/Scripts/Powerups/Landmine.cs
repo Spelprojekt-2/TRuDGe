@@ -20,11 +20,14 @@ public class Landmine : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Rigidbody rb = other.GetComponentInParent<Rigidbody>();
-        Vector3 upwardForceVector = Vector3.up * upwardForce;
-        upwardForceVector = new Vector3(rb.linearVelocity.x, upwardForceVector.y, rb.linearVelocity.z);
-        rb.AddForce(upwardForceVector, ForceMode.VelocityChange);
-        if (interactablesAudio != null) interactablesAudio.LandmineTriggerAudio(gameObject); // Play landmine audio
-        Destroy(gameObject);
+        if (other != null)
+        {
+            Rigidbody rb = other.GetComponentInParent<Rigidbody>();
+            Vector3 upwardForceVector = Vector3.up * upwardForce;
+            upwardForceVector = new Vector3(rb.linearVelocity.x, upwardForceVector.y, rb.linearVelocity.z);
+            rb.AddForce(upwardForceVector, ForceMode.VelocityChange);
+            if (interactablesAudio != null) interactablesAudio.LandmineTriggerAudio(gameObject); // Play landmine audio
+            Destroy(gameObject);
+        }
     }
 }
