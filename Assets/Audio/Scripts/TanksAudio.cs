@@ -7,7 +7,6 @@ public class TanksAudio : ScriptableObject
 {
     #region EventReferences
     [SerializeField] private EventReference grappleEvent;
-    [SerializeField] private EventReference grappleHookEvent;
     [SerializeField] private EventReference vehicleEngineEvent;
     [SerializeField] private EventReference shootEvent;
     #endregion

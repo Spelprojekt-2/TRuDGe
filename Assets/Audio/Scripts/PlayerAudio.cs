@@ -13,6 +13,7 @@ public class PlayerAudio : MonoBehaviour
     private EventInstance shootInstance;
     private EventInstance engineInstance;
     private EventInstance magnetInstance;
+    private EventInstance turboInst;
 
     // GameOBJs
     [SerializeField] private GameObject grapplePos;
@@ -88,6 +89,7 @@ public class PlayerAudio : MonoBehaviour
         grappleInstance = tanksAudio.GrappleStartAudio(new EventInstance(), grapplePos);
     }
 
+    /*
     public void GrappleHit()
     {
         if (hasGrapple)
@@ -99,6 +101,7 @@ public class PlayerAudio : MonoBehaviour
         if (hasGrapple)
             tanksAudio.SetGrappleState(grappleInstance, TanksAudio.GrappleState.Return);
     }
+    */
 
     public void GrappleEnd()
     {
@@ -121,16 +124,6 @@ public class PlayerAudio : MonoBehaviour
         interactablesAudio.PlayPickupAudio(type);
     }
 
-    public void PlayLandminePlaceAudio(GameObject landmineOBJ)
-    {
-        if (interactablesAudio == null)
-        {
-            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
-            return;
-        }
-        interactablesAudio.LandminePlaceAudio(landmineOBJ);
-    }
-
     public void ToggleMagnetAudio(bool mode, GameObject obj)
     {
         if (interactablesAudio == null)
@@ -151,16 +144,6 @@ public class PlayerAudio : MonoBehaviour
         }
     }
 
-    public void PlaySmokeAudio(Vector3 pos)
-    {
-        if (interactablesAudio == null)
-        {
-            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
-            return;
-        }
-        interactablesAudio.PlaySmokeAudio(pos);
-    }
-
     public void PlayShieldAudio()
     {
         if (interactablesAudio == null)
@@ -171,14 +154,24 @@ public class PlayerAudio : MonoBehaviour
         interactablesAudio.PlayShieldAudio();
     }
 
-    public void PlayScatterShotAudio()
+    public void PlayTurboAudio()
     {
         if (interactablesAudio == null)
         {
             Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
             return;
         }
-        interactablesAudio.ScatterShotAudio();
+        turboInst = interactablesAudio.TurboStartAudio(turboInst);
+    }
+
+    public void StopTurboAudio()
+    {
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            return;
+        }
+        turboInst = interactablesAudio.TurboStopAudio(turboInst);
     }
     #endregion
 }

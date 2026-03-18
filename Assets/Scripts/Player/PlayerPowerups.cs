@@ -145,14 +145,12 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.smoke:
                 onSmoke.Invoke();
-                playerAudio.PlaySmokeAudio(transform.position); // Play smoke audio
                 Smokescreen();
                 break;
 
             case PowerUpType.landMine:
                 onLandmine.Invoke();
                 GameObject landmine = Instantiate(landMine, transform.position, Quaternion.identity);
-                playerAudio.PlayLandminePlaceAudio(landmine); // Play landmine audio
                 break;
 
             case PowerUpType.airstrike:
@@ -167,7 +165,6 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.scatterShot:
                 onScatterShot.Invoke();
-                playerAudio.PlayScatterShotAudio();
                 GameObject scatterShotSpawned = Instantiate(scatterShot, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.LookRotation(transform.forward));
                 foreach (var projectile in scatterShotSpawned.GetComponentsInChildren<Projectile>())
                 {
@@ -313,6 +310,9 @@ public class PlayerPowerups : MonoBehaviour
         playerMovement.externalTopSpeedModifier = normalTopSpeedModifier;
         playerMovement.externalIgnoreInAirAccelerationModifier = false;
         usingTurbo = false;
+
+        // Stop turbo audio
+        playerAudio.StopTurboAudio();
     }
 
     IEnumerator Magnet()
