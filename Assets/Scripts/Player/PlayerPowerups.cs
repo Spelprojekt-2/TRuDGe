@@ -270,6 +270,10 @@ public class PlayerPowerups : MonoBehaviour
         type = null;
         usedPowerUp = false;
         PowerUpUIUpdate();
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f;
+        normalTopSpeedModifier = 1;
+        GetComponent<PlayerMovement>().AccelerationGasModifier = 1f;
+        
         //gasTankCounter.text = "Gastanks: 0";
     }
     
