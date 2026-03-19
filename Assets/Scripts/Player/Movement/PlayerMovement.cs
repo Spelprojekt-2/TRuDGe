@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     #region Component refs
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform rotationRoot;
     #endregion
 
@@ -85,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float topSpeed = 100f;
     [HideInInspector] public float externalTopSpeedModifier = 1f;
     [SerializeField] private float baseAcceleration = 50f;
+    [HideInInspector] public float AccelerationGasModifier = 1f;
     [Tooltip("Curve to modify acceleration based on current speed")]
     [SerializeField] private AnimationCurve accelerationOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.1f;
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Public methods
     [HideInInspector]public bool canTurn = true;
-    public float GetTopSpeed() => topSpeed;
+    public float GetTopSpeed(bool netTopSpeed) => netTopSpeed? topSpeed * externalTopSpeedModifier : topSpeed;
     public bool IsGrounded() => isGrounded;
     public Vector3 GetGroundNormal() => groundNormal;
     public float GetCurrentSpeed(bool absolute = false) =>
@@ -151,10 +152,6 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Unity methods
-    public void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
     public void Update()
     {
         moveInputVector.y = Mathf.Clamp((accelerationInput ? 1 : 0) - (reversingInput ? 1 : 0), -1f, 1f);
@@ -307,6 +304,8 @@ public class PlayerMovement : MonoBehaviour
             moveInputVector.y *
             // Base acceleration
             baseAcceleration * 
+            //Gas tanks
+            AccelerationGasModifier *
             // Speed modifier
             accelerationOverSpeedModifier.Evaluate(
                 baseSpeedOnAbsoluteVelocity ?

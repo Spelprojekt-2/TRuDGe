@@ -7,7 +7,7 @@ public class TrainingGroundSingle : MonoBehaviour
 {
     void Start()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        /*GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject p in players)
             {
                 Transform lapimage = p.transform.Find("Canvas/LapImage");

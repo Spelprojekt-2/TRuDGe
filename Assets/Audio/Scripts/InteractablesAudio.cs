@@ -1,7 +1,8 @@
-using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
+using UnityEngine;
 using UnityEngine.Serialization;
+using static UnityEditor.PlayerSettings;
 
 [CreateAssetMenu (menuName = "Scriptables/Audio/Interactables")]
 public class InteractablesAudio : ScriptableObject
@@ -20,6 +21,8 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference WallPlaceRef;
     [SerializeField] private EventReference WallDestroyRef;
     [SerializeField] private EventReference ScatterShotRef;
+    [SerializeField] private EventReference TurboRef;
+    [SerializeField] private EventReference AirstrikeRef;
     #endregion
 
     public void PlayPickupAudio(PlayerPowerups.PowerUpType powerUpType)
@@ -35,14 +38,14 @@ public class InteractablesAudio : ScriptableObject
         }
     }
 
-    public void LandminePlaceAudio(GameObject landmineOBJ)
+    public void LandminePlaceAudio(GameObject tankOBJ)
     {
         if (LandminePlaceRef.IsNull)
         {
             Debug.LogError("InteractablesAudio: LandminePlaceRef is missing!");
             return;
         }
-        RuntimeManager.PlayOneShotAttached(LandminePlaceRef, landmineOBJ);
+        RuntimeManager.PlayOneShotAttached(LandminePlaceRef, tankOBJ);
     }
 
     public void LandmineTriggerAudio(GameObject landmineOBJ)
@@ -82,14 +85,14 @@ public class InteractablesAudio : ScriptableObject
         return instance;
     }
 
-    public void PlaySmokeAudio(Vector3 pos)
+    public void PlaySmokeAudio(Transform pos)
     {
         if (SmokeRef.IsNull)
         {
             Debug.LogError("InteractablesAudio: SmokeRef is missing!");
             return;
         }
-        RuntimeManager.PlayOneShot(SmokeRef, pos);
+        RuntimeManager.PlayOneShot(SmokeRef, pos.position);
     }
 
     public void PlayShieldAudio()
@@ -102,9 +105,14 @@ public class InteractablesAudio : ScriptableObject
         RuntimeManager.PlayOneShot(ShieldRef);
     }
 
-    public void PlaceWallAudio()
+    public void PlaceWallAudio(Transform pos)
     {
-        // Add place audio here...
+        if (WallPlaceRef.IsNull)
+        {
+            Debug.LogError("InteractablesAudio: WallPlaceRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(WallPlaceRef, pos.position);
     }
 
     public void WallDestroyAudio(Vector3 pos)
@@ -125,5 +133,41 @@ public class InteractablesAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(ScatterShotRef);
+    }
+
+    public EventInstance TurboStartAudio(EventInstance instance)
+    {
+        if (TurboRef.IsNull)
+        {
+            Debug.LogError("TurboRef is missing!");
+            return instance;
+        }
+
+        if (instance.isValid())
+        {
+            TurboStopAudio(instance);
+        }
+
+        instance = RuntimeManager.CreateInstance(TurboRef);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance TurboStopAudio(EventInstance instance)
+    {
+        instance.keyOff();
+        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        instance.release();
+        return instance;
+    }
+
+    public void PlayAirstrikeAudio()
+    {
+        if (AirstrikeRef.IsNull)
+        {
+            Debug.LogError("AirstrikeRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(AirstrikeRef);
     }
 }
