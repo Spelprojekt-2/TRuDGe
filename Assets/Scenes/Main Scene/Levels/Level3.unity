@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: e0cb4271d7ac30345b842c26ea98f8b4, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -26569,6 +26569,8 @@ MonoBehaviour:
   startingLine: {fileID: 119611019}
   timeBeforeStartCountdown: 6
   countdownText: {fileID: 1288232999}
+  SwapSceneAfterRaceTime: 5
+  FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 5404573993507513911, guid: 7770d74a3584b8a4ba34f624e6b75de1, type: 3}
 --- !u!4 &1040715468 stripped
 Transform:
@@ -52133,7 +52135,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ebe833ce5ed6049ae88c3397f96cb3, type: 2}
+  - {fileID: 2100000, guid: 706600f0521638a4f8b5c2853e35e845, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
