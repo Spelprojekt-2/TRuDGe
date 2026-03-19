@@ -7,6 +7,7 @@ public class LarsMessage : MonoBehaviour
     [SerializeField] private TextMeshProUGUI message;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float threshold = 30f;
+    [SerializeField] private RacerData rd;
     [SerializeField] private bool messageEnabled;
     private Color clr = new Color32(255, 255, 255, 255);
     private int check = 0;
@@ -19,8 +20,8 @@ public class LarsMessage : MonoBehaviour
     {
         if (!messageEnabled && !SceneController.instance.IsMenu)
         {
-            RacerData data = transform.root.GetComponentInChildren<RacerData>();
-            if (data.racername == "Lars-Göran")
+            //RacerData data = transform.root.GetComponentInChildren<RacerData>();
+            if (rd.racername == "Lars-Göran")
             {
                 messageEnabled = true;
             }
@@ -71,6 +72,11 @@ public class LarsMessage : MonoBehaviour
         }
 
         check = 0;
+    }
+    public void toggleMessage(bool state)
+    {
+        message.text = "";
+        messageEnabled = state;
     }
     void OnDisable()
     {

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     #region Component refs
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform rotationRoot;
     #endregion
 
@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Public methods
     [HideInInspector]public bool canTurn = true;
-    public float GetTopSpeed() => topSpeed;
+    public float GetTopSpeed(bool netTopSpeed) => netTopSpeed? topSpeed * externalTopSpeedModifier : topSpeed;
     public bool IsGrounded() => isGrounded;
     public Vector3 GetGroundNormal() => groundNormal;
     public float GetCurrentSpeed(bool absolute = false) =>
@@ -151,10 +151,6 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Unity methods
-    public void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
     public void Update()
     {
         moveInputVector.y = Mathf.Clamp((accelerationInput ? 1 : 0) - (reversingInput ? 1 : 0), -1f, 1f);

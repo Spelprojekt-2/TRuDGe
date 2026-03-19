@@ -81,6 +81,10 @@ public class PlayerShooting : MonoBehaviour
 
         // Play shoot audio
         playerAudio.ShootStart();
+
+        //Napoleon
+        NapoleonRespect nr = transform.root.GetComponentInChildren<NapoleonRespect>();
+        nr.StartCoroutine(nr.LowerRespect());
     }
 
     private Vector3 GetTargetDir()

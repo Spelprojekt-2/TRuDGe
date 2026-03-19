@@ -80,9 +80,16 @@ public class NinaMechanic : MonoBehaviour
      
     public IEnumerator LaunchWrenches()
     {
-        steam.Play();
-        yield return new WaitForSeconds(0.5f);
-        steam.Stop();
+        if (specialEnabled)
+        {
+            steam.Play();
+            yield return new WaitForSeconds(0.5f);
+            steam.Stop();
+        }
+    }
+    public void toggleWrenches(bool state)
+    {
+        specialEnabled = state;
     }
     void OnDisable()
     {
