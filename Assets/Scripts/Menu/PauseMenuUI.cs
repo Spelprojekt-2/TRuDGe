@@ -33,6 +33,12 @@ public class PauseMenuUI : MonoBehaviour
         UISelection.playerSelections[currentPlayerID].SwapSelection(selectOnPause);
         Time.timeScale = 0f;
         isPaused = true;
+
+        // Pause audio
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.TogglePause(true);
+        }
     }
 
     public void ExitRace()
@@ -52,6 +58,12 @@ public class PauseMenuUI : MonoBehaviour
         currentPlayerInput = null;
         Time.timeScale = 1f;
         isPaused = false;
+
+        // Unpause audio
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.TogglePause(false);
+        }
     }
 
     public IEnumerator SwapMap(PlayerInput input, string map)
