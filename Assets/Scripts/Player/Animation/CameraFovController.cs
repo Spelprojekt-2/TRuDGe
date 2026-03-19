@@ -31,7 +31,7 @@ public class CameraFovController : MonoBehaviour
     void Update()
     {
         float speed = playerMovement.GetCurrentSpeed(true);
-        float maxSpeed = playerMovement.GetTopSpeed();
+        float maxSpeed = playerMovement.GetTopSpeed(false);
         speed = Mathf.Clamp01(speed / maxSpeed) * X_AXIS_SCALE;
         float targetFov = fovOverSpeed.Evaluate(speed) * Y_AXIS_SCALE + currentBoost;
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFov, Time.deltaTime * fovAdjustmentSpeed);

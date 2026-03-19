@@ -31,8 +31,16 @@ public class TrainingGroundReady : MonoBehaviour
         playersReady = 0;
         if (TrainingUI == null) return;
         TrainingUI.SetActive(isOnTrainingGround);
-        PrereadyText.SetActive(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround);
-        ReadyText.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "SingleplayerTG")
+        {
+            ReadyText.SetActive(false);
+            PrereadyText.SetActive(false);
+        }
+        else
+        {
+            PrereadyText.SetActive(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround);
+            ReadyText.SetActive(false);
+        }
         if (isOnTrainingGround)
         {
             bool isController = GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
@@ -89,7 +97,7 @@ public class TrainingGroundReady : MonoBehaviour
     public void ReadyUp(InputAction.CallbackContext context)
     {
         if (!context.performed || 
-            !(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)) 
+            !(SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround) || SceneManager.GetActiveScene().name == "SingleplayerTG") 
             return;
         if (isReady)
         {

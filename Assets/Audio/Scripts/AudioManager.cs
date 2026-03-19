@@ -5,17 +5,19 @@ using FMOD.Studio;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
-using Unity.VisualScripting;
 
 public class AudioManager : MonoBehaviour
 {
     #region Configuration
     public static AudioManager Instance { get; private set; }
 
+    [Header("Pause Configuration")]
     [Tooltip("List of bus paths to pause, e.g., 'bus:/SFX', 'bus:/Music'")]
     [SerializeField] private List<string> busesToMute;
+    [SerializeField] private EventReference PauseSnapshotRef;
+    private EventInstance pauseSnapInst;
+    private bool isPaused = false;
 
-    // Music config
     [Header("Music Configuration")]
     [SerializeField] private EventReference Music_MainMenuRef;
     [SerializeField] private EventReference Music_SelectionScreenRef;
@@ -35,14 +37,16 @@ public class AudioManager : MonoBehaviour
 
     public enum MusicID
     {
-        MainMenu = 0,
-        SelectionScreen = 1,
-        TimeTrail = 2,
-        Level1sloped = 3,
-        TrainingGround = 4,
-        Dover = 5,
-        Luminen = 6
+        None = 0,
+        MainMenu = 1,
+        SelectionScreen = 2,
+        TimeTrail = 3,
+        Level1sloped = 4,
+        TrainingGround = 5,
+        Dover = 6,
+        Luminen = 7
     }
+    private MusicID currentMusic = MusicID.None;
 
     // SFX config
     [Header("SFX Configuration")]
@@ -62,6 +66,7 @@ public class AudioManager : MonoBehaviour
         CliffsOfDover = 3,
         LuminenTRT = 4
     }
+    private AmbienceID currentAmbience = AmbienceID.None;
 
     // Ambience config
     [SerializeField] private EventReference AmbienceManagerRef;
@@ -98,6 +103,10 @@ public class AudioManager : MonoBehaviour
     #region Music
     public void ChangeMusic(MusicID musicID)
     {
+        if (musicID == currentMusic)
+        {
+            return;
+        }
         if (musicInstance.isValid())
         {
             musicInstance.stop(STOP_MODE.IMMEDIATE);
@@ -133,7 +142,7 @@ public class AudioManager : MonoBehaviour
                 musicInstance = RuntimeManager.CreateInstance(Music_Level3);
                 break;
         }
-
+        currentMusic = musicID;
         musicInstance.start();
     }
     #endregion
@@ -256,43 +265,82 @@ public class AudioManager : MonoBehaviour
         }
         ambienceInstance = RuntimeManager.CreateInstance(AmbienceManagerRef);
         ambienceInstance.start();
+        ChangeAmbience(currentAmbience);
     }
 
     private void ChangeAmbience(AmbienceID id)
     {
+        if (id == currentAmbience)
+        {
+            return;
+        }
+        currentAmbience = id;
+
+        // Fail check
         if (!ambienceInstance.isValid())
         {
             Debug.LogWarning("AmbienceInstance is not valid!");
             return;
         }
-        ambienceInstance.setParameterByName("CurrentLocation", (float)id);
+        RuntimeManager.StudioSystem.setParameterByName("CurrentLocation", (float)id);
     }
     #endregion
 
     #region Pause / Resume
-    public void PauseAudio()
+    public void TogglePause(bool pause)
     {
-        TogglePause(true);
-        Debug.Log("Audio paused");
-    }
+        if (pause == isPaused)
+        {
+            return;
+        }
+        isPaused = pause;
 
-    public void ResumeAudio()
-    {
-        TogglePause(false);
-        Debug.Log("Audio resumed");
-    }
-
-    private void TogglePause(bool pause)
-    {
+        // Pause buses
         foreach (string busPath in busesToMute)
         {
             Bus bus = RuntimeManager.GetBus(busPath);
 
             if (bus.isValid())
+            {
                 bus.setPaused(pause);
+            }
             else
+            {
                 Debug.LogWarning($"Bus not found: {busPath}");
+            }
         }
+
+        if (pause)
+        {
+            EnablePauseSnapshot();
+        }
+        else
+        {
+            DisablePauseSnapshot();
+        }
+    }
+
+    private void EnablePauseSnapshot()
+    {
+        if (pauseSnapInst.isValid() || PauseSnapshotRef.IsNull)
+        {
+            Debug.LogWarning("AudioManager: Audio is either already paused or the PauseSnapshotRef is missing!");
+            return;
+        }
+
+        pauseSnapInst = RuntimeManager.CreateInstance(PauseSnapshotRef);
+        pauseSnapInst.start();
+    }
+
+    private void DisablePauseSnapshot()
+    {
+        if (!pauseSnapInst.isValid())
+        {
+            return;
+        }
+
+        pauseSnapInst.stop(STOP_MODE.IMMEDIATE);
+        pauseSnapInst.release();
     }
     #endregion
 
@@ -304,49 +352,45 @@ public class AudioManager : MonoBehaviour
             case 0:
                 ChangeMusic(MusicID.MainMenu);
                 ChangeAmbience(AmbienceID.None);
-                Debug.Log("Ambience set: NONE");
                 break;
 
             case 1:
                 ChangeMusic(MusicID.SelectionScreen);
                 ChangeAmbience(AmbienceID.None);
-                Debug.Log("Ambience set: NONE");
                 break;
 
             case 2:
                 ChangeMusic(MusicID.SelectionScreen);
                 ChangeAmbience(AmbienceID.None);
-                Debug.Log("Ambience set: NONE");
                 break;
 
             case 3:
                 ChangeMusic(MusicID.SelectionScreen);
                 ChangeAmbience(AmbienceID.None);
-                Debug.Log("Ambience set: NONE");
                 break;
 
             case 9:
                 ChangeMusic(MusicID.Level1sloped);
                 ChangeAmbience(AmbienceID.Schlammrennstrecke);
-                Debug.Log("Ambience set: Schlammrennstrecke");
                 break;
 
             case 10:
                 ChangeMusic(MusicID.TrainingGround);
                 ChangeAmbience(AmbienceID.TrainingGround);
-                Debug.Log("Ambience set: TrainingGround");
                 break;
 
             case 12:
                 ChangeMusic(MusicID.Dover);
                 ChangeAmbience(AmbienceID.CliffsOfDover);
-                Debug.Log("Ambience set: CliffsOfDover");
                 break;
 
             case 15:
                 ChangeMusic(MusicID.Luminen);
                 ChangeAmbience(AmbienceID.LuminenTRT);
-                Debug.Log("Ambience set: LuminenTRT");
+                break;
+            case 16:
+                ChangeMusic(MusicID.TrainingGround);
+                ChangeAmbience(AmbienceID.TrainingGround);
                 break;
         }
     }
