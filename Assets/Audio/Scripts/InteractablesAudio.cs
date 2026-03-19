@@ -19,7 +19,6 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference SmokeRef;
     [SerializeField] private EventReference ShieldRef;
     [SerializeField] private EventReference WallPlaceRef;
-    [SerializeField] private EventReference WallDestroyRef;
     [SerializeField] private EventReference ScatterShotRef;
     [SerializeField] private EventReference TurboRef;
     [SerializeField] private EventReference AirstrikeRef;
@@ -113,16 +112,6 @@ public class InteractablesAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(WallPlaceRef, pos.position);
-    }
-
-    public void WallDestroyAudio(Vector3 pos)
-    {
-        if (WallDestroyRef.IsNull)
-        {
-            Debug.LogError("InteractablesAudio: WallDestroyRef is missing!");
-            return;
-        }
-        RuntimeManager.PlayOneShot(WallDestroyRef, pos);
     }
 
     public void ScatterShotAudio()
