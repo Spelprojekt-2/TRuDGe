@@ -223,6 +223,9 @@ public class RaceController : MonoBehaviour
             lastRacer.raceProgress = 1000 - lastRacer.racePosition;
         }
         finishPlayersRoutine = null;
+
+        if (allDoneRoutine != null) yield break;
+        allDoneRoutine = StartCoroutine(WaitToAfterRace(SwapSceneAfterRaceTime));
     }
 
     private IEnumerator WaitToAfterRace(float sec)
