@@ -20,7 +20,6 @@ public class LarsMessage : MonoBehaviour
     {
         if (!messageEnabled && !SceneController.instance.IsMenu)
         {
-            //RacerData data = transform.root.GetComponentInChildren<RacerData>();
             if (rd.racername == "Lars-Göran")
             {
                 messageEnabled = true;
