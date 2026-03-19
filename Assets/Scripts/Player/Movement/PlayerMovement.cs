@@ -85,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float topSpeed = 100f;
     [HideInInspector] public float externalTopSpeedModifier = 1f;
     [SerializeField] private float baseAcceleration = 50f;
+    [HideInInspector] public float AccelerationGasModifier = 1f;
     [Tooltip("Curve to modify acceleration based on current speed")]
     [SerializeField] private AnimationCurve accelerationOverSpeedModifier = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField][Range(0f, 1f)] private float inAirAccelerationModifier = 0.1f;
@@ -303,6 +304,8 @@ public class PlayerMovement : MonoBehaviour
             moveInputVector.y *
             // Base acceleration
             baseAcceleration * 
+            //Gas tanks
+            AccelerationGasModifier *
             // Speed modifier
             accelerationOverSpeedModifier.Evaluate(
                 baseSpeedOnAbsoluteVelocity ?
