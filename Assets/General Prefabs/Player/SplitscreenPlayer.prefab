@@ -1658,6 +1658,7 @@ MonoBehaviour:
   crosshair: {fileID: 1618995087796112529}
   fireRate: 2.5
   canvas: {fileID: 434969871267061588}
+  timer: 0
   excludeLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -1693,6 +1694,7 @@ MonoBehaviour:
   topSpeed: 90
   externalTopSpeedModifier: 1
   baseAcceleration: 25
+  AccelerationGasModifier: 1
   accelerationOverSpeedModifier:
     serializedVersion: 2
     m_Curve:
@@ -3768,6 +3770,10 @@ PrefabInstance:
     - target: {fileID: 4090259101736725575, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
       propertyPath: m_text
       value: Smoke Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269530674700081160, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
+      propertyPath: meterTopSpeed
+      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 5269530674700081160, guid: 5adcf7b8c5ea3e645825ae6a30c72eb7, type: 3}
       propertyPath: playerMovement
