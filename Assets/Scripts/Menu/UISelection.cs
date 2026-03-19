@@ -103,8 +103,6 @@ public class UISelection : MonoBehaviour
         //if (context.performed && SceneManager.GetActiveScene().name != "CharacterScreen")
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
-            if (SceneManager.GetActiveScene().name != "CharacterScreen")
-            {
             string charname = (textObj != null) ? textObj.text : null;
 
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
@@ -151,9 +149,9 @@ public class UISelection : MonoBehaviour
                 }
             }
             UpdateButtons();
-        }
+        
         //else if (SceneManager.GetActiveScene().name == "CharacterScreen")
-        selection.Click();
+        //selection.Click();
     }
     public void MouseClicked(InputAction.CallbackContext context)
     {
