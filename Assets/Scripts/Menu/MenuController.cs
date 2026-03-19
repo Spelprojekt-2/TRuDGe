@@ -44,6 +44,7 @@ public class MenuController : MonoBehaviour
                 CoroutineRunner.Run(SelectObject(initialSelection));
                 break;
             case SceneController.SceneType.PlayerSelectRace:
+                //MainMenuWaitForUIPopulation();
                 CoroutineRunner.Run(SelectObject(initialSelection));
                 break;
         }
