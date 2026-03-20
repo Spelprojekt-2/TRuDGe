@@ -6919,7 +6919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7167701020163762987, guid: c798f8f6138649e4db5ca3e4bf741b66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -73.42644
+      value: -80.6
       objectReference: {fileID: 0}
     - target: {fileID: 7167701020163762987, guid: c798f8f6138649e4db5ca3e4bf741b66, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6956,6 +6956,10 @@ PrefabInstance:
     - target: {fileID: 7508374375186346385, guid: c798f8f6138649e4db5ca3e4bf741b66, type: 3}
       propertyPath: m_Name
       value: Tree_long2 1 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301232279054651460, guid: c798f8f6138649e4db5ca3e4bf741b66, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8582,6 +8586,8 @@ MonoBehaviour:
   startingLine: {fileID: 1307901372}
   timeBeforeStartCountdown: 6
   countdownText: {fileID: 1394884666}
+  SwapSceneAfterRaceTime: 5
+  FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 5404573993507513911, guid: 7770d74a3584b8a4ba34f624e6b75de1, type: 3}
 --- !u!4 &219024937
 Transform:
@@ -10136,6 +10142,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 303822524}
     m_Modifications:
+    - target: {fileID: 6951178731414568174, guid: 9ad8fbcc48457994c9fee5c9ceb31b9a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087515943173408641, guid: 9ad8fbcc48457994c9fee5c9ceb31b9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 148.20001
@@ -77503,6 +77513,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ---GrapplePoints---
       objectReference: {fileID: 0}
+    - target: {fileID: 4925591322301664012, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.7
+      objectReference: {fileID: 0}
     - target: {fileID: 5241604308945506404, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -77514,6 +77528,10 @@ PrefabInstance:
     - target: {fileID: 5929258798934859784, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979020412467164826, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: grapplePoint.y
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6034004541437194673, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -101481,6 +101499,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree_long4 1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5980804653635076638, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -112157,6 +112179,10 @@ PrefabInstance:
     - target: {fileID: 5188404422132343755, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
       propertyPath: m_Name
       value: Tree_long4 1 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980804653635076638, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -127435,7 +127461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4849034268119398769, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -55.241444
+      value: -61.83
       objectReference: {fileID: 0}
     - target: {fileID: 4849034268119398769, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -127472,6 +127498,10 @@ PrefabInstance:
     - target: {fileID: 5188404422132343755, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
       propertyPath: m_Name
       value: Tree_long4 1 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980804653635076638, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -184316,6 +184346,10 @@ PrefabInstance:
     - target: {fileID: 5188404422132343755, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
       propertyPath: m_Name
       value: Tree_long4 1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980804653635076638, guid: d3325d71e544fc0468c65244f53953d9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
