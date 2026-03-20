@@ -43,7 +43,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (timer >= fireRate)
         {
-            if (isShooting && !isShot)
+            if (isShooting && !isShot && !GetComponent<PlayerCamera>().isPressingLookBack)
             {
                 timer = 0;
                 Shoot(projectilePrefab);
