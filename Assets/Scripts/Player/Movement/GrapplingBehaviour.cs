@@ -30,6 +30,8 @@ public class GrapplingBehaviour : MonoBehaviour
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
     public float TimeSinceGrapple { get; private set;} = 0f;
+    
+    public ParticleSystem grappleEffect;
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
@@ -43,6 +45,8 @@ public class GrapplingBehaviour : MonoBehaviour
         if (grappleable != null)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
         SceneManager.sceneLoaded += SceneChange;
+        //particle grapple
+        grappleEffect = grappleUIIndicator.GetComponent<ParticleSystem>();
     }
 
     public void GrappleInput(InputAction.CallbackContext context)
@@ -68,7 +72,7 @@ public class GrapplingBehaviour : MonoBehaviour
 
         // Start grapple audio
         playerAudio.GrappleStart();
-        ParticleSystem grappleEffect = grappleUIIndicator.GetComponent<ParticleSystem>();
+        
         grappleEffect.Stop();
 
         lineRenderer.enabled = true;
