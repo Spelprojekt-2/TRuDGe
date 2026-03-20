@@ -187,7 +187,7 @@ public class PlayerPowerups : MonoBehaviour
                 onShield.Invoke();
                 GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
-                playerAudio.PlayShieldAudio(); // Play shield audio
+                playerAudio.PlayShieldAudio(shieldTimer); // Play shield audio
                 StartCoroutine(Shield(shieldSpawned));
                 break;
 
@@ -341,7 +341,6 @@ public class PlayerPowerups : MonoBehaviour
 
     IEnumerator Shield(GameObject shieldSpawned)
     {
-
         yield return new WaitForSeconds(shieldTimer);
         Destroy(shieldSpawned);
     }

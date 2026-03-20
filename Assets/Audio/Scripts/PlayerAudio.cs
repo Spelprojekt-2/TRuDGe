@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
+using System.Collections;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -24,6 +25,13 @@ public class PlayerAudio : MonoBehaviour
     // Checks
     private bool hasGrapple;
     private bool hasShoot;
+
+    // Shield vars
+    private bool hasShield;
+    private float shieldStopTime;
+    private float shieldStartTime;
+    private EventInstance shieldInst;
+    private Coroutine shieldRoutine;
 
     private void Awake()
     {
@@ -144,14 +152,69 @@ public class PlayerAudio : MonoBehaviour
         }
     }
 
-    public void PlayShieldAudio()
+    public void PlayShieldAudio(float shieldTimer)
     {
         if (interactablesAudio == null)
         {
             Debug.LogWarning("PlayerAudio: interactablesAudio is missing!");
+            hasShield = false;
             return;
         }
-        interactablesAudio.PlayShieldAudio();
+
+        interactablesAudio.PlayShieldUseAudio(); // Trigger usage sound
+
+        float newStopTime = Time.time + shieldTimer;
+
+        if (hasShield)
+        {
+            shieldStopTime = Mathf.Max(shieldStopTime, newStopTime);
+            shieldStartTime = Time.time;
+        }
+        else
+        {
+            hasShield = true;
+
+            shieldStartTime = Time.time;
+            shieldStopTime = newStopTime;
+
+            shieldInst = interactablesAudio.ShieldDurationAudio(shieldInst);
+
+            if (shieldRoutine != null)
+                StopCoroutine(shieldRoutine);
+
+            shieldRoutine = StartCoroutine(ShieldHandler());
+        }
+    }
+
+    private IEnumerator ShieldHandler()
+    {
+        while (Time.time < shieldStopTime)
+        {
+            float remaining = shieldStopTime - Time.time;
+            float totalDuration = shieldStopTime - shieldStartTime;
+
+            float normalized = Mathf.Clamp01(remaining / totalDuration);
+            Debug.Log("NORMAL:" + normalized);
+
+            if (shieldInst.isValid())
+            {
+                interactablesAudio.SetPowerupDuration(shieldInst, normalized);
+            }
+
+            yield return null;
+        }
+
+        if (shieldInst.isValid())
+            interactablesAudio.SetPowerupDuration(shieldInst, 0f);
+
+        if (shieldInst.isValid())
+        {
+            shieldInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            shieldInst.release();
+        }
+
+        hasShield = false;
+        shieldRoutine = null;
     }
 
     public void PlayTurboAudio()
