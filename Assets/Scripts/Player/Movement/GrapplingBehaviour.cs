@@ -68,6 +68,8 @@ public class GrapplingBehaviour : MonoBehaviour
 
         // Start grapple audio
         playerAudio.GrappleStart();
+        ParticleSystem grappleEffect = grappleUIIndicator.GetComponent<ParticleSystem>();
+        grappleEffect.Stop();
 
         lineRenderer.enabled = true;
         if (grappleHook) grappleHook.SetActive(false);
@@ -131,6 +133,7 @@ public class GrapplingBehaviour : MonoBehaviour
             Vector3 diff = cachedGrapplePoint - playerCamera.transform.position;
 
             grappleUIIndicator.gameObject.SetActive(Vector3.Dot(playerCamera.transform.forward, diff.normalized) > 0f);
+            
 
             Vector2 viewPortpoint = playerCamera.WorldToViewportPoint(cachedGrapplePoint);
             viewPortpoint.x = Mathf.Clamp(viewPortpoint.x, 0, 1);
@@ -142,6 +145,8 @@ public class GrapplingBehaviour : MonoBehaviour
                 grappleUIIndicator.anchoredPosition = viewPortpoint * new Vector2(
                     playerCamera.scaledPixelWidth / playerCamera.rect.width,
                     playerCamera.scaledPixelHeight / playerCamera.rect.height);
+                
+                
             }
             else
             {
