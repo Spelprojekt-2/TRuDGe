@@ -72,11 +72,16 @@ public class GrapplingBehaviour : MonoBehaviour
 
         // Start grapple audio
         playerAudio.GrappleStart();
+
         
-        grappleEffect.Stop();
+        
 
         lineRenderer.enabled = true;
         if (grappleHook) grappleHook.SetActive(false);
+        if (grappleEffect != null)
+        {
+            grappleEffect.Stop();
+        }
     }
     public void EndGrapple(bool respectLock)
     {
