@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: f30856b92435c5b43ac4663bece7ff8a, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: e0cb4271d7ac30345b842c26ea98f8b4, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -8582,6 +8582,8 @@ MonoBehaviour:
   startingLine: {fileID: 1307901372}
   timeBeforeStartCountdown: 6
   countdownText: {fileID: 1394884666}
+  SwapSceneAfterRaceTime: 5
+  FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 5404573993507513911, guid: 7770d74a3584b8a4ba34f624e6b75de1, type: 3}
 --- !u!4 &219024937
 Transform:
@@ -186489,7 +186491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2320764372696940904, guid: b6b06538acccc9d4ca2c53123c648ec5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5712012519045224188, guid: b6b06538acccc9d4ca2c53123c648ec5, type: 3}
       propertyPath: m_LocalPosition.x
