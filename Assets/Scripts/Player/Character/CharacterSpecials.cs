@@ -36,6 +36,18 @@ public class CharacterSpecials : MonoBehaviour
                 kbm.SetActive(true);
                 controller.SetActive(false);
             }
+            switch (rd.racername)
+            {
+                case "Lars-Göran": lm.toggleMessage(true); break;
+                case "The Brass Beast": nm.toggleWrenches(true); break;
+                case "King Napoleon III": nr.toggleRespect(true); break;
+                case "Capôw": sc.EnableChat(true); break;
+            }
+            Color32 white = new Color32(255,255,255,255);
+            toggleText.color = white;
+            controller.GetComponent<Image>().color = white;
+            kbm.GetComponent<Image>().color = white;
+            specialsEnabled = true;
         }
         else
         {

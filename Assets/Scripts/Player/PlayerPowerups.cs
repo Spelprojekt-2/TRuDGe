@@ -110,11 +110,12 @@ public class PlayerPowerups : MonoBehaviour
                 //gasTankCounter.text = "Gastanks: " + gasTankAmount;
                 if (usingTurbo)
                 {
-                    normalTopSpeedModifier += 0.1f;
+                    normalTopSpeedModifier += 0.05f;
                 }
                 else
                 {
-                    GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.1f;
+                    GetComponent<PlayerMovement>().externalTopSpeedModifier += 0.05f;
+                    GetComponent<PlayerMovement>().AccelerationGasModifier += 0.015f;
                 }
             }
         }
@@ -270,6 +271,10 @@ public class PlayerPowerups : MonoBehaviour
         type = null;
         usedPowerUp = false;
         PowerUpUIUpdate();
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f;
+        normalTopSpeedModifier = 1;
+        GetComponent<PlayerMovement>().AccelerationGasModifier = 1f;
+        
         //gasTankCounter.text = "Gastanks: 0";
     }
     
@@ -298,8 +303,10 @@ public class PlayerPowerups : MonoBehaviour
 
         //Debug.Log("ExternalTopSpeed before changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
 
-        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f + (0.1f * gasTankAmount); //Halverar topspeed
-        normalTopSpeedModifier = 1f + +(0.1f * gasTankAmount);
+        GetComponent<PlayerMovement>().externalTopSpeedModifier = 1f + (0.05f * gasTankAmount); //Halverar topspeed
+        normalTopSpeedModifier = 1f + +(0.05f * gasTankAmount);
+        GetComponent<PlayerMovement>().AccelerationGasModifier = 1f + (0.015f * gasTankAmount); //Halverar topspeed
+        
 
         //Debug.Log("ExternalTopSpeed after changes: " + GetComponent<PlayerMovement>().externalTopSpeedModifier);
     }
@@ -315,7 +322,7 @@ public class PlayerPowerups : MonoBehaviour
         playerMovement.externalAccelerationModifier = 1.75f;
         playerMovement.externalTopSpeedModifier = 2f;
         playerMovement.externalIgnoreInAirAccelerationModifier = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
 
         playerMovement.externalAccelerationModifier = normalAccelerationModifier;
         playerMovement.externalTopSpeedModifier = normalTopSpeedModifier;
