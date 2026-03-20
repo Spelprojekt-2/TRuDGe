@@ -31,6 +31,18 @@ public class UIButton : MonoBehaviour
         GetComponent<Button>().onClick?.Invoke();
     }
 
+    public void OnHighlighted()
+    {
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectTimeTrial)
+        {
+            
+        }
+    }
+    public void OnUnhighlighted()
+    {
+        
+    }
+
     public UIButton SwapUpSelection() => SwapUp;
     public UIButton SwapDownSelection() => SwapDown;
     public UIButton SwapRightSelection() => SwapRight;

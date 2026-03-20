@@ -46,11 +46,13 @@ public class TrainingGroundReady : MonoBehaviour
             bool isController = GetComponent<PlayerInput>().currentControlScheme == "Gamepad";
             if (isController)
             {
+                PrereadyText.GetComponent<TextMeshProUGUI>().text = "You are in the Training Ground!\nPress [Select] to race!";
                 KBMInputs.SetActive(false);
                 ControllerInputs.SetActive(true);
             }
             else
             {
+                PrereadyText.GetComponent<TextMeshProUGUI>().text = "You are in the Training Ground!\nPress [Enter] to race!";
                 KBMInputs.SetActive(true);
                 ControllerInputs.SetActive(false);
             }
