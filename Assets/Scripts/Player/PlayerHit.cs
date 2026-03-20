@@ -25,7 +25,7 @@ public class PlayerHit : MonoBehaviour
         transform.root.GetComponentInChildren<PlayerMovement>().canTurn = false;
         transform.root.GetComponentInChildren<PlayerShooting>().isShot = true;
         isInvincible = true;
-        anim.Play("Spin");
+        anim.SetTrigger("Hit");
         ninaWrenches.StartCoroutine(ninaWrenches.LaunchWrenches());
     }
 

@@ -27,7 +27,7 @@ public class PlayerCamera : MonoBehaviour
 
     [Header("---Auto Aim Settings---")]
     public  Transform forOthersAimPoint;
-    private Transform currentTarget = null;
+    public Transform CurrentTarget { get; private set; } = null;
     public LayerMask smokeLayer;
 
     [Tooltip("If the value is max, the camera will move if the crosshair is moved even slightly, if the value decreases the camera will be clamped to look forward until the crosshair enters a certain distance close to the edge.")]
@@ -86,17 +86,17 @@ public class PlayerCamera : MonoBehaviour
             cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
         }
 
-        currentTarget = autoAim.GetTarget();
-        if (currentTarget != null && IsTargetBlockedBySmoke(currentTarget))
+        CurrentTarget = autoAim.GetTarget();
+        if (CurrentTarget != null && IsTargetBlockedBySmoke(CurrentTarget))
         {
-            currentTarget = null;
+            CurrentTarget = null;
         }
 
-        if (currentTarget != oldTarget)
+        if (CurrentTarget != oldTarget)
         {
             crosshair.GetComponent<Image>().enabled = true;
 
-            if (currentTarget != null)
+            if (CurrentTarget != null)
             {
                 StartCoroutine(FocusOnTarget());
                 lookingAtTarget = true;
@@ -108,9 +108,9 @@ public class PlayerCamera : MonoBehaviour
                 if (TryGetComponent<PlayerShooting>(out var ps)) ps.speedMultiplier = 1f;
             }
 
-            oldTarget = currentTarget;
+            oldTarget = CurrentTarget;
         }
-        else if (currentTarget != null)
+        else if (CurrentTarget != null)
         {
             crosshair.GetComponent<Image>().enabled = true;
 
@@ -120,7 +120,7 @@ public class PlayerCamera : MonoBehaviour
                 lookingAtTarget = true;
             }
 
-            Vector3 screenPos = cam.WorldToScreenPoint(currentTarget.position);
+            Vector3 screenPos = cam.WorldToScreenPoint(CurrentTarget.position);
 
             if (screenPos.z > 0)
             {
