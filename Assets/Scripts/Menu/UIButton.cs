@@ -59,7 +59,7 @@ public class UIButton : MonoBehaviour
         //Play videos on trackselect
         if (SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectTimeTrial)
         {
-            if (cams[0] == null || cams[1] == null || cams[2] == null) return;
+            if (cams == null || cams.Length < 3) return;
             string tx = GetComponentInChildren<TextMeshProUGUI>().text;
             switch (tx)
             {
@@ -75,6 +75,7 @@ public class UIButton : MonoBehaviour
                     cams[2].depth = 101;
                     cams[0].depth = 100;
                     cams[1].depth = 100; break;
+                default: return; break;
             }
         }
     }

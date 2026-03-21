@@ -262,9 +262,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1245238780}
   - {fileID: 1485215866}
   - {fileID: 1272896575}
-  - {fileID: 1245238780}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &73973486
@@ -1438,6 +1438,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &320227852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,7 +1554,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1631,6 +1632,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &343455804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2453,6 +2455,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &669852222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3204,6 +3207,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &779937781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4187,6 +4191,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &915238902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4455,6 +4460,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &920074064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6313,6 +6319,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &1457625810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6559,6 +6566,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &1504533044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7049,6 +7057,7 @@ GameObject:
   - component: {fileID: 1548941956}
   - component: {fileID: 1548941955}
   - component: {fileID: 1548941959}
+  - component: {fileID: 1548941960}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -7177,6 +7186,23 @@ MonoBehaviour:
   ReadyTextP4: {fileID: 0}
   preselectPlayer: []
   initialSelection: {fileID: 0}
+--- !u!114 &1548941960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548941954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb587d1db57bd44e8c52b11390c7b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videos:
+  - {fileID: 1245238781}
+  - {fileID: 1485215867}
+  - {fileID: 1272896576}
+  img: {fileID: 589475075}
 --- !u!1 &1626889389
 GameObject:
   m_ObjectHideFlags: 0
@@ -7497,6 +7523,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &1678465493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8571,6 +8598,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &1999517780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9123,6 +9151,7 @@ MonoBehaviour:
   characterStats:
   - {fileID: 0}
   characterSprites: []
+  cams: []
 --- !u!114 &2106053514
 MonoBehaviour:
   m_ObjectHideFlags: 0
