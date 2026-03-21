@@ -24,6 +24,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject[] characterSprites;
 
     //Trackselect video
+    [SerializeField] private Camera[] cams;
     private static VideoPlayer currentVid;
     void Awake()
     {
@@ -58,23 +59,23 @@ public class UIButton : MonoBehaviour
         //Play videos on trackselect
         if (SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectTimeTrial)
         {
-            VideoPlayer newVid = GetComponent<VideoPlayer>();
-            if (newVid == null) return;
-
-            float time = Random.Range(0, (float)newVid.length - 10);
-            newVid.time = time;
-            newVid.Play();
-            StartCoroutine(Transition(newVid));
+            if (cams[0] == null || cams[1] == null || cams[2] == null) return;
+            string tx = GetComponentInChildren<TextMeshProUGUI>().text;
+            switch (tx)
+            {
+                case "Schlammrennstrecke": 
+                    cams[0].depth = 101;
+                    cams[1].depth = 100;
+                    cams[2].depth = 100; break;
+                case "Cliffs of Dover":
+                    cams[1].depth = 101;
+                    cams[0].depth = 100;
+                    cams[2].depth = 100; break;
+                case "Luminen TRT":
+                    cams[2].depth = 101;
+                    cams[0].depth = 100;
+                    cams[1].depth = 100; break;
+            }
         }
-    }
-    private IEnumerator Transition(VideoPlayer newVid)
-    {
-        yield return null;
-        if (currentVid != null && currentVid != newVid)
-        {
-            //yield return new WaitForSeconds(0.35f);
-            currentVid.Stop();
-        }
-        currentVid = newVid;
     }
 }
