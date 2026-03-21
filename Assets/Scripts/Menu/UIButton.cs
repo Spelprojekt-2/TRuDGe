@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.Video;
+using System.Collections;
 
 public class UIButton : MonoBehaviour
 {
@@ -21,6 +23,8 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject[] characterStats;
     [SerializeField] private GameObject[] characterSprites;
 
+    //Trackselect video
+    private static VideoPlayer currentVid;
     void Awake()
     {
         button = GetComponent<Button>();
@@ -29,18 +33,6 @@ public class UIButton : MonoBehaviour
     public void Click()
     {
         GetComponent<Button>().onClick?.Invoke();
-    }
-
-    public void OnHighlighted()
-    {
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectTimeTrial)
-        {
-            
-        }
-    }
-    public void OnUnhighlighted()
-    {
-        
     }
 
     public UIButton SwapUpSelection() => SwapUp;
@@ -63,5 +55,26 @@ public class UIButton : MonoBehaviour
                 characterSprites[playerIndex]?.SetActive(state);
             }
         }
+        //Play videos on trackselect
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectTimeTrial)
+        {
+            VideoPlayer newVid = GetComponent<VideoPlayer>();
+            if (newVid == null) return;
+
+            float time = Random.Range(0, (float)newVid.length - 10);
+            newVid.time = time;
+            newVid.Play();
+            StartCoroutine(Transition(newVid));
+        }
+    }
+    private IEnumerator Transition(VideoPlayer newVid)
+    {
+        yield return null;
+        if (currentVid != null && currentVid != newVid)
+        {
+            yield return new WaitForSeconds(0.35f);
+            currentVid.Stop();
+        }
+        currentVid = newVid;
     }
 }
