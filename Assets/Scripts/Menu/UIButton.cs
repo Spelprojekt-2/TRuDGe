@@ -72,7 +72,7 @@ public class UIButton : MonoBehaviour
         yield return null;
         if (currentVid != null && currentVid != newVid)
         {
-            yield return new WaitForSeconds(0.35f);
+            //yield return new WaitForSeconds(0.35f);
             currentVid.Stop();
         }
         currentVid = newVid;
