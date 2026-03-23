@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.Video;
+using System.Collections;
 
 public class UIButton : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class UIButton : MonoBehaviour
     public GameObject characterDescription;
     private CharacterStats Stats;
 
-    [Header ("Character Info")]
+    [Header ("Character Info for selection")]
     [SerializeField] private GameObject[] characterBackgrounds;
     [SerializeField] private GameObject[] characterText;
     [SerializeField] private GameObject[] characterStats;
@@ -50,6 +52,14 @@ public class UIButton : MonoBehaviour
                 characterStats[playerIndex]?.SetActive(state);
                 characterSprites[playerIndex]?.SetActive(state);
             }
+        }
+        //Play videos on trackselect
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectTimeTrial)
+        {
+            GameObject canvas = GameObject.Find("-Videos-");
+            TrackSelectVideo tsv = canvas.GetComponent<TrackSelectVideo>();
+            string tx = GetComponentInChildren<TextMeshProUGUI>().text;
+            tsv.ChangeVideo(tx);
         }
     }
 }

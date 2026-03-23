@@ -41,7 +41,8 @@ public class PlayerCamera : MonoBehaviour
     private Vector2 screenSize;
     private Vector2 panningDist;
     private Vector2 lookInputVector;
-    private bool isPressingLookBack, isPressingResetCrosshair;
+    public bool isPressingLookBack;
+    private bool isPressingResetCrosshair;
     private bool isController = false;
     private Quaternion camStartRotOffset;
     private bool lookingAtTarget = false;

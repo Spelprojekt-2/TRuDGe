@@ -52,6 +52,8 @@ public class ShudderChat : MonoBehaviour
             "Microslop",
             "UBIMAD",
             "FREAKBOB",
+            "Peo",
+            "Nejlikor",
             //gruppens dc
             "Massiv",
             "arrerino",
