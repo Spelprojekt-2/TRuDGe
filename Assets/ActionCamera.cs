@@ -23,7 +23,7 @@ public class ActionCamera : MonoBehaviour
         cameraTargets = GameObject.FindGameObjectsWithTag("RotationPivot");
         */
 
-        if (cameraTargets.Length == 0)
+        if (cameraTargets.Length == 0 && cameraPositions.Length == 0)
         {
             return;
         }
