@@ -43385,6 +43385,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7628344030724533552, guid: 1b140b9ea57fac140913602914ba6b4f, type: 3}
   m_PrefabInstance: {fileID: 1088041658}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &508707707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1507636620937791777, guid: 7097ba7ba649e1f41bba232312bdcbd8, type: 3}
+  m_PrefabInstance: {fileID: 265064805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &508849783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125676,6 +125681,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2535954103604261516, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
+      propertyPath: reflectionPlane
+      value: 
+      objectReference: {fileID: 508707707}
     - target: {fileID: 2535954103604261519, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
       propertyPath: m_Name
       value: WaterReflectionCamera

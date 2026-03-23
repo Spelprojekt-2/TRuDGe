@@ -34,6 +34,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private float airstrikeForwardOffset;
     [SerializeField] private GameObject deployedWall;
     [SerializeField] private GameObject scatterShot;
+    [SerializeField] private Transform barrelPosition;
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldTimer = 4f;
 
@@ -177,7 +178,7 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.scatterShot:
                 onScatterShot.Invoke();
-                GameObject scatterShotSpawned = Instantiate(scatterShot, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.LookRotation(transform.forward));
+                GameObject scatterShotSpawned = Instantiate(scatterShot, barrelPosition.position, barrelPosition.rotation);
                 foreach (var projectile in scatterShotSpawned.GetComponentsInChildren<Projectile>())
                 {
                     projectile.PrepareProjectile(gameObject, null, 1);
