@@ -5,6 +5,7 @@ public class PlayerHit : MonoBehaviour
     [SerializeField] private float hitSpeedMultiplier;
     [SerializeField] private float invincibilityDuration;
     [SerializeField] private Animator anim;
+    [SerializeField] private NinaMechanic ninaWrenches;
     private float invincibilityTimer;
     private bool isInvincible;
 
@@ -24,7 +25,8 @@ public class PlayerHit : MonoBehaviour
         transform.root.GetComponentInChildren<PlayerMovement>().canTurn = false;
         transform.root.GetComponentInChildren<PlayerShooting>().isShot = true;
         isInvincible = true;
-        anim.Play("Spin");
+        anim.SetTrigger("Hit");
+        ninaWrenches.StartCoroutine(ninaWrenches.LaunchWrenches());
     }
 
     private void FixedUpdate()

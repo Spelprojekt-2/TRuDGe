@@ -8,14 +8,14 @@ using Image = UnityEngine.UI.Image;
 public class PlayerShooting : MonoBehaviour
 {
 
-    [SerializeField] private Image shootCooldown;
+    [SerializeField] public Image shootCooldown;
     
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform barrelPosition;
     [SerializeField] private RectTransform crosshair;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private Canvas canvas;
-    private float timer = 0;
+    public float timer = 0;
     private bool isShooting = false;
     [SerializeField] private LayerMask excludeLayers;
     [SerializeField] private PlayerCamera playerCam;
@@ -28,7 +28,7 @@ public class PlayerShooting : MonoBehaviour
     private void Start()
     {
         timer = fireRate;
-        shootCooldown.fillAmount = 1f;
+        shootCooldown.fillAmount = 0f;
         autoAim = GetComponentInChildren<AutoAimCone>();
 
         // Get PlayerAudio.
@@ -81,6 +81,10 @@ public class PlayerShooting : MonoBehaviour
 
         // Play shoot audio
         playerAudio.ShootStart();
+
+        //Napoleon
+        NapoleonRespect nr = transform.root.GetComponentInChildren<NapoleonRespect>();
+        nr.StartCoroutine(nr.LowerRespect());
     }
 
     private Vector3 GetTargetDir()

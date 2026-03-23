@@ -43,7 +43,10 @@ public class MenuController : MonoBehaviour
             case SceneController.SceneType.TrackSelectTimeTrial:
                 CoroutineRunner.Run(SelectObject(initialSelection));
                 break;
-
+            case SceneController.SceneType.PlayerSelectRace:
+                //MainMenuWaitForUIPopulation();
+                CoroutineRunner.Run(SelectObject(initialSelection));
+                break;
         }
     }
 

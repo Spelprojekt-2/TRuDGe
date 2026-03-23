@@ -1,12 +1,96 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CharacterSpecials : MonoBehaviour
 {
-    public void Start()
-    {
-        int playerIndex = GetComponent<RacerData>().index;
-        
-    }
+    [SerializeField] private LarsMessage lm;
+    [SerializeField] private NinaMechanic nm;
+    [SerializeField] private NapoleonRespect nr;
+    [SerializeField] private ShudderChat sc;
+    [SerializeField] private RacerData rd;
+    [SerializeField] private TextMeshProUGUI toggleText;
+    [SerializeField] private GameObject controller;
+    [SerializeField] private GameObject kbm;
+    private bool specialsEnabled = true;
 
-    //Will be character specials here, Shudder chat exists in selectionscreenscript
+    void Start()
+    {
+        SceneController.instance.SceneChangeEvent += OnSceneLoaded;
+    }
+    void OnSceneLoaded()
+    {
+        if (!SceneController.instance.IsMenu && SceneManager.GetActiveScene().name != "SingleplayerTG")
+        {
+            toggleText.text = "Toggle special with:";
+            bool isController = transform.root.GetComponentInChildren<PlayerInput>().currentControlScheme == "Gamepad";
+            if (isController)
+            {
+                kbm.SetActive(false);
+                controller.SetActive(true);
+            }
+            else
+            {
+                kbm.SetActive(true);
+                controller.SetActive(false);
+            }
+            switch (rd.racername)
+            {
+                case "Lars-Göran": lm.toggleMessage(true); break;
+                case "The Brass Beast": nm.toggleWrenches(true); break;
+                case "King Napoleon III": nr.toggleRespect(true); break;
+                case "Capôw": sc.EnableChat(true); break;
+            }
+            Color32 white = new Color32(255,255,255,255);
+            toggleText.color = white;
+            controller.GetComponent<Image>().color = white;
+            kbm.GetComponent<Image>().color = white;
+            specialsEnabled = true;
+        }
+        else
+        {
+            toggleText.text = "";
+            kbm.SetActive(false);
+            controller.SetActive(false);
+        }
+    }
+    void OnDisable()
+    {
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
+    }
+    public void ToggleCharacterSpecials()
+    {
+        if (specialsEnabled)
+        {
+            switch (rd.racername)
+            {
+                case "Lars-Göran": lm.toggleMessage(false); break;
+                case "The Brass Beast": nm.toggleWrenches(false); break;
+                case "King Napoleon III": nr.toggleRespect(false); break;
+                case "Capôw": sc.EnableChat(false); break;
+            }
+            Color32 transparent = new Color32(255,255,255,50);
+            toggleText.color = transparent;
+            controller.GetComponent<Image>().color = transparent;
+            kbm.GetComponent<Image>().color = transparent;
+            specialsEnabled = false;
+        }
+        else
+        {
+            switch (rd.racername)
+            {
+                case "Lars-Göran": lm.toggleMessage(true); break;
+                case "The Brass Beast": nm.toggleWrenches(true); break;
+                case "King Napoleon III": nr.toggleRespect(true); break;
+                case "Capôw": sc.EnableChat(true); break;
+            }
+            Color32 white = new Color32(255,255,255,255);
+            toggleText.color = white;
+            controller.GetComponent<Image>().color = white;
+            kbm.GetComponent<Image>().color = white;
+            specialsEnabled = true;
+        }
+    }
 }

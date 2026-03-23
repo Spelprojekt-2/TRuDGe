@@ -22,25 +22,25 @@ public class CharacterStats : MonoBehaviour
             string selectedCharacter = characterName.text;
             if (selectedCharacter == "Lars-Göran")
             {
-                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
+                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.4f;
+                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.2f;
+                accelerationSlider[playerIndex].GetComponent<Slider>().value = 1f;
                 maxGasSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
                 shotCooldownSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
             }
             else if (selectedCharacter == "The Brass Beast")
             {
-                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
+                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.2f;
+                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.8f;
+                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.3f;
                 maxGasSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
                 shotCooldownSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
             }
             else if (selectedCharacter == "Capôw")
             {
-                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
+                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.7f;
+                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.4f;
+                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.6f;
                 maxGasSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
                 shotCooldownSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
             }
@@ -54,9 +54,9 @@ public class CharacterStats : MonoBehaviour
             }
             else if (selectedCharacter == "King Napoleon III")
             {
-                charismaSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
-                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
+                charismaSlider[playerIndex].GetComponent<Slider>().value = 0f;
+                topSpeedSlider[playerIndex].GetComponent<Slider>().value = 0.4f;
+                accelerationSlider[playerIndex].GetComponent<Slider>().value = 0.7f;
                 maxGasSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
                 shotCooldownSlider[playerIndex].GetComponent<Slider>().value = 0.5f;
             }
