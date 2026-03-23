@@ -8582,6 +8582,8 @@ MonoBehaviour:
   startingLine: {fileID: 1307901372}
   timeBeforeStartCountdown: 6
   countdownText: {fileID: 1394884666}
+  SwapSceneAfterRaceTime: 5
+  FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 5404573993507513911, guid: 7770d74a3584b8a4ba34f624e6b75de1, type: 3}
 --- !u!4 &219024937
 Transform:
@@ -77498,6 +77500,38 @@ PrefabInstance:
     - target: {fileID: 666162726931117618, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
       propertyPath: m_LocalPosition.z
       value: -98
+      objectReference: {fileID: 0}
+    - target: {fileID: 2169620823167263549, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.73596
+      objectReference: {fileID: 0}
+    - target: {fileID: 2169620823167263549, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2169620823167263549, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -50.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462908841475559503, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.60402
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462908841475559503, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.60402
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462908841475559503, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.60402
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462908841475559503, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -42.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462908841475559503, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 61.5
       objectReference: {fileID: 0}
     - target: {fileID: 3900180539080900644, guid: 45e91482a5f121d4dbdaf60d208a6764, type: 3}
       propertyPath: m_Name
