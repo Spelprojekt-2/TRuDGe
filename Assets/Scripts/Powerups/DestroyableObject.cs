@@ -23,13 +23,13 @@ public class DestroyableObject : MonoBehaviour
         }
     }
 
-    public void OnChildHit(int index)
+    public void OnChildHit(int index, Vector3 hitDirection)
     {
         wallHealth[index]--;
 
         if (wallHealth[index] <= 0)
         {
-            GameObject particle = Instantiate(destructParticle, walls[index].transform.position, Quaternion.Euler(walls[index].transform.rotation.x, walls[index].transform.rotation.y, walls[index].transform.rotation.z));
+            GameObject particle = Instantiate(destructParticle, walls[index].transform.position, Quaternion.LookRotation(hitDirection));
             Destroy(particle, 2);
             Destroy(walls[index]);
 
@@ -57,6 +57,7 @@ public class WallChildListener : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Vector3 hitDirection = (transform.position - other.transform.position).normalized;
         if (other.CompareTag("Shield") && !wasHit)
         {
             wasHit = true;
@@ -65,7 +66,7 @@ public class WallChildListener : MonoBehaviour
             hit.HitShield();
             Destroy(other.gameObject);
 
-            mainScript.OnChildHit(myIndex);
+            mainScript.OnChildHit(myIndex, hitDirection);
         }
         
         if (other.CompareTag("Player") && !wasHit)
@@ -74,13 +75,13 @@ public class WallChildListener : MonoBehaviour
             Debug.Log("Hit player" + other.name);
             var rb = other.transform.root.gameObject.GetComponentInChildren<Rigidbody>();
             rb.linearVelocity *= velocityChange;
-            mainScript.OnChildHit(myIndex);
+            mainScript.OnChildHit(myIndex, hitDirection);
         }
 
         if (other.CompareTag("Projectile") && !wasHit)
         {
             wasHit = true;
-            mainScript.OnChildHit(myIndex);
+            mainScript.OnChildHit(myIndex, -hitDirection);
         }
     }
 }
