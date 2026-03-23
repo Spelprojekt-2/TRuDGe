@@ -184,14 +184,8 @@ public class PlayerAudio : MonoBehaviour
         }
     }
 
-    public void ShieldBreakAudio(bool wasHit)
+    public void ShieldBreakAudio()
     {
-        // Play shield break
-        interactablesAudio.PlayShieldBreakAudio();
-
-        // Should we keep playing the tick sound?
-        if (!wasHit && Time.time < shieldStopTime)
-            return; // Keep playing sound and ignore stacked shields.
         shieldStopTime = 0f;
     }
 
@@ -222,9 +216,9 @@ public class PlayerAudio : MonoBehaviour
             shieldInst.release();
         }
 
+        interactablesAudio.PlayShieldBreakAudio();
         hasShield = false;
         shieldRoutine = null;
-        ShieldBreakAudio(false);
     }
 
     public void PlayTurboAudio()

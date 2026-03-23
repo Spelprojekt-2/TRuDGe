@@ -24,7 +24,7 @@ public class PlayerHit : MonoBehaviour
         invincibilityTimer = invincibilityDuration;
         isInvincible = true;
 
-        playerAudio.ShieldBreakAudio(true); // Play shield break audio
+        playerAudio.ShieldBreakAudio(); // Play shield break audio
     }
     public void Hit(bool ignoreInvincibility)
     {
