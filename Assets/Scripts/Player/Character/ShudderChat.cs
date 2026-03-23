@@ -208,6 +208,15 @@ public class ShudderChat : MonoBehaviour
             "stream better than video",
             "Côôpa, when do you intend to win?",
             "trust the process guys",
+            "[Message removed by moderator.]",
+            "ooh im straight up trudgeing it",
+            "Group6 will never lock in",
+            "Hey, I'm a small streamer and if you would please give me a shoutout it would help me so much please please please",
+            "Is that an airstike or orbital lazer?",
+            "Is Lars still single?",
+            "We last longer on friday night",
+            "Fat explosions",
+            "Burn in hell Goffman",
             "its windy out here"
         };
 
