@@ -100,7 +100,7 @@ public class UISelection : MonoBehaviour
     {
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
-        if (context.performed && SceneManager.GetActiveScene().name != "CharacterScreen")
+        //if (context.performed && SceneManager.GetActiveScene().name != "CharacterScreen")
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
             string charname = (textObj != null) ? textObj.text : null;
@@ -109,7 +109,8 @@ public class UISelection : MonoBehaviour
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
             lastSelection = selection;
-
+            
+            
             if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
             {
                 selection.enabled = false;
@@ -146,11 +147,11 @@ public class UISelection : MonoBehaviour
                     racerData.SetName(selectedCharacter);
                     }
                 }
-    
+            }
             UpdateButtons();
-        }
-        else if (SceneManager.GetActiveScene().name == "CharacterScreen")
-        selection.Click();
+        
+        //else if (SceneManager.GetActiveScene().name == "CharacterScreen")
+        //selection.Click();
     }
     public void MouseClicked(InputAction.CallbackContext context)
     {
