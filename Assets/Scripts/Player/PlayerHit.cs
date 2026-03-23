@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerHit : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class PlayerHit : MonoBehaviour
     [SerializeField] private float invincibilityDuration;
     [SerializeField] private Animator anim;
     [SerializeField] private NinaMechanic ninaWrenches;
+    [SerializeField] private UnityEvent hit;
+
     private float invincibilityTimer;
     private bool isInvincible;
 
@@ -18,6 +21,9 @@ public class PlayerHit : MonoBehaviour
     {
         if (isInvincible && !ignoreInvincibility) return;
         invincibilityTimer = 0;
+
+        hit.Invoke();
+
         Rigidbody rb = transform.root.GetComponentInChildren<Rigidbody>();
         rb.linearVelocity = new Vector3(rb.linearVelocity.x * hitSpeedMultiplier, rb.linearVelocity.y, rb.linearVelocity.z * hitSpeedMultiplier);
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);
@@ -25,7 +31,7 @@ public class PlayerHit : MonoBehaviour
         transform.root.GetComponentInChildren<PlayerMovement>().canTurn = false;
         transform.root.GetComponentInChildren<PlayerShooting>().isShot = true;
         isInvincible = true;
-        anim.Play("Spin");
+        anim.SetTrigger("Hit");
         ninaWrenches.StartCoroutine(ninaWrenches.LaunchWrenches());
     }
 
