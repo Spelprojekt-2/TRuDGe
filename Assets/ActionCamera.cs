@@ -11,7 +11,9 @@ public class ActionCamera : MonoBehaviour
     private int currentCamera;
     [SerializeField] public float timer = 5f;
     private Camera cam;
-    private int index;
+    //private int index;
+    //private GameObject[] players;
+    //private GameObject closestPlayer;
     
     
     
@@ -38,6 +40,9 @@ public class ActionCamera : MonoBehaviour
         ChangeCameraPosition();
         
         
+        //players = GameObject.FindGameObjectsWithTag("Player");
+        
+        
         
         
     }
@@ -52,6 +57,33 @@ public class ActionCamera : MonoBehaviour
             ChangeCameraPosition();
             timer = 5;
         }
+        
+        /*
+        closestPlayer = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject player in players)
+        {
+            Vector3 diff = player.transform.position - position;
+            float currentDistance = diff.sqrMagnitude;
+            if (currentDistance < distance)
+            {
+                closestPlayer = player;
+                distance = currentDistance;
+                if (currentDistance < 500)
+                {
+                    ChangeCameraPosition();
+                }
+            }
+            
+        }
+        */
+        
+        
+        
+        
+
+
     }
 
     
