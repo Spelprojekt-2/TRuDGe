@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 using static UnityEditor.PlayerSettings;
@@ -19,11 +20,19 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference SmokeRef;
     [SerializeField] private EventReference ShieldRef;
     [SerializeField] private EventReference WallPlaceRef;
-    [SerializeField] private EventReference WallDestroyRef;
     [SerializeField] private EventReference ScatterShotRef;
     [SerializeField] private EventReference TurboRef;
     [SerializeField] private EventReference AirstrikeRef;
+
+    [Header("Duration handlers")]
+    [SerializeField] private EventReference ShieldDurationRef;
     #endregion
+
+    public EventInstance SetPowerupDuration(EventInstance instance, float duration)
+    {
+        instance.setParameterByName("PowerupDuration", duration);
+        return instance;
+    }
 
     public void PlayPickupAudio(PlayerPowerups.PowerUpType powerUpType)
     {
@@ -95,7 +104,7 @@ public class InteractablesAudio : ScriptableObject
         RuntimeManager.PlayOneShot(SmokeRef, pos.position);
     }
 
-    public void PlayShieldAudio()
+    public void PlayShieldUseAudio()
     {
         if (ShieldRef.IsNull)
         {
@@ -103,6 +112,19 @@ public class InteractablesAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(ShieldRef);
+    }
+
+    public EventInstance ShieldDurationAudio(EventInstance instance)
+    {
+        if (ShieldDurationRef.IsNull)
+        {
+            Debug.LogError("InteractablesAudio: ShieldDurationRef is missing!");
+            return instance;
+        }
+
+        instance = RuntimeManager.CreateInstance(ShieldDurationRef);
+        instance.start();
+        return instance;
     }
 
     public void PlaceWallAudio(Transform pos)
@@ -113,16 +135,6 @@ public class InteractablesAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(WallPlaceRef, pos.position);
-    }
-
-    public void WallDestroyAudio(Vector3 pos)
-    {
-        if (WallDestroyRef.IsNull)
-        {
-            Debug.LogError("InteractablesAudio: WallDestroyRef is missing!");
-            return;
-        }
-        RuntimeManager.PlayOneShot(WallDestroyRef, pos);
     }
 
     public void ScatterShotAudio()
