@@ -161,8 +161,6 @@ public class PlayerAudio : MonoBehaviour
             return;
         }
 
-        interactablesAudio.PlayShieldUseAudio(); // Trigger usage sound
-
         float newStopTime = Time.time + shieldTimer;
 
         if (hasShield)
@@ -186,6 +184,17 @@ public class PlayerAudio : MonoBehaviour
         }
     }
 
+    public void ShieldBreakAudio(bool wasHit)
+    {
+        // Play shield break
+        interactablesAudio.PlayShieldBreakAudio();
+
+        // Should we keep playing the tick sound?
+        if (!wasHit && Time.time < shieldStopTime)
+            return; // Keep playing sound and ignore stacked shields.
+        shieldStopTime = 0f;
+    }
+
     private IEnumerator ShieldHandler()
     {
         while (Time.time < shieldStopTime)
@@ -194,7 +203,7 @@ public class PlayerAudio : MonoBehaviour
             float totalDuration = shieldStopTime - shieldStartTime;
 
             float normalized = Mathf.Clamp01(remaining / totalDuration);
-            Debug.Log("NORMAL:" + normalized);
+            //Debug.Log("NORMAL:" + normalized);
 
             if (shieldInst.isValid())
             {
@@ -215,6 +224,7 @@ public class PlayerAudio : MonoBehaviour
 
         hasShield = false;
         shieldRoutine = null;
+        ShieldBreakAudio(false);
     }
 
     public void PlayTurboAudio()

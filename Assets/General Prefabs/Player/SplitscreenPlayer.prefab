@@ -1598,6 +1598,8 @@ MonoBehaviour:
   input: {fileID: 4948547773746624805}
   rotationRoot: {fileID: 9156989860318698681}
   rotationIntensity: 5.06
+  shakeLength: 0.5
+  shakeIntensity: 1
   sensitivity: 1
   controllerSensMultiplier: 7.5
   bottomCrosshairLimit: 50
@@ -2100,7 +2102,19 @@ MonoBehaviour:
         m_CallState: 2
   onShield:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
+        m_TargetAssemblyTypeName: InteractablesAudio, Assembly-CSharp
+        m_MethodName: PlayShieldUseAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gasTank: {fileID: 6217824498448878911, guid: c9b621c7eb4b9bf4a87de1f7db61a1af, type: 3}
   magnetPickupRange: 30
   smokeScreen: {fileID: 8154719246734930020, guid: 4f71f723c744b6d49bf1ee8f8e2cf18c, type: 3}
@@ -2249,6 +2263,21 @@ MonoBehaviour:
   invincibilityDuration: 2
   anim: {fileID: 3469740517386081268}
   ninaWrenches: {fileID: 6013422152461682331}
+  hit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 778e1bb08d6cec145866e2f55468c5ee, type: 2}
+        m_TargetAssemblyTypeName: ImpactsAudio, Assembly-CSharp
+        m_MethodName: PlayTankImpact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7730791383982230208
 MonoBehaviour:
   m_ObjectHideFlags: 0
