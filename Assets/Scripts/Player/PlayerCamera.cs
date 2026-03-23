@@ -19,6 +19,8 @@ public class PlayerCamera : MonoBehaviour
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
     [Range(1, 10)]
     [SerializeField] private float rotationIntensity;
+    [SerializeField] private float shakeLength = 0.5f;
+    [SerializeField] private float shakeIntensity = 1f;
 
     [Header("---Aiming Settings---")]
     [SerializeField] float sensitivity;
@@ -44,6 +46,7 @@ public class PlayerCamera : MonoBehaviour
     private Quaternion camStartRotOffset;
     private bool lookingAtTarget = false;
     private Transform oldTarget;
+    private float shakeTime = 0f;
 
     [SerializeField] private string uiCameraTag = "UICamera";
 
@@ -70,6 +73,10 @@ public class PlayerCamera : MonoBehaviour
         autoAim = GetComponentInChildren<AutoAimCone>();
     }
 
+    public void ShakeCamera()
+    {
+        shakeTime = shakeLength;
+    }
 
     void LateUpdate()
     {
@@ -84,6 +91,18 @@ public class PlayerCamera : MonoBehaviour
         else
         {
             cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+        }
+
+        // Shake camera
+        if (shakeTime > 0)
+        {
+            cameraHolder.localRotation = Quaternion.Euler(
+                new Vector3(
+                    Random.Range(-shakeIntensity, shakeIntensity),
+                    Random.Range(-shakeIntensity, shakeIntensity),
+                    Random.Range(-shakeIntensity, shakeIntensity)
+                    )) * cameraHolder.localRotation;
+            shakeTime -= Time.deltaTime;
         }
 
         CurrentTarget = autoAim.GetTarget();
