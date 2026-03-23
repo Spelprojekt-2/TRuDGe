@@ -6,42 +6,31 @@ using UnityEngine.EventSystems;
 
 public class TrackSelectVideo : MonoBehaviour
 {
-    [SerializeField] private VideoPlayer[] videos;
+    [SerializeField] private Camera[] cams;
     [SerializeField] private Image img;
-    int lastVideo = -1;
     void Start()
     {
-        //if (b.currentSelectionState == SelectionState.Selected)
-        //img.color = new Color32(0,0,0,255);
+        
     }
-    /*public void OnSelect(BaseEventData eventData)
+    public void ChangeVideo(string title)
     {
-        Debug.Log("AAAAAAAAAAAAAAA");
-    }*/
-    public void ChangeVideo()
-    {
-        int r;
-        do
-        {
-            r = Random.Range(0,videos.Length);
-        }
-        while (r == lastVideo);
-        lastVideo = r;
-
-        for (int i = 0; i < videos.Length; i++)
-        {
-            if (i == r)
+        if (cams == null || cams.Length < 3) return;
+        switch (title)
             {
-                float time = Random.Range(0, (float)videos[i].length - 17);
-                videos[i].Play();
-                videos[i].time += time;
-            }    
-            else
-            {
-                videos[i].Stop();
+                case "Schlammrennstrecke": 
+                    cams[0].depth = 101;
+                    cams[1].depth = 100;
+                    cams[2].depth = 100; break;
+                case "Cliffs of Dover":
+                    cams[1].depth = 101;
+                    cams[0].depth = 100;
+                    cams[2].depth = 100; break;
+                case "Luminen TRT":
+                    cams[2].depth = 101;
+                    cams[0].depth = 100;
+                    cams[1].depth = 100; break;
+                default: return; break;
             }
-                
-        }
     }
     public IEnumerator FadeOut()
     {
