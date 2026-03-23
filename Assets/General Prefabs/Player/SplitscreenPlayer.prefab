@@ -465,6 +465,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9189338741132390125}
+  - {fileID: 1077687112125083210}
   - {fileID: 2563408139579286964}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1257,7 +1258,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6952112585984081812}
-  - {fileID: 1077687112125083210}
   - {fileID: 9156989860318698681}
   - {fileID: 2595559165410895274}
   m_Father: {fileID: 4911964848692854880}
@@ -1598,6 +1598,10 @@ MonoBehaviour:
   input: {fileID: 4948547773746624805}
   rotationRoot: {fileID: 9156989860318698681}
   rotationIntensity: 5.06
+  cameraTranslationSpeed: 20
+  cameraRotationSpeed: 5
+  cameraShakeLength: 0.5
+  cameraShakeIntensity: 1
   sensitivity: 1
   controllerSensMultiplier: 7.5
   bottomCrosshairLimit: 50
@@ -2492,7 +2496,7 @@ Transform:
   m_Children:
   - {fileID: 7913166191568065603}
   - {fileID: 2687407152046443668}
-  m_Father: {fileID: 2563408139579286964}
+  m_Father: {fileID: 4911964848692854880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7266563552362869154
 GameObject:

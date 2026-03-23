@@ -19,6 +19,10 @@ public class PlayerCamera : MonoBehaviour
     [Tooltip("If the value is higher, the camera rotates further when mouse is near edge of screen")]
     [Range(1, 10)]
     [SerializeField] private float rotationIntensity;
+    [SerializeField] private float cameraTranslationSpeed = 10f;
+    [SerializeField] private float cameraRotationSpeed = 3f;
+    [SerializeField] private float cameraShakeLength = 0.5f;
+    [SerializeField] private float cameraShakeIntensity = 1f;
 
     [Header("---Aiming Settings---")]
     [SerializeField] float sensitivity;
@@ -44,6 +48,7 @@ public class PlayerCamera : MonoBehaviour
     private Quaternion camStartRotOffset;
     private bool lookingAtTarget = false;
     private Transform oldTarget;
+    private float cameraShakeTime = 0f;
 
     [SerializeField] private string uiCameraTag = "UICamera";
 
@@ -70,20 +75,32 @@ public class PlayerCamera : MonoBehaviour
         autoAim = GetComponentInChildren<AutoAimCone>();
     }
 
+    public void ShakeCamera()
+    {
+        cameraShakeTime = cameraShakeLength;
+    }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         panningDist *= 0.01f * rotationIntensity;
 
-        cameraHolder.transform.position = Vector3.Lerp(cameraHolder.transform.position, rotationRoot.transform.position, 10f * Time.deltaTime);
-        cameraHolder.transform.rotation = Quaternion.Slerp(cameraHolder.transform.rotation, rotationRoot.transform.rotation, 10f * Time.deltaTime);
+        cameraHolder.position = Vector3.Lerp(
+            cameraHolder.position, 
+            rotationRoot.position, 
+            cameraTranslationSpeed * Time.deltaTime);
+
+        cameraHolder.rotation = Quaternion.Slerp(
+            cameraHolder.rotation, 
+            player.rotation, 
+            cameraRotationSpeed * Time.deltaTime);
+
         if (isPressingLookBack)
         {
             cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, 180 + camStartRotOffset.eulerAngles.y + panningDist.x, 0);
         }
         else
         {
-            cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
+            // cameraHolder.transform.localRotation = Quaternion.Euler(camStartRotOffset.eulerAngles.x - panningDist.y, camStartRotOffset.eulerAngles.y + panningDist.x, 0);
         }
 
         CurrentTarget = autoAim.GetTarget();
