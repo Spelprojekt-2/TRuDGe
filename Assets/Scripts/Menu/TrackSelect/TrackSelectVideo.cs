@@ -7,10 +7,15 @@ using UnityEngine.EventSystems;
 public class TrackSelectVideo : MonoBehaviour
 {
     [SerializeField] private Camera[] cams;
-    [SerializeField] private Image img;
+    //[SerializeField] private VideoPlayer[] vp;
+    //[SerializeField] private Image img;
     void Start()
     {
-        
+        /*if (vp == null || vp.Length < 3) return;
+        for (int i = 0; i < vp.Length; i++)
+        {
+            vp[i].loopPointReached += Fade;
+        }*/
     }
     public void ChangeVideo(string title)
     {
@@ -32,6 +37,11 @@ public class TrackSelectVideo : MonoBehaviour
                 default: return; break;
             }
     }
+    /*private void Fade(VideoPlayer vp)
+    {
+        StartCoroutine(FadeOut());
+        StartCoroutine(FadeIn());
+    }
     public IEnumerator FadeOut()
     {
         for (int i = 148; i<256; i++)
@@ -47,5 +57,5 @@ public class TrackSelectVideo : MonoBehaviour
             img.color = new Color32(0,0,0,(byte)i);
             yield return new WaitForSeconds(0.007f);
         }
-    }
+    }*/
 }

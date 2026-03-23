@@ -17,7 +17,7 @@ public class UIButton : MonoBehaviour
     public GameObject characterDescription;
     private CharacterStats Stats;
 
-    [Header ("Character Info")]
+    [Header ("Character Info for selection")]
     [SerializeField] private GameObject[] characterBackgrounds;
     [SerializeField] private GameObject[] characterText;
     [SerializeField] private GameObject[] characterStats;
