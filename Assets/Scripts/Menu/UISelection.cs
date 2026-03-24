@@ -170,8 +170,9 @@ public class UISelection : MonoBehaviour
     {
         int playerIndex = GetComponent<RacerData>().index;
         if (!newButton || selection == newButton)
+        {
             return;
-
+        }
         if (selection) selection.SetHighlight(false, playerIndex);
         selection = newButton;
         selection.SetHighlight(true, playerIndex);
