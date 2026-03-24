@@ -100,7 +100,7 @@ public class RaceController : MonoBehaviour
                     racers[i].OnRaceStarted();
                     if (RacingInformation.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
                     if (countdownText) countdownText.gameObject.SetActive(false);
-                    timeForVO = Time.time;
+                    timeForVO = Time.time; // Voice lines time reset
                 }
             }
         }
@@ -146,6 +146,7 @@ public class RaceController : MonoBehaviour
             if (racersInOrder[i].racePosition != i + 1)
             {
                 racersInOrder[i].UpdatePosition(i + 1);
+                // Play Voice line
                 if (Time.time > timeForVO)
                 {
                     timeForVO = Time.time + VODelay;
