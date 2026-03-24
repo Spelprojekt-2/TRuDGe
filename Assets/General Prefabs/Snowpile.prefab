@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4228634218421866966}
   - component: {fileID: 3288067833239696579}
   - component: {fileID: 4525052667466532611}
+  - component: {fileID: 7182791548104356020}
   m_Layer: 0
   m_Name: Snowpile
   m_TagString: Untagged
@@ -122,3 +123,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityChange: 0.5
+--- !u!114 &7182791548104356020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5804472170395651188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc3b48e1d996044bbec1252ee18507b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 778e1bb08d6cec145866e2f55468c5ee, type: 2}
+        m_TargetAssemblyTypeName: ImpactsAudio, Assembly-CSharp
+        m_MethodName: PlaySnowImpact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
