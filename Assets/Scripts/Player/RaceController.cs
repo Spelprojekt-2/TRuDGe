@@ -152,11 +152,10 @@ public class RaceController : MonoBehaviour
                     timeForVO = Time.time + VODelay;
                     int r = Random.Range(0, 2);
                     switch (r)
-                {
-                    case 0: AudioManager.Instance.PlayFirstVO(racersInOrder[0].racername); break;
-                    case 1: AudioManager.Instance.PlayFirstANN(racersInOrder[0].racername); break;
-                    //default: AudioManager.Instance.PlayMetalPipe(); break;
-                }
+                    {
+                        case 0: AudioManager.Instance.PlayTakeLeadVO(racersInOrder[0].racername); break;
+                        case 1: AudioManager.Instance.PlayTakeLeadANN(racersInOrder[0].racername); break;
+                    }
                 }
             }
         }

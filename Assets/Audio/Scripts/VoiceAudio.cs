@@ -5,64 +5,122 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptables/Audio/Voice")]
 public class VoiceAudio : ScriptableObject
 {
-    [Header("Announcements")]
-    [SerializeField] private EventReference SchlammrennstreckeIntroRef;
-    [SerializeField] private EventReference CliffsOfDoverIntroRef;
-    [SerializeField] private EventReference LuminenTRTIntroRef;
+    [Header("ANN_Intros")]
+    [SerializeField] private EventReference SchlammrennstreckeIntro;
+    [SerializeField] private EventReference CliffsOfDoverIntro;
+    [SerializeField] private EventReference LuminenTRTIntro;
 
-    [Header("ANN_FirstPlace")]
-    [SerializeField] private EventReference ANN_Napoleon_First;
+    [Header("ANN_TakeLead")]
+    [SerializeField] private EventReference ANN_Napoleon_TakeLead;
+    [SerializeField] private EventReference ANN_Lars_TakeLead;
+    [SerializeField] private EventReference ANN_Carla_TakeLead;
+    [SerializeField] private EventReference ANN_Nina_TakeLead;
 
-    [Header("VO_FirstPlace")]
-    [SerializeField] private EventReference VO_Napoleon_First;
+    [Header("Character_TakeLead")]
+    [SerializeField] private EventReference Char_Napoleon_TakeLead;
+    [SerializeField] private EventReference Char_Lars_TakeLead;
+    [SerializeField] private EventReference Char_Carla_TakeLead;
+    [SerializeField] private EventReference Char_Nina_TakeLead;
 
+    #region Intro
     public EventInstance SchlammenstreckeIntroAudio(EventInstance instance)
     {
-        if (SchlammrennstreckeIntroRef.IsNull)
+        if (SchlammrennstreckeIntro.IsNull)
         {
             Debug.LogError("VoiceAudio: SchlammrennstreckeIntroRef is missing!");
             return instance;
         }
-        instance = RuntimeManager.CreateInstance(SchlammrennstreckeIntroRef);
+        instance = RuntimeManager.CreateInstance(SchlammrennstreckeIntro);
         instance.start();
         return instance;
     }
 
     public EventInstance CliffsOfDoverIntroAudio(EventInstance instance)
     {
-        if (CliffsOfDoverIntroRef.IsNull)
+        if (CliffsOfDoverIntro.IsNull)
         {
             Debug.LogError("VoiceAudio: CliffsOfDoverIntroRef is missing!");
             return instance;
         }
-        instance = RuntimeManager.CreateInstance(CliffsOfDoverIntroRef);
+        instance = RuntimeManager.CreateInstance(CliffsOfDoverIntro);
         instance.start();
         return instance;
     }
 
     public EventInstance LuminenTRTIntroAudio(EventInstance instance)
     {
-        if (LuminenTRTIntroRef.IsNull)
+        if (LuminenTRTIntro.IsNull)
         {
             Debug.LogError("VoiceAudio: LuminenTRTIntroRef is missing!");
             return instance;
         }
-        instance = RuntimeManager.CreateInstance(LuminenTRTIntroRef);
+        instance = RuntimeManager.CreateInstance(LuminenTRTIntro);
         instance.start();
         return instance;
     }
-    
-    public EventInstance ANN_NapoleonFirstPlace(EventInstance instance)
+    #endregion
+
+    #region Napoleon
+    public EventInstance ANN_NapoleonTakeLead(EventInstance instance)
     {
-        instance = RuntimeManager.CreateInstance(ANN_Napoleon_First);
+        instance = RuntimeManager.CreateInstance(ANN_Napoleon_TakeLead);
         instance.start();
         return instance;
     }
 
-    public EventInstance VO_NapoleonFirstPlace(EventInstance instance)
+    public EventInstance VO_NapoleonTakeLead(EventInstance instance)
     {
-        instance = RuntimeManager.CreateInstance(VO_Napoleon_First);
+        instance = RuntimeManager.CreateInstance(Char_Napoleon_TakeLead);
         instance.start();
         return instance;
     }
+    #endregion
+
+    #region Lars
+    public EventInstance ANN_LarsTakeLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(ANN_Lars_TakeLead);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance VO_LarsTakeLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Lars_TakeLead);
+        instance.start();
+        return instance;
+    }
+    #endregion
+
+    #region Carla
+    public EventInstance ANN_CarlaTakeLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(ANN_Carla_TakeLead);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance VO_CarlaTakeLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Carla_TakeLead);
+        instance.start();
+        return instance;
+    }
+    #endregion
+
+    #region Nina
+    public EventInstance ANN_NinaTakeLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(ANN_Nina_TakeLead);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance VO_NinaTakeLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Nina_TakeLead);
+        instance.start();
+        return instance;
+    }
+    #endregion
 }
