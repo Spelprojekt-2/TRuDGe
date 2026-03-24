@@ -26,10 +26,12 @@ public class MainMenuVideos : MonoBehaviour
         {
             if (i == r)
             {
-                StartCoroutine(FadeIn());
+                
                 float time = Random.Range(0, (float)videos[i].length - 17);
                 videos[i].Play();
+                videos[i].StepForward();
                 videos[i].time += time;
+                StartCoroutine(FadeIn());
                 StartCoroutine(FadeOut(time));
             }    
             else
@@ -37,20 +39,20 @@ public class MainMenuVideos : MonoBehaviour
                 
                 videos[i].Stop();
             }
-                
         }
     }
     private IEnumerator FadeOut(float time)
     {
-        yield return new WaitForSeconds(13.6f);
+        yield return new WaitForSeconds(14f);
         for (int i = 148; i<256; i++)
         {
             img.color = new Color32(0,0,0,(byte)i);
-            yield return new WaitForSeconds(0.007f);
+            yield return new WaitForSeconds(0.005f);
         }
     }
     private IEnumerator FadeIn()
     {
+        yield return new WaitForSeconds(0.3f);
         for (int i = 255;i>148;i--)
         {
             img.color = new Color32(0,0,0,(byte)i);
