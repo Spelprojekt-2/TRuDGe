@@ -80,6 +80,34 @@ PrefabInstance:
       propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7596434564535238132}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Stop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.ParticleSystem, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075224458996698583, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: grappleStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -96,3 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90bd5bdffdc81a04b96529c739e94a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &7596434564535238132 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4750278778906433942, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+  m_PrefabInstance: {fileID: 2920467382807061602}
+  m_PrefabAsset: {fileID: 0}
