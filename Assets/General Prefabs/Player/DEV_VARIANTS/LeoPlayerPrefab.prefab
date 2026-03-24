@@ -8,6 +8,102 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 4003848617028822708}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 4003848617028822708}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 4003848617028822708}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_FloatArgument
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_FloatArgument
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceStart.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceFinish.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516440824473505753, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: OnRaceSceneStarted.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_Name
       value: LeoPlayerPrefab
@@ -57,3 +153,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+--- !u!114 &4003848617028822708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5309196000907836840, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+  m_PrefabInstance: {fileID: 9096860823258143516}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
