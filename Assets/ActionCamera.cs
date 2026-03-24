@@ -50,7 +50,7 @@ public class ActionCamera : MonoBehaviour
         if (timer <= 0)
         {
             ChangeCameraPosition();
-            timer = 5;
+            timer = 10;
         }
     }
 
