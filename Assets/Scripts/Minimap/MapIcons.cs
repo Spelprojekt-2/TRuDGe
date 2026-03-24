@@ -10,14 +10,8 @@ public class MinimapIcons : MonoBehaviour
     [SerializeField] private GameObject iconPrefab;
 
     [Header("---Icon Settings---")]
+    [SerializeField] private Sprite[] playerIcons = new Sprite[4]; //Lars, Nina, Capow, Napoleon
     [SerializeField] private float iconScale = 1f;
-    [SerializeField] private Color[] playerColors = 
-    {
-        new Color32(255,25,25,255),
-        new Color32(50,200,50,255),
-        new Color32(255,255,0,255),
-        new Color32(0,190,255,255),
-    };
 
     private Dictionary<RacerData, RectTransform> iconMap = new Dictionary<RacerData, RectTransform>();
 
@@ -35,8 +29,8 @@ public class MinimapIcons : MonoBehaviour
 
 
 
-            float angle = racer.transform.eulerAngles.y;
-            iconMap[racer].localRotation = Quaternion.Euler(0, 0, -angle + 180); //Det m�ste vara -angle + 180 annars blir turningen inversed p� kartan
+            //float angle = racer.transform.eulerAngles.y;
+            //iconMap[racer].localRotation = Quaternion.Euler(0, 0, -angle + 180); //Det m�ste vara -angle + 180 annars blir turningen inversed p� kartan
         }
 
         var keysToRemove = iconMap.Keys.Where(r => r == null).ToList();
@@ -53,14 +47,31 @@ public class MinimapIcons : MonoBehaviour
         RectTransform rt = go.GetComponent<RectTransform>();
 
         rt.localScale = Vector3.one * iconScale;
-        rt.localScale = new Vector3(iconScale/2, iconScale, iconScale);
+        rt.localScale = new Vector3(iconScale, iconScale, iconScale);
 
         Image img = go.transform.Find("PlayerIcon").GetComponent<Image>();
         if (img != null)
         {
-            img.color = playerColors[iconMap.Count % playerColors.Length];
+            if (racer.racername != null)
+            {
+                switch (racer.racername)
+                {
+                    case "Lars-Göran":
+                        img.sprite = playerIcons[0];
+                        break;
+                    case "The Brass Beast":
+                        Debug.Log("Changed icon");
+                        img.sprite = playerIcons[1];
+                        break;
+                    case "Capôw":
+                        img.sprite = playerIcons[2];
+                        break;
+                    case "King Napoleon III":
+                        img.sprite = playerIcons[3];
+                        break;
+                }
+            }
         }
-
         iconMap.Add(racer, rt);
     }
 }
