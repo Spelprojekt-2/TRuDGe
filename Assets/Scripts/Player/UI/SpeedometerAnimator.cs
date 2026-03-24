@@ -14,6 +14,6 @@ public class SpeedometerAnimator : MonoBehaviour
         float topSpeed = playerMovement.GetTopSpeed(true);
 
         topSpeedImage.fillAmount = topSpeed/meterTopSpeed;
-        speedImage.fillAmount = speed/meterTopSpeed;
+        speedImage.fillAmount = Mathf.Lerp(speedImage.fillAmount, speed/meterTopSpeed, Time.deltaTime * 5f);
     }
 }
