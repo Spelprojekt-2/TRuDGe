@@ -22,6 +22,12 @@ public class VoiceAudio : ScriptableObject
     [SerializeField] private EventReference Char_Carla_TakeLead;
     [SerializeField] private EventReference Char_Nina_TakeLead;
 
+    [Header("Character_LostLead")]
+    [SerializeField] private EventReference Char_Napoleon_LostLead;
+    [SerializeField] private EventReference Char_Lars_LostLead;
+    [SerializeField] private EventReference Char_Carla_LostLead;
+    [SerializeField] private EventReference Char_Nina_LostLead;
+
     #region Intro
     public EventInstance SchlammenstreckeIntroAudio(EventInstance instance)
     {
@@ -74,6 +80,13 @@ public class VoiceAudio : ScriptableObject
         instance.start();
         return instance;
     }
+
+    public EventInstance VO_NapoleonLostLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Napoleon_LostLead);
+        instance.start();
+        return instance;
+    }
     #endregion
 
     #region Lars
@@ -87,6 +100,13 @@ public class VoiceAudio : ScriptableObject
     public EventInstance VO_LarsTakeLead(EventInstance instance)
     {
         instance = RuntimeManager.CreateInstance(Char_Lars_TakeLead);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance VO_LarsLostLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Lars_LostLead);
         instance.start();
         return instance;
     }
@@ -106,6 +126,13 @@ public class VoiceAudio : ScriptableObject
         instance.start();
         return instance;
     }
+
+    public EventInstance VO_CarlaLostLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Carla_LostLead);
+        instance.start();
+        return instance;
+    }
     #endregion
 
     #region Nina
@@ -119,6 +146,13 @@ public class VoiceAudio : ScriptableObject
     public EventInstance VO_NinaTakeLead(EventInstance instance)
     {
         instance = RuntimeManager.CreateInstance(Char_Nina_TakeLead);
+        instance.start();
+        return instance;
+    }
+
+    public EventInstance VO_NinaLostLead(EventInstance instance)
+    {
+        instance = RuntimeManager.CreateInstance(Char_Nina_LostLead);
         instance.start();
         return instance;
     }

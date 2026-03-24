@@ -305,6 +305,32 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
+
+    public void PlayLostLeadVO(string name)
+    {
+        if (char_vo_inst.isValid())
+        {
+            char_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            char_vo_inst.release();
+        }
+
+        string lower = name.ToLower();
+        switch (lower)
+        {
+            case "king napoleon iii":
+                char_vo_inst = voiceAudio.VO_NapoleonLostLead(char_vo_inst);
+                break;
+            case "lars-göran":
+                char_vo_inst = voiceAudio.VO_LarsLostLead(char_vo_inst);
+                break;
+            case "capôw":
+                char_vo_inst = voiceAudio.VO_CarlaLostLead(char_vo_inst);
+                break;
+            case "the brass beast":
+                char_vo_inst = voiceAudio.VO_NinaLostLead(char_vo_inst);
+                break;
+        }
+    }
     #endregion
 
     #region Ambience
