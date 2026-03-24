@@ -19,6 +19,9 @@ public class UISelection : MonoBehaviour
     public Color selectionColor;
     public RectTransform selectionHighlight;
 
+    //Main Menu
+    [SerializeField] private Image[] buttonBGs;
+
     private RacerData racerData;
     private bool stickHeld = false;
     private UIButton[] buttonsOnScene;
@@ -233,9 +236,13 @@ public class UISelection : MonoBehaviour
         if (selectionHighlight == null)
             return;
 
-        int playerIndex = GetComponent<RacerData>().index;
+        string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
+        bool bgs = tx.Length == 1;
+        if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
+        {
+             int playerIndex = GetComponent<RacerData>().index;
 
-        selectionColor = playerIndex switch
+            selectionColor = playerIndex switch
         {
             0 => new Color32(255,25,25,255),
             1 => new Color32(50,200,50,255),
@@ -252,12 +259,32 @@ public class UISelection : MonoBehaviour
         if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
         
-        UpdateAllHighlights();
-
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+        }
+        else
         {
+            if (button.transform != null)   
+            selectionHighlight.transform.SetParent(button.transform.parent);
+
+            lastSelection = selection;
+            if (lastSelection != null && lastSelection.buttonBackground != null && lastSelection.buttonBackground.gameObject.activeSelf)
+            lastSelection.buttonBackground.gameObject.SetActive(false);
+
+            if (!selection.buttonBackground.gameObject.activeSelf)
+            selection.buttonBackground.gameObject.SetActive(true);
+            
+            /*{
+                    switch (tx)
+                {
+                    case "Singleplayer": buttonBGs[0].gameObject.SetActive(true); break;
+                    case "Multiplayer": buttonBGs[1].gameObject.SetActive(true); break;
+                    case "Characters": buttonBGs[2].gameObject.SetActive(true); break;
+                    case "Controls": buttonBGs[3].gameObject.SetActive(true); break;
+                    case "Quit": buttonBGs[4].gameObject.SetActive(true); break;
+                }
+            }*/
             
         }
+        UpdateAllHighlights();
     }
     private void UpdateAllHighlights()
     {
