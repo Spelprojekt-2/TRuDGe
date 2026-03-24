@@ -217,7 +217,7 @@ public class RaceController : MonoBehaviour
     {
         yield return new WaitForSeconds(sec-5);
         RacerData lastRacer = racers.FirstOrDefault(r => r.lap < lapsOnThisTrack);
-        for (int i = 5; i > 1; i--)
+        for (int i = 5; i > 0; i--)
         {
             CoroutineRunner.Run(lastRacer.CountdownText(i.ToString(), i == 1));
             yield return new WaitForSeconds(1);
