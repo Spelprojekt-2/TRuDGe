@@ -62,38 +62,6 @@ public class TrainingGroundReady : MonoBehaviour
             KBMInputs.SetActive(false);
             ControllerInputs.SetActive(false);
         }
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.TrainingGround)
-        {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject p in players)
-            {
-                Transform lapimage = p.transform.Find("Canvas/LapImage");
-                if(lapimage != null)
-                lapimage.GetComponent<Image>().enabled = false;
-
-                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
-                if(posimage != null)
-                posimage.GetComponent<Image>().enabled = false;
-
-                Transform timer = p.transform.Find("Canvas/TimeTrialStuff/Timer");
-                if(timer != null)
-                timer.GetComponent<TextMeshProUGUI>().enabled = false;
-            }
-        }
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.Racing)
-        {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject p in players)
-            {
-                Transform lapimage = p.transform.Find("Canvas/LapImage");
-                if(lapimage != null)
-                lapimage.GetComponent<Image>().enabled = true;
-
-                Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
-                if(posimage != null)
-                posimage.GetComponent<Image>().enabled = true;
-            }
-        }
     }
 
     public void ReadyUp(InputAction.CallbackContext context)
