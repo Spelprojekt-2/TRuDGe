@@ -23,6 +23,7 @@ public class Landmine : MonoBehaviour
         if (other != null)
         {
             Rigidbody rb = other.GetComponentInParent<Rigidbody>();
+            if (rb == null) return;
             Vector3 upwardForceVector = Vector3.up * upwardForce;
             upwardForceVector = new Vector3(rb.linearVelocity.x, upwardForceVector.y, rb.linearVelocity.z);
             rb.AddForce(upwardForceVector, ForceMode.VelocityChange);
