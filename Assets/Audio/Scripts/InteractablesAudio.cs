@@ -19,7 +19,6 @@ public class InteractablesAudio : ScriptableObject
     [SerializeField] private EventReference MagnetRef;
     [SerializeField] private EventReference SmokeRef;
     [SerializeField] private EventReference ShieldRef;
-    [SerializeField] private EventReference ShielBreakdRef;
     [SerializeField] private EventReference WallPlaceRef;
     [SerializeField] private EventReference ScatterShotRef;
     [SerializeField] private EventReference TurboRef;
@@ -126,16 +125,6 @@ public class InteractablesAudio : ScriptableObject
         instance = RuntimeManager.CreateInstance(ShieldDurationRef);
         instance.start();
         return instance;
-    }
-
-    public void PlayShieldBreakAudio()
-    {
-        if (ShielBreakdRef.IsNull)
-        {
-            Debug.LogError("InteractablesAudio: ShielBreakdRef is missing!");
-            return;
-        }
-        RuntimeManager.PlayOneShot(ShielBreakdRef);
     }
 
     public void PlaceWallAudio(Transform pos)
