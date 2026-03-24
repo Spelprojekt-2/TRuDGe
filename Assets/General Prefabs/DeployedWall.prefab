@@ -52,8 +52,21 @@ MonoBehaviour:
   - {fileID: 7234489221453218150}
   wallHealth: 000000000000000000000000
   velocityChangeWhenHit: 0.6
-  destructParticle: {fileID: 5914557437514165592, guid: e6ca4598e4853744e825f34327eb4d93, type: 3}
-  interactablesAudio: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
+  OnAudio:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 778e1bb08d6cec145866e2f55468c5ee, type: 2}
+        m_TargetAssemblyTypeName: ImpactsAudio, Assembly-CSharp
+        m_MethodName: PlayDestroyWall
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 805372273216282017}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &7690597125494423424
 Animator:
   serializedVersion: 7
@@ -175,10 +188,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1066486
+    m_Bits: 1066487
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -196,10 +209,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1049345
+    m_Bits: 1049344
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 17654
+    m_Bits: 17655
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -306,10 +319,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1066486
+    m_Bits: 1066487
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -327,10 +340,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1049345
+    m_Bits: 1049344
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 17654
+    m_Bits: 17655
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
