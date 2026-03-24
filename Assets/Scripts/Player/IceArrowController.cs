@@ -29,7 +29,7 @@ public class IceArrowController : MonoBehaviour
         float singleStep = speed * Time.deltaTime;
         
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-        
+        newDirection.y = 0;
         Debug.DrawRay(transform.position, newDirection, Color.red);
         
         transform.rotation = Quaternion.LookRotation(newDirection);

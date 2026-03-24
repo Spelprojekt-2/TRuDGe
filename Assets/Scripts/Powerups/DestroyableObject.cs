@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.Events;
 public class DestroyableObject : MonoBehaviour
 {
     [SerializeField] private GameObject[] walls = new GameObject[3];
@@ -7,8 +7,8 @@ public class DestroyableObject : MonoBehaviour
     [SerializeField] private float velocityChangeWhenHit = 0.6f;
     [SerializeField] private GameObject destructParticle;
 
-    [Header("Audio")] // Lungt att ta bort audio ref.
-    [SerializeField] private InteractablesAudio interactablesAudio;
+    [Header("Audio")]
+    public UnityEvent OnAudio;
 
     private void Start()
     {
@@ -33,11 +33,8 @@ public class DestroyableObject : MonoBehaviour
             Destroy(particle, 2);
             Destroy(walls[index]);
 
-            // PLAY AUDIO, safe att ta bort...
-            if (interactablesAudio != null)
-            {
-                interactablesAudio.WallDestroyAudio(transform.position);
-            }
+            // Trigger audio
+            OnAudio.Invoke();
         }
     }
 }
