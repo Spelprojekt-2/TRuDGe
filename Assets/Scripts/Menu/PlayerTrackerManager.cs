@@ -134,6 +134,7 @@ public class PlayerTrackerManager : MonoBehaviour
         switch (SceneController.instance.currentSceneType)
         {
             case SceneController.SceneType.PlayerSelectRace:
+            case SceneController.SceneType.CharScreen:
                 RacingInformation.instance.isTimeTrial = false;
                 for (int i = playerInputs.Count - 1; i > 0; i--)
                 {
@@ -149,7 +150,7 @@ public class PlayerTrackerManager : MonoBehaviour
                         UISelection.playerSelections[rd.index].SwapSelection(UIList.GetStartButton(rd.index));
                     }
                 }
-                PlayerInputManager.instance.EnableJoining();
+                if (SceneController.instance.currentSceneType == SceneController.SceneType.CharScreen) PlayerInputManager.instance.DisableJoining();
                 readyStates.Clear();
                 foreach (int index in playerInputs.Keys)
                     readyStates[index] = false;
