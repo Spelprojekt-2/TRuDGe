@@ -54,6 +54,10 @@ public class ShudderChat : MonoBehaviour
             "FREAKBOB",
             "Peo",
             "Nejlikor",
+            "Leonie Arenberg",
+            "André Nuskea",
+            "Ragana Vilkaite",
+            "Tristano Martinelli",
             //gruppens dc
             "Massiv",
             "arrerino",
@@ -208,6 +212,20 @@ public class ShudderChat : MonoBehaviour
             "stream better than video",
             "Côôpa, when do you intend to win?",
             "trust the process guys",
+            "[Message removed by moderator.]",
+            "ooh im trudgeing it",
+            "Group6 will never lock in",
+            "Hey, I'm a small streamer and if you would please give me a shoutout it would help me so much please please please",
+            "Is that an airstike or orbital lazer?",
+            "Is Lars still single?",
+            "We last longer on friday night",
+            "Fat explosions",
+            "Burn in hell Goffman",
+            "straight up schlamming it",
+            "WAR & DEATH = BAD",
+            "This looks AI generated",
+            "Why aren't they racing in Iceland",
+            "Are they going yo that track in italy this year?",
             "its windy out here"
         };
 
