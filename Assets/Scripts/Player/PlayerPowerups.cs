@@ -48,6 +48,7 @@ public class PlayerPowerups : MonoBehaviour
     private float normalTopSpeedModifier = 1;
     private bool usingTurbo = false;
     private bool usingMagnet = false;
+    private GameObject shieldSpawned;
 
     private RaceController raceController;
     
@@ -186,8 +187,9 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.shield:
+                if (shieldSpawned != null) return;
                 onShield.Invoke();
-                GameObject shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
+                shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
                 playerAudio.PlayShieldAudio(shieldTimer); // Play shield audio
                 StartCoroutine(Shield(shieldSpawned));
@@ -351,6 +353,7 @@ public class PlayerPowerups : MonoBehaviour
     {
         yield return new WaitForSeconds(shieldTimer);
         Destroy(shieldSpawned);
+        //playerAudio.ShieldBreakAudio(false);
     }
 
     void Airstrike()

@@ -100,17 +100,17 @@ public class UISelection : MonoBehaviour
     {
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
-        //if (context.performed && SceneManager.GetActiveScene().name != "CharacterScreen")
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
             string charname = (textObj != null) ? textObj.text : null;
-
+            
+            if (SceneController.instance.currentSceneType == SceneController.SceneType.CharScreen && selection.transform.GetSiblingIndex() != selection.transform.parent.childCount - 1) return;
+            
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
             lastSelection = selection;
-            
-            
+
             if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
             {
                 selection.enabled = false;
@@ -179,7 +179,7 @@ public class UISelection : MonoBehaviour
         UpdateButtons();
 
         // Switch tank colours
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial || SceneController.instance.currentSceneType == SceneController.SceneType.CharScreen)
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
             string charname = (textObj != null) ? textObj.text : null;
