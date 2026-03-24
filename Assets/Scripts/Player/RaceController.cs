@@ -7,7 +7,6 @@ using System;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using Random = UnityEngine.Random;
 
 public class RaceController : MonoBehaviour
 {
@@ -19,7 +18,6 @@ public class RaceController : MonoBehaviour
     private float startLineOffset;
 
     [SerializeField] private float timeBeforeStartCountdown;
-    [SerializeField] private TextMeshProUGUI countdownText;
     private float timeToRaceStart;
     private bool raceStarted;
     private Coroutine finishPlayersRoutine;
@@ -33,8 +31,6 @@ public class RaceController : MonoBehaviour
     private double totalPausedTime = 0;
     private double pauseStartTime = 0;
     private int lastCountdownSecond = -1;
-    private float timeForVO;
-    private float VODelay = 5f;
 
     [SerializeField] private GameObject ghostPrefab;
     private TimeTrialReplay ghostReplay;
@@ -68,10 +64,6 @@ public class RaceController : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        timeForVO = Time.time + VODelay;
-    }
     private void FixedUpdate()
     {
         if (!raceStarted)
@@ -84,7 +76,10 @@ public class RaceController : MonoBehaviour
                 if (currentSecond != lastCountdownSecond)
                 {
                     lastCountdownSecond = currentSecond;
-                    countdownText.text = currentSecond.ToString();
+                    for (int i = 0; i < racers.Count; i++)
+                    {
+                        CoroutineRunner.Run(racers[i].CountdownText(currentSecond.ToString(), currentSecond == 1));
+                    }
                     AudioManager.Instance.PlayCountdownAudio(); // Play countdown audio
                 }
             }
@@ -99,8 +94,6 @@ public class RaceController : MonoBehaviour
                 {
                     racers[i].OnRaceStarted();
                     if (RacingInformation.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
-                    if (countdownText) countdownText.gameObject.SetActive(false);
-                    timeForVO = Time.time; // Voice lines time reset
                 }
             }
         }
@@ -146,19 +139,9 @@ public class RaceController : MonoBehaviour
             if (racersInOrder[i].racePosition != i + 1)
             {
                 racersInOrder[i].UpdatePosition(i + 1);
-                // Play Voice line
-                if (Time.time > timeForVO)
-                {
-                    timeForVO = Time.time + VODelay;
-                    int r = Random.Range(0, 2);
-                    switch (r)
-                    {
-                        case 0: AudioManager.Instance.PlayTakeLeadVO(racersInOrder[0].racername); break;
-                        case 1: AudioManager.Instance.PlayTakeLeadANN(racersInOrder[0].racername); break;
-                    }
-                }
             }
         }
+
     }
 
     void UpdateRaceProgress(RacerData racer)
@@ -232,8 +215,13 @@ public class RaceController : MonoBehaviour
 
     private IEnumerator FinishPlayerAfterSec(float sec)
     {
-        yield return new WaitForSeconds(sec);
+        yield return new WaitForSeconds(sec-5);
         RacerData lastRacer = racers.FirstOrDefault(r => r.lap < lapsOnThisTrack);
+        for (int i = 5; i > 1; i--)
+        {
+            CoroutineRunner.Run(lastRacer.CountdownText(i.ToString(), i == 1));
+            yield return new WaitForSeconds(1);
+        }
         if (lastRacer != null)
         {
             lastRacer.OnRaceFinished();
@@ -241,6 +229,11 @@ public class RaceController : MonoBehaviour
             lastRacer.raceProgress = 1000 - lastRacer.racePosition;
         }
         finishPlayersRoutine = null;
+        RacerData[] inorder = racers.ToList().OrderByDescending(x => x.raceProgress).ToArray();
+        Leaderboard.SetLeaderboard(inorder);
+
+        if (allDoneRoutine != null) yield break;
+        allDoneRoutine = StartCoroutine(WaitToAfterRace(SwapSceneAfterRaceTime));
     }
 
     private IEnumerator WaitToAfterRace(float sec)

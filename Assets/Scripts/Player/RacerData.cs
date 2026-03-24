@@ -22,6 +22,7 @@ public class RacerData : MonoBehaviour
 
     private bool isRacing;
     public int currentValidLap;
+    [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Image lapCountImage;
     [SerializeField] private Image lapCountPopup;
     [SerializeField] private TextMeshProUGUI finishText;
@@ -153,6 +154,17 @@ public class RacerData : MonoBehaviour
     public double GetRaceTime()
     {
         return lapEndTimes[^1];
+    }
+
+    public IEnumerator CountdownText(string text, bool hideAfter)
+    {
+        if (!countdownText.enabled) countdownText.enabled = true;
+        countdownText.text = text;
+        if (hideAfter)
+        {
+            yield return new WaitForSeconds(1);
+            countdownText.enabled = false;
+        }
     }
 
     private IEnumerator DisplayTemporary(GameObject g)
