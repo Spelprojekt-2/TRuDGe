@@ -161,8 +161,6 @@ public class PlayerAudio : MonoBehaviour
             return;
         }
 
-        interactablesAudio.PlayShieldUseAudio(); // Trigger usage sound
-
         float newStopTime = Time.time + shieldTimer;
 
         if (hasShield)
@@ -184,6 +182,11 @@ public class PlayerAudio : MonoBehaviour
 
             shieldRoutine = StartCoroutine(ShieldHandler());
         }
+    }
+
+    public void ShieldBreakAudio()
+    {
+        shieldStopTime = 0f;
     }
 
     private IEnumerator ShieldHandler()
@@ -213,6 +216,7 @@ public class PlayerAudio : MonoBehaviour
             shieldInst.release();
         }
 
+        interactablesAudio.PlayShieldBreakAudio();
         hasShield = false;
         shieldRoutine = null;
     }

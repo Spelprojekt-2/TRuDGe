@@ -53,7 +53,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private FeedbackAudio feedbackAudio;
     private EventInstance countDownInst;
 
-    [Header("VO Configuration")]
+    [Header("ANN Configuration")]
     [SerializeField] private VoiceAudio voiceAudio;
     private EventInstance VOinst_Announcer;
     private EventInstance VOinst_Character;
@@ -252,6 +252,40 @@ public class AudioManager : MonoBehaviour
         if (musicInstance.isValid())
         {
             musicInstance.start();
+        }
+    }
+
+    public void PlayFirstANN(string name)
+    {
+        if (VOinst_Announcer.isValid())
+        {
+            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Announcer.release();
+        }
+
+        string lower = name.ToLower();
+        switch (lower)
+        {
+            case "king napoleon iii":
+                VOinst_Announcer = voiceAudio.ANN_NapoleonFirstPlace(VOinst_Announcer);
+                break;
+        }
+    }
+
+    public void PlayFirstVO(string name)
+    {
+        if (VOinst_Character.isValid())
+        {
+            VOinst_Character.stop(STOP_MODE.IMMEDIATE);
+            VOinst_Character.release();
+        }
+
+        string lower = name.ToLower();
+        switch (lower)
+        {
+            case "king napoleon iii":
+                VOinst_Character = voiceAudio.VO_NapoleonFirstPlace(VOinst_Character);
+                break;
         }
     }
     #endregion

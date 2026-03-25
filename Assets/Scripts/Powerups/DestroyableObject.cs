@@ -5,6 +5,7 @@ public class DestroyableObject : MonoBehaviour
     [SerializeField] private GameObject[] walls = new GameObject[3];
     [SerializeField] private int[] wallHealth = new int[3];
     [SerializeField] private float velocityChangeWhenHit = 0.6f;
+    [SerializeField] private GameObject destructParticle;
 
     [Header("Audio")]
     public UnityEvent OnAudio;
@@ -22,12 +23,14 @@ public class DestroyableObject : MonoBehaviour
         }
     }
 
-    public void OnChildHit(int index)
+    public void OnChildHit(int index, Vector3 hitDirection)
     {
         wallHealth[index]--;
 
         if (wallHealth[index] <= 0)
         {
+            GameObject particle = Instantiate(destructParticle, walls[index].transform.position, Quaternion.LookRotation(hitDirection));
+            Destroy(particle, 2);
             Destroy(walls[index]);
 
             // Trigger audio
@@ -41,6 +44,7 @@ public class WallChildListener : MonoBehaviour
     private DestroyableObject mainScript;
     private int myIndex;
     private float velocityChange;
+    private bool wasHit = false;
     public void Initialize(DestroyableObject parent, int index, float velocityChange)
     {
         mainScript = parent;
@@ -50,24 +54,32 @@ public class WallChildListener : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Shield"))
+        //Nytt!!!
+        Vector3 hitDirection = (transform.position - other.transform.position).normalized;
+        if (other.CompareTag("Shield") && !wasHit)
         {
-            Debug.Log("Shield hit: " + other.gameObject.name);
+            wasHit = true;
+            Debug.Log("Hit shield");
+            PlayerHit hit = other.transform.root.GetComponentInChildren<PlayerHit>();
+            hit.HitShield();
             Destroy(other.gameObject);
-            mainScript.OnChildHit(myIndex);
-        }
 
-        if (other.CompareTag("Player"))
+            mainScript.OnChildHit(myIndex, hitDirection);
+        }
+        
+        if (other.CompareTag("Player") && !wasHit)
         {
-            Debug.Log("Player hit: " + other.gameObject.name);
+            wasHit = true;
+            Debug.Log("Hit player" + other.name);
             var rb = other.transform.root.gameObject.GetComponentInChildren<Rigidbody>();
             rb.linearVelocity *= velocityChange;
-            mainScript.OnChildHit(myIndex);
+            mainScript.OnChildHit(myIndex, hitDirection);
         }
 
-        if (other.CompareTag("Projectile"))
+        if (other.CompareTag("Projectile") && !wasHit)
         {
-            mainScript.OnChildHit(myIndex);
+            wasHit = true;
+            mainScript.OnChildHit(myIndex, -hitDirection);
         }
     }
 }
