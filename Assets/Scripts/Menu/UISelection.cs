@@ -260,7 +260,7 @@ public class UISelection : MonoBehaviour
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
         {
             highlightImage.sprite = selection.buttonBackground.sprite;
-            highlightImage.color = new Color32(255,255,255,255);
+            highlightImage.color = new Color32(180,180,180,255);
             //highlightImage.transform.localScale = new Vector3(5f, highlightImage.transform.localScale.y, highlightImage.transform.localScale.z);
         }
         /*else
