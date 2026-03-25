@@ -8585,6 +8585,7 @@ MonoBehaviour:
   racers: []
   startingLine: {fileID: 1307901372}
   timeBeforeStartCountdown: 6
+  countdownText: {fileID: 0}
   SwapSceneAfterRaceTime: 5
   FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 5404573993507513911, guid: 7770d74a3584b8a4ba34f624e6b75de1, type: 3}
@@ -90503,7 +90504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3908223061078645523, guid: b73638b756aafd64ca590c8249d5f6c5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3976955382256563162, guid: b73638b756aafd64ca590c8249d5f6c5, type: 3}
       propertyPath: m_LocalPosition.x

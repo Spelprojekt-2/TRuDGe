@@ -10,9 +10,11 @@ public class PauseMenuUI : MonoBehaviour
     public GameObject mainPauseMenu;
     public GameObject settingsMenu;
     public GameObject controlsMenu;
+    public GameObject audioMenu;
     public UIButton selectOnPause;
     public UIButton selectOnSettings;
     public UIButton selectOnControls;
+    public UIButton selectOnAudio;
     private bool isPaused = false;
     private PlayerInput currentPlayerInput;
     private int currentPlayerID;
@@ -100,6 +102,20 @@ public class PauseMenuUI : MonoBehaviour
     {
         controlsMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        CoroutineRunner.Run(SwapButton(selectOnSettings));
+    }
+
+    public void OpenAudio()
+    {
+        settingsMenu.SetActive(false);
+        audioMenu.SetActive(true);
+        CoroutineRunner.Run(SwapButton(selectOnAudio));
+    }
+
+    public void CloseAudio()
+    {
+        settingsMenu.SetActive(true);
+        audioMenu.SetActive(false);
         CoroutineRunner.Run(SwapButton(selectOnSettings));
     }
 
