@@ -256,6 +256,7 @@ public class UISelection : MonoBehaviour
         if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
         
+        //if ((SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs) || Time.timeScale == 0)
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
         {
             highlightImage.sprite = selection.buttonBackground.sprite;
