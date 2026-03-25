@@ -16,7 +16,7 @@ public class AutoAimCone : MonoBehaviour
     {
         if (targetList.Count < 1) return;
 
-        if (!SceneController.instance.IsMenu)
+        if (SceneController.instance.IsMenu)
         {
             targetList.Clear();
         }
