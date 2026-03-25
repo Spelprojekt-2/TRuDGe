@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(PlayerAudio))]
 public class PlayerHit : MonoBehaviour
 {
     [SerializeField] private float hitSpeedMultiplier;
@@ -16,7 +15,10 @@ public class PlayerHit : MonoBehaviour
 
     void Start()
     {
-        playerAudio = GetComponent<PlayerAudio>();
+        // Get player audio
+        PlayerAudio plrAudio = GetComponent<PlayerAudio>();
+        if (plrAudio != null)
+            playerAudio = plrAudio;
     }
 
     public void HitShield()
@@ -24,7 +26,8 @@ public class PlayerHit : MonoBehaviour
         invincibilityTimer = invincibilityDuration;
         isInvincible = true;
 
-        playerAudio.ShieldBreakAudio(); // Play shield break audio
+        if (playerAudio != null)
+            playerAudio.ShieldBreakAudio(); // Play shield break audio
     }
     public void Hit(bool ignoreInvincibility)
     {
