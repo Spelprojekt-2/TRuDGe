@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2375384915210502981, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -462981019419857548, guid: d0682141baabf964eadc6542c5767818, type: 3}
     - target: {fileID: 2596392209779828448, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_Name
       value: NewFont
@@ -54,6 +58,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4513008583965476499, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4596613912892124558, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4814318765866647497, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4911964848692854880, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
@@ -139,11 +151,11 @@ PrefabInstance:
     - target: {fileID: 7346217755502583080, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: bd0312a1f14dff243838d5c8055a6c29, type: 2}
+      objectReference: {fileID: 11400000, guid: 8ce8a86b69a5ea9499a1eb708b8dfc11, type: 2}
     - target: {fileID: 7346217755502583080, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 7316485686144304032, guid: bd0312a1f14dff243838d5c8055a6c29, type: 2}
+      objectReference: {fileID: -2221045674679475821, guid: 8ce8a86b69a5ea9499a1eb708b8dfc11, type: 2}
     - target: {fileID: 7346217755502583080, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -163,6 +175,18 @@ PrefabInstance:
     - target: {fileID: 7668400800883754721, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8205391135189758385, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.60655123
+      objectReference: {fileID: 0}
+    - target: {fileID: 8205391135189758385, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7950444
+      objectReference: {fileID: 0}
+    - target: {fileID: 8205391135189758385, guid: 2545be91ea8d57c47885cb7fab56a39a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -105.319
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
