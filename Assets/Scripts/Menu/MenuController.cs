@@ -33,7 +33,7 @@ public class MenuController : MonoBehaviour
         switch (SceneController.instance.currentSceneType)
         {
             case SceneController.SceneType.MainMenu:
-                MainMenuWaitForUIPopulation();
+                CoroutineRunner.Run(MainMenuWaitForUIPopulation());
                 ShowJoinPopup(PlayerTrackerManager.instance.GetPlayerCount() < 1);
                 break;
             case SceneController.SceneType.PostRaceLeaderboard:
@@ -151,7 +151,6 @@ public class MenuController : MonoBehaviour
         {
             yield return null;
         }
-
         UISelection.playerSelections[0].SwapSelection(mainMenuButtons[0]);
     }
 }

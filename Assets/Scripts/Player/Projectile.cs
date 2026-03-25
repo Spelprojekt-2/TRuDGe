@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionParticle;
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private Rigidbody rb;
     private float currentSpeed;
@@ -58,6 +59,9 @@ public class Projectile : MonoBehaviour
             return;
         }
 
+        GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        Destroy(particle, 2f);
+
         if (col.CompareTag("Shield"))
         {
             isHit = true;
@@ -76,6 +80,8 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision col)
@@ -84,6 +90,9 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+        Debug.Log("Hit solid collider");
+        GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        Destroy(particle, 2f);
         Destroy(gameObject);
     }
 }

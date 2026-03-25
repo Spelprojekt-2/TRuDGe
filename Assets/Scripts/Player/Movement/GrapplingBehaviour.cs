@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(LineRenderer))]
 public class GrapplingBehaviour : MonoBehaviour
@@ -30,11 +31,11 @@ public class GrapplingBehaviour : MonoBehaviour
     private bool isInGrappleRange = false;
     private bool isGrappling = false;
     public float TimeSinceGrapple { get; private set;} = 0f;
-    
-    public ParticleSystem grappleEffect;
 
     // Audio refs
     [SerializeField] private PlayerAudio playerAudio;
+    [SerializeField] private UnityEvent grappleStarted;
+    [SerializeField] private UnityEvent grappleEnded;
 
     void Start()
     {
@@ -45,8 +46,6 @@ public class GrapplingBehaviour : MonoBehaviour
         if (grappleable != null)
             grappleDistance = Vector3.Distance(vehicleRigidbody.transform.position, grappleable.GetGrapplePoint(this));
         SceneManager.sceneLoaded += SceneChange;
-        //particle grapple
-        grappleEffect = grappleUIIndicator.GetComponent<ParticleSystem>();
     }
 
     public void GrappleInput(InputAction.CallbackContext context)
@@ -73,15 +72,10 @@ public class GrapplingBehaviour : MonoBehaviour
         // Start grapple audio
         playerAudio.GrappleStart();
 
-        
-        
+        grappleStarted.Invoke();
 
         lineRenderer.enabled = true;
         if (grappleHook) grappleHook.SetActive(false);
-        if (grappleEffect != null)
-        {
-            grappleEffect.Stop();
-        }
     }
     public void EndGrapple(bool respectLock)
     {
@@ -89,6 +83,8 @@ public class GrapplingBehaviour : MonoBehaviour
 
         isGrappling = false;
         TimeSinceGrapple = 0f;
+
+        grappleEnded.Invoke();
 
         // Change audio behaviour
         playerAudio.GrappleEnd();
