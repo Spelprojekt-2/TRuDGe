@@ -174,7 +174,7 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.deployWall:
                 onDeployWall.Invoke();
-                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + -7, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
                 break;
 
             case PowerUpType.scatterShot:
