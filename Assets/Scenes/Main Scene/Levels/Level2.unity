@@ -14879,17 +14879,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 259964b516a40184897b438fe9d7167e, type: 3}
---- !u!114 &242686032 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 234624281745062732, guid: 85b0e20e31300434894d6bd6b7173ad3, type: 3}
-  m_PrefabInstance: {fileID: 768629536}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &242855710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28281,6 +28270,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 714da0db7d475014785746a74dc1b824, type: 2}
+    - target: {fileID: 4552460984948295408, guid: a6899fd612edf024cbf4d8a4ee5b1129, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 540f43808117e444792f161f07a952f0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -48525,6 +48518,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 714da0db7d475014785746a74dc1b824, type: 2}
+    - target: {fileID: 4552460984948295408, guid: a6899fd612edf024cbf4d8a4ee5b1129, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 540f43808117e444792f161f07a952f0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -55753,7 +55750,6 @@ MonoBehaviour:
   racers: []
   startingLine: {fileID: 1117294350}
   timeBeforeStartCountdown: 6
-  countdownText: {fileID: 242686032}
   SwapSceneAfterRaceTime: 5
   FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 5404573993507513911, guid: 7770d74a3584b8a4ba34f624e6b75de1, type: 3}
@@ -61194,10 +61190,10 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 6581c12d610d1f5468f5b348779e2be7, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 631
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 350
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -111494,6 +111490,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 714da0db7d475014785746a74dc1b824, type: 2}
+    - target: {fileID: 4552460984948295408, guid: a6899fd612edf024cbf4d8a4ee5b1129, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 540f43808117e444792f161f07a952f0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
