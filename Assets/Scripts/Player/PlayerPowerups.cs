@@ -359,6 +359,7 @@ public class PlayerPowerups : MonoBehaviour
     {
         yield return new WaitForSeconds(shieldTimer);
         Destroy(shieldSpawned);
+        //playerAudio.ShieldBreakAudio(false);
     }
 
     void Airstrike()
