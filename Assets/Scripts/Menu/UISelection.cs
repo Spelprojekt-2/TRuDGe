@@ -236,8 +236,8 @@ public class UISelection : MonoBehaviour
         string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
         bool bgs = tx.Length == 1;
         int playerIndex = GetComponent<RacerData>().index;
-        if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
-        {
+        //if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
+        
             selectionColor = playerIndex switch
         {
             0 => new Color32(255,25,25,255),
@@ -250,12 +250,19 @@ public class UISelection : MonoBehaviour
         if (highlightImage == null)
             return;
         highlightImage.color = selectionColor;
+        highlightImage.sprite = null;
 
         selectionHighlight.gameObject.SetActive(true);
         if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
+        
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
+        {
+            highlightImage.sprite = selection.buttonBackground.sprite;
+            highlightImage.color = new Color32(255,255,255,255);
+            //highlightImage.transform.localScale = new Vector3(5f, highlightImage.transform.localScale.y, highlightImage.transform.localScale.z);
         }
-        else
+        /*else
         {
             if (lastSelection != null && lastSelection.buttonBackground != null && lastSelection.buttonBackground.gameObject.activeSelf)
             lastSelection.buttonBackground.gameObject.SetActive(false);
@@ -263,8 +270,8 @@ public class UISelection : MonoBehaviour
             if (!selection.buttonBackground.gameObject.activeSelf && selection != null && selection.buttonBackground != null)
             selection.buttonBackground.gameObject.SetActive(true);
             lastSelection = selection;
-        }
-        selectionHighlight.transform.SetParent(button.transform.parent);
+        }*/
+        //selectionHighlight.transform.SetParent(button.transform.parent);
         UpdateAllHighlights();
     }
     private void UpdateAllHighlights()
