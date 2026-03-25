@@ -7,11 +7,11 @@ public class RoadsideCamera : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        ObservedObjectChanged.Invoke(transform, other.transform);
+        ObservedObjectChanged?.Invoke(transform, other.transform);
     }
 
     public void OnTriggerExit(Collider other)
     {
-        ObservedObjectChanged.Invoke(transform, null);
+        ObservedObjectChanged?.Invoke(transform, null);
     }
 }
