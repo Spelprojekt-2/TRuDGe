@@ -27,6 +27,7 @@ public class RoadsideCameraController : MonoBehaviour
     }
     public void Awake()
     {
+        if (PlayerTrackerManager.instance.GetPlayerCount() != 3) Destroy(gameObject);
         foreach(RoadsideCamera camPos in cameraPositions)
         {
             camPos.ObservedObjectChanged += ChangeCamState;
