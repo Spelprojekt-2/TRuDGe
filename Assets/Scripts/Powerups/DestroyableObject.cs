@@ -54,6 +54,7 @@ public class WallChildListener : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Nytt!!!
         Vector3 hitDirection = (transform.position - other.transform.position).normalized;
         if (other.CompareTag("Shield") && !wasHit)
         {
