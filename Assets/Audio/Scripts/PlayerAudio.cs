@@ -39,6 +39,10 @@ public class PlayerAudio : MonoBehaviour
         {
             Debug.LogWarning("PlayerAudio: TanksAudio is missing!");
         }
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: InteractablesAudio is missing!");
+        }
     }
 
     private void Start()

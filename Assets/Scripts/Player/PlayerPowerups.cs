@@ -11,7 +11,6 @@ using System.Net.Mime;
 using Unity.Mathematics;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
     [Header("---Power Up Events---")]
@@ -58,7 +57,9 @@ public class PlayerPowerups : MonoBehaviour
     private void Start()
     {
         // Get player audio
-        playerAudio = GetComponent<PlayerAudio>();
+        PlayerAudio plrAudio = GetComponent<PlayerAudio>();
+        if (plrAudio != null)
+            playerAudio = plrAudio;
 
         currPowerUpText.text = "";
         gasTankAmount = 0;
@@ -100,8 +101,9 @@ public class PlayerPowerups : MonoBehaviour
         }
         
         // Play audio
-        playerAudio.PickupAudio(type);
-        
+        if (playerAudio != null)
+            playerAudio.PickupAudio(type);
+
         if (type == PowerUpType.gasolineTank)
         {
             if (gasTankAmount < 10)
@@ -153,7 +155,8 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.magnet:
                 onMagnet.Invoke();
-                playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
+                if (playerAudio != null)
+                    playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
                 StartCoroutine(Magnet());
                 break;
 
@@ -191,7 +194,8 @@ public class PlayerPowerups : MonoBehaviour
                 onShield.Invoke();
                 shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
-                playerAudio.PlayShieldAudio(shieldTimer); // Play shield audio
+                if (playerAudio != null)
+                    playerAudio.PlayShieldAudio(shieldTimer); // Play shield audio
                 StartCoroutine(Shield(shieldSpawned));
                 break;
 
@@ -332,7 +336,8 @@ public class PlayerPowerups : MonoBehaviour
         usingTurbo = false;
 
         // Stop turbo audio
-        playerAudio.StopTurboAudio();
+        if (playerAudio != null)
+            playerAudio.StopTurboAudio();
     }
 
     IEnumerator Magnet()
@@ -340,7 +345,8 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
-        playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
+        if (playerAudio != null)
+            playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
     }
 
     void Smokescreen()
@@ -353,7 +359,6 @@ public class PlayerPowerups : MonoBehaviour
     {
         yield return new WaitForSeconds(shieldTimer);
         Destroy(shieldSpawned);
-        //playerAudio.ShieldBreakAudio(false);
     }
 
     void Airstrike()
