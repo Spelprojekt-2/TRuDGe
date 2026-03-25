@@ -16,8 +16,9 @@ public class AutoAimCone : MonoBehaviour
     {
         if (targetList.Count < 1) return;
 
-        if (SceneController.instance.IsMenu)
+        if (SceneController.instance.IsMenu ||SceneController.instance.currentSceneType == SceneController.SceneType.TrackSelectRace)
         {
+            Debug.Log("Clear lock list");
             targetList.Clear();
         }
 
