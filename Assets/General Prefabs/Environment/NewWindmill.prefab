@@ -374,7 +374,10 @@ MonoBehaviour:
   - {fileID: 7894857660072861581}
   wallHealth: 010000000100000001000000010000000100000001000000
   velocityChangeWhenHit: 0.6
-  interactablesAudio: {fileID: 0}
+  destructParticle: {fileID: 5251164372292422389, guid: 32005ae856c7cd44c84cda7a2a9c8f08, type: 3}
+  OnAudio:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7894857660072861581 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4546223472420574152, guid: 320b076245596d3448d1d2f1c7e25346, type: 3}
