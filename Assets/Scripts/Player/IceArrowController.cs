@@ -43,6 +43,10 @@ public class IceArrowController : MonoBehaviour
         currentTarget = target1;
     }
     
+    void OnDisable()
+    {
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
+    }
     
     private void OnTriggerEnter(Collider other)
     {
