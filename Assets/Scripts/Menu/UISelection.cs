@@ -251,6 +251,8 @@ public class UISelection : MonoBehaviour
             return;
         highlightImage.color = selectionColor;
         highlightImage.sprite = null;
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu)
+        highlightImage.color = new Color32(180,180,180,255);
 
         selectionHighlight.gameObject.SetActive(true);
         if (button.transform != null)   
@@ -272,7 +274,7 @@ public class UISelection : MonoBehaviour
             selection.buttonBackground.gameObject.SetActive(true);
             lastSelection = selection;
         }*/
-        //selectionHighlight.transform.SetParent(button.transform.parent);
+        selectionHighlight.transform.SetParent(button.transform.parent);
         UpdateAllHighlights();
     }
     private void UpdateAllHighlights()
