@@ -194,7 +194,7 @@ public class PlayerAudio : MonoBehaviour
             float totalDuration = shieldStopTime - shieldStartTime;
 
             float normalized = Mathf.Clamp01(remaining / totalDuration);
-            Debug.Log("NORMAL:" + normalized);
+            //Debug.Log("NORMAL:" + normalized);
 
             if (shieldInst.isValid())
             {

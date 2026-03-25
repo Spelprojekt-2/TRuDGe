@@ -15,6 +15,12 @@ public class AutoAimCone : MonoBehaviour
     private void Update()
     {
         if (targetList.Count < 1) return;
+
+        if (!SceneController.instance.IsMenu)
+        {
+            targetList.Clear();
+        }
+
         foreach (var target in targetList)
         {
             if(target == null)

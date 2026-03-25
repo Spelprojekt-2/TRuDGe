@@ -50,9 +50,16 @@ public class WallChildListener : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Shield"))
+        {
+            Debug.Log("Shield hit: " + other.gameObject.name);
+            Destroy(other.gameObject);
+            mainScript.OnChildHit(myIndex);
+        }
+
         if (other.CompareTag("Player"))
         {
-            Debug.Log(other.gameObject.name);
+            Debug.Log("Player hit: " + other.gameObject.name);
             var rb = other.transform.root.gameObject.GetComponentInChildren<Rigidbody>();
             rb.linearVelocity *= velocityChange;
             mainScript.OnChildHit(myIndex);
