@@ -54,6 +54,8 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         if (shooter == null) return;
+        if (col.CompareTag("IceEntry")) return;
+        if (col.CompareTag("LakeExit")) return;
         if (col.transform.IsChildOf(shooter.transform) || isHit)
         {
             return;
