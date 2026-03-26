@@ -16,7 +16,7 @@ public class PlayerHit : MonoBehaviour
     private bool isInvincible;
 
     void Start()
-    {}
+    {
         playerAudio = GetComponent<PlayerAudio>();
         // Get player audio
         PlayerAudio plrAudio = GetComponent<PlayerAudio>();
