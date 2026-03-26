@@ -320,12 +320,10 @@ public class UISelection : MonoBehaviour
             highlightImage.color = new Color32(180, 180, 180, 255);
 
         selectionHighlight.gameObject.SetActive(true);
-        if (button.transform != null)   
+
+        if (button.transform != null)
             selectionHighlight.transform.SetParent(button.transform.parent);
-        
-        //string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
-        //bool bgs = tx.Length == 1;
-        //if ((SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs) || Time.timeScale == 0)
+
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
         {
             highlightImage.sprite = selection.buttonBackground.sprite;
