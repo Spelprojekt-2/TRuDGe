@@ -23,10 +23,12 @@ public class Landmine : MonoBehaviour
     {
         if (other != null)
         {
-            GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
-            Destroy(particle, 2f);
             Rigidbody rb = other.GetComponentInParent<Rigidbody>();
             if (rb == null) return;
+
+            GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            Destroy(particle, 2f);
+
             Vector3 upwardForceVector = Vector3.up * upwardForce;
             upwardForceVector = new Vector3(rb.linearVelocity.x, upwardForceVector.y, rb.linearVelocity.z);
             rb.AddForce(upwardForceVector, ForceMode.VelocityChange);
