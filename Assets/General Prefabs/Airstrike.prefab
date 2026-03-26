@@ -100,13 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b656cd0fb89f7f6498f3a6640939eec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectiles: {fileID: 4325890104349121320, guid: 271276feb06b7384491584fb49dcf9a7, type: 3}
+  airstrikeParticle: {fileID: 8712418638802758627, guid: 8accd313fb57ece419326a5aa4c7aa82, type: 3}
   finalScale: 50
   lockonForwardOffset: 70
-  strikeCount: 7
-  timeToLockOn: 4
+  timeToLockOn: 2
   timeTillFire: 1
-  fireDuration: 2
+  fireDuration: 3
 --- !u!136 &3605091340100289429
 CapsuleCollider:
   m_ObjectHideFlags: 0

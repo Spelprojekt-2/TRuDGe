@@ -4,10 +4,9 @@ using UnityEngine.Splines;
 using System.Collections.Generic;
 public class Airstrike : MonoBehaviour
 {
-    [SerializeField] private GameObject projectiles;
+    [SerializeField] private GameObject airstrikeParticle;
     [SerializeField] private float finalScale = 30;
     [SerializeField] private float lockonForwardOffset = 250;
-    [SerializeField] private int strikeCount = 7;
     [SerializeField] private float timeToLockOn = 4;
     [SerializeField] private float timeTillFire = 1;
     [SerializeField] private float fireDuration = 1;
@@ -49,8 +48,10 @@ public class Airstrike : MonoBehaviour
 
     IEnumerator AirstrikeFire()
     {
+        Vector3 particleSpawnPoint = transform.position;
+        particleSpawnPoint.y = particleSpawnPoint.y + 264;
+        GameObject particle = Instantiate(airstrikeParticle, particleSpawnPoint, Quaternion.identity);
         yield return new WaitForSeconds(timeTillFire);
-        StartCoroutine(Projectiles());
         for (float f = fireDuration; f >= 0; f -= Time.deltaTime)
         {
             yield return null;
@@ -60,16 +61,7 @@ public class Airstrike : MonoBehaviour
             }
         }
         Destroy(gameObject);
-    }
-
-    IEnumerator Projectiles()
-    {
-        for (int i = 0; i < strikeCount; i++)
-        {
-            yield return new WaitForSeconds(0.2f);
-            GameObject proj = Instantiate(projectiles, transform.position + new Vector3(Random.Range(-10, 10), 25, Random.Range(-10, 10)), Quaternion.LookRotation(Vector3.down));
-            proj.GetComponent<Projectile>().PrepareProjectile(proj, null, 0.3f);
-        }
+        Destroy(particle);
     }
 
     public void SetTarget(RacerData leader)
