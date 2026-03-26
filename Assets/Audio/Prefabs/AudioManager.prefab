@@ -45,7 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   busesToMute:
-  - bus:/SFX
+  - bus:/SFX/FEEDBACK
+  - bus:/SFX/PICKUPS
+  - bus:/SFX/POWERUPS
+  - bus:/SFX/TANKS
+  - bus:/SFX/VOICE
+  - bus:/SFX/ENVIRONMENT
   PauseSnapshotRef:
     Guid:
       Data1: -535641254
@@ -90,10 +95,10 @@ MonoBehaviour:
     Path: event:/Music/Music_Section/Singleplayer/Music_TrainingGround
   Music_Level2:
     Guid:
-      Data1: -1867575303
-      Data2: 1223673456
-      Data3: 2119474062
-      Data4: -890500964
+      Data1: 537892794
+      Data2: 1179040937
+      Data3: 1889130148
+      Data4: 675067625
     Path: event:/Music/Music_Section/Multiplayer/Music_InGame_2
   Music_Level3:
     Guid:
@@ -139,3 +144,4 @@ MonoBehaviour:
       Data3: 1691657406
       Data4: -1221083547
     Path: event:/Sound/Environment/Ambience/AmbienceManager
+  musicTransitionDuration: 2
