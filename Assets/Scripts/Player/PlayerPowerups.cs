@@ -38,7 +38,8 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldTimer = 4f;
 
-    [SerializeField] private TextMeshProUGUI currPowerUpText;
+    [SerializeField] private Image currPowerUpImage;
+    [SerializeField] private Sprite[] powerUpSprites; 
     [SerializeField] private Image useKeyController;
     [SerializeField] private Image useKeyKBM;
    // [SerializeField] private TextMeshProUGUI gasTankCounter;
@@ -60,9 +61,11 @@ public class PlayerPowerups : MonoBehaviour
         // Get player audio
         playerAudio = GetComponent<PlayerAudio>();
 
-        currPowerUpText.text = "";
+        currPowerUpImage.sprite = null;
+        //currPowerUpText.text = "";
         gasTankAmount = 0;
         
+        PowerUpUIUpdate();
         //gasTankCounter.text = "Gastanks: 0";
     }
     public void UsePowerUpInput(InputAction.CallbackContext context)
@@ -229,41 +232,51 @@ public class PlayerPowerups : MonoBehaviour
 
     void PowerUpUIUpdate()
     {
+        currPowerUpImage.enabled = true;
         if(type == PowerUpType.turbo)
         {
-            currPowerUpText.text = "Turbo";
+            currPowerUpImage.sprite = powerUpSprites[6];
         }
         else if (type == PowerUpType.magnet)
         {
-            currPowerUpText.text = "Magnet";
+            currPowerUpImage.sprite = powerUpSprites[3];
+            //currPowerUpText.text = "Magnet";
         }
         else if(type == PowerUpType.smoke)
         {
-            currPowerUpText.text = "Smoke Screen";
+            currPowerUpImage.sprite = powerUpSprites[5];
+            //currPowerUpText.text = "Smoke Screen";
         }
         else if(type == PowerUpType.landMine)
         {
-            currPowerUpText.text = "Landmine";
+            currPowerUpImage.sprite = powerUpSprites[2];
+            //currPowerUpText.text = "Landmine";
         }
         else if (type == PowerUpType.airstrike)
         {
-            currPowerUpText.text = "Airstrike";
+            currPowerUpImage.sprite = powerUpSprites[0];
+            //currPowerUpText.text = "Airstrike";
         }
         else if (type == PowerUpType.deployWall)
         {
-            currPowerUpText.text = "Deploy Wall";
+            currPowerUpImage.sprite = powerUpSprites[1];
+            //currPowerUpText.text = "Deploy Wall";
         }
         else if (type == PowerUpType.scatterShot)
         {
-            currPowerUpText.text = "Scatter Shot";
+            currPowerUpImage.sprite = powerUpSprites[0];
+            //currPowerUpText.text = "Scatter Shot";
         }
         else if (type == PowerUpType.shield)
         {
-            currPowerUpText.text = "Shield";
+            currPowerUpImage.sprite = powerUpSprites[4];
+            //currPowerUpText.text = "Shield";
         }
         else
         {
-            currPowerUpText.text = "";
+            currPowerUpImage.sprite = null;
+            currPowerUpImage.enabled = false;
+            //currPowerUpText.text = "";
             useKeyController.gameObject.SetActive(false);
             useKeyKBM.gameObject.SetActive(false);
         }
