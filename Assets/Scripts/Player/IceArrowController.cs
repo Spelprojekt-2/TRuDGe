@@ -42,12 +42,13 @@ public class IceArrowController : MonoBehaviour
         iceArrowRenderer.enabled = false;
         currentTarget = target1;
     }
-    
-    void OnDisable()
+
+    private void OnDisable()
     {
         SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
     }
-    
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("IceEntry"))
