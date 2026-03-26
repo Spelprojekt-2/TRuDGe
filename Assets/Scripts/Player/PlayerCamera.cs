@@ -166,7 +166,15 @@ public class PlayerCamera : MonoBehaviour
 
         if (crosshair != null)
         {
-            crosshair.anchoredPosition = cursorPos;
+            if (cam.rect.width == 1 && cam.rect.height == 0.5)
+            {
+                Vector2 pos = new Vector2(2 * cursorPos.x, cursorPos.y);
+                crosshair.anchoredPosition = pos;
+            }
+            else
+            {
+                crosshair.anchoredPosition = cursorPos;
+            }
         }
     }
 
