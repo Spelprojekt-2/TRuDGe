@@ -65,7 +65,7 @@ public class TimeTrialReplay : MonoBehaviour
             json = System.IO.File.ReadAllText(filePathfileName);
         else
         {
-            Debug.LogWarning("No ghost file found for scene " + SceneManager.GetActiveScene().name);
+            Debug.LogWarning("Could not find " + filePathfileName);
             recordedFrames = new List<InputFrame>();
             ghostName = "Unknown";
             totalTime = 0f;
