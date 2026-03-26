@@ -37649,6 +37649,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: 778e1bb08d6cec145866e2f55468c5ee, type: 2}
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayWoodImpact
+      objectReference: {fileID: 0}
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ImpactsAudio, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3833324399031836772, guid: 517ec24be911a39459b58317855a6f15, type: 3}
+      propertyPath: OnAudio.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6128832168802954158, guid: 517ec24be911a39459b58317855a6f15, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
