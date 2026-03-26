@@ -190,7 +190,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.shield:
-                if (shieldSpawned != null) return;
+                if (shieldSpawned != null) Destroy(shieldSpawned);
                 onShield.Invoke();
                 shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
