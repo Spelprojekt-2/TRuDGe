@@ -56,11 +56,33 @@ public class TrainingGroundReady : MonoBehaviour
                 KBMInputs.SetActive(true);
                 ControllerInputs.SetActive(false);
             }
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+            Transform lapimage = p.transform.Find("Canvas/LapImage");
+            if(lapimage != null)
+            lapimage.GetComponent<Image>().enabled = false;
+
+            Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+            if(posimage != null)
+            posimage.GetComponent<Image>().enabled = false;
+            }
         }
         else
         {
             KBMInputs.SetActive(false);
             ControllerInputs.SetActive(false);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+            Transform lapimage = p.transform.Find("Canvas/LapImage");
+            if(lapimage != null)
+            lapimage.GetComponent<Image>().enabled = true;
+
+            Transform posimage = p.transform.Find("Canvas/RaceUI/PositionImage");
+            if(posimage != null)
+            posimage.GetComponent<Image>().enabled = true;
+            }
         }
     }
 

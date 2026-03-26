@@ -51,12 +51,11 @@ public class AudioManager : MonoBehaviour
     // SFX config
     [Header("SFX Configuration")]
     [SerializeField] private FeedbackAudio feedbackAudio;
-    private EventInstance countDownInst;
 
-    [Header("ANN Configuration")]
+    [Header("Voice Configuration")]
     [SerializeField] private VoiceAudio voiceAudio;
-    private EventInstance VOinst_Announcer;
-    private EventInstance VOinst_Character;
+    private EventInstance ann_vo_inst;
+    private EventInstance char_vo_inst;
 
     public enum AmbienceID
     {
@@ -162,10 +161,10 @@ public class AudioManager : MonoBehaviour
     #region VO
     public void StopIntro()
     {
-        if (VOinst_Announcer.isValid())
+        if (ann_vo_inst.isValid())
         {
-            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
-            VOinst_Announcer.release();
+            ann_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            ann_vo_inst.release();
         }
     }
 
@@ -176,13 +175,13 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("VoiceAudio is missing!");
             return;
         }
-        if (VOinst_Announcer.isValid())
+        if (ann_vo_inst.isValid())
         {
-            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
-            VOinst_Announcer.release();
+            ann_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            ann_vo_inst.release();
         }
         
-        VOinst_Announcer = voiceAudio.SchlammenstreckeIntroAudio(VOinst_Announcer);
+        ann_vo_inst = voiceAudio.SchlammenstreckeIntroAudio(ann_vo_inst);
     }
 
     public void PlayCliffsOfDoverIntro()
@@ -192,13 +191,13 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("VoiceAudio is missing!");
             return;
         }
-        if (VOinst_Announcer.isValid())
+        if (ann_vo_inst.isValid())
         {
-            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
-            VOinst_Announcer.release();
+            ann_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            ann_vo_inst.release();
         }
         
-        VOinst_Announcer = voiceAudio.CliffsOfDoverIntroAudio(VOinst_Announcer);
+        ann_vo_inst = voiceAudio.CliffsOfDoverIntroAudio(ann_vo_inst);
     }
 
     public void PlayLuminenTRTIntro()
@@ -208,13 +207,13 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("VoiceAudio is missing!");
             return;
         }
-        if (VOinst_Announcer.isValid())
+        if (ann_vo_inst.isValid())
         {
-            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
-            VOinst_Announcer.release();
+            ann_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            ann_vo_inst.release();
         }
         
-        VOinst_Announcer = voiceAudio.LuminenTRTIntroAudio(VOinst_Announcer);
+        ann_vo_inst = voiceAudio.LuminenTRTIntroAudio(ann_vo_inst);
     }
 
     public void PlayVictoryVoice(string characterName)
@@ -255,36 +254,80 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayFirstANN(string name)
+    public void PlayTakeLeadANN(string name)
     {
-        if (VOinst_Announcer.isValid())
+        if (ann_vo_inst.isValid())
         {
-            VOinst_Announcer.stop(STOP_MODE.IMMEDIATE);
-            VOinst_Announcer.release();
+            ann_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            ann_vo_inst.release();
         }
 
         string lower = name.ToLower();
         switch (lower)
         {
             case "king napoleon iii":
-                VOinst_Announcer = voiceAudio.ANN_NapoleonFirstPlace(VOinst_Announcer);
+                ann_vo_inst = voiceAudio.ANN_NapoleonTakeLead(ann_vo_inst);
+                break;
+            case "lars-göran":
+                ann_vo_inst = voiceAudio.ANN_LarsTakeLead(ann_vo_inst);
+                break;
+            case "capôw":
+                ann_vo_inst = voiceAudio.ANN_CarlaTakeLead(ann_vo_inst);
+                break;
+            case "the brass beast":
+                ann_vo_inst = voiceAudio.ANN_NinaTakeLead(ann_vo_inst);
                 break;
         }
     }
 
-    public void PlayFirstVO(string name)
+    public void PlayTakeLeadVO(string name)
     {
-        if (VOinst_Character.isValid())
+        if (char_vo_inst.isValid())
         {
-            VOinst_Character.stop(STOP_MODE.IMMEDIATE);
-            VOinst_Character.release();
+            char_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            char_vo_inst.release();
         }
 
         string lower = name.ToLower();
         switch (lower)
         {
             case "king napoleon iii":
-                VOinst_Character = voiceAudio.VO_NapoleonFirstPlace(VOinst_Character);
+                char_vo_inst = voiceAudio.VO_NapoleonTakeLead(char_vo_inst);
+                break;
+            case "lars-göran":
+                char_vo_inst = voiceAudio.VO_LarsTakeLead(char_vo_inst);
+                break;
+            case "capôw":
+                char_vo_inst = voiceAudio.VO_CarlaTakeLead(char_vo_inst);
+                break;
+            case "the brass beast":
+                char_vo_inst = voiceAudio.VO_NinaTakeLead(char_vo_inst);
+                break;
+        }
+    }
+
+    public void PlayLostLeadVO(string name)
+    {
+        if (char_vo_inst.isValid())
+        {
+            char_vo_inst.stop(STOP_MODE.IMMEDIATE);
+            char_vo_inst.release();
+        }
+
+        string lower = name.ToLower();
+        switch (lower)
+        {
+            case "king napoleon iii":
+                char_vo_inst = voiceAudio.VO_NapoleonLostLead(char_vo_inst);
+                break;
+            case "lars-göran":
+                char_vo_inst = voiceAudio.VO_LarsLostLead(char_vo_inst);
+                break;
+            case "capôw":
+                char_vo_inst = voiceAudio.VO_CarlaLostLead(char_vo_inst);
+                break;
+            case "the brass beast":
+                char_vo_inst = voiceAudio.VO_NinaLostLead(char_vo_inst);
                 break;
         }
     }

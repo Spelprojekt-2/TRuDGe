@@ -38,6 +38,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldTimer = 4f;
 
+    [SerializeField] private GameObject riseParticle;
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private Image useKeyController;
     [SerializeField] private Image useKeyKBM;
@@ -174,7 +175,9 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.deployWall:
                 onDeployWall.Invoke();
-                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + -7, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                GameObject wall = Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                GameObject particle = Instantiate(riseParticle, wall.transform.position, Quaternion.LookRotation(transform.forward));
+                Destroy(particle, 5f);
                 break;
 
             case PowerUpType.scatterShot:
@@ -187,7 +190,7 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.shield:
-                if (shieldSpawned != null) return;
+                if (shieldSpawned != null) Destroy(shieldSpawned);
                 onShield.Invoke();
                 shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;

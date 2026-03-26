@@ -70,7 +70,8 @@ public class GrapplingBehaviour : MonoBehaviour
         TimeSinceGrapple = 0f;
 
         // Start grapple audio
-        playerAudio.GrappleStart();
+        if (playerAudio != null)
+            playerAudio.GrappleStart();
 
         grappleStarted.Invoke();
 
@@ -87,7 +88,8 @@ public class GrapplingBehaviour : MonoBehaviour
         grappleEnded.Invoke();
 
         // Change audio behaviour
-        playerAudio.GrappleEnd();
+        if (playerAudio != null)
+            playerAudio.GrappleEnd();
 
         lineRenderer.enabled = false;
         if (grappleHook) grappleHook.SetActive(true);
