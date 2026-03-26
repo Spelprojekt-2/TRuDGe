@@ -37,7 +37,6 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldTimer = 4f;
 
-    [SerializeField] private GameObject riseParticle;
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private Image useKeyController;
     [SerializeField] private Image useKeyKBM;
