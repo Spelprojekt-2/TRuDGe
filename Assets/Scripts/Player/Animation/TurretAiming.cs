@@ -8,7 +8,7 @@ public class TurretAiming : MonoBehaviour
 
     public void Update()
     {
-        if (playerCamera.CurrentTarget != null)
+        if (playerCamera != null && playerCamera.CurrentTarget != null)
         {
             // Aim
             transform.localRotation = Quaternion.Slerp(

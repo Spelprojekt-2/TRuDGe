@@ -39,7 +39,7 @@ public class SceneController : MonoBehaviour
                 currentSceneType = SceneType.PlayerSelectRace;
                 IsMenu = true; break;
             case "CharacterScreen":
-                currentSceneType = SceneType.PlayerSelectRace;
+                currentSceneType = SceneType.CharScreen;
                 IsMenu = true; break;
             case "TimeTrialMenu":
                 currentSceneType = SceneType.PlayerSelectTimeTrial;
@@ -87,7 +87,8 @@ public class SceneController : MonoBehaviour
         PostRaceLeaderboard,
         Racing,
         TrainingGround,
-        STrainingGround
+        STrainingGround,
+        CharScreen
     }
 
 }
