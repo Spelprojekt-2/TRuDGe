@@ -145,6 +145,47 @@ public class AudioManager : MonoBehaviour
         musicInstance.start();
     }
     #endregion
+    
+    #region Music Fade
+
+    [SerializeField] private float musicTransitionDuration = 2f; // fade duration
+    private EventInstance nextMusic;
+
+// Call this when you want to go from Main Menu → Selection Screen
+    public void CrossfadeMainMenuToSelection()
+    {
+        if (!musicInstance.isValid())
+            return;
+
+        nextMusic = RuntimeManager.CreateInstance(Music_SelectionScreenRef);
+        nextMusic.start();
+        StartCoroutine(FadeMusicCoroutine(musicInstance, nextMusic, musicTransitionDuration));
+        musicInstance = nextMusic;
+    }
+
+// Coroutine that handles the fade
+    private System.Collections.IEnumerator FadeMusicCoroutine(EventInstance fromMusic, EventInstance toMusic, float duration)
+    {
+        float timer = 0f;
+        toMusic.setVolume(0f);
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+
+            fromMusic.setVolume(1f - t); // fade out old music
+            toMusic.setVolume(t);         // fade in new music
+
+            yield return null;
+        }
+
+        fromMusic.stop(STOP_MODE.ALLOWFADEOUT);
+        fromMusic.release();
+        toMusic.setVolume(1f);
+    }
+
+    #endregion
 
     #region SFX
     public void PlayCountdownAudio(bool endCountdown = false)
@@ -432,7 +473,7 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case 1:
-                ChangeMusic(MusicID.SelectionScreen);
+                CrossfadeMainMenuToSelection(); // smooth transition
                 ChangeAmbience(AmbienceID.None);
                 break;
 
