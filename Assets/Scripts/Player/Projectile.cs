@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject explosionParticle;
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private Rigidbody rb;
@@ -59,8 +60,18 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
-        Destroy(particle, 2f);
+        if(col.gameObject.layer == 6)
+        {
+            GameObject particle = Instantiate(explosionParticle, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+            Destroy(particle, 2f);
+            Debug.Log("Hit ground");
+        }
+        else
+        {
+            GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            Destroy(particle, 2f);
+            Debug.Log("Hit " + col.gameObject.name);
+        }
 
         if (col.CompareTag("Shield"))
         {

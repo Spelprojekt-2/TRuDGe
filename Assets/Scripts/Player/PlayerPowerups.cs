@@ -178,10 +178,9 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.deployWall:
                 onDeployWall.Invoke();
-                GameObject wall = Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
-                GameObject particle = Instantiate(riseParticle, wall.transform.position, Quaternion.LookRotation(transform.forward));
-                Destroy(particle, 5f);
-                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + -7, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                GameObject wall = Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + -7, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                /*GameObject particle = Instantiate(riseParticle, wall.transform.position, Quaternion.LookRotation(transform.forward));
+                Destroy(particle, 5f);*/
                 break;
 
             case PowerUpType.scatterShot:
