@@ -17,7 +17,7 @@ public class IceArrowController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
+        SceneController.instance.SceneChangeEvent += OnSceneLoaded;
     }
 
     // Update is called once per frame
@@ -36,7 +36,17 @@ public class IceArrowController : MonoBehaviour
     }
 
 
+    void OnSceneLoaded()
+    {
+        iceArrowRenderer = iceArrow.GetComponent<MeshRenderer>();
+        iceArrowRenderer.enabled = false;
+        currentTarget = target1;
+    }
     
+    void OnDisable()
+    {
+        SceneController.instance.SceneChangeEvent -= OnSceneLoaded;
+    }
     
     private void OnTriggerEnter(Collider other)
     {

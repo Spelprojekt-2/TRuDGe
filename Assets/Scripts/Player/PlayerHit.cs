@@ -8,14 +8,26 @@ public class PlayerHit : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private NinaMechanic ninaWrenches;
     [SerializeField] private UnityEvent hit;
+    private PlayerAudio playerAudio;
 
     private float invincibilityTimer;
     private bool isInvincible;
+
+    void Start()
+    {
+        // Get player audio
+        PlayerAudio plrAudio = GetComponent<PlayerAudio>();
+        if (plrAudio != null)
+            playerAudio = plrAudio;
+    }
 
     public void HitShield()
     {
         invincibilityTimer = invincibilityDuration;
         isInvincible = true;
+
+        if (playerAudio != null)
+            playerAudio.ShieldBreakAudio(); // Play shield break audio
     }
     public void Hit(bool ignoreInvincibility)
     {

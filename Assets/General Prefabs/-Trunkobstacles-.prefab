@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4559626402614603443}
   m_Layer: 0
   m_Name: -Trunkobstacles-
-  m_TagString: Untagged
+  m_TagString: DestroyableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,6 +77,7 @@ MonoBehaviour:
   - {fileID: 3607689147086205484}
   wallHealth: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   velocityChangeWhenHit: 0.6
+  destructParticle: {fileID: 5251164372292422389, guid: 32005ae856c7cd44c84cda7a2a9c8f08, type: 3}
   OnAudio:
     m_PersistentCalls:
       m_Calls:

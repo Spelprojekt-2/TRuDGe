@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 
-[RequireComponent(typeof(PlayerAudio))]
 public class PlayerShooting : MonoBehaviour
 {
 
@@ -31,8 +30,10 @@ public class PlayerShooting : MonoBehaviour
         shootCooldown.fillAmount = 0f;
         autoAim = GetComponentInChildren<AutoAimCone>();
 
-        // Get PlayerAudio.
-        playerAudio = GetComponent<PlayerAudio>();
+        // Get player audio
+        PlayerAudio plrAudio = GetComponent<PlayerAudio>();
+        if (plrAudio != null)
+            playerAudio = plrAudio;
     }
     public void ShootInput(InputAction.CallbackContext context)
     {
@@ -80,7 +81,8 @@ public class PlayerShooting : MonoBehaviour
         bullet.GetComponent<Projectile>().PrepareProjectile(gameObject, null, speedMultiplier);
 
         // Play shoot audio
-        playerAudio.ShootStart();
+        if (playerAudio != null)
+            playerAudio.ShootStart();
 
         //Napoleon
         NapoleonRespect nr = transform.root.GetComponentInChildren<NapoleonRespect>();

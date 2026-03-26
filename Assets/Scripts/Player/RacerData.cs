@@ -36,6 +36,9 @@ public class RacerData : MonoBehaviour
     [SerializeField] private UnityEvent OnNewLap;
     private List<double> lapEndTimes = new List<double>();
     [SerializeField] private TimeTrialCapture capture;
+
+    //Character audio
+    public List<string> voicelines = new List<string>();
     private void Update()
     {
         if (!RacingInformation.instance.isTimeTrial || SceneController.instance.IsMenu || isReplayGhost || raceController == null || !isRacing) return;
@@ -91,6 +94,7 @@ public class RacerData : MonoBehaviour
 
     public void OnRaceStarted()
     {
+        voicelines.Clear();
         currentValidLap = 0;
         lap = 0;
         raceProgress = 0;
@@ -101,7 +105,6 @@ public class RacerData : MonoBehaviour
         isRacing = true;
         OnRaceStart?.Invoke();
         if (RacingInformation.instance.isTimeTrial && !isReplayGhost) capture.StartCapture();
-
     }
     public void OnRaceFinished()
     {
