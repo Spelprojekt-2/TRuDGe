@@ -6074,6 +6074,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1668723460971478453, guid: f5f347a9d7fd19a43906484cdfd9e1c7, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2472299390606291813, guid: f5f347a9d7fd19a43906484cdfd9e1c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8703,6 +8707,7 @@ MonoBehaviour:
   racers: []
   startingLine: {fileID: 0}
   timeBeforeStartCountdown: 0
+  countdownText: {fileID: 0}
   SwapSceneAfterRaceTime: 5
   FinishLastRacerTimer: 30
   ghostPrefab: {fileID: 0}

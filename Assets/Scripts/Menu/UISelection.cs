@@ -228,11 +228,8 @@ public class UISelection : MonoBehaviour
 
     private void SelectUIUpdate(UIButton button)
     {
-        if (button == null || selectionHighlight == null || selection == null || selection == lastSelection)
+        if (button == null || selectionHighlight == null || selection == null)// || selection == lastSelection
             return;
-
-        string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
-        bool bgs = tx.Length == 1;
         int playerIndex = GetComponent<RacerData>().index;
         //if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
         
@@ -256,6 +253,8 @@ public class UISelection : MonoBehaviour
         if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
         
+        string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
+        bool bgs = tx.Length == 1;
         //if ((SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs) || Time.timeScale == 0)
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
         {
