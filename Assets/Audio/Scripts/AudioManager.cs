@@ -466,26 +466,26 @@ public class AudioManager : MonoBehaviour
                 ChangeAmbience(AmbienceID.None);
                 break;
 
-            case 9:
+            case 6:
                 ChangeMusic(MusicID.Level1sloped);
                 ChangeAmbience(AmbienceID.Schlammrennstrecke);
                 break;
 
-            case 10:
+            case 7:
                 ChangeMusic(MusicID.TrainingGround);
                 ChangeAmbience(AmbienceID.TrainingGround);
                 break;
 
-            case 12:
+            case 9:
                 ChangeMusic(MusicID.Dover);
                 ChangeAmbience(AmbienceID.CliffsOfDover);
                 break;
 
-            case 15:
+            case 8:
                 ChangeMusic(MusicID.Luminen);
                 ChangeAmbience(AmbienceID.LuminenTRT);
                 break;
-            case 16:
+            case 13:
                 ChangeMusic(MusicID.TrainingGround);
                 ChangeAmbience(AmbienceID.TrainingGround);
                 break;
