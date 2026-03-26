@@ -23,6 +23,7 @@ public class Landmine : MonoBehaviour
     {
         if (other != null)
         {
+            Debug.Log(other.gameObject.name);
             GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
             Destroy(particle, 2f);
             Rigidbody rb = other.GetComponentInParent<Rigidbody>();
