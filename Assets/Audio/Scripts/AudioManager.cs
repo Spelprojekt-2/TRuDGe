@@ -171,18 +171,22 @@ public class AudioManager : MonoBehaviour
 
         while (timer < duration)
         {
+            // Ensure we don't go past 'duration'
             timer += Time.deltaTime;
-            float t = timer / duration;
+            float t = Mathf.Clamp01(timer / duration); // t is always between 0 and 1
 
-            fromMusic.setVolume(1f - t); // fade out old music
-            toMusic.setVolume(t);         // fade in new music
+            fromMusic.setVolume(1f - t); // fade out
+            toMusic.setVolume(t);        // fade in
 
             yield return null;
         }
 
+        // Guarantee final volume values
+        fromMusic.setVolume(0f);
+        toMusic.setVolume(1f);
+
         fromMusic.stop(STOP_MODE.ALLOWFADEOUT);
         fromMusic.release();
-        toMusic.setVolume(1f);
     }
 
     #endregion
