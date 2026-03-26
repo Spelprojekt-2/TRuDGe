@@ -16,8 +16,12 @@ public class PlayerHit : MonoBehaviour
     private bool isInvincible;
 
     void Start()
-    {
+    {}
         playerAudio = GetComponent<PlayerAudio>();
+        // Get player audio
+        PlayerAudio plrAudio = GetComponent<PlayerAudio>();
+        if (plrAudio != null)
+            playerAudio = plrAudio;
     }
 
     public void HitShield()
@@ -26,6 +30,8 @@ public class PlayerHit : MonoBehaviour
         isInvincible = true;
 
         playerAudio.ShieldBreakAudio(); // Play shield break audio
+        if (playerAudio != null)
+            playerAudio.ShieldBreakAudio(); // Play shield break audio
     }
     public void Hit(bool ignoreInvincibility)
     {

@@ -19,6 +19,9 @@ public class UISelection : MonoBehaviour
     public Color selectionColor;
     public RectTransform selectionHighlight;
 
+    //Main Menu
+    [SerializeField] private Image[] buttonBGs;
+
     private RacerData racerData;
     private bool stickHeld = false;
     private UIButton[] buttonsOnScene;
@@ -170,8 +173,9 @@ public class UISelection : MonoBehaviour
     {
         int playerIndex = GetComponent<RacerData>().index;
         if (!newButton || selection == newButton)
+        {
             return;
-
+        }
         if (selection) selection.SetHighlight(false, playerIndex);
         selection = newButton;
         selection.SetHighlight(true, playerIndex);
@@ -226,15 +230,15 @@ public class UISelection : MonoBehaviour
 
     private void SelectUIUpdate(UIButton button)
     {
-        if (button == null)
-            return;
-        
-        if (selectionHighlight == null)
+        if (button == null || selectionHighlight == null || selection == null || selection == lastSelection)
             return;
 
+        string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
+        bool bgs = tx.Length == 1;
         int playerIndex = GetComponent<RacerData>().index;
-
-        selectionColor = playerIndex switch
+        //if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
+        
+            selectionColor = playerIndex switch
         {
             0 => new Color32(255,25,25,255),
             1 => new Color32(50,200,50,255),
@@ -246,17 +250,32 @@ public class UISelection : MonoBehaviour
         if (highlightImage == null)
             return;
         highlightImage.color = selectionColor;
+        highlightImage.sprite = null;
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu)
+        highlightImage.color = new Color32(180,180,180,255);
 
         selectionHighlight.gameObject.SetActive(true);
         if (button.transform != null)   
         selectionHighlight.transform.SetParent(button.transform.parent);
         
-        UpdateAllHighlights();
-
-        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+        //if ((SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs) || Time.timeScale == 0)
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
         {
-            
+            highlightImage.sprite = selection.buttonBackground.sprite;
+            highlightImage.color = new Color32(180,180,180,255);
+            //highlightImage.transform.localScale = new Vector3(5f, highlightImage.transform.localScale.y, highlightImage.transform.localScale.z);
         }
+        /*else
+        {
+            if (lastSelection != null && lastSelection.buttonBackground != null && lastSelection.buttonBackground.gameObject.activeSelf)
+            lastSelection.buttonBackground.gameObject.SetActive(false);
+
+            if (!selection.buttonBackground.gameObject.activeSelf && selection != null && selection.buttonBackground != null)
+            selection.buttonBackground.gameObject.SetActive(true);
+            lastSelection = selection;
+        }*/
+        selectionHighlight.transform.SetParent(button.transform.parent);
+        UpdateAllHighlights();
     }
     private void UpdateAllHighlights()
     {
