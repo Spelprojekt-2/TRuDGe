@@ -288,7 +288,7 @@ public class UISelection : MonoBehaviour
 
     private void SelectUIUpdate(UIButton button)
     {
-        if (button == null || selectionHighlight == null || selection == null || selection == lastSelection)
+        if (button == null || selectionHighlight == null || selection == null)// || selection == lastSelection
             return;
 
         TextMeshProUGUI txt = selection.GetComponentInChildren<TextMeshProUGUI>();

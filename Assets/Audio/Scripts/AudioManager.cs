@@ -477,7 +477,7 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case 1:
-                CrossfadeMainMenuToSelection(); // smooth transition
+                ChangeMusic(MusicID.SelectionScreen);
                 ChangeAmbience(AmbienceID.None);
                 break;
 
