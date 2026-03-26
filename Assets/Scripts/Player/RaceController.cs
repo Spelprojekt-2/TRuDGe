@@ -103,7 +103,7 @@ public class RaceController : MonoBehaviour
                 {
                     racers[i].OnRaceStarted();
                     if (RacingInformation.instance.isTimeTrialWithGhost) ghostReplay.PlayGhost();
-                    if (countdownText) countdownText.gameObject.SetActive(false);
+                    //if (countdownText) countdownText.gameObject.SetActive(false);
                     timeForVO = Time.time; // Voice lines time reset
                 }
             }

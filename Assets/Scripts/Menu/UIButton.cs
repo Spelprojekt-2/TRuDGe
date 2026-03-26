@@ -23,6 +23,9 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject[] characterStats;
     [SerializeField] private GameObject[] characterSprites;
 
+    [Header ("Main Menu images")]
+    public Image buttonBackground;
+
     void Awake()
     {
         button = GetComponent<Button>();

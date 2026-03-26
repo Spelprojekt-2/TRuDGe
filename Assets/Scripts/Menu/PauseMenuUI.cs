@@ -7,8 +7,14 @@ public class PauseMenuUI : MonoBehaviour
 {
 
     public GameObject pauseMenu;
+    public GameObject mainPauseMenu;
+    public GameObject settingsMenu;
+    public GameObject controlsMenu;
+    public GameObject audioMenu;
     public UIButton selectOnPause;
-
+    public UIButton selectOnSettings;
+    public UIButton selectOnControls;
+    public UIButton selectOnAudio;
     private bool isPaused = false;
     private PlayerInput currentPlayerInput;
     private int currentPlayerID;
@@ -64,6 +70,54 @@ public class PauseMenuUI : MonoBehaviour
         {
             AudioManager.Instance.TogglePause(false);
         }
+    }
+
+    public void OpenSettings()
+    {
+        settingsMenu.SetActive(true);
+        CoroutineRunner.Run(SwapButton(selectOnSettings));
+    }
+
+    public IEnumerator SwapButton(UIButton btn)
+    {
+        yield return null;
+        UISelection.playerSelections[currentPlayerID].SwapSelection(btn);
+    }
+    public void CloseSettings()
+    {
+        mainPauseMenu.SetActive(true);
+        settingsMenu.SetActive(false);
+        CoroutineRunner.Run(SwapButton(selectOnPause));
+    }
+
+    public void OpenControls()
+    {
+        mainPauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(true);
+        CoroutineRunner.Run(SwapButton(selectOnControls));
+    }
+
+    public void CloseControls()
+    {
+        controlsMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+        CoroutineRunner.Run(SwapButton(selectOnSettings));
+    }
+
+    public void OpenAudio()
+    {
+        settingsMenu.SetActive(false);
+        mainPauseMenu.SetActive(false);
+        audioMenu.SetActive(true);
+        CoroutineRunner.Run(SwapButton(selectOnAudio));
+    }
+
+    public void CloseAudio()
+    {
+        settingsMenu.SetActive(true);
+        audioMenu.SetActive(false);
+        CoroutineRunner.Run(SwapButton(selectOnSettings));
     }
 
     public IEnumerator SwapMap(PlayerInput input, string map)

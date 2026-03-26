@@ -11,6 +11,7 @@ using System.Net.Mime;
 using Unity.Mathematics;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerPowerups : MonoBehaviour
 {
     [Header("---Power Up Events---")]
@@ -37,6 +38,7 @@ public class PlayerPowerups : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldTimer = 4f;
 
+    [SerializeField] private GameObject riseParticle;
     [SerializeField] private TextMeshProUGUI currPowerUpText;
     [SerializeField] private Image useKeyController;
     [SerializeField] private Image useKeyKBM;
@@ -57,9 +59,7 @@ public class PlayerPowerups : MonoBehaviour
     private void Start()
     {
         // Get player audio
-        PlayerAudio plrAudio = GetComponent<PlayerAudio>();
-        if (plrAudio != null)
-            playerAudio = plrAudio;
+        playerAudio = GetComponent<PlayerAudio>();
 
         currPowerUpText.text = "";
         gasTankAmount = 0;
@@ -101,9 +101,8 @@ public class PlayerPowerups : MonoBehaviour
         }
         
         // Play audio
-        if (playerAudio != null)
-            playerAudio.PickupAudio(type);
-
+        playerAudio.PickupAudio(type);
+        
         if (type == PowerUpType.gasolineTank)
         {
             if (gasTankAmount < 10)
@@ -155,8 +154,7 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.magnet:
                 onMagnet.Invoke();
-                if (playerAudio != null)
-                    playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
+                playerAudio.ToggleMagnetAudio(true, gameObject); // Start magnet audio
                 StartCoroutine(Magnet());
                 break;
 
@@ -177,7 +175,9 @@ public class PlayerPowerups : MonoBehaviour
 
             case PowerUpType.deployWall:
                 onDeployWall.Invoke();
-                Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                GameObject wall = Instantiate(deployedWall, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z) - transform.forward * 10, Quaternion.LookRotation(transform.forward));
+                GameObject particle = Instantiate(riseParticle, wall.transform.position, Quaternion.LookRotation(transform.forward));
+                Destroy(particle, 5f);
                 break;
 
             case PowerUpType.scatterShot:
@@ -190,12 +190,11 @@ public class PlayerPowerups : MonoBehaviour
                 break;
 
             case PowerUpType.shield:
-                if (shieldSpawned != null) return;
+                if (shieldSpawned != null) Destroy(shieldSpawned);
                 onShield.Invoke();
                 shieldSpawned = Instantiate(shield, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
                 shieldSpawned.transform.parent = gameObject.transform;
-                if (playerAudio != null)
-                    playerAudio.PlayShieldAudio(shieldTimer); // Play shield audio
+                playerAudio.PlayShieldAudio(shieldTimer); // Play shield audio
                 StartCoroutine(Shield(shieldSpawned));
                 break;
 
@@ -336,8 +335,7 @@ public class PlayerPowerups : MonoBehaviour
         usingTurbo = false;
 
         // Stop turbo audio
-        if (playerAudio != null)
-            playerAudio.StopTurboAudio();
+        playerAudio.StopTurboAudio();
     }
 
     IEnumerator Magnet()
@@ -345,8 +343,7 @@ public class PlayerPowerups : MonoBehaviour
         usingMagnet = true;
         yield return new WaitForSeconds(5f);
         usingMagnet = false;
-        if (playerAudio != null)
-            playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
+        playerAudio.ToggleMagnetAudio(false, gameObject); // Stop magnet audio
     }
 
     void Smokescreen()
@@ -359,6 +356,7 @@ public class PlayerPowerups : MonoBehaviour
     {
         yield return new WaitForSeconds(shieldTimer);
         Destroy(shieldSpawned);
+        //playerAudio.ShieldBreakAudio(false);
     }
 
     void Airstrike()
