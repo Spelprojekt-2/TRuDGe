@@ -19,8 +19,7 @@ public class AudioManager : MonoBehaviour
     private bool isPaused = false;
 
     [Header("Music Configuration")]
-    [SerializeField] private EventReference Music_MainMenuRef;
-    [SerializeField] private EventReference Music_SelectionScreenRef;
+    [SerializeField] private EventReference Music_MenuHandler;
     [SerializeField] private EventReference Music_TimeTrailRef;
     [SerializeField] private EventReference Music_Level1_slopedRef;
     [SerializeField] private EventReference Music_TrainingGround;
@@ -47,6 +46,7 @@ public class AudioManager : MonoBehaviour
         Luminen = 7
     }
     private MusicID currentMusic = MusicID.None;
+    bool isMenuMusic;
 
     // SFX config
     [Header("SFX Configuration")]
@@ -106,7 +106,13 @@ public class AudioManager : MonoBehaviour
         {
             return;
         }
-        if (musicInstance.isValid())
+
+        if (musicID != MusicID.MainMenu && musicID != MusicID.SelectionScreen)
+        {
+            isMenuMusic = false;
+        }
+
+        if (musicInstance.isValid() && !isMenuMusic)
         {
             musicInstance.stop(STOP_MODE.IMMEDIATE);
             musicInstance.release();
@@ -115,11 +121,25 @@ public class AudioManager : MonoBehaviour
         switch (musicID)
         {
             case MusicID.MainMenu:
-                musicInstance = RuntimeManager.CreateInstance(Music_MainMenuRef);
+                Debug.Log("MENU!-------------------");
+                if (!isMenuMusic)
+                {
+                    isMenuMusic = true;
+                    musicInstance = RuntimeManager.CreateInstance(Music_MenuHandler);
+                    Debug.Log("MENU!---------WAS SET----------");
+                }
+                musicInstance.setParameterByName("IsSelectionScreen", 0f);
                 break;
 
             case MusicID.SelectionScreen:
-                musicInstance = RuntimeManager.CreateInstance(Music_SelectionScreenRef);
+                Debug.Log("SELECT-------------------");
+                if (!isMenuMusic)
+                {
+                    isMenuMusic = true;
+                    musicInstance = RuntimeManager.CreateInstance(Music_MenuHandler);
+                    Debug.Log("SELECT!-------------------");
+                }
+                musicInstance.setParameterByName("IsSelectionScreen", 1f);
                 break;
 
             case MusicID.TimeTrail:
@@ -144,51 +164,6 @@ public class AudioManager : MonoBehaviour
         currentMusic = musicID;
         musicInstance.start();
     }
-    #endregion
-    
-    #region Music Fade
-
-    [SerializeField] private float musicTransitionDuration = 2f; // fade duration
-    private EventInstance nextMusic;
-
-// Call this when you want to go from Main Menu → Selection Screen
-    public void CrossfadeMainMenuToSelection()
-    {
-        if (!musicInstance.isValid())
-            return;
-
-        nextMusic = RuntimeManager.CreateInstance(Music_SelectionScreenRef);
-        nextMusic.start();
-        StartCoroutine(FadeMusicCoroutine(musicInstance, nextMusic, musicTransitionDuration));
-        musicInstance = nextMusic;
-    }
-
-// Coroutine that handles the fade
-    private System.Collections.IEnumerator FadeMusicCoroutine(EventInstance fromMusic, EventInstance toMusic, float duration)
-    {
-        float timer = 0f;
-        toMusic.setVolume(0f);
-
-        while (timer < duration)
-        {
-            // Ensure we don't go past 'duration'
-            timer += Time.deltaTime;
-            float t = Mathf.Clamp01(timer / duration); // t is always between 0 and 1
-
-            fromMusic.setVolume(1f - t); // fade out
-            toMusic.setVolume(t);        // fade in
-
-            yield return null;
-        }
-
-        // Guarantee final volume values
-        fromMusic.setVolume(0f);
-        toMusic.setVolume(1f);
-
-        fromMusic.stop(STOP_MODE.ALLOWFADEOUT);
-        fromMusic.release();
-    }
-
     #endregion
 
     #region SFX
@@ -477,7 +452,7 @@ public class AudioManager : MonoBehaviour
                 break;
 
             case 1:
-                CrossfadeMainMenuToSelection(); // smooth transition
+                ChangeMusic(MusicID.SelectionScreen);
                 ChangeAmbience(AmbienceID.None);
                 break;
 
