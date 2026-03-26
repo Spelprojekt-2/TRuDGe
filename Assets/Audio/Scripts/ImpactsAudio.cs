@@ -1,5 +1,6 @@
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Scriptables/Audio/Impacts")]
 public class ImpactsAudio : ScriptableObject
@@ -10,6 +11,7 @@ public class ImpactsAudio : ScriptableObject
     [SerializeField] private EventReference WoodImpactRef;
     [SerializeField] private EventReference WallDestroyRef;
     [SerializeField] private EventReference SnowImpactRef;
+    [SerializeField] private EventReference ProjectileImpactRef;
     #endregion
 
     #region Functions
@@ -51,6 +53,23 @@ public class ImpactsAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(SnowImpactRef);
+    }
+
+    public void PlayProjectileImpact()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.buildIndex <= 3)  // AVOID IMPACT IN MAINMENU
+        {
+            Debug.Log("Avoided impact audio!");
+            return;
+        }
+
+        if (ProjectileImpactRef.IsNull)
+        {
+            Debug.LogWarning("ImpactsAudio: ProjectileImpactRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(ProjectileImpactRef);
     }
     #endregion
 }
