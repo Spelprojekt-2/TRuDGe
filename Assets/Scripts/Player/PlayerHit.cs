@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(PlayerAudio))]
 public class PlayerHit : MonoBehaviour
 {
+    [SerializeField] private GameObject getHitParticle;
     [SerializeField] private float hitSpeedMultiplier;
     [SerializeField] private float invincibilityDuration;
     [SerializeField] private Animator anim;
@@ -15,6 +17,7 @@ public class PlayerHit : MonoBehaviour
 
     void Start()
     {
+        playerAudio = GetComponent<PlayerAudio>();
         // Get player audio
         PlayerAudio plrAudio = GetComponent<PlayerAudio>();
         if (plrAudio != null)
@@ -26,6 +29,7 @@ public class PlayerHit : MonoBehaviour
         invincibilityTimer = invincibilityDuration;
         isInvincible = true;
 
+        playerAudio.ShieldBreakAudio(); // Play shield break audio
         if (playerAudio != null)
             playerAudio.ShieldBreakAudio(); // Play shield break audio
     }
@@ -36,6 +40,8 @@ public class PlayerHit : MonoBehaviour
 
         hit.Invoke();
 
+        GameObject particle = Instantiate(getHitParticle, transform.position, Quaternion.identity);
+        Destroy(particle, 2f);
         Rigidbody rb = transform.root.GetComponentInChildren<Rigidbody>();
         rb.linearVelocity = new Vector3(rb.linearVelocity.x * hitSpeedMultiplier, rb.linearVelocity.y, rb.linearVelocity.z * hitSpeedMultiplier);
         transform.root.GetComponentInChildren<Vibrations>().TriggerVibration(0.2f, 0.2f, 0.3f);

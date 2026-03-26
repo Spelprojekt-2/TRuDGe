@@ -49,12 +49,8 @@ public class Airstrike : MonoBehaviour
 
     IEnumerator AirstrikeFire()
     {
-        for (int i = 0; i < strikeCount; i++)
-        {
-            GameObject proj = Instantiate(projectiles, transform.position + new Vector3(Random.Range(-10, 10), 25, Random.Range(-10, 10)), Quaternion.LookRotation(Vector3.down));
-            proj.GetComponent<Projectile>().PrepareProjectile(proj, null, 1);
-        }
         yield return new WaitForSeconds(timeTillFire);
+        StartCoroutine(Projectiles());
         for (float f = fireDuration; f >= 0; f -= Time.deltaTime)
         {
             yield return null;
@@ -64,6 +60,16 @@ public class Airstrike : MonoBehaviour
             }
         }
         Destroy(gameObject);
+    }
+
+    IEnumerator Projectiles()
+    {
+        for (int i = 0; i < strikeCount; i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+            GameObject proj = Instantiate(projectiles, transform.position + new Vector3(Random.Range(-10, 10), 25, Random.Range(-10, 10)), Quaternion.LookRotation(Vector3.down));
+            proj.GetComponent<Projectile>().PrepareProjectile(proj, null, 0.3f);
+        }
     }
 
     public void SetTarget(RacerData leader)
