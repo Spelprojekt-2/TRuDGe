@@ -264,7 +264,7 @@ public class PlayerPowerups : MonoBehaviour
         }
         else if (type == PowerUpType.scatterShot)
         {
-            currPowerUpImage.sprite = powerUpSprites[0];
+            currPowerUpImage.sprite = powerUpSprites[7];
             //currPowerUpText.text = "Scatter Shot";
         }
         else if (type == PowerUpType.shield)
