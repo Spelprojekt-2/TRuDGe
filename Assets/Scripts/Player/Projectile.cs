@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject explosionParticle;
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private Rigidbody rb;
     private float currentSpeed;
@@ -53,9 +55,24 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         if (shooter == null) return;
+        if (col.CompareTag("IceEntry")) return;
+        if (col.CompareTag("LakeExit")) return;
         if (col.transform.IsChildOf(shooter.transform) || isHit)
         {
             return;
+        }
+
+        if(col.gameObject.layer == 6)
+        {
+            GameObject particle = Instantiate(explosionParticle, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+            Destroy(particle, 2f);
+            Debug.Log("Hit ground");
+        }
+        else
+        {
+            GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            Destroy(particle, 2f);
+            Debug.Log("Hit " + col.gameObject.name);
         }
 
         if (col.CompareTag("Shield"))
@@ -76,6 +93,8 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision col)
@@ -84,6 +103,9 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
+        Debug.Log("Hit solid collider");
+        GameObject particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        Destroy(particle, 2f);
         Destroy(gameObject);
     }
 }

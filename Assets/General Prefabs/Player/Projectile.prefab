@@ -102,6 +102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257b7a447fdfe72428c7d0985925dde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  explosionParticle: {fileID: 6391762480799724831, guid: 2e835fe758282374abf362e53503b4e7, type: 3}
   projectileSpeed: 500
   rb: {fileID: 1809992583948717343}
 --- !u!135 &6346276452147010697
@@ -114,7 +118,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1066487
+    m_Bits: 17911
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -141,7 +145,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 455
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 512

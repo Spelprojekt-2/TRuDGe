@@ -39,6 +39,10 @@ public class PlayerAudio : MonoBehaviour
         {
             Debug.LogWarning("PlayerAudio: TanksAudio is missing!");
         }
+        if (interactablesAudio == null)
+        {
+            Debug.LogWarning("PlayerAudio: InteractablesAudio is missing!");
+        }
     }
 
     private void Start()
@@ -161,8 +165,6 @@ public class PlayerAudio : MonoBehaviour
             return;
         }
 
-        interactablesAudio.PlayShieldUseAudio(); // Trigger usage sound
-
         float newStopTime = Time.time + shieldTimer;
 
         if (hasShield)
@@ -186,6 +188,11 @@ public class PlayerAudio : MonoBehaviour
         }
     }
 
+    public void ShieldBreakAudio()
+    {
+        shieldStopTime = 0f;
+    }
+
     private IEnumerator ShieldHandler()
     {
         while (Time.time < shieldStopTime)
@@ -194,7 +201,7 @@ public class PlayerAudio : MonoBehaviour
             float totalDuration = shieldStopTime - shieldStartTime;
 
             float normalized = Mathf.Clamp01(remaining / totalDuration);
-            Debug.Log("NORMAL:" + normalized);
+            //Debug.Log("NORMAL:" + normalized);
 
             if (shieldInst.isValid())
             {
@@ -213,6 +220,7 @@ public class PlayerAudio : MonoBehaviour
             shieldInst.release();
         }
 
+        interactablesAudio.PlayShieldBreakAudio();
         hasShield = false;
         shieldRoutine = null;
     }
