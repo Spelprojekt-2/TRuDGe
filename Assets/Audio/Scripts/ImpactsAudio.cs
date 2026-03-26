@@ -10,6 +10,7 @@ public class ImpactsAudio : ScriptableObject
     [SerializeField] private EventReference WoodImpactRef;
     [SerializeField] private EventReference WallDestroyRef;
     [SerializeField] private EventReference SnowImpactRef;
+    [SerializeField] private EventReference ProjectileImpactRef;
     #endregion
 
     #region Functions
@@ -51,6 +52,16 @@ public class ImpactsAudio : ScriptableObject
             return;
         }
         RuntimeManager.PlayOneShot(SnowImpactRef);
+    }
+
+    public void PlayProjectileImpact()
+    {
+        if (ProjectileImpactRef.IsNull)
+        {
+            Debug.LogWarning("ImpactsAudio: ProjectileImpactRef is missing!");
+            return;
+        }
+        RuntimeManager.PlayOneShot(ProjectileImpactRef);
     }
     #endregion
 }
