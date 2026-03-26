@@ -19,9 +19,6 @@ public class UISelection : MonoBehaviour
     public Color selectionColor;
     public RectTransform selectionHighlight;
 
-    //Main Menu
-    [SerializeField] private Image[] buttonBGs;
-
     private RacerData racerData;
     private bool stickHeld = false;
     private UIButton[] buttonsOnScene;
@@ -96,6 +93,7 @@ public class UISelection : MonoBehaviour
             selection = null;
             SwapSelection(lastSelection);
             lastSelection.GetComponent<Image>().color = Color.white;
+            selectionHighlight.gameObject.SetActive(true);
             lastSelection = null;
         }
     }
@@ -238,7 +236,7 @@ public class UISelection : MonoBehaviour
         int playerIndex = GetComponent<RacerData>().index;
         //if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
         
-            selectionColor = playerIndex switch
+        selectionColor = playerIndex switch
         {
             0 => new Color32(255,25,25,255),
             1 => new Color32(50,200,50,255),
