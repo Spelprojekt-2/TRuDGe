@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 25862192}
   - component: {fileID: 25862194}
   - component: {fileID: 25862193}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Carla win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1066,7 @@ GameObject:
   - component: {fileID: 374615062}
   - component: {fileID: 374615064}
   - component: {fileID: 374615063}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Nina win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1752,11 +1752,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1913607613}
-  m_Father: {fileID: 783284023}
+  m_Father: {fileID: 989152002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -729.5, y: 71}
+  m_AnchoredPosition: {x: 180.5, y: -419}
   m_SizeDelta: {x: 400, y: 124}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &608346062
@@ -2375,8 +2375,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1918388973}
-  - {fileID: 608346061}
-  - {fileID: 847466544}
+  - {fileID: 989152002}
   - {fileID: 139159548}
   - {fileID: 640168543}
   - {fileID: 850018376}
@@ -2443,11 +2442,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1135130985}
-  m_Father: {fileID: 783284023}
+  m_Father: {fileID: 989152002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1264.5, y: 71}
+  m_AnchoredPosition: {x: -354.5, y: -419}
   m_SizeDelta: {x: 400, y: 124}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &847466545
@@ -2848,6 +2847,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967590771}
   m_CullTransparentMesh: 1
+--- !u!1 &989152001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 989152002}
+  m_Layer: 5
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &989152002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989152001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 608346061}
+  - {fileID: 847466544}
+  m_Father: {fileID: 783284023}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1016462304
 GameObject:
   m_ObjectHideFlags: 0
@@ -4017,7 +4053,7 @@ GameObject:
   - component: {fileID: 1374761446}
   - component: {fileID: 1374761448}
   - component: {fileID: 1374761447}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: "Lars-G\xF6ran win"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4467,7 +4503,7 @@ GameObject:
   - component: {fileID: 1641605029}
   - component: {fileID: 1641605031}
   - component: {fileID: 1641605030}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Napoleon win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
