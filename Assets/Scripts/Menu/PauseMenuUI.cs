@@ -108,6 +108,7 @@ public class PauseMenuUI : MonoBehaviour
     public void OpenAudio()
     {
         settingsMenu.SetActive(false);
+        mainPauseMenu.SetActive(false);
         audioMenu.SetActive(true);
         CoroutineRunner.Run(SwapButton(selectOnAudio));
     }

@@ -18,6 +18,9 @@ public class UISelection : MonoBehaviour
     public UIButton lastSelection;
     public Color selectionColor;
     public RectTransform selectionHighlight;
+    private Slider draggingSlider = null;
+
+    [SerializeField] private Image[] buttonBGs;
 
     private RacerData racerData;
     private bool stickHeld = false;
@@ -27,10 +30,12 @@ public class UISelection : MonoBehaviour
 
     public string selectedCharacter;
     public static UISelection Instance;
+
     void Awake()
     {
         Instance = this;
     }
+
     public void Start()
     {
         playerSelections.Add(this);
@@ -39,6 +44,7 @@ public class UISelection : MonoBehaviour
         SceneController.instance.SceneChangeEvent += UpdateButtons;
         UpdateButtons();
     }
+
     public void OnDisable()
     {
         SceneController.instance.SceneChangeEvent -= UpdateButtons;
@@ -47,6 +53,7 @@ public class UISelection : MonoBehaviour
             playerSelections.Remove(this);
         }
     }
+
     public void LookInput(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
@@ -67,9 +74,25 @@ public class UISelection : MonoBehaviour
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
         {
             if (input.x > 0)
-                SwapSelection(selection.SwapRightSelection());
+            {
+                Slider slider = selection.GetComponent<Slider>();
+                if (slider != null)
+                {
+                    slider.value += 0.01f;
+                    stickHeld = false;
+                }
+                else SwapSelection(selection.SwapRightSelection());
+            }
             else
+            {
+                Slider slider = selection.GetComponent<Slider>();
+                if (slider != null)
+                {
+                    slider.value -= 0.01f;
+                    stickHeld = false;
+                }
                 SwapSelection(selection.SwapLeftSelection());
+            }
         }
         else
         {
@@ -80,11 +103,10 @@ public class UISelection : MonoBehaviour
         }
     }
 
-
-     public void Deselect(InputAction.CallbackContext context)
+    public void Deselect(InputAction.CallbackContext context)
     {
-            if (!context.performed) return;
-            if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
+        if (!context.performed) return;
+        if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace ||
             SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
         {
             if (lastSelection == null) return;
@@ -93,20 +115,21 @@ public class UISelection : MonoBehaviour
             selection = null;
             SwapSelection(lastSelection);
             lastSelection.GetComponent<Image>().color = Color.white;
-            selectionHighlight.gameObject.SetActive(true);
             lastSelection = null;
         }
     }
+
     public void Select(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
         if (!selection || !selection.enabled) return;
+        if (selection.GetComponent<Slider>() != null) return;
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
             string charname = (textObj != null) ? textObj.text : null;
-            
+
             if (SceneController.instance.currentSceneType == SceneController.SceneType.CharScreen && selection.transform.GetSiblingIndex() != selection.transform.parent.childCount - 1) return;
-            
+
             selectionHighlight.SetParent(transform.root.GetComponentInChildren<Canvas>().transform);
             selectionHighlight.gameObject.SetActive(false);
             selection.Click();
@@ -120,40 +143,38 @@ public class UISelection : MonoBehaviour
             else selection = null;
 
             int playerIndex = GetComponent<RacerData>().index;
-            
-                if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+
+            if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial)
+            {
+                selection.GetComponent<Image>().color = playerIndex switch
                 {
-                    selection.GetComponent<Image>().color = playerIndex switch
+                    0 => new Color32(255, 25, 25, 255),
+                    1 => new Color32(50, 200, 50, 255),
+                    2 => new Color32(255, 255, 0, 255),
+                    3 => new Color32(0, 190, 255, 255),
+                    _ => new Color32(255, 255, 255, 255)
+                };
+                Debug.Log(charname);
+                if (charname != null)
+                {
+                    switch (charname)
                     {
-                        0 => new Color32(255,25,25,255),
-                        1 => new Color32(50,200,50,255),
-                        2 => new Color32(255,255,0,255),
-                        3 => new Color32(0,190,255,255),
-                        _ => new Color32(255,255,255,255)
-                    };
-                    Debug.Log(charname);
-                    if (charname != null)
-                    {
-                        switch (charname)
-                        {
-                            case "Lars-Göran": selectedCharacter = "Lars-Göran"; break;
-                            case "The Brass Beast": selectedCharacter = "The Brass Beast"; break;
-                            case "Capôw": selectedCharacter = "Capôw"; break;
-                            case "Schlammer": selectedCharacter = "Schlammer"; break;
-                            case "King Napoleon III": selectedCharacter = "King Napoleon III"; break;
-                            case "Dragoș": selectedCharacter = "Dragoș"; break;
-                            case "Demon of Vilkmergéle": selectedCharacter = "Demon of Vilkmergéle"; break;
-                            case "Harlequini Martinellini": selectedCharacter = "Harlequini Martinellini"; break;
-                        }
-                    racerData.SetName(selectedCharacter);
+                        case "Lars-Göran": selectedCharacter = "Lars-Göran"; break;
+                        case "The Brass Beast": selectedCharacter = "The Brass Beast"; break;
+                        case "Capôw": selectedCharacter = "Capôw"; break;
+                        case "Schlammer": selectedCharacter = "Schlammer"; break;
+                        case "King Napoleon III": selectedCharacter = "King Napoleon III"; break;
+                        case "Dragoș": selectedCharacter = "Dragoș"; break;
+                        case "Demon of Vilkmergéle": selectedCharacter = "Demon of Vilkmergéle"; break;
+                        case "Harlequini Martinellini": selectedCharacter = "Harlequini Martinellini"; break;
                     }
+                    racerData.SetName(selectedCharacter);
                 }
             }
-            UpdateButtons();
-        
-        //else if (SceneManager.GetActiveScene().name == "CharacterScreen")
-        //selection.Click();
+        }
+        UpdateButtons();
     }
+
     public void MouseClicked(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
@@ -164,7 +185,52 @@ public class UISelection : MonoBehaviour
             RectTransform rect = selection.GetComponent<RectTransform>();
             if (!RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos)) return;
         }
-        Select(context);
+
+        if (selection.TryGetComponent<Slider>(out Slider slider))
+        {
+            draggingSlider = slider;
+            UpdateSliderValue(slider);
+        }
+        else Select(context);
+    }
+
+    public void MouseReleased(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        draggingSlider = null;
+    }
+
+    private void UpdateSliderValue(Slider slider)
+    {
+        RectTransform rect = slider.GetComponent<RectTransform>();
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rect,
+            mousePos,
+            null,
+            out Vector2 localPoint
+        );
+
+        float normalized;
+
+        if (slider.direction == Slider.Direction.LeftToRight ||
+            slider.direction == Slider.Direction.RightToLeft)
+        {
+            normalized = Mathf.InverseLerp(rect.rect.xMin, rect.rect.xMax, localPoint.x);
+        }
+        else
+        {
+            normalized = Mathf.InverseLerp(rect.rect.yMin, rect.rect.yMax, localPoint.y);
+        }
+
+        if (slider.direction == Slider.Direction.RightToLeft ||
+            slider.direction == Slider.Direction.TopToBottom)
+        {
+            normalized = 1f - normalized;
+        }
+
+        slider.value = Mathf.Lerp(slider.minValue, slider.maxValue, normalized);
     }
 
     public void SwapSelection(UIButton newButton)
@@ -180,7 +246,6 @@ public class UISelection : MonoBehaviour
         SelectUIUpdate(newButton);
         UpdateButtons();
 
-        // Switch tank colours
         if (SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectRace || SceneController.instance.currentSceneType == SceneController.SceneType.PlayerSelectTimeTrial || SceneController.instance.currentSceneType == SceneController.SceneType.CharScreen)
         {
             TextMeshProUGUI textObj = selection.GetComponentInChildren<TextMeshProUGUI>();
@@ -189,25 +254,20 @@ public class UISelection : MonoBehaviour
             switch (charname)
             {
                 case "Lars-Göran":
-                {
                     tankMaterializer.SwitchMaterialScheme(0);
-                } break;
+                    break;
                 case "The Brass Beast":
-                {
                     tankMaterializer.SwitchMaterialScheme(1);
-                } break;
+                    break;
                 case "Capôw":
-                {
                     tankMaterializer.SwitchMaterialScheme(2);
-                } break;
+                    break;
                 case "King Napoleon III":
-                {
                     tankMaterializer.SwitchMaterialScheme(3);
-                } break;
+                    break;
                 default:
-                {
                     tankMaterializer.SwitchMaterialScheme(4);
-                } break;
+                    break;
             }
         }
     }
@@ -231,110 +291,113 @@ public class UISelection : MonoBehaviour
         if (button == null || selectionHighlight == null || selection == null || selection == lastSelection)
             return;
 
-        string tx = selection.GetComponentInChildren<TextMeshProUGUI>().text;
-        bool bgs = tx.Length == 1;
+        TextMeshProUGUI txt = selection.GetComponentInChildren<TextMeshProUGUI>();
+        bool bgs = false;
+        if (txt != null)
+        {
+            string tx = txt.text;
+            bgs = tx.Length == 1;
+        }
         int playerIndex = GetComponent<RacerData>().index;
-        //if (SceneController.instance.currentSceneType != SceneController.SceneType.MainMenu || !bgs)
-        
+
         selectionColor = playerIndex switch
         {
-            0 => new Color32(255,25,25,255),
-            1 => new Color32(50,200,50,255),
-            2 => new Color32(255,255,0,255),
-            3 => new Color32(0,190,255,255),
-            _ => new Color32(255,255,255,255)
+            0 => new Color32(255, 25, 25, 255),
+            1 => new Color32(50, 200, 50, 255),
+            2 => new Color32(255, 255, 0, 255),
+            3 => new Color32(0, 190, 255, 255),
+            _ => new Color32(255, 255, 255, 255)
         };
+
         Image highlightImage = selectionHighlight.GetComponent<Image>();
         if (highlightImage == null)
             return;
+
         highlightImage.color = selectionColor;
         highlightImage.sprite = null;
+
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu)
-        highlightImage.color = new Color32(180,180,180,255);
+            highlightImage.color = new Color32(180, 180, 180, 255);
 
         selectionHighlight.gameObject.SetActive(true);
-        if (button.transform != null)   
-        selectionHighlight.transform.SetParent(button.transform.parent);
-        
-        //if ((SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs) || Time.timeScale == 0)
+
+        if (button.transform != null)
+            selectionHighlight.transform.SetParent(button.transform.parent);
+
         if (SceneController.instance.currentSceneType == SceneController.SceneType.MainMenu && bgs)
         {
             highlightImage.sprite = selection.buttonBackground.sprite;
-            highlightImage.color = new Color32(180,180,180,255);
-            //highlightImage.transform.localScale = new Vector3(5f, highlightImage.transform.localScale.y, highlightImage.transform.localScale.z);
+            highlightImage.color = new Color32(180, 180, 180, 255);
         }
-        /*else
-        {
-            if (lastSelection != null && lastSelection.buttonBackground != null && lastSelection.buttonBackground.gameObject.activeSelf)
-            lastSelection.buttonBackground.gameObject.SetActive(false);
 
-            if (!selection.buttonBackground.gameObject.activeSelf && selection != null && selection.buttonBackground != null)
-            selection.buttonBackground.gameObject.SetActive(true);
-            lastSelection = selection;
-        }*/
         selectionHighlight.transform.SetParent(button.transform.parent);
         UpdateAllHighlights();
     }
+
     private void UpdateAllHighlights()
     {
-    int maxPlayers = playerSelections.Count;
+        int maxPlayers = playerSelections.Count;
 
-    var grouped = playerSelections
-        .GroupBy(p => p.selection);
+        var grouped = playerSelections.GroupBy(p => p.selection);
 
-    foreach (var group in grouped)
-    {
-        var sorted = group
-            .OrderByDescending(p => p.GetComponent<RacerData>().index)
-            .ToList();
-
-        for (int i = 0; i < sorted.Count; i++)
+        foreach (var group in grouped)
         {
-            UISelection ui = sorted[i];
+            var sorted = group.OrderByDescending(p => p.GetComponent<RacerData>().index).ToList();
 
-            if (ui.selection == null || ui.selectionHighlight == null)
-                continue; 
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                UISelection ui = sorted[i];
 
-            RectTransform highlight = ui.selectionHighlight;
-            RectTransform buttonRect =
-                ui.selection.GetComponent<RectTransform>();
+                if (ui.selection == null || ui.selectionHighlight == null)
+                    continue;
 
-            if (buttonRect == null)
-                continue; 
+                RectTransform highlight = ui.selectionHighlight;
+                RectTransform buttonRect = ui.selection.GetComponent<RectTransform>();
 
-            int clampedIndex = Mathf.Clamp(i, 0, maxPlayers - 1);
+                if (buttonRect == null)
+                    continue;
 
-            float basePadding = 25f;
-            float paddingStep = 15f;
+                int clampedIndex = Mathf.Clamp(i, 0, maxPlayers - 1);
 
-            highlight.sizeDelta = buttonRect.sizeDelta +
-            Vector2.one * (basePadding + paddingStep * clampedIndex);
+                float basePadding = 25f;
+                float paddingStep = 15f;
 
-            highlight.localScale = Vector3.one;
-            highlight.position = buttonRect.position;
-            highlight.rotation = Quaternion.identity;
+                highlight.sizeDelta = buttonRect.sizeDelta + Vector2.one * (basePadding + paddingStep * clampedIndex);
 
-            highlight.SetSiblingIndex(sorted.Count - 1 - i);
+                if (selection.GetComponent<Slider>() != null)
+                    highlight.localScale = new Vector3(1.1f, 5, 1);
+                else
+                    highlight.localScale = Vector3.one;
+
+                highlight.position = buttonRect.position;
+                highlight.rotation = Quaternion.identity;
+                highlight.SetSiblingIndex(sorted.Count - 1 - i);
+            }
         }
     }
-}
-
-    public static void UpdateAllColors()
-    {
-        
-    }
-
-
 
     private void UpdateButtons()
     {
         if (!isKBM) return;
         buttonsOnScene = FindObjectsByType<UIButton>(FindObjectsSortMode.None);
     }
+
     void Update()
     {
         if (!isKBM)
             return;
+
+        if (draggingSlider != null)
+        {
+            if (!Mouse.current.leftButton.isPressed)
+            {
+                draggingSlider = null;
+                return;
+            }
+
+            UpdateSliderValue(draggingSlider);
+            return;
+        }
 
         if (selection == null)
             return;
@@ -359,6 +422,7 @@ public class UISelection : MonoBehaviour
             }
         }
     }
+
     public void Skip()
     {
         GameObject controller = GameObject.FindWithTag("Announcement controller");
