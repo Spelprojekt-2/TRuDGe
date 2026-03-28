@@ -80,7 +80,7 @@ public class SubtitlesManager : MonoBehaviour
     //Announcer
     public void Announcement_Intro()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Announcer</color><color=yellow>]</color> In the year 2060 another few races will take place all over Europe in the", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Announcer</color><color=yellow>]</color> In the year 2060 another few races will take place all over Europe in the", 6f);
         Invoke(nameof(Announcement_Intro1), 5f);
     }
     void Announcement_Intro1()
@@ -110,7 +110,7 @@ public class SubtitlesManager : MonoBehaviour
     //Schlamm
     public void SchlammenstreckeIntro()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Herbert</color><color=yellow>]</color> Schlammrennstrecke, a mud track located here in western Germany. It", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Herbert</color><color=yellow>]</color> Schlammrennstrecke, a mud track located here in western Germany. It", 6f);
         Invoke(nameof(SchlammenstreckeIntro1), 5f); 
     }
     void SchlammenstreckeIntro1()
@@ -125,7 +125,7 @@ public class SubtitlesManager : MonoBehaviour
     }
     void SchlammenstreckeIntro3()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Ozzie</color><color=yellow>]</color> Schlammrennstrecke is a track with a lot of history, as it was a famous", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Ozzie</color><color=yellow>]</color> Schlammrennstrecke is a track with a lot of history, as it was a famous", 6f);
         Invoke(nameof(SchlammenstreckeIntro4), 5f); 
     }
     void SchlammenstreckeIntro4()
@@ -140,7 +140,7 @@ public class SubtitlesManager : MonoBehaviour
     //Cliffs
     public void CliffsOfDoverIntro()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Ozzie</color><color=yellow>]</color> Welcome everyone, to the Cliffs of Dover! These beautiful cliffs have", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Ozzie</color><color=yellow>]</color> Welcome everyone, to the Cliffs of Dover! These beautiful cliffs have", 6f);
         Invoke(nameof(CliffsOfDoverIntro1), 4.5f);
     }
     public void CliffsOfDoverIntro1()
@@ -165,7 +165,7 @@ public class SubtitlesManager : MonoBehaviour
     }
     public void CliffsOfDoverIntro5()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Herbert</color><color=yellow>]</color> Nowadays the town has been mostly rebuilt, and the fields outside the", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Herbert</color><color=yellow>]</color> Nowadays the town has been mostly rebuilt, and the fields outside the", 6f);
         Invoke(nameof(CliffsOfDoverIntro6), 3.5f);
     }
     public void CliffsOfDoverIntro6()
@@ -190,7 +190,7 @@ public class SubtitlesManager : MonoBehaviour
     //Luminen
     public void LuminenTRTIntro()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Ozzie</color><color=yellow>]</color> Ladies and gentlemen, welcome to Luminen TRT! Our racers are currently", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Ozzie</color><color=yellow>]</color> Ladies and gentlemen, welcome to Luminen TRT! Our racers are currently", 6f);
         Invoke(nameof(LuminenTRTIntro1), 5.5f);
     }
     public void LuminenTRTIntro1()
@@ -220,7 +220,7 @@ public class SubtitlesManager : MonoBehaviour
     }
     public void LuminenTRTIntro6()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Herbert</color><color=yellow>]</color> This winter-only track is going to take our racers over frozen lakes", 6f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Herbert</color><color=yellow>]</color> This winter-only track is going to take our racers over frozen lakes", 6f);
         Invoke(nameof(LuminenTRTIntro7), 4.5f);
     }
     public void LuminenTRTIntro7()
@@ -238,38 +238,38 @@ public class SubtitlesManager : MonoBehaviour
     //Lars-Göran
     public void Lars_Start()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Lars-Göran</color><color=yellow>]</color> I hope no one decides to cheat today!", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Lars-Göran</color><color=yellow>]</color> I hope no one decides to cheat today!", 5f);
     }
 
     //Napoleon
     public void Napoleon_DriveBy()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Napoleon</color><color=yellow>]</color> Napoleon drive-by", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Napoleon</color><color=yellow>]</color> Napoleon drive-by", 5f);
     }
     public void Napoleon_DrivenBy()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Napoleon</color><color=yellow>]</color> Napoleon driven by", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Napoleon</color><color=yellow>]</color> Napoleon driven by", 5f);
     }
     public void Napoleon_Carla_Crash()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Carla</color><color=yellow>]</color> Go away!", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Carla</color><color=yellow>]</color> Go away!", 5f);
         Invoke(nameof(NapoleonReply_Carla_Crash), 3f);
     }
     void NapoleonReply_Carla_Crash()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Napoleon</color><color=yellow>]</color> No u.", 3f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Napoleon</color><color=yellow>]</color> No u.", 3f);
     }
 
     //Nina, Brass beast
     public void Nina_Hit()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Brass beast</color><color=yellow>]</color> Nina_hit", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Brass beast</color><color=yellow>]</color> Nina_hit", 5f);
     }
 
     //Carla, Capôw
     public void Carla_Win()
     {
-        SpawnSubtitle("<color=yellow>[</color><color=blue>Capôw</color><color=yellow>]</color> Carla win", 5f);
+        SpawnSubtitle("<color=yellow>[</color><color=#5e9cff>Capôw</color><color=yellow>]</color> Carla win", 5f);
     }
 
     //Leonie, Schlammer

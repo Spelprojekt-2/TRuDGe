@@ -220,7 +220,6 @@ public class ShudderChat : MonoBehaviour
             "Is Lars still single?",
             "We last longer on friday night",
             "Fat explosions",
-            "Burn in hell Goffman",
             "straight up schlamming it",
             "WAR & DEATH = BAD",
             "This looks AI generated",

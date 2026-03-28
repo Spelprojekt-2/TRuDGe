@@ -2025,6 +2025,18 @@ MonoBehaviour:
           m_StringArgument: Turbo
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4028980751891896900}
+        m_TargetAssemblyTypeName: PlayerAudio, Assembly-CSharp
+        m_MethodName: PlayTurboAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Turbo
+          m_BoolArgument: 0
+        m_CallState: 2
   onMagnet:
     m_PersistentCalls:
       m_Calls:
@@ -2042,7 +2054,19 @@ MonoBehaviour:
         m_CallState: 2
   onSmoke:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
+        m_TargetAssemblyTypeName: InteractablesAudio, Assembly-CSharp
+        m_MethodName: PlaySmokeAudio
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2563408139579286964}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onLandmine:
     m_PersistentCalls:
       m_Calls:
@@ -2053,6 +2077,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Mine
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
+        m_TargetAssemblyTypeName: InteractablesAudio, Assembly-CSharp
+        m_MethodName: LandminePlaceAudio
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4523023332637477557}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Mine
@@ -2076,6 +2112,18 @@ MonoBehaviour:
       - m_Target: {fileID: 4549119202306693625}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Airstrike
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
+        m_TargetAssemblyTypeName: InteractablesAudio, Assembly-CSharp
+        m_MethodName: PlayAirstrikeAudio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2130,6 +2178,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5221188865279480680}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: ScatterShot
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 4871c47712b76774094042e09c877fb0, type: 2}
+        m_TargetAssemblyTypeName: InteractablesAudio, Assembly-CSharp
+        m_MethodName: ScatterShotAudio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2320,7 +2380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1d8e08537f29e49bc0168fac71b012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getHitParticle: {fileID: 0}
+  getHitParticle: {fileID: 4535260787619069018, guid: 2bf60650c1237ad4caec0fa1cec1cab7, type: 3}
   hitSpeedMultiplier: 0.8
   invincibilityDuration: 2
   anim: {fileID: 3469740517386081268}
@@ -3601,12 +3661,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5361896168483529188, guid: 84fda251bf9549b46b72c44b4617a405, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361896168483529188, guid: 84fda251bf9549b46b72c44b4617a405, type: 3}
       propertyPath: prewarm
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5361896168483529188, guid: 84fda251bf9549b46b72c44b4617a405, type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361896168483529188, guid: 84fda251bf9549b46b72c44b4617a405, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361896168483529188, guid: 84fda251bf9549b46b72c44b4617a405, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7684751334503657587, guid: 84fda251bf9549b46b72c44b4617a405, type: 3}
       propertyPath: m_Name

@@ -3,7 +3,6 @@ using FMODUnity;
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static UnityEditor.PlayerSettings;
 
 [CreateAssetMenu (menuName = "Scriptables/Audio/Interactables")]
 public class InteractablesAudio : ScriptableObject
